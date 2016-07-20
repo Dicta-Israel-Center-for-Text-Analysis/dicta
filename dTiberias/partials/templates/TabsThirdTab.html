@@ -4,10 +4,11 @@
         <div class="button-slider author-text">
             <h2>Segment by text by author</h2>
             <p>How many authors are assumed?</p>
+            <img title="Choose the number of threads to which to decompose the text." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
             <input class="author-assumed" ng-model="Segmentation_NumberOfClusters" id="clusters" name="clusters" type="text" value="{{Segmentation_NumberOfClusters}}" />
             <p class="refine-segmentation">Refine Segmentation</p>
-                                
-                                
+            <img title="How granular do you want the decomposition to be." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
+             
             <input id="NumberOfSentencesLockedInId" 
                     ng-model="Segmentation_NumberOfSentencesLockedIn"
                     type="text" data-slider-min="10" data-slider-max="90" 

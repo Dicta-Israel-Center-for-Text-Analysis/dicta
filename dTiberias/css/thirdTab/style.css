@@ -630,6 +630,21 @@ color:#696969;
     padding: 6px;
     border: 3px solid red;
 }
+
+.sid-bar {
+	font-family:"ChaparralPro";
+    font-size: 10px;
+    text-align: justify;
+    min-height: 10px;
+    padding: 6px;
+    border: 3px solid #BDCBD4;
+    border-bottom: transparent;
+    border-bottom: transparent;
+    background: #FFFEA4;
+}
+.sid-bar-selected {
+    border: 3px solid red;
+}
 .sid-bar2 {
 	font-family:"ChaparralPro";
     font-size: 10px;

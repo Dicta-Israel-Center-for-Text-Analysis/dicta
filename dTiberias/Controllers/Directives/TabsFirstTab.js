@@ -42,10 +42,21 @@
                 }
                 return $sce.trustAsHtml(chunk);
             }
-
+            $scope.createThumbnail = function (chunk) {
+                var dotsNail = "";
+                for (i = 0; i < chunk.length / 20; i = i + 1) {
+                    dotsNail += ". ";
+                }
+                return $sce.trustAsHtml(dotsNail);
+            }
             $scope.chunkSelectedIndex = -1;
             $scope.setSelectedChunkIndex = function (chunkIndex) {
                 $scope.chunkSelectedIndex = chunkIndex;
+            }
+            $scope.setSelectedClass = function (chunkIndex) {
+                if ($scope.chunkSelectedIndex == chunkIndex)
+                    return "sid-bar-selected";
+                return "";
             }
             $scope.markParallelsForSelectedChunk = function (chunkIndex) {
                 if (chunkIndex == -1)

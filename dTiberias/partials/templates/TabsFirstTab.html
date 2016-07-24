@@ -64,7 +64,7 @@
         </div>
 
 
-        <div class="col-md-8">
+        <div class="col-md-7">
             <in-progress></in-progress>
 
 
@@ -88,75 +88,21 @@
 
         </div>
 
-        <div ng-show="false" class="col-md-1">
-            <div class="sid-bar0">
-            </div>
-            <div class="sid-bar1">
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-
-            </div>
-
-            <div class="sid-bar2">
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-
-            </div> <div class="sid-bar3">
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-
-            </div>
-
-            <div class="sid-bar4">
-                Text Text Text
-
-
-            </div>
-
-            <div class="sid-bar5">
-
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-            </div>
-
-            <div class="sid-bar6">
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-
-            </div>
-
-            <div class="sid-bar7">
-                Text Text Text
-                Text Text Text
-
-            </div>
-
-            <div class="sid-bar8">
-
-                Text Text Text Text Text
-                Text Text Text
-            </div>
-
-            <div class="sid-bar9">
-
-                Text Text Text Text Text
-                Text Text Text Text Text
-                Text Text Text Text Text
-            </div>
-
-            <div class="sid-bar10">
-
-                Text Text Text
-            </div>
-
-
-
+    <div ng-show="!showInProcess" class="col-md-1">
+        <div class="sid-bar0">
+            {{(chunks | filter:parallelFilter).length}}
         </div>
+
+        <div ng-repeat="chunk in chunks | filter:parallelFilter" class="sid-bar {{setSelectedClass($index)}}">
+            <p ng-click="setSelectedChunkIndex($index)" title="{{source[$index]}}" style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(chunk)">
+        </div>
+
+        <div style="border:1px solid #BDCBD4;">
+        </div>
+
+
+
+    </div>
 
 
 

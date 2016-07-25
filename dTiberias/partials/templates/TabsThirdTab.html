@@ -64,14 +64,32 @@ $(document).ready(function () {
         </div>
     </div>
     <div ng-show="tab == '1'">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div ng-show="resultData.htmlSegmentation" class="box-right-side">
                 <div class="border-box">
                     <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
                     <p class="line-h">
-                    <div dir="rtl" ng-bind-html="htmlSegmentation"></div>
+                        <div ng-repeat="segment in resultData.segments">
+                            <div id="section{{$index}}" dir="rtl" class="A{{segment.classIndex}}">
+                                {{createSegment(segment.text)}}
+                            </div>
+                        </div>
+                        <div ng-show="false" dir="rtl" ng-bind-html="htmlSegmentation"></div>
                     </p>
                 </div>
+            </div>
+        </div>
+        <div ng-show="!showInProcess" class="col-md-1">
+            <div class="sid-bar0" style="font-size:10px;">
+                 {{resultData.segments.length}} segments
+            </div>
+
+            <div ng-repeat="segment in resultData.segments" class="sid-bar" style="background-color:{{segment.classColor}};">
+                <p ng-click="scrollTo($index)" style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(segment.text)">
+                </p>
+            </div>
+
+            <div style="border:1px solid #BDCBD4;">
             </div>
         </div>
     </div>

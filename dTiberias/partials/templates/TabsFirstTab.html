@@ -74,14 +74,14 @@
                 </div>
                 <div class="border-box">
                     <h2 style="background-color:#cfcfcf;">{{source[chunkSelectedIndex]}}</h2>
-                    <p style="direction:rtl;" class="line-h" ng-bind-html="markParallelsForSelectedChunk(chunkSelectedIndex)">
+                    <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallelsForSelectedChunk(chunkSelectedIndex)">
                     </p>
                 </div>
             </div>
             <div ng-show="!showInProcess && chunkSelectedIndex == -1" ng-repeat="chunk in chunks | filter:parallelFilter" class="box-right-side">
                 <div ng-click="setSelectedChunkIndex($index)" class="border-box">
                     <h2 style="background-color:#cfcfcf;">{{source[$index]}}</h2>
-                    <p style="direction:rtl;" class="line-h" ng-bind-html="markParallels(chunk)">
+                    <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallels(chunk)">
                     </p>
                 </div>
             </div>

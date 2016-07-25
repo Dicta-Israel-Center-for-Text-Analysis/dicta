@@ -567,9 +567,12 @@ color:#696969;
 }
 .line-h {
 
-	line-height: 33px;
+	line-height: 5px;
 }
+.line-h2 {
 
+	line-height: 22px;
+}
 .footer {
 	background:#fff;
 	padding:30px 0px;

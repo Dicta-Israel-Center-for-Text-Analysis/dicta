@@ -8,7 +8,6 @@
                 $scope.showInProcess = InProgressService.isReady != 1;
             });
 
-
             $scope.currentGroupIndex = -1;
             $scope.updateGroupIndex = function (indx) {
                 if ($scope.currentGroupIndex == indx)
@@ -17,15 +16,17 @@
                     $scope.currentGroupIndex = indx;
             }
 
-            $scope.chunks = ParallelsService.chunks;
-            $scope.source = ParallelsService.source;
+            $scope.smallUnits = ParallelsService.smallUnits;
+            $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
+
             $scope.groupNames = ParallelsService.groupNames;
             $scope.groups = ParallelsService.groups;
             $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
             $scope.numOfParallels = ParallelsService.numOfParallels;
             $scope.parrallelsPerChunk = ParallelsService.parrallelsPerChunk;
             $scope.$on('ParallelsUpdates', function () {
-                $scope.chunks = ParallelsService.chunks;
+                $scope.smallUnits = ParallelsService.smallUnits;
+                $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
                 $scope.groupNames = ParallelsService.groupNames;
                 $scope.groups = ParallelsService.groups;
                 $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
@@ -61,7 +62,7 @@
             $scope.markParallelsForSelectedChunk = function (chunkIndex) {
                 if (chunkIndex == -1)
                     return "";
-                var chunk = $scope.chunks[chunkIndex];
+                var chunk = $scope.smallUnits[chunkIndex];
                 for (j = 0; j < $scope.groups.length; j = j + 1) 
                 {
                     $scope.currentGroup = $scope.groups[j];
@@ -82,8 +83,8 @@
                     if ($scope.currentGroup== null  || $scope.currentGroup['parallels'] == null) return true;
                     for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
                         $scope.currentParallel = $scope.currentGroup.parallels[i];
-                        for (j = 0; j < $scope.chunks.length; j = j + 1) {
-                            if(item == $scope.chunks[j])
+                        for (j = 0; j < $scope.smallUnits.length; j = j + 1) {
+                            if (item == $scope.smallUnits[j])
                             {
                                 if ($scope.currentParallel.chunkIndex == j)
                                     return true;

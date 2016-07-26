@@ -1,0 +1,21 @@
+﻿
+
+
+
+        <div class="col-md-12">
+            <in-progress></in-progress>
+            
+            <div ng-show="!showInProcess" ng-repeat="chunk in chunks" class="box-right-side">
+                <div class="border-box">
+                    <h2 style="background-color:#cfcfcf;">{{source[$index]}}</h2>
+                    <p style="direction:rtl;" class="line-h2" ng-bind-html="chunkAsHTML(chunk)">
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    
+
+
+

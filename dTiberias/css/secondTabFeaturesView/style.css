@@ -447,7 +447,6 @@ color:#696969;
 	font-weight:bold;
 	color:#115F90;
 	padding:5px 12px;
-	border-bottom:3px solid #BDCBD4;
 }
 
 .box-bys span {
@@ -456,7 +455,6 @@ color:#696969;
 	font-weight:normal;
 }
 .box-bys ul {
-	border-bottom:3px solid #BDCBD4;
 	padding: 0px 12px;
 }
 .box-bys ul li {

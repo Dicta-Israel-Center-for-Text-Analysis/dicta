@@ -240,7 +240,7 @@ a.btn.btn-form-collection {
     background: #005488;
     color: #fff;
     font-weight: bold;
-    padding: 6px 42px;
+    padding: 6px 20px;
     box-shadow: -2px 2px 0 #002d44;
 }
 a.btn.btn-upload{
@@ -248,9 +248,7 @@ a.btn.btn-upload{
     color: #fff;
     font-weight: bold;
     padding: 6px 7px;
-    max-width: 140px;
     text-align: left;
-    width: 140px;
     display: inline-block;
     box-shadow: -2px 2px 0 #002d44;
 }

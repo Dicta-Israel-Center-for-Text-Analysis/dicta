@@ -1,0 +1,16 @@
+﻿
+<div style="float:left;">
+    <h3>
+        Analysis:
+        <span ng-show="ExperimentActionMode=='SelectOnlineCorpus'">Choose text(s) from collection</span>
+        <span ng-show="ExperimentActionMode=='BrowseThisComputer'">Upload text(s)</span>
+    </h3>
+
+</div>
+<div style="float:right;">
+    OR, 
+    <a ng-click="ExperimentActionMode = 'BrowseThisComputer'" ng-show="ExperimentActionMode=='SelectOnlineCorpus'">Upload a file</a>
+    <a ng-click="ExperimentActionMode = 'SelectOnlineCorpus'" ng-show="ExperimentActionMode=='BrowseThisComputer'">Choose from collection</a>
+
+</div>
+<div style="clear:both;"></div>

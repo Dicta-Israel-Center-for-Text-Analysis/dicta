@@ -170,7 +170,7 @@
            
             $scope.createThumbnail = function (chunk) {
                 var dotsNail = "";
-                for (i = 0; i < chunk.length / 20; i = i + 1) {
+                for (i = 0; i < chunk.length / 40; i = i + 1) {
                     dotsNail += ". ";
                 }
                 return $sce.trustAsHtml(dotsNail);

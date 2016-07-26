@@ -1,0 +1,23 @@
+﻿<div class="ngdialog-message">
+    <h3>Select algorithm</h3>
+    <fieldset>
+        <legend>Algorithm</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>Algorithm type:</td>
+                <td>
+                    <select id="AlgorithmType" ng-model="selectedAlgorithmType" ng-options="item as item.name for item in algorithms"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>Attributes:</td>
+                <td>
+                    <input ng-model="selectedAlgorithmType.attributes" type="text" value="{{selectedAlgorithmType.attributes}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="GoBack()">Done</button>
+</div>

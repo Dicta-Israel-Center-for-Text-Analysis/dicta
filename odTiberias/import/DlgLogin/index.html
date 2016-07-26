@@ -1,0 +1,79 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Dicta- Text Analysis Login Page</title>
+	<link href='https://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+	
+</head>
+<body>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Sign in</button>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+   <div class="modal-content sign-in-account">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Sign into your account</h4>
+      </div>
+      <div class="modal-body">
+       <form class="form-horizontal" role="form">
+        <div class="form-group">
+         <label for="firstname" class="col-sm-3 control-label"> Email</label>
+          <div class="col-sm-9"> <input type="text" class="form-control" id="firstname" placeholder="example@gamil.com"> </div>
+           </div>
+            <div class="form-group"> <label for="lastname" class="col-sm-3 control-label">Password</label>
+             <div class="col-sm-9"> <input type="password" class="form-control" id="lastname" >
+              </div> 
+              </div>
+              
+       </form>
+      </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default forget-passwords" data-dismiss="modal">Forget Passwords?</button>
+        <button type="submit" class="btn btn-primary sign-in-btn"> Sign in</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Sign up</button>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-sm">
+   <div class="modal-content sign-in-account">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create an account</h4>
+      </div>
+      <div class="modal-body">
+       <form class="form-horizontal" role="form">
+        <div class="form-group">
+         <label for="firstname" class="col-sm-3 control-label"> Email</label>
+          <div class="col-sm-9"> <input type="text" class="form-control" id="firstname" placeholder="example@gamil.com"> </div>
+           </div>
+            <div class="form-group"> <label for="lastname" class="col-sm-3 control-label">Password</label>
+             <div class="col-sm-9"> <input type="password" class="form-control" id="lastname" >
+              </div> 
+              </div>
+              <div class="form-group"> <label for="lastname" class="col-sm-3 control-label">Re-Type</label>
+             <div class="col-sm-9"> <input type="password" class="form-control" id="lastname" >
+              </div> 
+              </div>
+              
+       </form>
+      </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default forget-passwords" data-dismiss="modal">Forget Passwords?</button>
+        <button type="submit" class="btn btn-primary sign-in-btn"> Sign in</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+</html>

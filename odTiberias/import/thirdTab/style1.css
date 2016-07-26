@@ -1,0 +1,178 @@
+
+*{margin:0;padding:0;}
+body{font-size:14px;line-height:16px;background:#fff;color:#000}
+
+
+@font-face { 
+	src : url(font/MyriadPro-Regular.otf);
+	font-family:MyriadPro;
+}
+#myModal{
+	background: #fff;
+}
+
+.header_area{}
+.container{}
+.logo_content{}
+.logo_content h1{
+	font-family:MyriadPro;
+	color: #000;
+    font-size: 30px;
+	color:#035689;
+    font-size:50px;
+}
+.cross_area{}
+.cross_area img{position: absolute;right: 8px;top: 6px;width: 50px;cursor:pointer}
+.syntax_area{background:#ECECEC;border-top:3px solid #778B95}
+.container{}
+.syntax_content{}
+.syntax_content h1{font-family:MyriadPro;font-weight:bold;color:#035689;background: #fff none repeat scroll 0 0;border: 1px solid #fff;border-radius: 6px;box-shadow: -2px 3px 0 0 #5E737F;padding: 10px 15px;}
+.syntax_content h1 i.fa.fa-caret-down{
+	color:#035689;
+	font-size: 50px;position: absolute;right: 34px;top: 26px;cursor:pointer}
+.vocalizer{}
+.vocalizer ul{margin:0;padding:0;list-style:none}
+.vocalizer ul li{color:#767676;display: inline-block;font-size: 25px;padding: 40px;}
+.vocalizer ul li img{width: 25px;}
+
+.unigrams_area{background: #ececec none repeat scroll 0 0;border-bottom: 3px solid #778b95;padding-bottom: 17px;position:relative}
+.unigrams_area:after{background: #778b95 none repeat scroll 0 0;
+content: "";
+height: 3px;
+left: 47px;
+position: absolute;
+top: 0;
+width: 1244px;}
+
+.top_botton h1{background: #fff none repeat scroll 0 0;
+border: 1px solid #fff;
+color:#035689;
+font-weight:bold;
+border-radius: 6px;
+box-shadow: -2px 3px 0 0 #5e737f;
+font-size: 26px;
+padding: 10px 14px;}
+.top_botton h1 i.fa.fa-caret-down{font-size: 30px;
+position: absolute;
+right: 28px;cursor:pointer}
+.per_class{}
+.per_class ul{margin:0;padding:0;list-style:none}
+.per_class ul li{display: inline-block;padding: 13px 70px;}
+.per_class ul li a{text-decoration:none;background: #fff none repeat scroll 0 0;font-size:20px;color:#035689;font-weight:bold;border: 1px solid #fff;border-radius: 10px;box-shadow: -2px 3px 0 0 #5e737f;padding: 10px 15px;}
+.per_class ul li a img{margin-left: 20px;
+width: 20px;cursor:pointer}
+.per_class ul li a> span{color: #035689;
+font-size: 26px;
+padding: 14px;}
+.per_class ul li span{color:#767676;font-size: 18px;padding: 11px;}
+.feature_area{text-align:center;position:relative}
+.feature_area img{height: 90%;
+position: absolute;
+right: 70px;
+top: 65px;}
+
+.feature_content{color: #a6b2b7;font-size: 24px;}
+.feature_content img {
+  height: 10px;
+  left: 335px;
+  position: absolute;
+  top: 22px;
+  width: 21px;cursor:pointer;
+}
+.images_2 img{cursor: pointer;
+height: 10px;
+left: 563px;
+position: absolute;
+top: 22px;
+width: 21px;}
+.images_3 img{cursor: pointer;
+height: 10px;
+left: 973px;
+position: absolute;
+top: 19px;
+width: 21px;}
+.images_three img{cursor: pointer;
+height: 10px;
+left: 780px;
+position: absolute;
+top: 23px;
+width: 21px;}
+
+.feature{}
+.feature:after{/*background: #778b95 none repeat scroll 0 0;
+content: "";
+height: 2px;
+left: -44px;
+position: absolute;
+top: 47px;
+width: 1257px;*/}
+.feature table{}
+.feature table tr{}
+.feature table tr td{}
+.dot_blue{color:#72B7EE;font-size:20px}
+.dot_green{color:#35AE02;font-size:20px}
+.dot_orange {
+    color: #ff931e;
+    font-size: 12px;
+}
+.footer_area{border-top: 3px solid #778b95;}
+.footer_content{float: right;
+padding: 30px 0;}
+.footer_content h1{
+
+}
+.footer_content h1 span{
+	font-weight:bold;
+	color:#005488;
+	font-family:MyriadPro;
+	font-size:30px;
+	padding-right:40px;
+}
+.footer_content strong {
+background: #005488 none repeat scroll 0 0;
+border-radius: 7px;
+box-shadow: -4px 5px 0 0 #000000;
+color: #fff;
+font-family: MyriadPro;
+padding: 10px;
+}
+
+
+
+
+
+.icon-td span {
+	color:#7F7F7F;
+	font-size:25px;
+	padding-right:5px;
+}
+
+.icon-td b {
+	font-family:MyriadPro;
+	font-size:18px;
+}
+.icon-td td {
+	font-size:18px;
+	font-family:MyriadPro;
+}
+.icon-td2 span {
+	color:#CCCCCC;
+	font-size:25px;
+	padding-right:5px;
+}
+
+.icon-td2 b {
+	color:#CCCCCC;
+	font-family:MyriadPro;
+	font-size:18px;
+}
+
+
+
+
+
+
+
+
+
+

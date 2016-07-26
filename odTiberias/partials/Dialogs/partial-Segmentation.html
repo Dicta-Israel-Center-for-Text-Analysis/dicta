@@ -1,0 +1,133 @@
+﻿<div class="ngdialog-message">
+    <h3>Select parameters of Segmentation algorithm</h3>
+    <fieldset>
+        <legend>Segmentation Experiment parameters</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>
+                    <fieldset>
+                        <legend>Chunk by</legend>
+                        <table style="">
+                            <tr>
+                                <td>
+                                    <input id="NumberOfSentenceId" type="radio" name="ChunkByGroup" ng-model="Segmentation_ChunkBy" value="NumberOfSentence" />
+                                    <label for="NumberOfSentenceId">
+                                        Number of sentence
+                                    </label>
+                                </td>
+                                <td>
+                                    <input id="SplitStringId" type="radio" name="ChunkByGroup" ng-model="Segmentation_ChunkBy" value="SplitString" />
+                                    <label for="SplitStringId">
+                                        Split string
+                                    </label>
+                                </td>
+                                <td ng-show="ActionMode=='SelectOnlineCorpus'">
+                                    <input id="BibleChapterId" type="radio" name="ChunkByGroup" ng-model="Segmentation_ChunkBy" value="BibleChapter" />
+                                    <label for="BibleChapterId">
+                                        Bible chapter
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div ng-show="Segmentation_ChunkBy=='NumberOfSentence'" title="Number of sentence for each chunk">
+                                        # sentence per chunk (c)
+                                        <input class="width_150" ng-model="Segmentation_NumberOfSentencePerChunk" id="sentence_per_chunk" name="sentence_per_chunk" type="text" value="{{Segmentation_NumberOfSentencePerChunk}}" />
+                                    </div>
+                                    <div ng-show="Segmentation_ChunkBy=='SplitString'" title="Empty for chunking according to number of senteces or respresenting the split string which perform chunking">
+                                        Split string
+                                        <input class="width_150" ng-model="Segmentation_SplitString" id="Split_string" name="Split_string" type="text" value="{{Segmentation_SplitString}}" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td title="Which similarity function to use in order to perfoem clustering">
+                    Similarity type
+                    <select class="width_150" ng-model="Segmentation_SimilarityType" id="Similarity_type" name="Similarity_type" value="{{Segmentation_SimilarityType}}">
+                        <option>Cosine</option>
+                        <option>MinMax</option>
+                        <option>Lin</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td ng-show="false" title="How many clusters (authors)">
+                    # clusters (k)
+                    <input class="width_150" ng-model="Segmentation_NumberOfClusters" id="clusters" name="clusters" type="text" value="{{Segmentation_NumberOfClusters}}" />
+                </td>
+            </tr>
+            <tr>
+                <td title="How many percent are taken from the cluster's core for the SVM training set">
+                    % core docs (p)
+                    <input class="width_150" ng-model="Segmentation_CoreDocs" id="core_docs" name="core_docs" type="text" value="{{Segmentation_CoreDocs}}" />
+                </td>
+            </tr>
+            <tr ng-show="false">
+                <td title="Not in used - Represent  each  chapter  as  a  bag-of-words  (using all words that appear at least k times in the corpus).">
+                    # words in feature set
+
+                    <input class="width_150" ng-model="Segmentation_NumberOfWordsInFeatureSet" id="words_in_feature_set" name="words_in_feature_set" type="text" value="{{Segmentation_NumberOfWordsInFeatureSet}}" />
+                </td>
+            </tr>
+            <tr>
+                <td ng-show="false"  title="Consider the % of sentences that are assigned to one class or the other with highest confidence (reflected in distance from the SVM boundary)">
+                    % sentences locked in
+                    <div class="well">
+                        <input id="ex15" ng-model="Segmentation_NumberOfSentencesLockedIn" type="text" data-slider-min="10" data-slider-max="90" data-slider-step="1" />
+                    </div>
+                    <script>
+                        //http://seiyria.com/bootstrap-slider/
+
+                        var slider;
+                        $(document).ready(function () {
+                            slider = new Slider('#ex15', {
+                                min: 10,
+                                max: 90,
+                                scale: 'logarithmic',
+                                value: 25,
+                                step: 1
+                            });
+                            $("#ex15").on("slide", function (slideEvt) {
+                                var scope = angular.element($("#ex15")).scope(); // $rootScope; //
+                                //alert(scope);
+                                //alert(scope.Segmentation_NumberOfSentencesLockedIn);
+                                scope.Segmentation_NumberOfSentencesLockedIn = slideEvt.value;
+                                //alert(slideEvt.value);
+                            });
+
+                        });
+                    </script>
+
+
+                    <input ng-show="false" class="width_150" ng-model="Segmentation_NumberOfSentencesLockedIn" id="sentences_locked_in" name="sentences_locked_in" type="text" value="{{Segmentation_NumberOfSentencesLockedIn}}" />
+                </td>
+
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset ng-show="false">
+        <legend>Algorithm</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>
+                    Algorithm type
+                    <select class="width_150" id="AlgorithmType" ng-model="selectedAlgorithmType" ng-options="item as item.name for item in algorithms"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Attributes
+                    <input class="width_100_percent" ng-model="selectedAlgorithmType.attributes" type="text" value="{{selectedAlgorithmType.attributes}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm()">Done</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+</div>

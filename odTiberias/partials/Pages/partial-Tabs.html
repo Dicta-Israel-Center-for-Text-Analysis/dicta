@@ -1,0 +1,117 @@
+﻿<link href='https://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="import/secondTab/css/bootstrap.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/secondTab/css/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/secondTab/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/secondTab/css/responsive.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/secondTabFeaturesView/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/secondTabFeaturesView/style1.css" media="all" />
+
+
+<link href='https://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="import/thirdTab/css/bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/thirdTab/css/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/thirdTab/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/thirdTab/style1.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/thirdTab/css/responsive.css" media="all" />
+
+<header-page></header-page>
+
+
+<experiment-menu></experiment-menu>
+
+
+<div class="main-box-1">
+    <div class="container fix-pad">
+        <div class="main-title">
+            <ul class="nav nav-tabs">
+                <li class="{{firstTabClass}}">
+                    <a data-toggle="tab" ng-click="goToFirstTab()">
+                        <b>Find Matches<i class="fa fa-check-circle"></i></b>
+
+                    </a>
+                </li>
+                <li class="{{secondTabClass}}">
+                    <a data-toggle="tab" ng-click="goToSecondTab()">
+
+                        <b>Classify it<i class="fa fa-check-circle"></i></b>
+                    </a>
+                </li>
+                <li class="{{thirdTabClass}}">
+                    <a data-toggle="tab" ng-click="goToThirdTab()">
+
+                        <b>Segment it<i class="fa fa-check-circle"></i></b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container fix-pad">
+
+        <div class="box-body">
+            <div class="main-box-header">
+                <div class="col-md-6 box-deut-left">
+
+                    <h3>
+                        Selected test text ...
+                        <img src="import/secondTab/images/info.png" alt="" />
+                        <a ng-click="editTestSet()">Edit</a>
+                    </h3>
+                    <div ng-show="isShow" class="deut-icon">
+                        <ul>
+                            <li><img src="import/secondTab/images/genre.png" alt="" /> <span>Prose</span></li>
+                            <li><img src="import/secondTab/images/period.png" alt="" /> <span>Biblical</span></li>
+                            <li><img src="import/secondTab/images/region.png" alt="" /> <span>Israel</span></li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-6 box-deut-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-box-body newtabs">
+        <div class="container bdmo">
+            <div class="box-body-bg">
+                <div ng-show="firstTabClass=='active'" class="tab-pane fade in active">
+                    <tabs-first-tab></tabs-first-tab>
+                </div>
+                <div ng-show="secondTabClass=='active'" class="tab-pane fade in active">
+                    <tabs-second-tab></tabs-second-tab>
+                </div>
+                <div ng-show="thirdTabClass=='active'" class="tab-pane fade in active">
+                    <tabs-third-tab></tabs-third-tab>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer-page></footer-page>
+
+
+<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
+        <div class="ngdialog-overlay"></div>
+        <div class="ngdialog-content" role="document">
+            <div class="ngdialog-message">
+                <action-mode></action-mode>
+                <in-progress></in-progress>
+                <br />
+                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
+                    <browse-this-computer show-class-name=""></browse-this-computer>
+                </div>
+                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
+                    <select-online-corpus></select-online-corpus>
+
+                </div>
+            </div>
+            <div class="ngdialog-buttons" ng-show="!showInProcess">
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,302 @@
+﻿
+
+    <div class="col-md-4">
+
+        <div class="box-left-side">
+
+            <div class="box-in">
+                <h2><a ng-click="ContinueToAddClass('SelectOnlineCorpus');">-Add a class <span class="fa fa-caret-down"></span></a></h2>
+                <training-classes show-delete-button="true"></training-classes>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="box-found new-box">
+                <p class="alogrithim">alogrithim</p>
+                <p ng-click="OpenSelectAlgorithm();" class="alogrithim-class"><img src="import/secondTab/images/setting.png" alt="" /> {{selectedAlgorithmTypeName}} </p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="feature-set">
+                <p class="alogrithim">feature set</p>
+                            
+                <feature-sets show-delete-button="true"></feature-sets>
+
+                <ul class="list-unstyled">
+                    <li><a ng-click="OpenSelectFeatureSet();"><i class="fa fa-plus"></i> Add a feature set</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="cross-verification">
+                <p ng-show="CVResultData.classes.length>1"> Cross validition {{CVResultData.accuracy[0] | number: 1}}%</p>
+                <a ng-click="ContinueToResult();">Classify Test Text</a>
+            </div>
+
+
+        </div>
+    </div>
+    <in-progress></in-progress>
+
+
+    <div class="col-md-8" ng-show="testSetChunks.length > 0">
+        <div class="box-right-side">
+            <div class="view-text">
+                <ul class="list-inline">
+                    <li ng-class=" tab == '1' ? 'active' : ''"><a ng-click="updateCurrentFeatureListToEmpty()">View text</a></li>
+                    <li><a>|</a></li>
+                    <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="updateCurrentFeatureList()">View features</a></li>
+                </ul>
+            </div>
+                        
+            <div class="clearfix"></div>
+
+        </div>
+        <div ng-show="tab == '1'">
+                        
+                <div ng-repeat="testFile in testSetChunks" class="box-right-side">
+                    <div class="border-box">
+                        <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
+                            <span class="align-left">{{testFile.name}}</span><span class="align-right">
+                                {{testFile.length}} words, {{testFile.classifiedAs}},
+                                <i ng-show="testFile.confidence==100">very high</i>
+                                <i ng-show="testFile.confidence>=95 && testFile.confidence<100">high</i>
+                                <i ng-show="testFile.confidence>=80 && testFile.confidence<95">medium</i>
+                                <i ng-show="testFile.confidence<80">low</i>
+                            </span>
+                        </h2>
+                        <p class="line-h" style='height: 350px; overflow: scroll; text-align:{{textAlign}};' ng-bind-html="convert2TrustAsHtml(testFile.htmlText)">
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        <div ng-show="tab == '2'" >
+
+            <div class="clearfix"></div>
+
+            <div ng-repeat="testFile in testSetChunks" class="box-right-side">
+                <div class="border-box">
+                    <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
+                        <span class="align-left">{{testFile.name}}</span><span class="align-right">
+                            {{testFile.length}} words, {{testFile.classifiedAs}},
+                            <i ng-show="testFile.confidence==100">very high</i>
+                            <i ng-show="testFile.confidence>=95 && testFile.confidence<100">high</i>
+                            <i ng-show="testFile.confidence>=80 && testFile.confidence<95">medium</i>
+                            <i ng-show="testFile.confidence<80">low</i>
+                        </span>
+                    </h2>
+
+
+
+                    <div class="feature_area">
+                        <div class="feature">
+                            <table>
+                                <tr class="feature_content">
+                                    <td class="class-table">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown"> Class <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="feature-class">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown"> feature  </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="occur-class">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown"> Occur <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="frequency-class">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown"> frequency <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="t-text-class">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown">T-Test <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="infl-class">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn dropdown-toggle class-btn " id="dropdownMenu1" data-toggle="dropdown"> Infl. <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                                <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">Class 1</a> </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <div class="view-text-content">
+                                <div ng-repeat="oneclass in classes">
+                                    <div class="content-describe">
+
+                                        <div class="class-table2 class-table-content">
+                                            <h4>{{oneclass.title}}</h4>
+                                        </div>
+
+                                        <div class="reprencented-section">
+                                            <p class="reprencented"><i class="fa fa-star"></i> Reprencented ({{(testFile.featureList | positiveInfluence: $index).length}})</p>
+                                            <table>
+                                                <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: $index">
+                                                    <td class="reprencented-content"  title="{{feature.title}}">{{feature.name}}</td>
+                                                    <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
+                                                    <td class="frequenct-content">
+                                                        <ttest-slider feature-id='reprencented_{{indexOfColor(oneclass.title)}}{{testFile.name | removeDot}}{{$index}}'
+                                                            currentvalue='{{feature.freqInDoc}}'
+                                                            classaverage='{{feature.averageForEachClass[oneclass.title]}}'
+                                                            otheraverage='{{feature.freqInOthers}}'
+                                                            ttest='{{feature.tTestForEachClass[oneclass.title]}}'          
+                                                            classcolor='{{indexOfColor(oneclass.title)}}'
+                                                        ></ttest-slider>
+                                                    </td>
+                                                    <!--
+                                                    <td class="frequenct-content">
+                                                            |
+                                                        {{beforeOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        <span title="{{feature.freqInOthers}}" class="dot_blue">
+                                                            <img src="import/secondTabFeaturesView/images/circle.png" />
+                                                        </span>
+                                                        {{afterOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        |
+                                                        {{beforeClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        <span title="{{feature.averageForEachClass[oneclass.title]}}" class="dot_{{indexOfColor(oneclass.title)}}">
+                                                            <i class="fa fa-circle"></i>
+                                                        </span>
+                                                        {{afterClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}} 
+                                                        |
+                                                    </td>
+                                                    -->
+                                                    <!--
+                                                    <td class="frequenct-content">
+                                                        |
+                                                        <span title="{{feature.freqInOthers}}" class="dot_blue">
+                                                            <img src="import/secondTabFeaturesView/images/circle.png" />
+                                                        </span>
+                                                        {{beforeClassBeforeStar(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc)}}
+                                                        <span ng-show="feature.freqInDoc < feature.averageForEachClass[oneclass.title]" title="{{feature.freqInDoc}}" class="dot_green">
+                                                            <img src="import/secondTabFeaturesView/images/star.png" />
+                                                        </span>
+                                                        {{beforeClassAfterStar(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc)}}
+                                                        <span title="{{feature.averageForEachClass[oneclass.title]}}" class="dot_{{indexOfColor(oneclass.title)}}">
+                                                            <i class="fa fa-circle"></i>
+                                                        </span>
+                                                        {{afterClassBeforeStar(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc)}}
+                                                        <span ng-show="feature.freqInDoc >= feature.averageForEachClass[oneclass.title]" title="{{feature.freqInDoc}}" class="dot_green">
+                                                            <img src="import/secondTabFeaturesView/images/star.png" />
+                                                        </span>
+                                                        {{afterClassAfterStar(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc)}}
+                                                        |
+                                                    </td>
+                                                    -->
+                                                    <td class="t-text-content">{{feature.tTestForEachClass[oneclass.title] | number : 2}}</td>
+                                                    <td class="infl-content">{{feature.influence | number : 2}}</td>
+                                                </tr>
+                                            </table>
+                                            <p class="reprencented">Missing ({{(testFile.featureList | negativeInfluence: $index).length}})</p>
+                                            <table class="_missing">
+                                                <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'influence' | negativeInfluence: $index">
+                                                    <td class="reprencented-content" title="{{feature.title}}">{{feature.name}}</td>
+                                                    <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
+                                                    <td class="frequenct-content">
+                                                        <ttest-slider feature-id='missing_{{indexOfColor(oneclass.title)}}{{testFile.name | removeDot}}{{$index}}'
+                                                                        currentvalue='{{feature.freqInDoc}}'
+                                                                        classaverage='{{feature.averageForEachClass[oneclass.title]}}'
+                                                                        otheraverage='{{feature.freqInOthers}}'
+                                                                        ttest='{{feature.tTestForEachClass[oneclass.title]}}'
+                                                                        classcolor='{{indexOfColor(oneclass.title)}}'></ttest-slider>
+                                                    </td>
+                                                    <!--
+                                                    <td class="frequenct-content">
+                                                        |
+                                                        {{beforeOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        <span title="{{feature.freqInOthers}}" class="dot_blue">
+                                                            <img src="import/secondTabFeaturesView/images/circle.png" />
+                                                        </span>
+                                                        {{afterOther(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        |
+                                                        {{beforeClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        <span title="{{feature.averageForEachClass[oneclass.title]}}" class="dot_{{indexOfColor(oneclass.title)}}">
+                                                            <i class="fa fa-circle"></i>
+                                                        </span>
+                                                        {{afterClass(feature.averageForEachClass[oneclass.title], feature.freqInOthers, feature.freqInDoc, feature.tTestForEachClass[oneclass.title])}}
+                                                        |
+                                                    </td>
+                                                    -->
+                                                    <td class="t-text-content">{{feature.tTestForEachClass[oneclass.title] | number : 2}}</td>
+                                                    <td class="infl-content">{{feature.influence | number : 2}}</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+
+        </div>
+
+
+
+        </div>
+
+
+
+
+
+
+<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
+        <div class="ngdialog-overlay"></div>
+        <div class="ngdialog-content" role="document">
+            <div class="ngdialog-message">
+                <action-mode></action-mode>
+                <in-progress></in-progress>
+                <br />
+                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
+                    <browse-this-computer show-class-name="true"></browse-this-computer>
+                </div>
+                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
+                    <select-online-corpus></select-online-corpus>
+                    <br />
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <class-name-input></class-name-input>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="ngdialog-buttons" ng-show="!showInProcess">
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Save class</button>
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

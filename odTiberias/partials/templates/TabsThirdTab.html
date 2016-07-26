@@ -1,0 +1,65 @@
+﻿
+
+    <div class="col-md-4 border-author">
+        <div class="button-slider author-text">
+            <h2>Segment by text by author</h2>
+            <p>How many authors are assumed?</p>
+            <input class="author-assumed" ng-model="Segmentation_NumberOfClusters" id="clusters" name="clusters" type="text" value="{{Segmentation_NumberOfClusters}}" />
+            <p class="refine-segmentation">Refine Segmentation</p>
+                                
+                                
+            <input id="NumberOfSentencesLockedInId" 
+                    ng-model="Segmentation_NumberOfSentencesLockedIn"
+                    type="text" data-slider-min="10" data-slider-max="90" 
+                    data-slider-step="1"
+                    data-slider-id='NumberOfSentencesLockedInIdSlider' />
+            <p class="rough-refine"> <span class="text-left1">Rough</span><span class="text-right1">Fine</span></p>
+            <script>
+// http://seiyria.com/bootstrap-slider/
+var slider;
+$(document).ready(function () {
+    slider = new Slider('#NumberOfSentencesLockedInId', {
+        min: 10,
+        max: 90,
+        scale: 'logarithmic',
+        value: 25,
+        step: 1
+    });
+    $("#NumberOfSentencesLockedInId").on("slide", function (slideEvt) {
+        var scope = angular.element($("#NumberOfSentencesLockedInId")).scope(); // $rootScope; //
+        //alert(scope);
+        //alert(scope.Segmentation_NumberOfSentencesLockedIn);
+        scope.Segmentation_NumberOfSentencesLockedIn = slideEvt.value;
+        //alert(slideEvt.value);
+    });
+
+});
+            </script>
+
+
+            <div class="clearfix"></div>
+            <div class="author-refine-section">
+                <p class="advance"><i class="fa fa-wrench" aria-hidden="true"></i><a href="">Advanced</a></p>
+                <button ng-click="RunExperiment();" class="btn segments-btn">Segment</button>
+            </div>
+        </div>
+
+    </div>
+
+    <in-progress></in-progress>
+    <div class="col-md-8">
+        <div ng-show="resultData.htmlSegmentation" class="box-right-side">
+            <div class="border-box">
+                <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
+                <p class="line-h">
+                    <div ng-bind-html="htmlSegmentation"></div>
+                </p>
+            </div>
+        </div>
+
+                           
+    </div>
+
+
+
+

@@ -1,0 +1,34 @@
+﻿<div>
+    <div>
+        The morphological and syntactic data for our Biblical corpus is derived from the ETCBC4 database
+        (
+        <a href="http://dx.doi.org/10.17026%2Fdans-2z3-arxf">LINK</a>
+        )
+    </div>
+    <input id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Bible" />
+    <label for="Select_BibleId">
+        Bible
+    </label>
+    <input disabled id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Talmud" />
+    <label for="Select_BibleId">
+        Talmud
+    </label>
+    <input disabled id="Select_BibleId" ng-click="OpenSelectBible();" type="radio" name="Select_OnlineCorpusGroup" ng-model="Select_OnlineCorpus" value="Shakespeare" />
+    <label for="Select_BibleId">
+        Shakespeare
+    </label>
+    <button ng-hide="true" focus-on="focusMe" type="button"
+            class="btn btn-success padding_5"
+            ng-dialog="partials/Dialogs/partial-Bible.html"
+            ng-dialog-controller="BibleDialogController"
+            ng-dialog-data="{{treeData}}"
+            ng-dialog-class="ngdialog-theme-default"
+            ng-dialog-show-close="true">
+        Bible
+    </button>
+    <br />
+    <div ng-show="showBibleDialog" style="height: 400px; overflow: scroll;">
+        <!-- http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html -->
+        <div id="trainTree"></div>
+    </div>
+</div>

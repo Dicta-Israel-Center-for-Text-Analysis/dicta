@@ -52,7 +52,7 @@
                                 <li style="float:right;"><h2>{{parallel.parallelTitle}}</h2></li>
                                 <li><small> parallel in - {{source[parallel.chunkIndex]}}</small></li>
                             </ul>
-                            <p style="direction:rtl;">
+                            <p style="direction:rtl; border-bottom:3px solid #BDCBD4;">
                                 {{parallel.parallelText}}
                             </p>
                         </div>
@@ -93,15 +93,15 @@
             {{(chunks | filter:parallelFilter).length}}
         </div>
 
-        <div ng-repeat="chunk in chunks | filter:parallelFilter" class="sid-bar {{setSelectedClass($index)}}">
-            <p ng-click="setSelectedChunkIndex($index)" title="{{source[$index]}}" style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(chunk)">
+        <div title="{{source[$index]}}"
+             ng-click="setSelectedChunkIndex($index)" 
+             ng-repeat="chunk in chunks | filter:parallelFilter" class="sid-bar {{setSelectedClass($index)}}">
+            ({{parrallelsPerChunk[$index].parallels.length}})
+            <p style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(chunk)" />
         </div>
 
         <div style="border:1px solid #BDCBD4;">
         </div>
-
-
-
     </div>
 
 

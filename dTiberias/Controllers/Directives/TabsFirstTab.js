@@ -9,7 +9,7 @@
             });
 
 
-            $scope.currentGroupIndex = 0;
+            $scope.currentGroupIndex = -1;
             $scope.updateGroupIndex = function (indx) {
                 if ($scope.currentGroupIndex == indx)
                     $scope.currentGroupIndex = -1;

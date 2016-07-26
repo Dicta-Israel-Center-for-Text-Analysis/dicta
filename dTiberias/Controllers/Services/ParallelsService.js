@@ -2,6 +2,17 @@
 jTextMinerApp.factory('ParallelsService', function ($rootScope) {
     var root = {};
 
+    root.smallUnits = [];
+    root.updateSmallUnits = function (items) {
+        this.smallUnits = items;
+        $rootScope.$broadcast("ParallelsUpdates");
+    }
+    root.sourceForSmallUnits = [];
+    root.updateSourceForSmallUnits = function (items) {
+        this.sourceForSmallUnits = items;
+        $rootScope.$broadcast("ParallelsUpdates");
+    }
+
     root.chunks = [];
     root.updateChunks = function (items) {
         this.chunks = items;

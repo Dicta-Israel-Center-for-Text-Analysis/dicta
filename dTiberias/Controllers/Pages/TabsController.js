@@ -1,25 +1,35 @@
 ﻿// create the controller and inject Angular's $scope
 jTextMinerApp.controller('TabsController', function ($scope, ClassService, $rootScope, SelectClassService) {
-
+    
+    $scope.goToZeroTab = function ()
+    {
+        $scope.zeroTabClass = "active";
+        $scope.firstTabClass = "";
+        $scope.secondTabClass = "";
+        $scope.thirdTabClass = "";
+    }
     $scope.goToFirstTab = function ()
     {
+        $scope.zeroTabClass = "";
         $scope.firstTabClass = "active";
         $scope.secondTabClass = "";
         $scope.thirdTabClass = "";
     }
     $scope.goToSecondTab = function ()
     {
+        $scope.zeroTabClass = "";
         $scope.firstTabClass = "";
         $scope.secondTabClass = "active";
         $scope.thirdTabClass = "";
     }
     $scope.goToThirdTab = function ()
     {
+        $scope.zeroTabClass = "";
         $scope.firstTabClass = "";
         $scope.secondTabClass = "";
         $scope.thirdTabClass = "active";
     }
-    $scope.goToFirstTab();
+    $scope.goToZeroTab();
 
     $scope.editTestSet = function () {
         $scope.showClassDialog = true;

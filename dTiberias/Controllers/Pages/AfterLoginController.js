@@ -210,30 +210,29 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
         }
         classData.expType = 'Classification';
         APIService.apiRun({ crud: 'UnknownTestClassAsChunks' }, classData, function (response) {
-            $scope.data.chunks = response.chunks;
             ParallelsService.updateChunks(response.chunks);
-            $scope.source = response.source;
             ParallelsService.updateSource(response.source);
-            $scope.parrallelsPerChunk = [];
-            for (i = 0; i < ParallelsService.chunks.length; i = i + 1) {
-                $scope.parrallelsPerChunk.push(
-                    {
-                        name: "Chunk " + i,
-                        parallels: []
-                    }
-                );
-            }
+           
+            APIService.apiRun({ crud: 'UnknownTestClassAsSmallUnits' }, classData, function (response2) {
+                $scope.data.chunks = response2.chunks;
+                ParallelsService.updateSmallUnits(response2.chunks);
+                $scope.source = response2.source;
+                ParallelsService.updateSourceForSmallUnits(response2.source);
+                $scope.parrallelsPerChunk = [];
+                for (i = 0; i < ParallelsService.smallUnits.length; i = i + 1) {
+                    $scope.parrallelsPerChunk.push(
+                        {
+                            name: "Chunk " + i,
+                            parallels: []
+                        }
+                    );
+                }
 
-            $scope.data.minthreshold = 6;
-            $scope.data.maxdistance = 2;
-            if ($scope.data.chunks.length > 800) {
-                InProgressService.updateIsReady(1);
-                $location.path('Tabs');
-            }
-            else
-            {
-                CAPIService.apiRun({ crud: 'parallels' }, $scope.data, function (response2) {
-                    $scope.results = response2;
+                $scope.data.minthreshold = 6;
+                $scope.data.maxdistance = 2;
+
+                CAPIService.apiRun({ crud: 'parallels' }, $scope.data, function (response3) {
+                    $scope.results = response3;
                     $scope.groupNames = [];
                     $scope.groups = [];
                     $scope.numOfParallelsInGroups = [];
@@ -300,7 +299,8 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                     InProgressService.updateIsReady(1);
                     $location.path('Tabs');
                 });
-            }
+            });
+            
         });
         
     }

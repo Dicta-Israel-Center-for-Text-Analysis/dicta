@@ -97,11 +97,11 @@
 
                 <div ng-show="fileNameList.length > 0" class="recently-result">
                     <p>Recent results</p>
-                    <ul class="nav nav-pills">
-                        <li ng-repeat="fileName in fileNameList"  class="active">
+                    <ul class="saved-experiment-pills">
+                        <li ng-repeat="fileName in fileNameList"  class="">
                             <a ng-click="LoadExperiment(fileName)">
                                 {{fileName}}
-                                <p><span class="aouther-name">Selected text</span> <span class="create-on">Created on 13-2</span></p>
+                                <p><span style="float: inherit" class="aouther-name">Selected text</span> <span class="create-on">Created on ??-?</span></p>
                             </a>
                         </li>
                     </ul>

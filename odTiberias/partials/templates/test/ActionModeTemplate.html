@@ -1,0 +1,26 @@
+﻿<fieldset>
+    <legend>Select Texts</legend>
+    {{ngDialogData}}
+    <table style="width:100%;">
+        <tr>
+            <td>
+                <input id="BrowseThisComputerId" type="radio" name="ActionModeGroup" ng-model="ExperimentActionMode" value="BrowseThisComputer" />
+                <label for="BrowseThisComputerId">
+                    Browse this computer
+                </label>
+            </td>
+            <td>
+                <input id="SelectOnlineCorpusId" type="radio" name="ActionModeGroup" ng-model="ExperimentActionMode" value="SelectOnlineCorpus" />
+                <label for="SelectOnlineCorpusId">
+                    Select online corpus
+                </label>
+            </td>
+            <td>
+                <input id="LoadStoredClassId" type="radio" name="ActionModeGroup" ng-model="ExperimentActionMode" value="LoadStoredClass" />
+                <label for="LoadStoredClassId">
+                    Load stored class
+                </label>
+            </td>
+        </tr>
+    </table>
+</fieldset>

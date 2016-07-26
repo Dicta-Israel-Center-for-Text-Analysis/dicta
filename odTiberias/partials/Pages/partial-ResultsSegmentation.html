@@ -1,0 +1,98 @@
+﻿
+
+<in-progress></in-progress>
+<table style="width:100%;" ng-show="!showInProcess">
+
+    <tr>
+        <td style="width:25%;" valign="top">
+            <div ng-show="resultData.showAnalitics && !resultData.htmlSegmentation">
+                <fieldset>
+                    <legend>Analytics</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <fieldset>
+                                    <legend>Confusion matrix</legend>
+                                    <table class="mytable">
+                                        <tr>
+                                            <td>Real\Classified</td>
+                                            <td ng-repeat="oneclass in resultData.classes">
+                                                {{oneclass}}
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="oneclass in resultData.classes">
+                                            <td>{{oneclass}}</td>
+                                            <td ng-repeat="oneresult in resultData.confusionMatrix[oneclass]">{{oneresult | number: 1}} </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <fieldset>
+                                    <legend>Statistics</legend>
+                                    <table class="mytable">
+                                        <tr>
+                                            <td></td>
+                                            <td>Average</td>
+                                            <td ng-repeat="oneclass in resultData.classes">{{oneclass}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td title="The precision for a class is the number of true positives divided by the total number of elements labeled as belonging to the positive class">Precision</td>
+                                            <td>{{resultData.precision[0] | number: 1}}</td>
+                                            <td ng-repeat="oneclass in resultData.classes">{{resultData.precision[$index+1] | number: 1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td title="Recall for a class is defined as the number of true positives divided by the total number of elements that actually belong to the positive class">Recall</td>
+                                            <td>{{resultData.recall[0] | number: 1}}</td>
+                                            <td ng-repeat="oneclass in resultData.classes">{{resultData.recall[$index+1] | number: 1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td title="The accuracy is the proportion of true results (both true positives and true negatives) among the total number of cases examined">Accuracy</td>
+                                            <td><b>{{resultData.accuracy[0] | number: 1}}</b></td>
+                                            <td ng-repeat="oneclass in resultData.classes">{{resultData.accuracy[$index+1] | number: 1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td title="A measure that combines precision and recall is the harmonic mean of precision and recall">F1</td>
+                                            <td><b>{{resultData.f1[0] | number: 1}}</b></td>
+                                            <td ng-repeat="oneclass in resultData.classes">{{resultData.f1[$index+1] | number: 1}}</td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+
+            <div ng-show="showSummary && resultData.htmlSegmentation">
+                <table>
+                    <tr>
+                        <td>Exp. type: </td>
+                        <td>{{ExperimentTypeModel}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="button padding_5 small-block-grid-1 radius font_12" ng-click="NewExperiment();">
+                                Back to start page
+                            </button>
+                        </td>
+                        <td ng-show="false">
+                            <button class="button padding_5 small-block-grid-1 radius font_12" ng-click="GoToSegmentation();">
+                                Revise experiment
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td valign="top">
+            <div ng-show="resultData.htmlSegmentation">
+                <div ng-bind-html="htmlSegmentation"></div>
+            </div>
+
+        </td>
+    </tr>
+</table>

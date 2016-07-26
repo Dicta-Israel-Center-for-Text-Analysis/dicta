@@ -1,0 +1,25 @@
+﻿
+<input id="{{featureId}}" type="text" 
+       data-slider-min="0"
+       data-slider-max="4"
+       data-slider-enabled="false"
+       data-slider-reversed="false" 
+       data-slider-precision="2"
+       data-slider-tooltip="hide"
+       data-slider-value="{{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)}}"
+       data-slider-id="{{classcolor}}"
+       data-slider-ticks="[{{boundOthers(ttest)}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)}}, {{boundClass(ttest)}}]"
+       data-slider-ticks-labels='["{{otheraverage}}", "{{currentvalue}}", "{{classaverage}}"]'
+       data-slider-ticks-positions="[{{boundOthers(ttest)*25}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)*25}}, {{boundClass(ttest)*25}}]"
+       />
+
+<div ng-show="false">
+    <div>&nbsp;</div>
+    <div>currentvalue: {{currentvalue}} </div>
+    <div>classaverage: {{classaverage}} </div>
+    <div>otheraverage: {{otheraverage}} </div>
+    <div>ttest: {{ttest}} </div>
+    <div>boundOthers: {{boundOthers(ttest)}} </div>
+    <div>boundClass: {{boundClass(ttest)}} </div>
+    <div>boundCurrentValue: {{boundCurrentValue(classaverage,otheraverage,currentvalue,ttest)}}</div>
+</div>

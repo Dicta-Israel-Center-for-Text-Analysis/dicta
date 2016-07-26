@@ -1,0 +1,197 @@
+﻿
+
+<link href='https://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="import/afterLogin/css/bootstrap.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/afterLogin/css/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/afterLogin/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/afterLogin/css/responsive.css" media="all" />
+
+
+<header class="header">
+    <div class="container">
+        <div class="nav-menu">
+            <div class="col-md-4 menu-logo">
+                <a href="#"><img src="import/afterLogin/images/logo.png" alt="" /></a>
+            </div>
+            <div class="col-md-4 menu-mid">
+                <ul>
+                    <li><a href="#">Experiments</a></li>
+                    <li><a ng-show="isShow" href="#">Collections</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 menu-signup">
+                Hello, <a href="#">{{currentUser}} <span class="fa fa-caret-down"></span></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="new-element">
+    <div class="container">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="title-header">
+                <h1>Welcome back, {{currentUser}}! What would you like do today?</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-contents-experiment">
+    <div class="container">
+        <in-progress></in-progress>
+
+        <div ng-show="!showInProcess" class="row">
+            <div class="col-md-4">
+                <div ng-show="isShow" class="search-aterm">
+                    <h4> Search a term</h4>
+                    <div class="search-aterm-field">
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" placeholder="input any text & concept">
+                                <button type="submit" class="btn searchicons"> <i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div ng-show="isShow" class="recently-result">
+                    <p>Recent results</p>
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <in-progress></in-progress>
+                <div class="search-aterm">
+                    <h4> Analyze a text</h4>
+                    <div class="search-aterm-field">
+                        <ul class="list-inline">
+                            <li><a ng-click="StartNewExperiment('SelectOnlineCorpus');" class="btn btn-form-collection">From collections</a></li>
+                            <li><a ng-click="StartNewExperiment('BrowseThisComputer');" class="btn btn-upload"><i class="fa fa-plus"></i> Upload</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div ng-show="fileNameList.length > 0" class="recently-result">
+                    <p>Recent results</p>
+                    <ul class="nav nav-pills">
+                        <li ng-repeat="fileName in fileNameList"  class="active">
+                            <a ng-click="LoadExperiment(fileName)">
+                                {{fileName}}
+                                <p><span class="aouther-name">Selected text</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div ng-show="isShow" class="search-aterm">
+                    <h4> Compare texts</h4>
+                    <div class="search-aterm-field">
+                        <ul class="list-inline">
+                            <li><a href="" class="btn btn-form-collection">From collections</a></li>
+                            <li><a href="" class="btn btn-upload"><i class="fa fa-plus"></i> Upload</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-show="isShow" class="recently-result">
+                    <p>Recent results</p>
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                Shakesper_Tomer
+                                <p><span class="aouther-name">Genersis 1,22-22</span> <span class="create-on">Created on 13-2</span></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="col-md-4 footer-left">
+            <p>Questions? <a ng-show="isShow" href="#">Contact Us</a></p>
+        </div>
+        <div class="col-md-4 footer-mid">
+            <ul>
+                <li><a ng-show="isShow" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a ng-show="isShow" href="#"><i class="fa fa-facebook"></i></a></li>
+
+            </ul>
+        </div>
+        <div class="col-md-4 footer-right">
+            <p>All rights reserved  @ Dicta inc</p>
+        </div>
+    </div>
+</footer>
+
+
+
+<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
+        <div class="ngdialog-overlay"></div>
+        <div class="ngdialog-content" role="document">
+            <div class="ngdialog-message">
+                <action-mode></action-mode>
+                <in-progress></in-progress>
+                <br />
+                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
+                    <browse-this-computer show-class-name=""></browse-this-computer>
+                </div>
+                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
+                    <select-online-corpus></select-online-corpus>
+
+                </div>
+            </div>
+            <div class="ngdialog-buttons" ng-show="!showInProcess">
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

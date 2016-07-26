@@ -1,0 +1,126 @@
+﻿<div class="ngdialog-message">
+    <h3>Select Features</h3>
+
+    <in-progress></in-progress>
+    <table style="width:100%;" ng-show="!showInProcess">
+        <tr>
+            <td valign="top">
+                <fieldset>
+                    <legend>Feature type</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Word" /> Words
+                            </td>
+                            <td>
+                                <input ng-show="!isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isTokenized" /> 
+                                <span ng-show="!isAllBible">tokenized</span>
+                                <input ng-show="isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isVocalized" />
+                                <span ng-show="isAllBible">vocalized</span> 
+                            </td>
+                            <td>
+                                <input ng-show="isAllBible" type="checkbox" ng-model="isSinDot" /> 
+                                <span ng-show="isAllBible" >shin\sin dot</span> 
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Letter" /> Letters</td>
+                            <td><input style="margin-left:20px;" type="checkbox" ng-model="isIncludingNumbers" /> inc. numbers</td>
+                            <td><input type="checkbox" ng-model="isIncludingPunctuation" /> inc. punctuation</td>
+                        </tr>
+                        <tr ng-show="isAllBible">
+                            <td><input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="SyntaxClause" /> Syntax -- Clause types <a class="font_12" href="http://shebanq-doc.readthedocs.org/en/latest/features/comments/typ.html#clause-atom">?</a></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr ng-show="isAllBible">
+                            <td><input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="SyntaxPhrase" /> Syntax -- Phrase Function Sequences <a class="font_12" href="http://shebanq-doc.readthedocs.org/en/latest/features/comments/function.html">?</a></td>
+                            <td><input style="margin-left:20px;" type="checkbox" ng-model="isSpoOnly" /> Subj, Pred and Obj only</td>
+                            <td></td>
+                        </tr>
+                        <tr ng-show="isAllBible">
+                            <td><input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Morphology" /> Morphology <a class="font_12" href="http://shebanq-doc.readthedocs.org/en/latest/features/comments/0_index.html">?</a></tdstyle>
+                            <td><input style="margin-left:20px;" type="checkbox" ng-model="isIncludeLexeme" /> include lexeme</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="color:gray;"><input disabled type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="PartsOfSpeech" /> Parts of speech</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                       
+                       
+                        <tr>
+                            <td colspan="3"><hr /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Use</td>
+                                        <td>
+                                            <select ng-model="FeatureType" value="{{FeatureType}}">
+                                                <option>Unigram</option>
+                                                <option>Bigram</option>
+                                                <option>Trigram</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Feature weight</legend>
+                    <table>
+                        <tr>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Binary" />Binary</td>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Frequency" />Frequency</td>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="TfIdf" />Tf-Idf</td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Filter</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="Common" />
+                                            Use
+                                        </td>
+                                        <td><input style="width:50px;" ng-model="FilterCount" type="text" value="{{FilterCount}}" /></td>
+                                        <td>most frequent</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-model="isFromEachClass" /> Per class
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="None" />
+                                Use all features
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+
+        </tr>
+    </table>
+</div>
+<div class="ngdialog-buttons" ng-show="!showInProcess">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="addFeatureSetAndReturn()">Add feature set</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+</div>

@@ -1,0 +1,177 @@
+﻿
+<!-- before Login Tamar design -->
+<link href='https://fonts.googleapis.com/css?family=Oranienbaum' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" type="text/css" href="import/beforeLogin/css/bootstrap.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/beforeLogin/css/font-awesome.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/beforeLogin/style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="import/beforeLogin/css/responsive.css" media="all" />
+<!-- End - before Login Tamar design -->
+
+<in-progress></in-progress>
+
+<header class="header">
+    <div class="container">
+        <div class="nav-menu">
+            <div class="col-md-4 menu-logo">
+                <a href="#"><img src="import/beforeLogin/images/top-logo.png" alt="" /></a>
+            </div>
+            <div class="col-md-4 menu-mid">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Our Product</a></li>
+                    <li><a ng-show="showSignUp" href="#">About Us</a></li>
+                    <li><a ng-show="showSignUp" href="#">Team</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 menu-signup">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a ng-show="showSignUp" href="#">Sign Up</a>
+                    </li>
+                    <li><a ng-click="LoginDlg();">Sign In</a></li>
+                </ul>
+            </div>
+            <div ng-show="!showSignUp" class="col-md-4 menu-signup">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a ng-show="showSignUp" href="#">Hi {{currentUser}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="banner">
+    <div class="container">
+        <div class="col-md-7 banner-left">
+            <h2><img src="import/beforeLogin/images/logo.png" alt="" /></h2>
+            <p>
+                Use the power of machine learning <br />
+                to find unknown matches, analyze authorship <br />
+                and resolve disputed classification
+            </p>
+            <h3>Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
+        </div>
+        <div ng-show="showSignUp" class="col-md-5 banner-right">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <h2>
+                        Sign up to Dicta to access your past <br />
+                        experiment & make online collections
+                    </h2>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="a-text">
+    <h2>
+        For getting a user please contact us: tempeden @ walla.com
+    </h2>
+</div>
+<div class="a-text" ng-show="showSignUp">
+    <div class="container" >
+        <h2>Analyze a text</h2>
+        <p>
+            Choose a text from our online corpus, or upload your own,
+            and you,ll access a variety of insights.
+        </p>
+        <h3><i class="fa fa-hand-o-right"></i><span>Parallels in other texts:</span>Find out if any segment of your text has been quoted or mentioned</h3>
+        <h3><i class="fa fa-hand-o-right"></i><span>Classification matters:</span>Classify your text into period, genre and region, as well as any custom-made class you create</h3>
+        <h3><i class="fa fa-hand-o-right"></i><span>Multiple Authorship:</span>Segment your text into its original sources</h3>
+
+        <div class="btn-text">
+            <ul>
+                <li><a ng-click="StartNewExperiment('SelectOnlineCorpus');">From Collections</a></li>
+                <li><a ng-click="StartNewExperiment('BrowseThisComputer');">+ Upload</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search" ng-show="showSignUp">
+    <div class="container">
+        <h2>Search a term</h2>
+        <form class="form-horizonta">
+            <div class="form-group-search">
+                <input type="search" class="form-control3" id="inputsearch" placeholder="input any text or concept">
+                <button type="submit" class="a"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="c-text" ng-show="showSignUp">
+    <div class="container">
+        <h2>Compare Texts</h2>
+        <div class="btn-text">
+            <ul>
+                <li><a href="#">From Collections</a></li>
+                <li><a href="#">+ Upload</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="col-md-4 footer-left">
+            <p>Questions? <a ng-show="showSignUp" href="#">Contact Us</a></p>
+        </div>
+        <div class="col-md-4 footer-mid">
+            <ul>
+                <li><a ng-show="showSignUp" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a ng-show="showSignUp" href="#"><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 footer-right">
+            <p>All rights reserved  @ Dicta inc</p>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
+        <div class="ngdialog-overlay"></div>
+        <div class="ngdialog-content" role="document">
+            <div class="ngdialog-message">
+                <action-mode></action-mode>
+                <in-progress></in-progress>
+                <br />
+                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
+                    <browse-this-computer show-class-name=""></browse-this-computer>
+                </div>
+                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
+                    <select-online-corpus></select-online-corpus>
+
+                </div>
+            </div>
+            <div class="ngdialog-buttons" ng-show="!showInProcess">
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

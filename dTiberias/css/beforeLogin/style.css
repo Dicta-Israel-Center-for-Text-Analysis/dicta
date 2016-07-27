@@ -7,10 +7,6 @@ body {
 
     background-color: #f2f2f2;
 }
-@font-face { 
-	src : url(../../fonts/MyriadPro-Regular.otf);
-	font-family:MyriadPro;
-}
 
 a {
 	text-decoration:none;
@@ -34,17 +30,17 @@ ul li {
 	display:inline-block;
 }
 .menu-logo a img {
-   margin-top:15px;
+   /*margin-top:15px;*/
 }
 
 .menu-mid {
-	padding-top:25px;
+	/*padding-top:25px;*/
 	text-align:center;
-	font-family: 'Oranienbaum', serif;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:20px;
 }
 .menu-mid ul li a {
-	padding:0px 18px;
+	/*padding:0px 18px;*/
 	font-weight:400;
 	color: #8ea2ac;
 	font-size: 19px;
@@ -63,14 +59,14 @@ ul li {
 	background: none;
 }
 .menu-signup {
-	padding-top:25px;
+	/*padding-top:25px;*/
 	font-size:20px;
 	text-align:right;
-	font-family: 'Oranienbaum', serif;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .menu-signup ul li a {
-	padding:0px 20px;
+	/*padding:0px 20px;*/
 	font-weight:400;
 	    font-size: 18px;
 }
@@ -90,7 +86,7 @@ ul li {
     background: none;
     color: #a6b6be;
     border-radius: 7px;
-    padding: 8px 15px;
+    /*padding: 8px 15px;*/
 }
 
 
@@ -109,7 +105,7 @@ ul li {
 
 .banner-left h2 {
 	color:#fff;
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:80px;
 	
 }
@@ -122,20 +118,20 @@ ul li {
 .banner-left p {
 	color:#fff;
 	font-size:26px;
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 
 .banner-left h3 {
 	font-size:26px;
 	color:#fff;
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .banner-left h3 a {
 	color:#fff;
 	font-size:26px;
-	font-family:"MyriadPro";
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	text-decoration: underline;
 }
 
@@ -146,7 +142,7 @@ ul li {
 .form-horizontal h2 {
     padding: 0px 18px;
     color: #414141;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 24px;
 }
 .form-horizontal {
@@ -164,7 +160,7 @@ padding: 0px 15px;
 
 .form-control {
 	height: 48px;
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:20px;
 	border: 1px solid #999999;
 	border-radius:0px;
@@ -181,7 +177,7 @@ padding: 0px 15px;
     color: #fff;
     width: 100%;
     font-size: 23px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     height: 48px;
     box-shadow: 0px 3px 0 #002d44;
     margin: 0 auto;
@@ -201,27 +197,27 @@ padding: 0px 15px;
 
 .a-text h2 {
     font-size: 26px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     padding: 0 0px 20px;
     color: #696969;
 }
 
 .a-text p {
 font-size: 20px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     color: #696969;
     margin-bottom: 10px;
 }
 
 .a-text h3 {
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	color:#696969;
 	font-size:20px;
 	padding:2px 0px;
 }
 
 .a-text h3>span {
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:19px;
 	color:#000;
 	font-weight:bold;
@@ -240,7 +236,7 @@ font-size: 20px;
 	list-style:none;
 }
 .btn-text ul li a {
-	font-family:MyriadPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	display:block;
 	font-size:23px;
 	background:#2674A4;
@@ -255,7 +251,7 @@ font-size: 20px;
     padding: 47px 0px;
 }
 .search h2 {
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     color: #666666;
 }
 
@@ -269,7 +265,7 @@ font-size: 20px;
     width: 100%;
     border: 1px solid #999999;
     height: 35px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 17px;
     font-weight: 500;
     padding: 0px 20px;
@@ -293,7 +289,7 @@ font-size: 20px;
 .c-text h2 {
     margin-bottom: 15px;
     font-size: 26px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     padding: 0 0 20px;
     color: #696969;
 }
@@ -309,13 +305,13 @@ font-size: 20px;
 .footer-left p {
 	    color: #848484;
     font-size: 21px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 .footer-left p a {
 	    color: #848484;
     font-size: 21px;
     text-decoration: underline;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .footer-mid {
@@ -343,7 +339,7 @@ font-size: 20px;
 .footer-right {
    color: #848484;
     font-size: 21px;
-    font-family: MyriadPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	text-align:right;
 }
 

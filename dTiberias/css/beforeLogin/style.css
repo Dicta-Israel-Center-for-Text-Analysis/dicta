@@ -145,17 +145,11 @@ ul li {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 24px;
 }
-.form-horizontal {
-	background: #ffffff;
-	/*background:rgba(122, 132, 157, 0.8);*/
-	border-radius:10px;
-	padding: 24px 11px;
-}
+
 
 .form-group{
-padding: 0px 15px;
+	padding: 0px 15px;
     margin: 0px;
-    margin-bottom: 15px;
 }
 
 .form-control {

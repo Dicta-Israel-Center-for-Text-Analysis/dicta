@@ -5,7 +5,7 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
 
         if ($scope.userLogin.length == 0) {
             AlertsService.determineAlert({ msg: 'Please insert your user name', type: 'danger' });
-            focus('focusMe');
+            //focus('focusMe');
         }
         else {
             $scope.data = {};
@@ -27,6 +27,4 @@ jTextMinerApp.controller('DlgLoginController', function ($scope, ExperimentServi
 
         }
     };
-
-    focus('focusMe');
 });

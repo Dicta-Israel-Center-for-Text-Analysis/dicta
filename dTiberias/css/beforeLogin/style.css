@@ -112,17 +112,21 @@ ul li {
 
 .banner-left h2 img {
 	width:200px;
+	margin-left: -12px; /* because the image includes too much padding */
 
 }
 
 .banner-left p {
 	color:#fff;
 	font-size:26px;
+	line-height: 1.4;
+	font-weight: lighter;
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 
 .banner-left h3 {
+	margin-top: 10px;
 	font-size:26px;
 	color:#fff;
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;

@@ -74,28 +74,25 @@
                 return $sce.trustAsHtml(chunk);
             }
 
-            $scope.parallelFilter = function (item) {
+            $scope.parallelFilter = function (itemIndex) {
                 if ($scope.currentGroupIndex == -1)
                     return true;
                 else
                 {
                     $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];
+                    // most likely to happen if api call failed
                     if ($scope.currentGroup== null  || $scope.currentGroup['parallels'] == null) return true;
+                    // for each parallel in the current group, check its chunkIndex
                     for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
                         $scope.currentParallel = $scope.currentGroup.parallels[i];
-                        for (j = 0; j < $scope.smallUnits.length; j = j + 1) {
-                            if (item == $scope.smallUnits[j])
-                            {
-                                if ($scope.currentParallel.chunkIndex == j)
-                                    return true;
-                            }
-                        }
-
-                        
+                        if ($scope.currentParallel.chunkIndex == itemIndex)
+                            return true;
                     }
                 }
                 return false;
             };
+
+            $scope.keys = Object.keys;
 
         }]
     };

@@ -78,10 +78,10 @@
                     </p>
                 </div>
             </div>
-            <div ng-show="!showInProcess && chunkSelectedIndex == -1" ng-repeat="chunk in smallUnits | filter:parallelFilter" class="box-right-side">
-                <div ng-click="setSelectedChunkIndex($index)" class="border-box">
-                    <h2 style="background-color:#cfcfcf;">{{sourceForSmallUnits[$index]}}</h2>
-                    <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallels(chunk)">
+            <div ng-show="!showInProcess && chunkSelectedIndex == -1" ng-repeat="chunkIndex in keys(smallUnits) | filter:parallelFilter" class="box-right-side">
+                <div ng-click="setSelectedChunkIndex(chunkIndex)" class="border-box">
+                    <h2 style="background-color:#cfcfcf;">{{sourceForSmallUnits[chunkIndex]}}</h2>
+                    <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallels(smallUnits[chunkIndex])">
                     </p>
                 </div>
             </div>
@@ -95,9 +95,9 @@
 
         <div title="{{sourceForSmallUnits[$index]}}"
              ng-click="setSelectedChunkIndex($index)" 
-             ng-repeat="chunk in smallUnits | filter:parallelFilter" class="sid-bar {{setSelectedClass($index)}}">
-            ({{parrallelsPerChunk[$index].parallels.length}})
-            <p style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(chunk)" />
+             ng-repeat="chunkIndex in keys(smallUnits) | filter:parallelFilter" class="sid-bar {{setSelectedClass(chunkIndex)}}">
+            ({{parrallelsPerChunk[chunkIndex].parallels.length}})
+            <p style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(smallUnits[chunkIndex])" />
         </div>
 
         <div style="border:1px solid #BDCBD4;">

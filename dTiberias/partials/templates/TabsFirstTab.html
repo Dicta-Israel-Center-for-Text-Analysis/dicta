@@ -90,7 +90,7 @@
 
     <div ng-show="!showInProcess" class="col-md-1">
         <div class="sid-bar0">
-            {{(smallUnits | filter:parallelFilter).length}}
+            {{(keys(smallUnits) | filter:parallelFilter).length}}
         </div>
 
         <div title="{{sourceForSmallUnits[$index]}}"

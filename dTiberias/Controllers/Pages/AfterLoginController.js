@@ -154,7 +154,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
         FeatureService.updateFeaturesData(data.featuresData);
 
-        SelectClassService.lastTestSetSelectedRootKeys = data.selectTestTextKeys;
+        SelectClassService.setTestSetRootKeys(data.selectTestTextKeys);
 
         ExperimentService.updateCvResultData(data.cvResultData);
         ExperimentService.updateTsResultData(data.tsResultData);
@@ -183,7 +183,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
 
     $scope.saveClass = function () {
-        SelectClassService.lastTestSetSelectedRootKeys = SelectClassService.lastSelectedRootKeys;
+        SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
         $scope.Next();
 
     }

@@ -4,6 +4,8 @@
         templateUrl: 'partials/templates/TabsFirstTab.html',
         controller: ['$scope', '$location', 'InProgressService', 'SaveClassInterface', 'SelectClassService', 'ExperimentService', 'ParallelsService', '$sce', function ($scope, $location, InProgressService, SaveClassInterface, SelectClassService, ExperimentService, ParallelsService, $sce) {
             $scope.parallels = ParallelsService;
+            $scope.selectClassService = SelectClassService;
+
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -103,8 +105,8 @@
 
             $scope.keys = Object.keys;
 
-            $scope.removePrefix = function (groupName, chunkName) {
-                return chunkName.substring(groupName.length + 3); //TODO: 3 is a constant, but it's dependent on the format of the chunkName string
+            $scope.removePrefix = function (groupName, chunkName, separatorLength) {
+                return chunkName.substring(groupName.length + separatorLength);
             }
 
         }]

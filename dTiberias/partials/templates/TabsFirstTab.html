@@ -69,8 +69,10 @@
                         <div ng-show="$index == currentGroupIndex" class="box-contens yellow">
                             <div ng-repeat="parallel in group.parallels">
                                 <ul>
-                                    <li style="float:right;"><h2>{{removePrefix(group.name, parallel.parallelTitle)}}</h2></li>
-                                    <li><small> parallel in - {{sourceForSmallUnits[parallel.chunkIndex]}}</small></li>
+                                    <li style="float:right;"><h2>{{removePrefix(group.name, parallel.parallelTitle, 3)}}</h2></li>
+                                    <li><small> parallel in - {{
+                                        removePrefix(selectClassService.testTitlesCommonPrefix,sourceForSmallUnits[parallel.chunkIndex],1)
+                                        }}</small></li>
                                 </ul>
                                 <p style="direction:rtl; border-bottom:3px solid #BDCBD4;">
                                     {{parallel.parallelText}}

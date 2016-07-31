@@ -33,6 +33,19 @@
 
     service.setTestSetRootKeys = function(rootKeys) {
         service.lastTestSetSelectedRootKeys = rootKeys;
+        var keyCopy = rootKeys.slice();
+        var oneKey = keyCopy.shift();
+        var commonKeySegments = oneKey.split('/');
+        for (oneKey in keyCopy) {
+            var keySegments = oneKey.split('/');
+            for (var i = 0; i < commonKeySegments.length; i++) {
+                if (i > keySegments.length + 1 || commonKeySegments[i] != keySegments[i]) {
+                    keySegments.splice(i);
+                    break;
+                }
+            }
+        }
+        service.testTitlesCommonPrefix = commonKeySegments.join('/');
     }
     return service;
 });

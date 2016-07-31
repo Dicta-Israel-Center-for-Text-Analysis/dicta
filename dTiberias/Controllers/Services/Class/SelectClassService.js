@@ -6,7 +6,8 @@
         Select_MinimumChunkSize: 250,
         Select_ChunkSize: 0,
         lastSelectedRootKeys: [],
-        lastTestSetSelectedRootKeys: []
+        lastTestSetSelectedRootKeys: [],
+        testTitlesCommonPrefix: ""
     };
 
     // broadcast any changes, except for lastTestSetSelectedRootKeys
@@ -29,6 +30,9 @@
         service.lastSelectedRootKeys = data;
         $rootScope.$broadcast("lastSelectedRootKeysUpdated");
     });
-    
+
+    service.setTestSetRootKeys = function(rootKeys) {
+        service.lastTestSetSelectedRootKeys = rootKeys;
+    }
     return service;
 });

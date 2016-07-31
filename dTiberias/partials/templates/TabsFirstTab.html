@@ -46,7 +46,7 @@
                         </p>
                     </div>
                 </div>
-                <br>
+                <hr>
                 <div class="box-found">
                     <div ng-show="smallUnits.length <= 800">
                         <h3 ng-show="parallels.haveResults && chunkSelectedIndex == -1">Found {{numOfParallels}} parallels</h3>
@@ -69,7 +69,7 @@
                         <div ng-show="$index == currentGroupIndex" class="box-contens yellow">
                             <div ng-repeat="parallel in group.parallels">
                                 <ul>
-                                    <li style="float:right;"><h2>{{parallel.parallelTitle}}</h2></li>
+                                    <li style="float:right;"><h2>{{removePrefix(group.name, parallel.parallelTitle)}}</h2></li>
                                     <li><small> parallel in - {{sourceForSmallUnits[parallel.chunkIndex]}}</small></li>
                                 </ul>
                                 <p style="direction:rtl; border-bottom:3px solid #BDCBD4;">

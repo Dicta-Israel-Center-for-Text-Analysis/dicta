@@ -103,6 +103,10 @@
 
             $scope.keys = Object.keys;
 
+            $scope.removePrefix = function (groupName, chunkName) {
+                return chunkName.substring(groupName.length + 3); //TODO: 3 is a constant, but it's dependent on the format of the chunkName string
+            }
+
         }]
     };
 });

@@ -5,16 +5,52 @@
 
             <div  ng-show="!showInProcess"  class="box-left-side">
 
-                <div ng-show="false" class="box-in">
-                    <h2><a href="#">In all collections<span class="fa fa-caret-down"></span></a></h2>
-                    <p><img src="images/firstTab/setting.png" alt="" /> Advanced</p>
+                <div class="button-slider author-text">
+                    <h2>Parallels Settings</h2>
+                    <ul class="nav nav-tabs">
+                        <li class="{{advancedSettings == 0 ? 'active' : ''}}"><a ng-click="advancedSettings = 0">Basic
+                            Settings</a></li>
+                        <li class="{{advancedSettings == 1 ? 'active' : ''}}"><a ng-click="advancedSettings = 1">Advanced
+                            Settings</a></li>
+                    </ul>
+                    <div class="clearfix">
+                        <div ng-show="advancedSettings == 0">
+                            <p>Look for:</p>
 
+                            <p>
+                                <label><input type="radio" name="matchLength" checked
+                                              ng-click="minParallelLength=12;maxParallelSkip=6"/>Longer Matches
+                                </label>
+                            </p>
+                            <p>
+                                <label><input type="radio" name="matchLength"
+                                              ng-click="minParallelLength=6;maxParallelSkip=2"/>Shorter Matches
+                                </label>
+                            </p>
+                        </div>
+                        <div ng-show="advancedSettings == 1">
+                            <p>
+                                <div class="col-xs-8" width="80%">Minimum length of parallel:</div>
+                                <input class="col-xs-3" width="10%" type="number" ng-model="minParallelLength"/>
+                            </p>
+
+                            <p>
+                                <div class="col-xs-8" width="80%">Maximum words to skip: </div>
+                                <input class="col-xs-3" width="10%" type="number" ng-model="maxParallelSkip"/>
+                            </p>
+                        </div>
+
+                        <p>
+                            <div class="col-xs-12"><a class="btn btn-primary" ng-click="runParallels()">Find
+                                Parallels</a></div>
+                        </p>
+                    </div>
                 </div>
-
+                <br>
                 <div class="box-found">
                     <div ng-show="smallUnits.length <= 800">
-                        <h3 ng-show="chunkSelectedIndex == -1">Found {{numOfParallels}} parallels</h3>
-                        <h3 ng-show="chunkSelectedIndex != -1">Found {{parrallelsPerChunk[chunkSelectedIndex].parallels.length}} parallels</h3>
+                        <h3 ng-show="parallels.haveResults && chunkSelectedIndex == -1">Found {{numOfParallels}} parallels</h3>
+                        <h3 ng-show="parallels.haveResults && chunkSelectedIndex != -1">Found {{parrallelsPerChunk[chunkSelectedIndex].parallels.length}} parallels</h3>
                     </div>
 
                     <div ng-show="false" class="box-fexo">
@@ -26,7 +62,7 @@
                     </div>
 
                 </div>
-                <div ng-show="chunkSelectedIndex == -1" class="box-bys">
+                <div ng-show="parallels.haveResults && chunkSelectedIndex == -1" class="box-bys">
                     <ul ng-repeat="group in groups">
                         <li><h2>{{group.name}}</h2></li>
                         <li><a ng-click="updateGroupIndex($index)">{{group.numOfParallels}} parallels <i class="fa fa-caret-down"></i></a></li>
@@ -45,7 +81,7 @@
                         </div>
                     </ul>
                 </div>
-                <div ng-show="chunkSelectedIndex != -1" class="box-bys">
+                <div ng-show="parallels.haveResults && chunkSelectedIndex != -1" class="box-bys">
                     <div class="box-contens yellow">
                         <div ng-repeat="parallel in parrallelsPerChunk[chunkSelectedIndex].parallels">
                             <ul>
@@ -68,7 +104,7 @@
             <in-progress></in-progress>
 
 
-            <div ng-show="!showInProcess && chunkSelectedIndex != -1">
+            <div ng-show="!showInProcess && parallels.haveResults && chunkSelectedIndex != -1">
                 <div class="box-bys">
                     <h3 ng-click="chunkSelectedIndex = -1;">Show all chunks</h3>
                 </div>
@@ -78,7 +114,7 @@
                     </p>
                 </div>
             </div>
-            <div ng-show="!showInProcess && chunkSelectedIndex == -1" ng-repeat="chunkIndex in keys(smallUnits) | filter:parallelFilter" class="box-right-side">
+            <div ng-show="!showInProcess && parallels.haveResults && chunkSelectedIndex == -1" ng-repeat="chunkIndex in keys(smallUnits) | filter:parallelFilter" class="box-right-side">
                 <div ng-click="setSelectedChunkIndex(chunkIndex)" class="border-box">
                     <h2 style="background-color:#cfcfcf;">{{sourceForSmallUnits[chunkIndex]}}</h2>
                     <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallels(smallUnits[chunkIndex])">
@@ -88,7 +124,7 @@
 
         </div>
 
-    <div ng-show="!showInProcess" class="col-md-1">
+    <div ng-show="parallels.haveResults && !showInProcess" class="col-md-1">
         <div class="sid-bar0">
             {{(keys(smallUnits) | filter:parallelFilter).length}}
         </div>

@@ -3,6 +3,7 @@
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsFirstTab.html',
         controller: ['$scope', '$location', 'InProgressService', 'SaveClassInterface', 'SelectClassService', 'ExperimentService', 'ParallelsService', '$sce', function ($scope, $location, InProgressService, SaveClassInterface, SelectClassService, ExperimentService, ParallelsService, $sce) {
+            $scope.parallels = ParallelsService;
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -15,6 +16,14 @@
                 else
                     $scope.currentGroupIndex = indx;
             }
+
+            $scope.advancedSettings = 0; // show the basic settings tab first
+            $scope.runParallels = function () {
+                ParallelsService.runParallels($scope.minParallelLength, $scope.maxParallelSkip);
+            }
+
+            $scope.minParallelLength = 12;
+            $scope.maxParallelSkip = 6;
 
             $scope.smallUnits = ParallelsService.smallUnits;
             $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;

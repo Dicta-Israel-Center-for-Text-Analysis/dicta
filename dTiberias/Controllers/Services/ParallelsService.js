@@ -80,20 +80,26 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                 var numOfParallelsInGroups = [];
                 var numOfParallels = 0;
 
-                // takes a list of objects that have a sortOrder property, and inserts a new item in the right place
-                // according to its sortOrder property
+
+                // helper for insertSorted that returns true if item1 sorts before item2
+                function parallelsSortCompare(item1, item2) {
+                    if (item1.sortOrder == item2.sortOrder)
+                        return item1.compStartChar < item2.compStartChar;
+                    else
+                        return item1.sortOrder < item2.sortOrder;
+                }
+
+                // takes a list of objects that have a sortOrder property and a compStartChar property,
+                // and inserts a new item in the right place according to its sortOrder property and if equal, by its compStartChar property
                 function insertSorted(list, itemToInsert) {
-                    // if it's the only item or it goes at the end, just use push
-                    if (list.length == 0 || itemToInsert.sortOrder >= list[list.length - 1].sortOrder)
-                        list.push(itemToInsert);
-                    else {
-                        for (var i = 0; i < list.length; i++) {
-                            if (itemToInsert.sortOrder < list[i].sortOrder){
-                                list.splice(i,0,itemToInsert);
-                                break;
-                            }
+                    for (var i = 0; i < list.length; i++) {
+                        if (parallelsSortCompare(itemToInsert, list[i])) {
+                            list.splice(i, 0, itemToInsert);
+                            return;
                         }
                     }
+                    // if we haven't returned from the function, it must belong at the end
+                    list.push(itemToInsert);
                 }
 
                 for (var k = 0; k < results.length; k = k + 1) {
@@ -137,7 +143,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                                 parallelText: currentData.compMatchedText,
                                 parallelTitle: title,
                                 parallelPath: path,
-                                sortOrder: currentData.sortOrder
+                                sortOrder: currentData.sortOrder,
+                                compStartChar: currentData.compStartChar
                                 //startCharacterIndex: currentData.baseStartChar,
                                 //length: currentData.baseTextLength
                             });
@@ -149,7 +156,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                                 parallelText: currentData.compMatchedText,
                                 parallelTitle: title,
                                 parallelPath: path,
-                                sortOrder: currentData.sortOrder
+                                sortOrder: currentData.sortOrder,
+                                compStartChar: currentData.compStartChar
                             }
                         );
 

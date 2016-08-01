@@ -106,6 +106,8 @@
             $scope.keys = Object.keys;
 
             $scope.removePrefix = function (groupName, chunkName, separatorLength) {
+                if (groupName.length == 0) // then there's no separator
+                    return chunkName;
                 return chunkName.substring(groupName.length + separatorLength);
             }
 

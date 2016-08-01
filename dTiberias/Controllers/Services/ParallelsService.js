@@ -75,7 +75,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
             }
             CAPIService.apiRun({ crud: 'parallels' }, data, function (response3) {
                 var results = response3;
-                var groupNames = [];
+                var groupNameDict = {};
                 var groups = [];
                 var numOfParallelsInGroups = [];
                 var numOfParallels = 0;
@@ -122,21 +122,21 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
 
                         // creates a list of groups, e.g. "Bible > Prophets"
                         // we sort based on whichever member of the group we first see, since any sortOrder we get will still give the same order for the groups
-                        if (groupNames.indexOf(group) < 0) {
-                            groupNames.push(group);
-                            insertSorted(groups,
-                                {
+                        if (!groupNameDict.hasOwnProperty(group)) {
+                            var newGroup = {
                                 name: group,
                                 numOfParallels: 1,
                                 parallels: [],
                                 sortOrder: currentData.sortOrder
-                            });
+                            };
+                            groupNameDict[group] = newGroup;
+                            insertSorted(groups, newGroup);
                         }
                         else {
-                            groups[groupNames.indexOf(group)].numOfParallels += 1;
+                            groupNameDict[group].numOfParallels += 1;
                         }
 
-                        insertSorted(groups[groupNames.indexOf(group)].parallels,
+                        insertSorted(groupNameDict[group].parallels,
                             {
                                 chunkIndex: k,
                                 chunkText: currentData.baseMatchedText,
@@ -164,7 +164,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                     }
                 }
 
-                root.updategroupNames(groupNames);
+                root.updategroupNames(groups.map(function(item){ return item.name }));
                 root.updategroups(groups);
                 root.updatenumOfParallelsInGroups(numOfParallelsInGroups);
                 root.updatenumOfParallels(numOfParallels);

@@ -155,7 +155,7 @@
                         FeatureService.updateFeaturesData($scope.featuresData);
                         InProgressService.updateIsReady(1);
                         $scope.NextToResult();
-                    });
+                    }, function (errorResponse) {InProgressService.setError(errorResponse.statusText);});
                 }
                 else {
                     $scope.NextToResult();

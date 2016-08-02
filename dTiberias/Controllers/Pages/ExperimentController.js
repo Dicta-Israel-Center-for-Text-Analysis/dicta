@@ -192,7 +192,7 @@ jTextMinerApp.controller('ExperimentController', function ($scope, ExperimentSer
 
     
     $scope.saveClass = function () {
-        SelectClassService.lastTestSetSelectedRootKeys = SelectClassService.lastSelectedRootKeys;
+        SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
         $scope.Next();
         
     }

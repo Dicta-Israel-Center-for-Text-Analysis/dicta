@@ -192,7 +192,7 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
 
 
     $scope.saveClass = function () {
-        SelectClassService.lastTestSetSelectedRootKeys = SelectClassService.lastSelectedRootKeys;
+        SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
         $scope.Next();
 
     }

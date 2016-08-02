@@ -3,6 +3,9 @@
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsFirstTab.html',
         controller: ['$scope', '$location', 'InProgressService', 'SaveClassInterface', 'SelectClassService', 'ExperimentService', 'ParallelsService', '$sce', function ($scope, $location, InProgressService, SaveClassInterface, SelectClassService, ExperimentService, ParallelsService, $sce) {
+            $scope.parallels = ParallelsService;
+            $scope.selectClassService = SelectClassService;
+
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -15,6 +18,14 @@
                 else
                     $scope.currentGroupIndex = indx;
             }
+
+            $scope.advancedSettings = 0; // show the basic settings tab first
+            $scope.runParallels = function () {
+                ParallelsService.runParallels($scope.minParallelLength, $scope.maxParallelSkip);
+            }
+
+            $scope.minParallelLength = 12;
+            $scope.maxParallelSkip = 6;
 
             $scope.smallUnits = ParallelsService.smallUnits;
             $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
@@ -74,28 +85,31 @@
                 return $sce.trustAsHtml(chunk);
             }
 
-            $scope.parallelFilter = function (item) {
+            $scope.parallelFilter = function (itemIndex) {
                 if ($scope.currentGroupIndex == -1)
                     return true;
                 else
                 {
                     $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];
+                    // most likely to happen if api call failed
                     if ($scope.currentGroup== null  || $scope.currentGroup['parallels'] == null) return true;
+                    // for each parallel in the current group, check its chunkIndex
                     for (i = 0; i < $scope.currentGroup.parallels.length; i = i + 1) {
                         $scope.currentParallel = $scope.currentGroup.parallels[i];
-                        for (j = 0; j < $scope.smallUnits.length; j = j + 1) {
-                            if (item == $scope.smallUnits[j])
-                            {
-                                if ($scope.currentParallel.chunkIndex == j)
-                                    return true;
-                            }
-                        }
-
-                        
+                        if ($scope.currentParallel.chunkIndex == itemIndex)
+                            return true;
                     }
                 }
                 return false;
             };
+
+            $scope.keys = Object.keys;
+
+            $scope.removePrefix = function (groupName, chunkName, separatorLength) {
+                if (groupName.length == 0) // then there's no separator
+                    return chunkName;
+                return chunkName.substring(groupName.length + separatorLength);
+            }
 
         }]
     };

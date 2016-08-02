@@ -3,16 +3,6 @@ body,ul,li,a,p,h2,h3,h4,span {
 	margin:0px;
 }
 
-@font-face { 
-	src : url(../../fonts/MyriadPro-Regular.otf);
-	font-family:MyriadPro;
-}
-
-@font-face { 
-	src : url(../../fonts/ChaparralPro-Regular.otf);
-	font-family:ChaparralPro;
-}
-
 a {
 	text-decoration:none;
 }
@@ -72,7 +62,7 @@ button.btn.btn-primary.sign-in-btn {
 
 .menu-mid {
 	padding:20px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:19px;
 	
 }
@@ -95,7 +85,7 @@ button.btn.btn-primary.sign-in-btn {
 .menu-signup {
 	padding:20px;
 	text-align:right;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	color:#93A7B1;
 	font-size:17px;
 }
@@ -120,7 +110,7 @@ padding-top: 20px;
 	background:#F2F2F2;
 	padding:8px 20px;
 	color:#015487;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	border-radius:5px;
 	font-size:15px;
 	box-shadow: -2px 2px 0px 0px #CCD7DE;
@@ -133,7 +123,7 @@ padding-top: 20px;
 }
 .new-e-right ul li p {
 	color:#A2A2A2;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:14px;
 }
 .new-e-right ul li {
@@ -146,7 +136,7 @@ padding-top: 20px;
 	background:#F2F2F2;
 	padding:8px 20px;
 	color:#015487;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	border-radius:5px;
 	font-size:18px;
 	box-shadow: -2px 2px 0px 0px #CCD7DE;
@@ -207,7 +197,7 @@ padding-top: 20px;
 .box-deut-left h3 {
 	
 	font-size:16px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-deut-left h3 a {
@@ -215,7 +205,7 @@ padding-top: 20px;
 }
 .box-deut-left span {
 	font-size:14px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .deut-icon {
@@ -239,7 +229,7 @@ padding-top: 20px;
     background: #F2F2F2;
     padding: 8px 12px;
     color: #015487;
-    font-family: ChaparralPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     border-radius: 5px;
     font-size: 16px;
     box-shadow: -2px 2px 0px 0px #CCD7DE;
@@ -313,7 +303,7 @@ background: #005488;
     display: block;
     text-align: center;
     width: 100%;
-    font-family: ChaparralPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     border-radius: 5px;
     font-size: 18px;
     box-shadow: -2px 2px 0px 0px #002d44;
@@ -362,7 +352,7 @@ font-size: 15px;
 	text-align: left;
 }
 .box-in h2 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:19px;
 	background:#fff;
 	padding:11px;
@@ -380,7 +370,7 @@ font-size: 15px;
 	text-align:right;
 	padding-top:7px;
 	font-size:14px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-found {
@@ -390,7 +380,7 @@ font-size: 15px;
 
 .box-found h3 {
 	font-size:18px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	padding:10px 0px;
 }
 .box-fexo {
@@ -419,7 +409,7 @@ font-size: 15px;
 
 .box-fexo ul li h2 {
 	font-size:16px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-weight:bold;
 	box-shadow: none;
     width: 320px;;
@@ -467,11 +457,11 @@ color:#696969;
 .box-fexo ul li small {
 	font-style:italic;
 	
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-bys h3 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:15px;
 	font-weight:bold;
 	color:#115F90;
@@ -480,7 +470,7 @@ color:#696969;
 }
 
 .box-bys span {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:14px;
 	font-weight:normal;
 }
@@ -501,12 +491,12 @@ color:#696969;
 
 .box-bys ul li h2 {
 	font-size:15px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-bys ul li a {
 	color:#BFBFBF;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-gol ul li:nth-child(2) {
@@ -527,11 +517,11 @@ color:#696969;
 }
 .box-contens ul li h2 {
 	font-size:17px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .box-contens ul li small {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:15px;
 	color:#BFBDBE;
 }
@@ -562,7 +552,7 @@ color:#696969;
 }
 .border-box h2,.border-box1 h2{
 	background: #F2F2F2;
-    font-family: ChaparralPro;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 14px;
     margin: 0;
     padding: 8px 18px 8px 18px;
@@ -605,7 +595,7 @@ color:#696969;
 .footer-left p {
 	color:#BDCBD4;
 	font-size:18px;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .footer-mid {
@@ -633,7 +623,7 @@ color:#696969;
 }
 .footer-right {
 	color:#BDCBD4;
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:18px;
 	text-align:right;
 }
@@ -650,7 +640,7 @@ color:#696969;
 	border-bottom:transparent;
 }
 .sid-bar1 {
-	    font-family: "ChaparralPro";
+	    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 10px;
     min-height: 60px;
     text-align: justify;
@@ -658,7 +648,7 @@ color:#696969;
     border: 3px solid red;
 }
 .sid-bar2 {
-	font-family:"ChaparralPro";
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 10px;
     text-align: justify;
     min-height: 90px;
@@ -669,7 +659,7 @@ color:#696969;
     background: #FFFEA4;
 }
 .sid-bar3 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:130px;
 	text-align: justify;
@@ -679,7 +669,7 @@ color:#696969;
 	border-bottom:transparent;
 }
 .sid-bar4 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:25px;
 	 text-align: justify;
@@ -689,7 +679,7 @@ color:#696969;
 	background:#FFFEA4;
 }
 .sid-bar5 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:100px;
 	 text-align: justify;
@@ -699,7 +689,7 @@ color:#696969;
 	background:#FFFEA4;
 }
 .sid-bar6 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:70px;
 	 text-align: justify;
@@ -708,7 +698,7 @@ color:#696969;
 	border-bottom:transparent;
 }
 .sid-bar7 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:35px;
 	 text-align: justify;
@@ -717,7 +707,7 @@ color:#696969;
 	border-bottom:transparent;
 }
 .sid-bar8 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:50px;
 	 text-align: justify;
@@ -726,7 +716,7 @@ color:#696969;
 	border-bottom:transparent;
 }
 .sid-bar9 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:70px;
 	 text-align: justify;
@@ -736,7 +726,7 @@ color:#696969;
 	background:#FFFEA4;
 }
 .sid-bar10 {
-	font-family:ChaparralPro;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size:10px;
 	min-height:25px;
 	 text-align: justify;
@@ -763,7 +753,7 @@ color:#696969;
     padding-left: 0;
 }
 .view-text ul li a {
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #7fa9c3;
      padding-left: 5px;
@@ -772,7 +762,7 @@ color:#696969;
 }
 
 .view-text ul li.active a {
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #115f90;
     padding-left: 5px;
@@ -795,7 +785,7 @@ color:#696969;
         float: left;
 }
 .flies-color ul li a {
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 15px;
     color: #333;
     display: block;
@@ -818,7 +808,7 @@ color:#696969;
 	clear: both;
 }
 span.number-words{
-	    font-family: "ChaparralPro";
+	    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #cfd9de;
     margin-left: 9px;
@@ -826,7 +816,7 @@ span.number-words{
     border-left: 1px solid #cfd9de;
 }
 span.words-high{
-	  font-family: "ChaparralPro";
+	  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #cfd9de;
     padding-left: 4px;
@@ -835,7 +825,7 @@ span.words-high{
 	background: #fff;
 	font-size: 15px;
 	font-style: italic;
-	 font-family: "ChaparralPro";
+	 font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	 color: #333;
 	 padding: 0;
 	 outline: 0;
@@ -882,7 +872,7 @@ width: 75px;
 }
 .class-table-content h4{
 	margin: 0;
-	font-family: "ChaparralPro";
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #333333;
     padding-top: 12px;
@@ -891,7 +881,7 @@ width: 75px;
 .class-table-content p{
 	margin: 0;
 	padding: 0;
-	font-family: "ChaparralPro";
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #333333;
     padding-bottom: 8px;
@@ -907,7 +897,7 @@ width: 75px;
 p.reprencented{
 margin: 0;
     padding: 16px 0 0 0px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #333333;
     text-align: left;
@@ -934,7 +924,7 @@ span.dot_green img {
 .reprencented-content{
     margin: 0;
        padding: 8px 0 8px 10px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #000;
         width: 198px;
@@ -943,7 +933,7 @@ span.dot_green img {
 .occur-content{
 	  margin: 0;
     padding: 8px 0 8px 10px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #000;
         width: 72px;
@@ -953,7 +943,7 @@ span.dot_green img {
     width: 178px;
         margin: 0;
     padding: 8px 0 8px 10px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #000;
     text-align: left;
@@ -962,7 +952,7 @@ span.dot_green img {
 	width: 75px;
 	    margin: 0;
        padding: 8px 0 8px 10px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #000;
     text-align: left;
@@ -971,7 +961,7 @@ span.dot_green img {
 	width: 51px;
 	    margin: 0;
         padding: 8px 0 8px 10px;
-    font-family: "ChaparralPro";
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 12px;
     color: #000;
     text-align: left;

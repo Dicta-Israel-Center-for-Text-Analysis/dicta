@@ -15,16 +15,18 @@
                     </ul>
                     <div class="clearfix">
                         <div ng-show="advancedSettings == 0">
+                            <p>Find Parallels in: <button class="btn btn-primary disabled">Library...</button></p>
+
                             <p>Look for:</p>
 
                             <p>
                                 <label><input type="radio" name="matchLength" checked
-                                              ng-click="minParallelLength=12;maxParallelSkip=6"/>Longer Matches
+                                              ng-click="minParallelLength=15;maxParallelSkip=5"/>Longer Matches Only
                                 </label>
                             </p>
                             <p>
                                 <label><input type="radio" name="matchLength"
-                                              ng-click="minParallelLength=6;maxParallelSkip=2"/>Shorter Matches
+                                              ng-click="minParallelLength=6;maxParallelSkip=2"/>Include Shorter Matches
                                 </label>
                             </p>
                         </div>
@@ -67,16 +69,19 @@
                         <li><h2>{{group.name}}</h2></li>
                         <li><a ng-click="updateGroupIndex($index)">{{group.numOfParallels}} parallels <i class="fa fa-caret-down"></i></a></li>
                         <div ng-show="$index == currentGroupIndex" class="box-contens yellow">
-                            <div ng-repeat="parallel in group.parallels">
+                            <div style="border-bottom:3px solid #FFFFFF;" ng-repeat="parallel in group.parallels">
                                 <ul>
                                     <li style="float:right;"><h2>{{removePrefix(group.name, parallel.parallelTitle, 3)}}</h2></li>
-                                    <li><small> parallel in - {{
-                                        removePrefix(selectClassService.testTitlesCommonPrefix,sourceForSmallUnits[parallel.chunkIndex],1)
-                                        }}</small></li>
+                                    <li></li>
                                 </ul>
-                                <p style="direction:rtl; border-bottom:3px solid #BDCBD4;">
+                                <p style="direction:rtl;">
                                     {{parallel.parallelText}}
                                 </p>
+                                <ul><li>
+                                <small> parallel to - {{
+                                removePrefix(selectClassService.testTitlesCommonPrefix,sourceForSmallUnits[parallel.chunkIndex],1)
+                                }}</small>
+                                </li></ul>
                             </div>
                                     
 
@@ -85,14 +90,18 @@
                 </div>
                 <div ng-show="parallels.haveResults && chunkSelectedIndex != -1" class="box-bys">
                     <div class="box-contens yellow">
-                        <div ng-repeat="parallel in parrallelsPerChunk[chunkSelectedIndex].parallels">
+                        <div style="border-bottom:3px solid #FFFFFF;" ng-repeat="parallel in parrallelsPerChunk[chunkSelectedIndex].parallels">
                             <ul>
                                 <li style="float:right;"><h2>{{parallel.parallelTitle}}</h2></li>
-                                <li><small> parallel in - {{removePrefix(selectClassService.testTitlesCommonPrefix, sourceForSmallUnits[parallel.chunkIndex], 1)}}</small></li>
+                                <li></li>
                             </ul>
-                            <p style="direction:rtl; border-bottom:3px solid #BDCBD4;">
+                            <p style="direction:rtl;">
                                 {{parallel.parallelText}}
                             </p>
+                            <ul><li>
+                                <small> parallel to - {{removePrefix(selectClassService.testTitlesCommonPrefix, sourceForSmallUnits[parallel.chunkIndex], 1)}}</small>
+                            </li></ul>
+
                         </div>
                     </div>
                 </div>

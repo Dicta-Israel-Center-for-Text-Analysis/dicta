@@ -34,7 +34,7 @@
     service.setTestSetRootKeys = function(rootKeys) {
         service.lastTestSetSelectedRootKeys = rootKeys;
         var keyCopy = rootKeys.slice();             // copy the list of keys
-        var oneKey = keyCopy.shift();               // take the first key
+        var oneKey = keyCopy.shift() || "";         // take the first key or if there isn't any, use ""
         var commonKeySegments = oneKey.split('/');  // split on '/' into an array
         for (oneKey in keyCopy) {                   // check each key to see how much it has in common with the others
             var keySegments = oneKey.split('/');    // split the key we're looking at

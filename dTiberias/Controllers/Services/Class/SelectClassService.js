@@ -7,7 +7,7 @@
         Select_ChunkSize: 0,
         lastSelectedRootKeys: [],
         lastTestSetSelectedRootKeys: [],
-        testTitlesCommonPrefix: ""
+        testSetTitlesCommonPrefix: ""
     };
 
     // broadcast any changes, except for lastTestSetSelectedRootKeys
@@ -45,7 +45,7 @@
                 }
             }
         }
-        service.testTitlesCommonPrefix = commonKeySegments.join('/');
+        service.testSetTitlesCommonPrefix = commonKeySegments.join('/');
     }
     return service;
 });

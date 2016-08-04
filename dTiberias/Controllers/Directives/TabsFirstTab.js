@@ -106,7 +106,9 @@
             $scope.keys = Object.keys;
 
             $scope.removePrefix = function (groupName, chunkName, separatorLength) {
-                if (groupName.length == 0) // then there's no separator
+                // if groupName is "" then there's also no separator to delete,
+                // and if the function is given invalid values during template init, just return
+                if (!groupName || !chunkName)
                     return chunkName;
                 return chunkName.substring(groupName.length + separatorLength);
             }

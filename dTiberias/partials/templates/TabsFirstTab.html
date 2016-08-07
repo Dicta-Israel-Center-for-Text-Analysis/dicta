@@ -79,7 +79,7 @@
                                 </p>
                                 <ul><li>
                                 <small> parallel to - {{
-                                removePrefix(selectClassService.testTitlesCommonPrefix,sourceForSmallUnits[parallel.chunkIndex],1)
+                                removePrefix(selectClassService.testSetTitlesCommonPrefix,sourceForSmallUnits[parallel.chunkIndex],1)
                                 }}</small>
                                 </li></ul>
                             </div>
@@ -99,7 +99,7 @@
                                 {{parallel.parallelText}}
                             </p>
                             <ul><li>
-                                <small> parallel to - {{removePrefix(selectClassService.testTitlesCommonPrefix, sourceForSmallUnits[parallel.chunkIndex], 1)}}</small>
+                                <small> parallel to - {{removePrefix(selectClassService.testSetTitlesCommonPrefix, sourceForSmallUnits[parallel.chunkIndex], 1)}}</small>
                             </li></ul>
 
                         </div>
@@ -120,14 +120,14 @@
                     <h3 ng-click="chunkSelectedIndex = -1;">Show all chunks</h3>
                 </div>
                 <div class="border-box">
-                    <h2 style="background-color:#cfcfcf;">{{removePrefix(selectClassService.testTitlesCommonPrefix,sourceForSmallUnits[chunkSelectedIndex], 1)}}</h2>
+                    <h2 style="background-color:#cfcfcf;">{{removePrefix(selectClassService.testSetTitlesCommonPrefix,sourceForSmallUnits[chunkSelectedIndex], 1)}}</h2>
                     <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallelsForSelectedChunk(chunkSelectedIndex)">
                     </p>
                 </div>
             </div>
             <div ng-show="!showInProcess && parallels.haveResults && chunkSelectedIndex == -1" ng-repeat="chunkIndex in keys(smallUnits) | filter:parallelFilter" class="box-right-side">
                 <div ng-click="setSelectedChunkIndex(chunkIndex)" class="border-box">
-                    <h2 style="background-color:#cfcfcf;">{{removePrefix(selectClassService.testTitlesCommonPrefix, sourceForSmallUnits[chunkIndex], 1)}}</h2>
+                    <h2 style="background-color:#cfcfcf;">{{removePrefix(selectClassService.testSetTitlesCommonPrefix, sourceForSmallUnits[chunkIndex], 1)}}</h2>
                     <p style="direction:rtl;" class="line-h2" ng-bind-html="markParallels(smallUnits[chunkIndex])">
                     </p>
                 </div>

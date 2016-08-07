@@ -1,8 +1,6 @@
-﻿
-
-jTextMinerApp.directive('ttestSlider', function ($timeout) {
+﻿jTextMinerApp.directive('ttestSlider', function ($timeout) {
     return {
-        restrict: 'AE',
+        restrict: 'E',
         templateUrl: 'partials/templates/TTestSliderTemplate.html',
         scope: {
             featureId: '@',
@@ -12,58 +10,39 @@ jTextMinerApp.directive('ttestSlider', function ($timeout) {
             ttest: '@',
             classcolor: '@'
         },
-        link: function ($scope, element, attrs) {
-            $timeout(function () {
-                //http://stackoverflow.com/questions/29620669/run-jquery-after-angular-is-done-rendering
-                var slider = new Slider("#" + $scope.featureId, {});
-            });
-            
-        },
         controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
-            $scope.tTestScale = 10;
-            $scope.boundClass = function (ttest) {
-                if (ttest >= $scope.tTestScale)
-                    return $scope.tTestScale;
-                return $scope.tTestScale / 2 + ttest / 2;
+            function clamp(percent) {
+                return (percent > 100) ? 100 : ((percent < 0) ? 0 : percent);
             }
-            $scope.boundOthers = function (ttest) {
-                if (ttest >= $scope.tTestScale)
-                    return 0;
-                return $scope.tTestScale / 2 - ttest / 2;
+
+            function convertFreqToPercent(frequency){
+                // force conversion to numbers
+                var classAverage = +$scope.classaverage;
+                var otherAverage = +$scope.otheraverage;
+                // one std dev = 5%
+                // a ttest of 2 means the means are 2 std dev apart, hence 10% apart
+                var midpoint = (classAverage + otherAverage) / 2;
+                var stdDev = (classAverage - otherAverage) / $scope.ttest;
+                var left = midpoint - 10*stdDev;
+                var percent = (frequency - left)/stdDev*5;
+                return clamp(percent);
             }
-            $scope.boundCurrentValue = function (avg, other, val, ttest) {
-                if (val <= 0 && other > 0)
-                    return 0;
-
-                var boundOthers = $scope.boundOthers(ttest);
-                //var boundClass = $scope.boundClass(ttest);
-                if (val == other)
-                    return boundOthers;
-
-                if (val <= other)
-                {
-                    if (ttest >= $scope.tTestScale)
-                        return 0;
-                    
-                    return boundOthers * val / other;
-                }
-                else if (val >= avg)
-                {
-                    if (ttest >= $scope.tTestScale || val >= (avg + other))
-                        return $scope.tTestScale;
-
-                    var boundVal = $scope.tTestScale * val / (avg + other);
-
-                    return boundVal;
-                }
-                else
-                {
-                    var newval = boundOthers + ttest*(val - other) / (avg - other);
-                    return newval;
-                }
-                
-                
-            }
+            $scope.firstDot =       {
+                left: "calc(" + convertFreqToPercent($scope.otheraverage) + "% - 10px"
+            };
+            $scope.firstDotLabel =  {
+                left: "calc(" + convertFreqToPercent($scope.otheraverage) + "% - 20px"
+            };
+            $scope.secondDot =      {
+                left: "calc(" + convertFreqToPercent($scope.classaverage) + "% - 10px",
+                "background-color": $scope.classcolor
+            };
+            $scope.secondDotLabel = {
+                left: "calc(" + convertFreqToPercent($scope.classaverage) + "% - 20px",
+                color: $scope.classcolor
+            };
+            $scope.currentMark =    {left: "calc(" + convertFreqToPercent($scope.currentvalue) + "% - 5px"};
+            $scope.currentMarkLabel ={left: "calc(" + convertFreqToPercent($scope.currentvalue) + "% - 20px"};
         }]
     };
 });

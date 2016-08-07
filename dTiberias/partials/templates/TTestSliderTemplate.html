@@ -1,25 +1,11 @@
-﻿
-<input id="{{featureId}}" type="text" 
-       data-slider-min="0"
-       data-slider-max="10"
-       data-slider-enabled="false"
-       data-slider-reversed="false" 
-       data-slider-precision="2"
-       data-slider-tooltip="hide"
-       data-slider-value="{{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)}}"
-       data-slider-id="{{classcolor}}"
-       data-slider-ticks="[{{boundOthers(ttest)}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)}}, {{boundClass(ttest)}}]"
-       data-slider-ticks-labels='["{{otheraverage}}", "{{currentvalue}}", "{{classaverage}}"]'
-       data-slider-ticks-positions="[{{boundOthers(ttest)*10}}, {{boundCurrentValue(classaverage, otheraverage, currentvalue, ttest)*10}}, {{boundClass(ttest)*10}}]"
-       />
+﻿<div style="position: relative; width: 400px; height: 60px">
 
-<div ng-show="false">
-    <div>&nbsp;</div>
-    <div>currentvalue: {{currentvalue}} </div>
-    <div>classaverage: {{classaverage}} </div>
-    <div>otheraverage: {{otheraverage}} </div>
-    <div>ttest: {{ttest}} </div>
-    <div>boundOthers: {{boundOthers(ttest)}} </div>
-    <div>boundClass: {{boundClass(ttest)}} </div>
-    <div>boundCurrentValue: {{boundCurrentValue(classaverage,otheraverage,currentvalue,ttest)}}</div>
+    <div class="feature-freq-line"></div>
+    <div class="feature-freq-bars"></div>
+    <div class="feature-freq-dot" ng-style="firstDot"></div>
+    <div class="feature-freq-dot-label" ng-style="firstDotLabel">{{otheraverage}}</div>
+    <div class="feature-freq-dot2" ng-style="secondDot"></div>
+    <div class="feature-freq-dot2-label" ng-style="secondDotLabel">{{classaverage}}</div>
+    <div class="feature-freq-arrow-down" ng-style="currentMark"></div>
+    <div class="feature-freq-arrow-down-label" ng-style="currentMarkLabel">{{currentvalue}}</div>
 </div>

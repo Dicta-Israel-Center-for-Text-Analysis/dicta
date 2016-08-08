@@ -52,7 +52,7 @@
     z-index: 1;
 }
 
-.feature-freq-dot {
+.feature-freq-other-dot {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -61,7 +61,7 @@
     top: 21px;
     z-index: 2;
 }
-.feature-freq-dot-label {
+.feature-freq-other-dot-label {
     position: absolute;
     color: #8c9ba3;
     top: 45px;
@@ -69,7 +69,7 @@
     text-align: center;
     z-index: 2;
 }
-.feature-freq-dot2 {
+.feature-freq-dot {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -77,7 +77,7 @@
     top: 21px;
     z-index: 2;
 }
-.feature-freq-dot2-label {
+.feature-freq-dot-label {
     position: absolute;
     top: 45px;
     width: 40px;

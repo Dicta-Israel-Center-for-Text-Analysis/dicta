@@ -4,13 +4,25 @@
         templateUrl: 'partials/templates/TTestSliderTemplate.html',
         scope: {
             featureId: '@',
-            currentvalue: '@',
-            classaverage: '@',
-            otheraverage: '@',
+            classaverages: '=?',
+            currentvalue: '@?',
+            classaverage: '@?',
+            otheraverage: '@?',
             ttest: '@',
-            classcolor: '@'
+            classcolors: '=?',
+            classcolor: '@?'
         },
         controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
+            if (!Array.isArray($scope.classaverages)) {
+                $scope.classaverages = [];
+                $scope.classcolors = [];
+            }
+
+            if ($scope.classaverage !== undefined) {
+                $scope.classaverages.push($scope.classaverage);
+                $scope.classcolors.push($scope.classcolor);
+            }
+
             function clamp(percent) {
                 return (percent > 100) ? 100 : ((percent < 0) ? 0 : percent);
             }
@@ -27,19 +39,23 @@
                 var percent = (frequency - left)/stdDev*5;
                 return clamp(percent);
             }
-            $scope.firstDot =       {
+            $scope.otherDot =       {
                 left: "calc(" + convertFreqToPercent($scope.otheraverage) + "% - 10px"
             };
-            $scope.firstDotLabel =  {
+            $scope.otherDotLabel =  {
                 left: "calc(" + convertFreqToPercent($scope.otheraverage) + "% - 20px"
             };
-            $scope.secondDot =      {
-                left: "calc(" + convertFreqToPercent($scope.classaverage) + "% - 10px",
-                "background-color": $scope.classcolor
+            $scope.classDot = function (index) {
+                return {
+                    left: "calc(" + convertFreqToPercent($scope.classaverages[index]) + "% - 10px",
+                    "background-color": $scope.classcolors[index]
+                }
             };
-            $scope.secondDotLabel = {
-                left: "calc(" + convertFreqToPercent($scope.classaverage) + "% - 20px",
-                color: $scope.classcolor
+            $scope.classDotLabel = function(index) {
+                return {
+                    left: "calc(" + convertFreqToPercent($scope.classaverages[index]) + "% - 20px",
+                    color: $scope.classcolors[index]
+                };
             };
             $scope.currentMark =    {left: "calc(" + convertFreqToPercent($scope.currentvalue) + "% - 5px"};
             $scope.currentMarkLabel ={left: "calc(" + convertFreqToPercent($scope.currentvalue) + "% - 20px"};

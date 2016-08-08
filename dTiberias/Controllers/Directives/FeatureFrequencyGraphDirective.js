@@ -1,7 +1,7 @@
-﻿jTextMinerApp.directive('ttestSlider', function ($timeout) {
+﻿jTextMinerApp.directive('featureFrequencyGraph', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'partials/templates/TTestSliderTemplate.html',
+        templateUrl: 'partials/templates/FeatureFrequencyGraphTemplate.html',
         scope: {
             featureId: '@',
             classaverages: '=?',

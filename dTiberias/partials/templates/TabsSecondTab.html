@@ -188,13 +188,13 @@
                                                     <td class="reprencented-content"  title="{{feature.title}}">{{feature.name}}</td>
                                                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                     <td class="frequenct-content">
-                                                        <ttest-slider feature-id='reprencented_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'
+                                                        <feature-frequency-graph feature-id='reprencented_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'
                                                             currentvalue='{{feature.freqInDoc}}'
                                                             classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                             otheraverage='{{feature.freqInOthers}}'
                                                             ttest='{{feature.tTestForEachClass[oneclass.title]}}'          
                                                             classcolor='{{indexOfColor(oneclass.title)}}'
-                                                        ></ttest-slider>
+                                                        ></feature-frequency-graph>
                                                     </td>
                                                     <!--
                                                     <td class="frequenct-content">
@@ -245,12 +245,12 @@
                                                     <td class="reprencented-content" title="{{feature.title}}">{{feature.name}}</td>
                                                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                     <td class="frequenct-content">
-                                                        <ttest-slider feature-id='missing_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'
+                                                        <feature-frequency-graph feature-id='missing_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'
                                                                         currentvalue='{{feature.freqInDoc}}'
                                                                         classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                                         otheraverage='{{feature.freqInOthers}}'
                                                                         ttest='{{feature.tTestForEachClass[oneclass.title]}}'
-                                                                        classcolor='{{indexOfColor(oneclass.title)}}'></ttest-slider>
+                                                                        classcolor='{{indexOfColor(oneclass.title)}}'></feature-frequency-graph>
                                                     </td>
                                                     <!--
                                                     <td class="frequenct-content">

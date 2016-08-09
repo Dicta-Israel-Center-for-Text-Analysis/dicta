@@ -1,7 +1,26 @@
 ﻿jTextMinerApp.factory('ClassService', function ($rootScope, SegmentationService) {
     var service = {};
 
+    // TODO: remove this, since these colors aren't really used
     service.colors = ["Red", "Green", "Blue", "FFFF00", "FF00FF", "00FFFF", "Gray"];
+
+    service.classIndexToColor = function(index) {
+        var realColors = ['#FF931E','#7AC943','#3FA9F5','#FF3833','#FF7BAC'];
+        // if we overshoot the array, just return something blueish
+        return index >= realColors.length ? "#1111" + (index << 4).toString(16) : realColors[index];
+    };
+
+    service.classNameToColor = function(name) {
+        var index = -1;
+        for (var i = 0; i < service.Corpus_classes.length; i++) {
+            if (service.Corpus_classes[i].title == name) {
+                index = i;
+                break;
+            }
+        }
+        return index == -1 ? "#777777" : service.classIndexToColor(index);
+    }
+
     service.ExperimentTestSetActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.ExperimentActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.updateExperimentActionMode = function (value) {

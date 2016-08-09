@@ -52,8 +52,14 @@
             <div class="main-box-header">
                 <div class="col-md-6 box-deut-left">
 
-                    <h3>
-                        Selected test text ...
+                    <h3 style="
+                        height: 40px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        width: 1000px;
+                        " title="{{SelectedTestClassText()}}">
+                        Selected test text: {{SelectedTestClassText()}}
                         <img src="images/secondTab/info.png" alt="" />
                     </h3>
                     <div ng-show="isShow" class="deut-icon">

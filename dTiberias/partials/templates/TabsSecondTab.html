@@ -61,23 +61,38 @@
 
         </div>
         <div ng-show="tab == '1'">
-                        
-                <div ng-repeat="testFile in testSetChunks" class="box-right-side">
-                    <div class="border-box">
-                        <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
-                            <span class="align-left">{{testFile.name}}</span><span class="align-right">
-                                {{testFile.length}} words, {{testFile.classifiedAs}},
-                                <i ng-show="testFile.confidence==100">very high</i>
-                                <i ng-show="testFile.confidence>=95 && testFile.confidence<100">high</i>
-                                <i ng-show="testFile.confidence>=80 && testFile.confidence<95">medium</i>
-                                <i ng-show="testFile.confidence<80">low</i>
-                            </span>
-                        </h2>
-                        <p class="line-h2" style='height: 350px; overflow: scroll; text-align:{{textAlign}};' ng-bind-html="convert2TrustAsHtml(testFile.htmlText)">
-                        </p>
-                    </div>
+                  <div class="col-md-11">
+                      <div ng-repeat="testFile in testSetChunks" class="box-right-side">
+                          <div id="section{{$index}}" class="border-box">
+                              <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
+                                  <span class="align-left">{{testFile.name}}</span><span class="align-right">
+                                      {{testFile.length}} words, {{testFile.classifiedAs}},
+                                      <i ng-show="testFile.confidence==100">very high</i>
+                                      <i ng-show="testFile.confidence>=95 && testFile.confidence<100">high</i>
+                                      <i ng-show="testFile.confidence>=80 && testFile.confidence<95">medium</i>
+                                      <i ng-show="testFile.confidence<80">low</i>
+                                  </span>
+                              </h2>
+                              <p class="line-h2" style='height: 350px; overflow: scroll; text-align:{{textAlign}};' ng-bind-html="convert2TrustAsHtml(testFile.htmlText)">
+                              </p>
+                          </div>
+                      </div>
+
+                  </div>      
+               
+            <div ng-show="!showInProcess" class="col-md-1">
+                <div class="sid-bar0" style="font-size:10px;">
+                    {{testSetChunks.length}} chunks
                 </div>
 
+                <div ng-repeat="testFile in testSetChunks" class="classify-sid-bar {{indexOfColor(testFile.classifiedAs)}}" >
+                    <p ng-click="scrollTo($index)" style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(testFile.htmlText)">
+                    </p>
+                </div>
+
+                <div style="border:1px solid #BDCBD4;">
+                </div>
+            </div>
             </div>
         <div ng-show="tab == '2'" >
 

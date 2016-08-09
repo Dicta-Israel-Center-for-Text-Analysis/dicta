@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('TabsController', function ($scope, ClassService, $rootScope, SelectClassService) {
+jTextMinerApp.controller('TabsController', function ($scope, ClassService, $rootScope, SelectClassService, SaveClassInterface) {
     
     $scope.goToZeroTab = function ()
     {
@@ -30,6 +30,13 @@ jTextMinerApp.controller('TabsController', function ($scope, ClassService, $root
         $scope.thirdTabClass = "active";
     }
     $scope.goToZeroTab();
+
+    $scope.SelectedTestClassText = function () {
+        if (SaveClassInterface.testSetActionMode == 'SelectOnlineCorpus')
+            return SelectClassService.lastSelectedRootKeys.join(', ');
+        else
+            return "Uploaded Text";
+    }
 
     $scope.editTestSet = function () {
         $scope.showClassDialog = true;

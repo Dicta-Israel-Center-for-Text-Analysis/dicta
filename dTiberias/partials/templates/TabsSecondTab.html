@@ -56,7 +56,13 @@
                     <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="updateCurrentFeatureList()">View features</a></li>
                 </ul>
             </div>
-                        
+            <div class="flies-color">
+                <ul class="list-inline">
+                    <li ng-repeat="oneclass in classes" class="files-class" >
+                        <a class="{{indexOfColor(oneclass.title)}}-bar" style="width:120px;" href="#">{{countHowManyFromClass(oneclass.title)}} files in {{oneclass.title}}</a>
+                    </li>
+                </ul>
+            </div>
             <div class="clearfix"></div>
 
         </div>

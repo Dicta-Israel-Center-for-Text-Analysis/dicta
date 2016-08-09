@@ -761,17 +761,18 @@ color:#696969;
         height: 27px;
     font-style: italic;
 }
+.flies-color ul li.files-class a{
+	border-bottom-width: 8px;
+    border-bottom-style: solid;
+}
 .flies-color ul li.files-yellow a{
 	border-bottom: 8px solid #ff931e;
-	width: 189px;
 }
 .flies-color ul li.files-green a{
 	border-bottom: 8px solid #7ac943;
-	width: 115px;
 }
 .flies-color ul li.files-blue a{
 	border-bottom: 8px solid #3fa9f5;
-	width: 45px;
 }
 .clearfix{
 	clear: both;
@@ -983,4 +984,19 @@ table.missing td {
 }
 .Gray {
     background-color: #F2F2F2;
+}
+
+.Blue-bar {
+    border-bottom-color: #8EC3EA;
+}
+
+.Red-bar {
+    border-bottom-color: #ffe9d2;
+}
+
+.Green-bar {
+    border-bottom-color: #e4f4d9;
+}
+.Gray-bar {
+    border-bottom-color: #F2F2F2;
 }

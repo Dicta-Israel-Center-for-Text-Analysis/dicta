@@ -792,15 +792,12 @@ color:#696969;
 }
 .flies-color ul li.files-yellow a{
 	border-bottom: 8px solid #ff931e;
-	width: 189px;
 }
 .flies-color ul li.files-green a{
 	border-bottom: 8px solid #7ac943;
-	width: 115px;
 }
 .flies-color ul li.files-blue a{
 	border-bottom: 8px solid #3fa9f5;
-	width: 45px;
 }
 .clearfix{
 	clear: both;

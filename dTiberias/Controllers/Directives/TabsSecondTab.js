@@ -8,6 +8,15 @@
                 $scope.showInProcess = InProgressService.isReady != 1;
             });
             
+            $scope.countHowManyFromClass = function (val) {
+                var l = 0;
+                for (testFile in $scope.testSetChunks) {
+                    if (angular.equals(testFile.classifiedAs, val))
+                        l=l+1;
+                }
+                return l;
+            }
+
 
             $scope.colors = ClassService.colors;
             $scope.indexOfColor = function (val) {

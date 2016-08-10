@@ -82,3 +82,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     })
     
 });
+
+jTextMinerApp.run(function($rootScope){
+    $rootScope.$on('$stateChangeSuccess',
+        function (event, toState, toParams, fromState, fromParams) {
+            hopscotch.endTour(true, false);
+        });
+});

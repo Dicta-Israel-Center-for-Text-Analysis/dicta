@@ -58,8 +58,8 @@
             </div>
             <div class="flies-color">
                 <ul class="list-inline">
-                    <li ng-repeat="oneclass in classes" class="files-class" >
-                        <a class="{{indexOfColor(oneclass.title)}}-bar" style="width:120px;" href="#">{{countHowManyFromClass(oneclass.title)}} files in {{oneclass.title}}</a>
+                    <li ng-repeat="countFiles in countFilesPerClass track by $index" class="files-class" >
+                        <a class="{{indexOfColor(classes[$index].title)}}-bar" style="width:120px;" href="#">{{countFiles}} files in {{classes[$index].title}}</a>
                     </li>
                 </ul>
             </div>
@@ -68,7 +68,7 @@
         </div>
         <div ng-show="tab == '1'">
                   <div class="col-md-11">
-                      <div ng-repeat="testFile in testSetChunks" class="box-right-side">
+                      <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
                           <div id="section{{$index}}" class="border-box">
                               <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
                                   <span class="align-left">{{testFile.name}}</span><span class="align-right">
@@ -91,7 +91,7 @@
                     {{testSetChunks.length}} chunks
                 </div>
 
-                <div ng-repeat="testFile in testSetChunks" class="classify-sid-bar {{indexOfColor(testFile.classifiedAs)}}" >
+                <div ng-repeat="testFile in testSetChunks track by $index" class="classify-sid-bar {{indexOfColor(testFile.classifiedAs)}}" >
                     <p ng-click="scrollTo($index)" style="direction:rtl;" class="line-h" ng-bind-html="createThumbnail(testFile.htmlText)">
                     </p>
                 </div>
@@ -104,7 +104,7 @@
 
             <div class="clearfix"></div>
 
-            <div ng-repeat="testFile in testSetChunks" class="box-right-side">
+            <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
                 <div class="border-box">
                     <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
                         <span class="align-left">{{testFile.name}}</span><span class="align-right">

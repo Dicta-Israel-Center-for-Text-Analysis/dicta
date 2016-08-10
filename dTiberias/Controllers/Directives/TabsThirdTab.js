@@ -169,6 +169,8 @@
             }
            
             $scope.createThumbnail = function (chunk) {
+                if (chunk == null)
+                    return "";
                 var dotsNail = "";
                 for (i = 0; i < chunk.length / 40; i = i + 1) {
                     dotsNail += ". ";

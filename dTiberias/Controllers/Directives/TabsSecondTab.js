@@ -7,17 +7,8 @@
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
             });
+            $scope.countFilesPerClass = [];
             
-            $scope.countHowManyFromClass = function (val) {
-                var l = 0;
-                for (testFile in $scope.testSetChunks) {
-                    if (angular.equals(testFile.classifiedAs, val))
-                        l=l+1;
-                }
-                return l;
-            }
-
-
             $scope.colors = ClassService.colors;
             $scope.indexOfColor = ClassService.classNameToColor;
 
@@ -208,7 +199,6 @@
                             for (var testFileIndex in sortedResults) {
                                 $scope.setSelectedTestFile(sortedResults[testFileIndex], testFileIndex);
                             }
-
                         });
                     });
 
@@ -222,6 +212,7 @@
             });
             $scope.TSResultData = ExperimentService.tsResultData;
             $scope.$on('tsResultDataUpdated', function () {
+                alert("tsResultDataUpdated");
                 $scope.TSResultData = ExperimentService.tsResultData;
                 $scope.testSetChunks = [];
                 for (testFileIndex in $scope.TSResultData.testSetResults) {
@@ -346,10 +337,20 @@
                     item.htmlText = results.htmlText;
                     item.featureList = results.features;
                     $scope.testSetChunks[index] = item;
-
                     $scope.legend = $sce.trustAsHtml(results.legend);
 
-
+                    if ($scope.testSetChunks.length == $scope.TSResultData.testSetResults.length)
+                    {
+                        $scope.countFilesPerClass = [];
+                        for (currentClass in $scope.classes) {
+                            var l = 0;
+                            for (testFile in $scope.testSetChunks) {
+                                if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
+                                    l = l + 1;
+                            }
+                            $scope.countFilesPerClass.push(l);
+                        }
+                    }
                 });
 
                 $scope.inited = true;

@@ -58,8 +58,8 @@
             </div>
             <div class="flies-color">
                 <ul class="list-inline">
-                    <li ng-repeat="countFiles in countFilesPerClass track by $index" class="files-class" >
-                        <a class="{{indexOfColor(classes[$index].title)}}-bar" style="width:120px;" href="#">{{countFiles}} files in {{classes[$index].title}}</a>
+                    <li ng-show="countFiles > 0" ng-repeat="countFiles in countFilesPerClass track by $index" class="files-class" >
+                        <a class="{{indexOfColor(classes[$index].title)}}-bar" style="width:{{countFiles*10}}px;" href="#">{{countFiles}} files in {{classes[$index].title}}</a>
                     </li>
                 </ul>
             </div>

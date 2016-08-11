@@ -56,10 +56,10 @@
                     <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="updateCurrentFeatureList()">View features</a></li>
                 </ul>
             </div>
-            <div class="flies-color">
+            <div class="flies-color" style="width:420px;">
                 <ul class="list-inline">
                     <li ng-show="countFiles > 0" ng-repeat="countFiles in countFilesPerClass track by $index" class="files-class" >
-                        <a class="{{indexOfColor(classes[$index].title)}}-bar" style="width:{{countFiles*10}}px;" href="#">{{countFiles}} files in {{classes[$index].title}}</a>
+                        <a class="{{indexOfColor(classes[$index].title)}}-bar" style="width:{{countFiles/testSetChunks.length*420}}px;" href="#">{{countFiles}} files in {{classes[$index].title}}</a>
                     </li>
                 </ul>
             </div>

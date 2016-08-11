@@ -35,6 +35,11 @@
             // otherAverage is the average for all other classes
             var otherAverage;
 
+            // utility function to sort numerically - see MDN
+            var sortCompare = function(a, b) {
+                return a - b;
+            };
+
             // called with classAverage and otherAverage
             if ($scope.classaverage !== undefined) {
                 $scope.classaverages.push($scope.classaverage);
@@ -46,10 +51,7 @@
             else {
                 // called with a list of averages
                 var copyOfAverages = $scope.classaverages.slice();
-                // sort numerically - see MDN
-                copyOfAverages.sort(function(a, b) {
-                    return a - b;
-                });
+                copyOfAverages.sort(sortCompare);
                 // the highest value is the class this feature belongs to
                 classAverage = +(copyOfAverages.pop());
                 var sum = copyOfAverages.reduce(function(previousValue, currentValue, currentIndex, array) {
@@ -62,7 +64,42 @@
             var midpoint = (classAverage + otherAverage) / 2;
             // variables to hold the origin and the scale for the graph
             var stdDev = (classAverage - otherAverage) / $scope.ttest;
+            // if stdDev is not valid, graph things in the middle of the bar anyway
+            if (isNaN(stdDev) || stdDev == 0) { stdDev = 1;}
             var left = midpoint - 10*stdDev;
+            // text sometimes overlaps, so we'll move labels that will overlap slightly
+            var averageAndIndex = $scope.classaverages.map(
+                function(value, index) {
+                    // create objects with the data we'll need
+                    return { index: index, value: value, position: convertFreqToPercent(value)}
+                }).sort(function(a, b) {
+                    // sort them by value
+                    return a.value - b.value;
+                });
+            // move everything overlapping slightly, 10 times. There has GOT to be a better way.
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < averageAndIndex.length - 1; j++) {
+                    var leftPos = averageAndIndex[j].position;
+                    var rightPos = averageAndIndex[j+1].position;
+                    var distance = rightPos - leftPos;
+                    if (distance < 8) {
+                        if (rightPos < 2) {
+                            averageAndIndex[j + 1].position += 2;
+                        }
+                        else if (leftPos > 96) {
+                            averageAndIndex[j].position -= 2;
+                        }
+                        else {
+                            averageAndIndex[j + 1].position += 1;
+                            averageAndIndex[j].position -= 1;
+                        }
+                    }
+                }
+            }
+            var indexToPosition = {};
+            for (var i = 0; i < averageAndIndex.length; i++) {
+                indexToPosition[averageAndIndex[i].index] = averageAndIndex[i].position;
+            }
 
 
             function clamp(percent) {
@@ -87,7 +124,7 @@
             };
             $scope.classDotLabel = function(index) {
                 return {
-                    left: "calc(" + convertFreqToPercent($scope.classaverages[index]) + "% - 20px",
+                    left: "calc(" + indexToPosition[index] + "% - 20px",
                     color: $scope.classcolors[index]
                 };
             };

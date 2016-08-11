@@ -392,8 +392,8 @@
 
             $scope.OpenSelectFeatureSet = function () {
                 ngDialog.openConfirm({
-                    template: 'partials/Dialogs/partial-FeatureSet.html',
-                    controller: 'FeatureSetDialogController',
+                    template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
+                    controller: 'FeatureSetPropertiesDlgCtrl',
                     className: 'ngdialog-theme-default',
                     scope: $scope
                 }).then(function (value) {

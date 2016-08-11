@@ -88,8 +88,8 @@
                     <p><b>Source Criticism:</b> Decompose a text into stylistic/authorial threads </p>
                     <div class="search-aterm-field">
                         <ul class="list-inline">
-                            <li><a ng-click="StartNewExperiment('SelectOnlineCorpus');" class="btn btn-form-collection">Select <span style="font-size:8px">from Dicta libraries</span></a></li>
-                            <li><a ng-click="StartNewExperiment('BrowseThisComputer');" class="btn btn-upload"><i class="fa fa-plus"></i> Upload <span style="font-size:8px">your own text</span></a></li>
+                            <li><a id="libraryBtn" ng-click="StartNewExperiment('SelectOnlineCorpus');" class="btn btn-form-collection">Select <span style="font-size:8px">from Dicta libraries</span></a></li>
+                            <li><a id="uploadBtn" ng-click="StartNewExperiment('BrowseThisComputer');" class="btn btn-upload"><i class="fa fa-plus"></i> Upload <span style="font-size:8px">your own text</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -195,3 +195,4 @@
         </div>
     </div>
 </div>
+<script>setTimeout(function(){if ($.cookie('seenAfterLoginTour')===undefined || $.cookie('seenAfterLoginTour') < 1) {hopscotch.startTour(AfterLoginTour);}}, 1000);</script>

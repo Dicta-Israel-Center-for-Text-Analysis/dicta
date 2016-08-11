@@ -50,7 +50,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
     }
     $scope.AddFeatureSet = function () {
         ngDialog.openConfirm({
-            template: 'partials/Dialogs/partial-AddFeatureSet.html',
+            template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
             controller: 'AddFeatureSetDialogController',
             className: 'ngdialog-theme-default',
             scope: $scope

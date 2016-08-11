@@ -33,32 +33,8 @@ jTextMinerApp.controller('TabsController', function ($scope, ClassService, $root
 
     $scope.SelectedTestClassText = function () {
         if (SaveClassInterface.testSetActionMode == 'SelectOnlineCorpus')
-            return SelectClassService.lastSelectedRootKeys.join(', ');
+            return SelectClassService.lastTestSetSelectedRootKeys.join(', ');
         else
             return "Uploaded Text";
-    }
-
-    $scope.editTestSet = function () {
-        $scope.showClassDialog = true;
-        $rootScope.$broadcast('lastSelectedRootKeys',SelectClassService.lastTestSetSelectedRootKeys);
-
-        /*
-        $scope.ExperimentMode = 'NewExperiment';
-
-        ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
-
-        var selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(true);
-        // Get a list of ALL selected nodes
-        selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(false);
-
-        var selRootKeys = $.map(selRootNodes, function (node) {
-            return node.data.key;
-        });
-        for (var i in selRootKeys) {
-            $("#trainTree").dynatree("getTree").getNodeByKey(selRootKeys[i]).select(false);
-        }
-        
-        ClassService.updateExperimentActionMode(actionMode);
-        */
     }
 });

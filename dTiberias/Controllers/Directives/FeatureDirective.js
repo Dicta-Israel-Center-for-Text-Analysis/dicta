@@ -1,4 +1,4 @@
-﻿jTextMinerApp.directive('featureSets', function () {
+﻿jTextMinerApp.directive('featureSets', function (ngDialog) {
     return {
         restrict: 'AE',
         scope: {
@@ -9,6 +9,19 @@
             $scope.Feature_sets = FeatureService.Feature_sets;
             $scope.deleteFeatureSet = function (index) {
                 FeatureService.deleteFeatureSet(index);
+            };
+            $scope.editFeatureSet = function (index) {
+                ngDialog.openConfirm({
+                    template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
+                    controller: 'EditFeatureSetDialogController',
+                    className: 'ngdialog-theme-default',
+                    scope: $scope,
+                    data: {featuresData: FeatureService.featuresData.features[index]}
+                }).then(function (value) {
+                    console.log('Modal promise resolved. Value: ', value);
+                }, function (reason) {
+                    console.log('Modal promise rejected. Reason: ', reason);
+                });
             };
         }]
     };

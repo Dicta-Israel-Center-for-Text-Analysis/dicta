@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('FeatureSetPropertiesDlgCtrl', function ($scope, ngDialog, InProgressService, APIService, FeatureService, ClassService) {
+jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngDialog, InProgressService, APIService, FeatureService, ClassService) {
     
     $scope.showInProcess = InProgressService.isReady != 1;
     $scope.$on('isReady_Updated', function () {

@@ -13,7 +13,7 @@
             $scope.editFeatureSet = function (index) {
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
-                    controller: 'FeatureSetPropertiesDlgCtrl',
+                    controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default',
                     scope: $scope,
                     featureSet: FeatureService.Feature_sets[index]

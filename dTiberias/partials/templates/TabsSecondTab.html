@@ -193,7 +193,7 @@
                                                             classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                             otheraverage='{{feature.freqInOthers}}'
                                                             ttest='{{feature.tTestForEachClass[oneclass.title]}}'          
-                                                            classcolor='{{indexOfColor(oneclass.title)}}'
+                                                            classcolor='{{classNameToColor(oneclass.title)}}'
                                                         ></feature-frequency-graph>
                                                     </td>
                                                     <!--
@@ -250,7 +250,7 @@
                                                                         classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                                         otheraverage='{{feature.freqInOthers}}'
                                                                         ttest='{{feature.tTestForEachClass[oneclass.title]}}'
-                                                                        classcolor='{{indexOfColor(oneclass.title)}}'></feature-frequency-graph>
+                                                                        classcolor='{{classNameToColor(oneclass.title)}}'></feature-frequency-graph>
                                                     </td>
                                                     <!--
                                                     <td class="frequenct-content">

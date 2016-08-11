@@ -1,4 +1,4 @@
-﻿jTextMinerApp.directive('featureSets', function () {
+﻿jTextMinerApp.directive('featureSets', function (ngDialog) {
     return {
         restrict: 'AE',
         scope: {
@@ -16,7 +16,7 @@
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default',
                     scope: $scope,
-                    featureSet: FeatureService.Feature_sets[index]
+                    data: {featuresData: FeatureService.featuresData.features[index]}
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);
                 }, function (reason) {

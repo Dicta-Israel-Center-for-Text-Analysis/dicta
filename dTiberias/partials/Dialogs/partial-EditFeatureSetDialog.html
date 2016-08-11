@@ -92,7 +92,7 @@
                 </div>
 
 
-                <div ng-if="featuresData.features" class="col-sm-12">
+                <div ng-if="ngDialogData.featuresData" class="col-sm-12">
                     <hr>
                     <div class="feature" style="height: 500px;overflow-y: auto">
                         <table class="table table-striped feature-set-table">
@@ -103,7 +103,7 @@
                                 <td class="vimages_three">Frequency</td>
                                 <td class="vimages_3">T-test</td>
                             </tr>
-                            <tr ng-repeat="feature in featuresData.features">
+                            <tr ng-repeat="feature in ngDialogData.featuresData">
                                 <td class="icon-td"><span class="fa fa-check-circle-o"></span> <b>{{feature.name}}</b>
                                 </td>
                                 <td>

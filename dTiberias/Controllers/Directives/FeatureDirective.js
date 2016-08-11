@@ -10,6 +10,19 @@
             $scope.deleteFeatureSet = function (index) {
                 FeatureService.deleteFeatureSet(index);
             };
+            $scope.editFeatureSet = function (index) {
+                ngDialog.openConfirm({
+                    template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
+                    controller: 'FeatureSetPropertiesDlgCtrl',
+                    className: 'ngdialog-theme-default',
+                    scope: $scope,
+                    featureSet: FeatureService.Feature_sets[index]
+                }).then(function (value) {
+                    console.log('Modal promise resolved. Value: ', value);
+                }, function (reason) {
+                    console.log('Modal promise rejected. Reason: ', reason);
+                });
+            };
         }]
     };
 });

@@ -10,52 +10,48 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
     $scope.$on('isAllBibleValueUpdated', function () {
         $scope.isAllBible = ClassService.isAllBible;
     });
-
-    $scope.TokenizerType = 'Word';
-    $scope.FeatureType = 'Unigram';
-    $scope.NormalizerType = 'Frequency';
-    $scope.FilterType = 'Common';
-    $scope.FilterCount = 250;
-    $scope.isTakeFromFile = false;
-    $scope.isDescending = true;
-    $scope.isFromEachClass = false;
-    $scope.isIncludeLexeme = false;
-    $scope.isSpoOnly = false;
-    $scope.isVocalized = true;
-    $scope.isSinDot = false;
-    $scope.isTokenized = false;
-    $scope.isIncludingNumbers = false;
-    $scope.isIncludingPunctuation = false;
     
-
-    $scope.addFeatureSet = function () {
-        FeatureService.FeatureSet_maxId = FeatureService.FeatureSet_maxId + 1;
-        console.log("isIncludeLexeme: " + $scope.isIncludeLexeme);
-        console.log("isSpoOnly: " + $scope.isSpoOnly);
-        FeatureService.Feature_sets.push({
-            id: FeatureService.FeatureSet_maxId,
-            featureSetName: 'Default name' + FeatureService.FeatureSet_maxId,
-            tokenizerType: $scope.TokenizerType,
-            featureType: $scope.FeatureType,
-            normalizerType: $scope.NormalizerType,
-            filterType: $scope.FilterType,
-            filterCount: $scope.FilterCount,
-            takeFromFile: $scope.isTakeFromFile,
-            descending: $scope.isDescending,
-            fromEachClass: $scope.isFromEachClass,
-            includeLexeme: $scope.isIncludeLexeme,
-            spoOnly: $scope.isSpoOnly,
-            vocalized: $scope.isVocalized,
-            sinDot: $scope.isSinDot,
-            tokenized: $scope.isTokenized,
-            includeNumber: $scope.isIncludingNumbers,
-            includePunctuation: $scope.isIncludingPunctuation
-        });
-
+    if ($scope.ngDialogData && $scope.ngDialogData.feature) {
+        $scope.newFeature = false;
+        $scope.feature = angular.copy($scope.ngDialogData.feature);
+    }
+    else {
+        $scope.newFeature = true;
+        $scope.feature = {
+            tokenizerType: 'Word',
+            featureType: 'Unigram',
+            normalizerType: 'Frequency',
+            filterType: 'Common',
+            filterCount: 250,
+            takeFromFile: false,
+            descending: true,
+            fromEachClass: false,
+            includeLexeme: false,
+            spoOnly: false,
+            vocalized: true,
+            sinDot: false,
+            tokenized: false,
+            includeNumber: false,
+            includePunctuation: false
+        };
     }
 
-    $scope.addFeatureSetAndReturn = function () {
-        $scope.addFeatureSet();
+    $scope.saveFeatureSet = function () {
+        if ($scope.newFeature) {
+            FeatureService.FeatureSet_maxId = FeatureService.FeatureSet_maxId + 1;
+            console.log("isIncludeLexeme: " + $scope.feature.includeLexeme);
+            console.log("isSpoOnly: " + $scope.feature.spoOnly);
+            $scope.feature.id = FeatureService.FeatureSet_maxId;
+            $scope.feature.featureSetName = 'Default name' + FeatureService.FeatureSet_maxId;
+            FeatureService.Feature_sets.push($scope.feature);
+        }
+        else {
+            angular.copy($scope.feature, $scope.ngDialogData.feature);
+        }
+    }
+
+    $scope.saveFeatureSetAndReturn = function () {
+        $scope.saveFeatureSet();
         $scope.confirm();
     }
 

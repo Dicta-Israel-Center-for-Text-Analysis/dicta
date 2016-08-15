@@ -11,12 +11,15 @@
                 FeatureService.deleteFeatureSet(index);
             };
             $scope.editFeatureSet = function (index) {
+                var featuresData;
+                if (FeatureService.featuresData.features !== undefined && FeatureService.featuresData.features.length > index)
+                    featuresData = FeatureService.featuresData.features[index];
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
                     scope: $scope,
-                    data: {featuresData: FeatureService.featuresData.features[index]}
+                    data: {feature: FeatureService.Feature_sets[index], featuresData: featuresData}
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);
                 }, function (reason) {

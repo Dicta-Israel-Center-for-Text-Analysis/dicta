@@ -14,7 +14,7 @@
                 <div class="row form-horizontal">
                     <div class="col-sm-5">
                         <div class="syntax_content">
-                            <select autofocus class="form-control" name="TokenizerTypeGroup" ng-model="TokenizerType" tabindex="1">
+                            <select autofocus class="form-control" name="TokenizerTypeGroup" ng-model="feature.tokenizerType">
                                 <option value="Word">Words</option>
                                 <option value="Letter" > Letters</option>
                                 <option ng-show="isAllBible" value="SyntaxClause">Syntax -- Clause types</option>
@@ -25,65 +25,65 @@
                         </div>
                     </div>
                     <div class="col-sm-1"></div>
-                    <div ng-show="TokenizerType == 'Word'" class="col-sm-3">
+                    <div ng-show="feature.tokenizerType == 'Word'" class="col-sm-3">
                             <label ng-show="!isAllBible"  class="checkbox">
-                                <input type="checkbox" ng-model="isTokenized" />
+                                <input type="checkbox" ng-model="feature.tokenized" />
                                 <span>tokenized</span>
                             </label>
 
                             <label ng-show="isAllBible"  class="checkbox">
-                                <input type="checkbox" ng-model="isVocalized" />
+                                <input type="checkbox" ng-model="feature.vocalized" />
                                 <span>vocalized</span>
                             </label>
                     </div>
-                    <div class="col-sm-3" ng-show="TokenizerType == 'Word'">
+                    <div class="col-sm-3" ng-show="feature.tokenizerType == 'Word'">
                         <label ng-show="isAllBible" class="checkbox">
-                            <input  type="checkbox" ng-model="isSinDot" />
+                            <input  type="checkbox" ng-model="feature.sinDot" />
                             <span>shin\sin dot</span>
                         </label>
                     </div>
-                    <div class="col-sm-3" ng-show="TokenizerType == 'Letter'">
+                    <div class="col-sm-3" ng-show="feature.tokenizerType == 'Letter'">
                         <label class="checkbox">
-                            <input type="checkbox" ng-model="isIncludingNumbers" /> inc. numbers
+                            <input type="checkbox" ng-model="feature.includeNumber" /> inc. numbers
                         </label>
                     </div>
 
-                    <div class="col-sm-3" ng-show="TokenizerType == 'Letter'">
+                    <div class="col-sm-3" ng-show="feature.tokenizerType == 'Letter'">
                         <label class="checkbox">
-                            <input type="checkbox" ng-model="isIncludingPunctuation" /> inc. punctuation
+                            <input type="checkbox" ng-model="feature.includePunctuation" /> inc. punctuation
                         </label>
                     </div>
 
-                        <div class="col-sm-3" ng-show="isAllBible && TokenizerType == 'SyntaxPhrase'">
-                            <label class="checkbox"><input type="checkbox" ng-model="isSpoOnly" /> Subj, Pred and Obj only</label>
+                        <div class="col-sm-3" ng-show="isAllBible && feature.tokenizerType == 'SyntaxPhrase'">
+                            <label class="checkbox"><input type="checkbox" ng-model="feature.spoOnly" /> Subj, Pred and Obj only</label>
                     </div>
-                    <div class="col-sm-3" ng-show="isAllBible && TokenizerType == 'Morphology'">
-                        <label class="checkbox"><input type="checkbox" ng-model="isIncludeLexeme" /> include lexeme</label>
+                    <div class="col-sm-3" ng-show="isAllBible && feature.tokenizerType == 'Morphology'">
+                        <label class="checkbox"><input type="checkbox" ng-model="feature.includeLexeme" /> include lexeme</label>
                     </div>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-sm-7 form-inline">
-                    <select class="form-control" name="FilterTypeGroup" ng-model="FilterType">
+                    <select class="form-control" name="FilterTypeGroup" ng-model="feature.filterType">
                         <option value="Common"> Use most common</option>
                         <option value="None">Use all features</option>
                     </select>
-                    <input class="form-control" ng-show="FilterType=='Common'" style="width:50px;"
-                           ng-model="FilterCount" type="text" value="{{FilterCount}}"/>
-                    <label class="checkbox" ng-show="FilterType=='Common'">
-                        <input type="checkbox" ng-model="isFromEachClass"/> Per class
+                    <input class="form-control" ng-show="feature.filterType=='Common'" style="width:50px;"
+                           ng-model="feature.filterCount" type="text" />
+                    <label class="checkbox" ng-show="feature.filterType=='Common'">
+                        <input type="checkbox" ng-model="feature.fromEachClass"/> Per class
                     </label>
                 </div>
                 <div class="col-sm-5 form-inline">
                     <div class="per_class">
-                        <select class="form-control" ng-model="FeatureType" name="FeatureType">
+                        <select class="form-control" ng-model="feature.featureType" name="FeatureType">
                             <option>Unigram</option>
                             <option>Bigram</option>
                             <option>Trigram</option>
                         </select>
                         <span class="">Feature Weight</span>
-                        <select class="form-control" name="FeatureWeightGroup" ng-model="NormalizerType">
+                        <select class="form-control" name="FeatureWeightGroup" ng-model="feature.normalizerType">
                             <option value="Binary">Binary</option>
                             <option value="Frequency">Frequency</option>
                             <option value="TfIdf">Tf-Idf</option>
@@ -131,7 +131,7 @@
                 <div class="col-sm-12">
                     <div class="footer_content1">
                         <h4><span data-dismiss="modal" ng-click="closeThisDialog('button')">Discard Changes </span>
-                            <button class="btn btn-primary" ng-click="addFeatureSetAndReturn()"><strong> <i class="fa fa-check-circle-o"></i> Save
+                            <button class="btn btn-primary" ng-click="saveFeatureSetAndReturn()"><strong> <i class="fa fa-check-circle-o"></i> Save
                                 Feature Set </strong></button>
                         </h4>
                     </div>

@@ -14,7 +14,7 @@
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
-                    className: 'ngdialog-theme-default',
+                    className: 'ngdialog-theme-default override-background',
                     scope: $scope,
                     data: {featuresData: FeatureService.featuresData.features[index]}
                 }).then(function (value) {

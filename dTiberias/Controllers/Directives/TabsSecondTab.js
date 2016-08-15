@@ -404,7 +404,7 @@
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
-                    className: 'ngdialog-theme-default',
+                    className: 'ngdialog-theme-default override-background',
                     scope: $scope
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);

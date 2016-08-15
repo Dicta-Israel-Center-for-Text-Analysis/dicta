@@ -112,3 +112,8 @@
 table.feature-set-table tbody tr td {
     vertical-align: middle;
 }
+
+/* TODO: replace with bootstrap-based modal system; this hides the ngdialog box in the meantime */
+.ngdialog.ngdialog-theme-default.override-background .ngdialog-content {
+    background: transparent;
+}

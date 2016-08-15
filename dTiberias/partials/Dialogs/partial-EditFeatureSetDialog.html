@@ -1,6 +1,6 @@
 ﻿<div class="">
     <in-progress></in-progress>
-    <div class="modal-content" style="width: 900px">
+    <div class="modal-content" style="width: 900px;left: calc(50% - 450px)">
         <div class="modal-header">
             <h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -14,7 +14,7 @@
                 <div class="row form-horizontal">
                     <div class="col-sm-5">
                         <div class="syntax_content">
-                            <select class="form-control" name="TokenizerTypeGroup" ng-model="TokenizerType" tabindex="1">
+                            <select autofocus class="form-control" name="TokenizerTypeGroup" ng-model="TokenizerType" tabindex="1">
                                 <option value="Word">Words</option>
                                 <option value="Letter" > Letters</option>
                                 <option ng-show="isAllBible" value="SyntaxClause">Syntax -- Clause types</option>
@@ -139,7 +139,8 @@
             </div>
         </div>
     </div>
-
+</div>
+<!--
     <table style="width:100%;" ng-show="!showInProcess">
         <tr>
             <td valign="top">
@@ -151,16 +152,16 @@
                                 <input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Word" /> Words
                             </td>
                             <td>
-                                <input ng-show="!isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isTokenized" /> 
+                                <input ng-show="!isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isTokenized" />
                                 <span ng-show="!isAllBible">tokenized</span>
                                 <input ng-show="isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isVocalized" />
-                                <span ng-show="isAllBible">vocalized</span> 
+                                <span ng-show="isAllBible">vocalized</span>
                             </td>
                             <td>
-                                <input ng-show="isAllBible" type="checkbox" ng-model="isSinDot" /> 
-                                <span ng-show="isAllBible" >shin\sin dot</span> 
+                                <input ng-show="isAllBible" type="checkbox" ng-model="isSinDot" />
+                                <span ng-show="isAllBible" >shin\sin dot</span>
                             </td>
-                            
+
                         </tr>
                         <tr>
 
@@ -170,8 +171,8 @@
                             <td></td>
                             <td></td>
                         </tr>
-                       
-                       
+
+
                         <tr>
                             <td colspan="3"><hr /></td>
                         </tr>
@@ -240,8 +241,8 @@
 
         </tr>
     </table>
-</div>
+
 <div class="ngdialog-buttons" ng-show="!showInProcess">
     <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="addFeatureSetAndReturn()">Add feature set</button>
     <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
-</div>
+</div>-->

@@ -355,6 +355,17 @@ font-size: 20px;
 .footer-mid {
 	text-align:center;
 }
+.footer-mid p {
+	    color: #848484;
+    font-size: 21px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+.footer-mid p a {
+	    color: #848484;
+    font-size: 21px;
+    text-decoration: underline;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
 .footer-mid ul li {
 	display:inline-block;
 	list-style:none;

@@ -103,8 +103,8 @@
                                 <td class="vimages_three">Frequency</td>
                                 <td class="vimages_3">T-test</td>
                             </tr>
-                            <tr ng-repeat="feature in ngDialogData.featuresData">
-                                <td class="icon-td"><span class="fa fa-check-circle-o"></span> <b>{{feature.name}}</b>
+                            <tr ng-repeat="feature in ngDialogData.featuresData" ng-class="feature.selected ? '' : 'disabled-table-row'">
+                                <td class="icon-td" ng-click="toggleFeature(feature)"><span class="fa fa-check-circle-o"></span> <b>{{feature.name}}</b>
                                 </td>
                                 <td>
                                     <div class="class-dot" ng-style="classNameToBgStyle(feature.className)"></div>

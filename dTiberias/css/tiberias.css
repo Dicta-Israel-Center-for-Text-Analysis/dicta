@@ -117,3 +117,9 @@ table.feature-set-table tbody tr td {
 .ngdialog.ngdialog-theme-default.override-background .ngdialog-content {
     background: transparent;
 }
+.disabled-table-row {
+    color: #dddddd;
+}
+.disabled-table-row .icon-td span {
+    color: #dddddd;
+}

@@ -228,6 +228,46 @@ font-size: 20px;
 	margin-right:4px;
 	
 }
+.b-text {
+	    padding: 48px 0px 24px;
+	        background: #f2f2f2;
+}
+
+.b-text h2 {
+    font-size: 26px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    padding: 0 0px 20px;
+    color: #666666;
+}
+
+.b-text p {
+font-size: 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    color: #666666;
+    margin-bottom: 10px;
+}
+
+.b-text h3 {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	color:#666666;
+	font-size:20px;
+	padding:2px 0px;
+}
+
+.b-text h3>span {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size:19px;
+	color:#000;
+	font-weight:bold;
+	margin-right:8px;
+	
+}
+.b-text h3>i {
+	font-size:14px;
+	color:#000;
+	margin-right:4px;
+	
+}
 .btn-text ul li {
 	padding-top:15px;
 	display:inline-block;

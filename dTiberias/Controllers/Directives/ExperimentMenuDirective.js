@@ -4,6 +4,7 @@
         templateUrl: 'partials/templates/ExperimentMenuTemplate.html',
         controller: ['$scope', 'ExperimentService', 'ngDialog', function ($scope, ExperimentService, ngDialog) {
             $scope.StartNewExperiment = function () {
+                window.location.reload();
                 $scope.ExperimentMode = 'NewExperiment';
                 ExperimentService.NewExperiment();
             }

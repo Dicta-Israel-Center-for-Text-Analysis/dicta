@@ -19,7 +19,7 @@
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
                     scope: $scope,
-                    data: {feature: FeatureService.Feature_sets[index], featuresData: featuresData}
+                    data: {featureSet: FeatureService.Feature_sets[index], featuresData: featuresData}
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);
                 }, function (reason) {

@@ -11,13 +11,13 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         $scope.isAllBible = ClassService.isAllBible;
     });
     
-    if ($scope.ngDialogData && $scope.ngDialogData.feature) {
-        $scope.newFeature = false;
-        $scope.feature = angular.copy($scope.ngDialogData.feature);
+    if ($scope.ngDialogData && $scope.ngDialogData.featureSet) {
+        $scope.newFeatureSet = false;
+        $scope.featureSet = angular.copy($scope.ngDialogData.featureSet);
     }
     else {
-        $scope.newFeature = true;
-        $scope.feature = {
+        $scope.newFeatureSet = true;
+        $scope.featureSet = {
             tokenizerType: 'Word',
             featureType: 'Unigram',
             normalizerType: 'Frequency',
@@ -37,16 +37,16 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
     }
 
     $scope.saveFeatureSet = function () {
-        if ($scope.newFeature) {
+        if ($scope.newFeatureSet) {
             FeatureService.FeatureSet_maxId = FeatureService.FeatureSet_maxId + 1;
             console.log("isIncludeLexeme: " + $scope.feature.includeLexeme);
             console.log("isSpoOnly: " + $scope.feature.spoOnly);
-            $scope.feature.id = FeatureService.FeatureSet_maxId;
-            $scope.feature.featureSetName = 'Default name' + FeatureService.FeatureSet_maxId;
-            FeatureService.Feature_sets.push($scope.feature);
+            $scope.featureSet.id = FeatureService.FeatureSet_maxId;
+            $scope.featureSet.featureSetName = 'Default name' + FeatureService.FeatureSet_maxId;
+            FeatureService.Feature_sets.push($scope.featureSet);
         }
         else {
-            angular.copy($scope.feature, $scope.ngDialogData.feature);
+            angular.copy($scope.featureSet, $scope.ngDialogData.featureSet);
         }
     }
 

@@ -50,8 +50,8 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
     $scope.saveFeatureSet = function () {
         if ($scope.newFeatureSet) {
             FeatureService.FeatureSet_maxId = FeatureService.FeatureSet_maxId + 1;
-            console.log("isIncludeLexeme: " + $scope.feature.includeLexeme);
-            console.log("isSpoOnly: " + $scope.feature.spoOnly);
+            console.log("isIncludeLexeme: " + $scope.featureSet.includeLexeme);
+            console.log("isSpoOnly: " + $scope.featureSet.spoOnly);
             $scope.featureSet.id = FeatureService.FeatureSet_maxId;
             $scope.featureSet.featureSetName = 'Default name' + FeatureService.FeatureSet_maxId;
             FeatureService.Feature_sets.push($scope.featureSet);

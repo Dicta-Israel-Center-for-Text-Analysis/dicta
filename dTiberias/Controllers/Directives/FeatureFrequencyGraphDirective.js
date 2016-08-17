@@ -12,7 +12,7 @@
             classcolors: '=?',
             classcolor: '@?'
         },
-        controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
+        controller: ['$scope', 'ExperimentService', 'APIService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, ClassService, InProgressService) {
             // setup
 
             // there are two ways to call the graph, so make sure that either way,

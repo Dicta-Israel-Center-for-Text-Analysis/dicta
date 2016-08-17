@@ -79,58 +79,57 @@
     </div>
 </div>
 
-<div class="a-text" ng-show="showSignUp">
+<div class="a-text">
     <div class="container" >
-        <h2>Analyze a text</h2>
-        <p>
-            Choose a text from our online corpus, or upload your own,
-            and you,ll access a variety of insights.
-        </p>
-        <h3><i class="fa fa-hand-o-right"></i><span>Parallels in other texts:</span>Find out if any segment of your text has been quoted or mentioned</h3>
-        <h3><i class="fa fa-hand-o-right"></i><span>Classification matters:</span>Classify your text into period, genre and region, as well as any custom-made class you create</h3>
-        <h3><i class="fa fa-hand-o-right"></i><span>Multiple Authorship:</span>Segment your text into its original sources</h3>
+        <h2>Corpus Construction</h2>
+        <h3><i class="fa fa-hand-o-right"></i> Assemble a comprehensive corpus of Jewish literature in a single format.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Annotate documents (genre/period/region/author), paragraphs and words (morphology).</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Standardize orthography (open abbreviations, maleh/chaser, etc.)</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Permit searching utilizing any combination of linguistic features and annotations.</h3>
 
-        <div class="btn-text">
-            <ul>
-                <li><a ng-click="StartNewExperiment('SelectOnlineCorpus');">From Collections</a></li>
-                <li><a ng-click="StartNewExperiment('BrowseThisComputer');">+ Upload</a></li>
-
-            </ul>
-        </div>
     </div>
 </div>
 
-<div class="search" ng-show="showSignUp">
+<div class="b-text">
     <div class="container">
-        <h2>Search a term</h2>
-        <form class="form-horizontal">
-            <div class="form-group-search">
-                <input type="search" class="form-control3" id="inputsearch" placeholder="input any text or concept">
-                <button type="submit" class="a"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
+        <h2>Authorship Analysis</h2>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically identify the author of an anonymous document.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Alternatively, identify period and region of an anonymous document.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Determine the probability that two documents were written by the same author.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically decompose a multi-author document into authorial threads.</h3>
+
     </div>
 </div>
 
-<div class="c-text" ng-show="showSignUp">
+<div class="a-text">
     <div class="container">
-        <h2>Compare Texts</h2>
-        <div class="btn-text">
-            <ul>
-                <li><a href="#">From Collections</a></li>
-                <li><a href="#">+ Upload</a></li>
-            </ul>
-        </div>
+        <h2>Intertextuality</h2>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically identify citations and their referents.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Identify text reuse across books (including paraphrases) even in huge corpora.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Analyze the citation/paraphrase matrix to track the flow of information over time.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically identify the central sources (hubs and authorities) for any selected topic.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Integrate the above with crowdsourcing methods.</h3>
+
     </div>
 </div>
+<div class="b-text">
+    <div class="container">
+        <h2>Ur-text Reconstruction</h2>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically align multiple textual witnesses into a synoptic text.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Reconstruct the maximum likelihood stemma of textual witnesses for a given text.</h3>
+        <h3><i class="fa fa-hand-o-right"></i> Automatically reconstruct the ur-text from which textual witnesses evolved.</h3>
 
+    </div>
+</div>
 <footer class="footer">
     <div class="container">
         <div class="col-md-4 footer-left">
-            <p> To create an account, please contact us at tempeden @ walla.com
-             <a ng-show="showSignUp" href="#">Contact Us</a></p>
+            <p> Address: Am V'olamo 8, Jerusalem, Israel.
+            </p>
         </div>
         <div class="col-md-4 footer-mid">
+            <p>ZIP Code: 9546306</p>
+            <p>e-Mail: tempeden@walla.com</p>
             <ul>
                 <li><a ng-show="showSignUp" href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a ng-show="showSignUp" href="#"><i class="fa fa-twitter"></i></a></li>

@@ -36,6 +36,12 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         };
     }
 
+    $scope.featureSetChanged = false;
+    $scope.$watch('featureSet', function(newValue, oldValue) {
+        if (oldValue && newValue !== oldValue)
+            $scope.featureSetChanged = true;
+    }, true);
+
     $scope.toggleFeature = function(feature) {
         feature.selected = !feature.selected;
         FeatureService.updateTotalNumberOfFeatures(feature);

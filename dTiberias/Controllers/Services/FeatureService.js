@@ -1,46 +1,7 @@
-﻿
-jTextMinerApp.factory('FeatureService', function ($rootScope) {
-    var root = {};
-
-    root.updateTotalNumberOfFeatures = function (item) {
-        var countSelected = 0;
-
-        if (angular.isUndefined(root.featuresData) || angular.isUndefined(root.featuresData.features))
-            return;
-
-        for (var i = 0; i < root.featuresData.features.length; i++) {
-            if (root.featuresData.features[i].selected)
-                countSelected++;
-        }
-        if (item != null) {
-            if (item.selected)
-                countSelected--;
-            else
-                countSelected++;
-        }
-        root.updateTotalNumberOfFeaturesValue(countSelected);
-    }
-
-    // Features
-    root.totalNumberOfFeatures = 0;
-    root.updateTotalNumberOfFeaturesValue = function (value) {
-        this.totalNumberOfFeatures = value;
-        $rootScope.$broadcast("totalNumberOfFeaturesUpdated");
-    }
-    root.featuresData = {};
-    root.updateFeaturesData = function (value) {
-        this.featuresData = value;
-        this.updateTotalNumberOfFeatures(null);
-        $rootScope.$broadcast("featuresDataUpdated");
-    }
-
-
-    root.FeatureSet_maxId = 0;
-    root.FeatureSet_maxId = root.FeatureSet_maxId + 1;
-    root.Feature_sets = [];
-    root.Feature_sets.push({
-        id: root.FeatureSet_maxId,
-        featureSetName: 'Default name' + root.FeatureSet_maxId,
+﻿jTextMinerApp.factory('FeatureService', function ($rootScope) {
+    var DEFAULT_FEATURE_SET = {
+        id: 0,
+        featureSetName: 'Default name',
         tokenizerType: 'Word',
         featureType: 'Unigram',
         normalizerType: 'Frequency',
@@ -56,14 +17,51 @@ jTextMinerApp.factory('FeatureService', function ($rootScope) {
         tokenized: false,
         includeNumber: false,
         includePunctuation: false
-    });
+    };
+    
+    var service = {
+        totalNumberOfFeatures: 0,
+        featuresData: {},
+        FeatureSet_maxId: 1,
+        Feature_sets: [DEFAULT_FEATURE_SET]
+    };
 
-    root.deleteFeatureSet = function (index) {
+    // does this code work?
+    service.updateTotalNumberOfFeatures = function (item) {
+        var countSelected = 0;
+
+        if (angular.isUndefined(service.featuresData) || angular.isUndefined(service.featuresData.features))
+            return;
+
+        for (var i = 0; i < service.featuresData.features.length; i++) {
+            if (service.featuresData.features[i].selected)
+                countSelected++;
+        }
+        if (item != null) {
+            if (item.selected)
+                countSelected--;
+            else
+                countSelected++;
+        }
+        service.updateTotalNumberOfFeaturesValue(countSelected);
+    }
+
+    // Features
+    service.updateTotalNumberOfFeaturesValue = function (value) {
+        this.totalNumberOfFeatures = value;
+        $rootScope.$broadcast("totalNumberOfFeaturesUpdated");
+    }
+    service.updateFeaturesData = function (value) {
+        this.featuresData = value;
+        this.updateTotalNumberOfFeatures(null);
+        $rootScope.$broadcast("featuresDataUpdated");
+    }
+    
+    service.deleteFeatureSet = function (index) {
         this.Feature_sets.splice(index, 1);
         this.updateFeaturesData({});
         $rootScope.$broadcast("featureSetDataUpdated");
     }
 
-
-    return root;
+    return service;
 });

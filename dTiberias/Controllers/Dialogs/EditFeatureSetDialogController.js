@@ -14,6 +14,7 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
     if ($scope.ngDialogData && $scope.ngDialogData.featureSet) {
         $scope.newFeatureSet = false;
         $scope.featureSet = angular.copy($scope.ngDialogData.featureSet);
+        $scope.featuresData = angular.copy($scope.ngDialogData.featuresData);
     }
     else {
         $scope.newFeatureSet = true;
@@ -58,6 +59,7 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         }
         else {
             angular.copy($scope.featureSet, $scope.ngDialogData.featureSet);
+            angular.copy($scope.featuresData, $scope.ngDialogData.featuresData);
         }
     }
 

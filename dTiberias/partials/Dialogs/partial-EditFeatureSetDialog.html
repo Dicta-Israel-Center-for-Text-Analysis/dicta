@@ -92,7 +92,7 @@
                 </div>
 
 
-                <div ng-if="ngDialogData.featuresData && !featureSetChanged" class="col-sm-12">
+                <div ng-if="featuresData && !featureSetChanged" class="col-sm-12">
                     <hr>
                     <div class="feature" style="height: 500px;overflow-y: auto">
                         <table class="table table-striped feature-set-table">
@@ -103,8 +103,8 @@
                                 <td class="vimages_three">Frequency</td>
                                 <td class="vimages_3">T-test</td>
                             </tr>
-                            <tr ng-repeat="feature in ngDialogData.featuresData" ng-class="feature.selected ? '' : 'disabled-table-row'">
-                                <td class="icon-td" ng-click="toggleFeature(feature)"><span class="fa fa-check-circle-o"></span> <b>{{feature.name}}</b>
+                            <tr ng-repeat="feature in featuresData" ng-class="feature.selected ? '' : 'disabled-table-row'">
+                                <td class="icon-td"><input type="checkbox" ng-model="feature.selected"> <b>{{feature.name}}</b>
                                 </td>
                                 <td>
                                     <div class="class-dot" ng-style="classNameToBgStyle(feature.className)"></div>

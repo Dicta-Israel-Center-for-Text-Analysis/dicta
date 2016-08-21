@@ -68,9 +68,4 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         $scope.saveFeatureSet();
         $scope.confirm();
     }
-
-    $scope.classNameToBgStyle = function (name) {
-        return { "background-color": ClassService.classNameToColor(name) };
-    };
-
 });

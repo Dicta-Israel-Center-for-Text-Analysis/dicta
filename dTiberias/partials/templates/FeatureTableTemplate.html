@@ -1,12 +1,12 @@
 ﻿<table class="table table-striped feature-set-table">
     <tr class="vfeature_content">
-        <td>Feature</td>
-        <td>Class</td>
+        <td><a href="" ng-click="sortClick('name')">Feature <span ng-class="arrowClass('name')"></span></a></td>
+        <td><a href="" ng-click="sortClick('className')">Class <span ng-class="arrowClass('className')"></span></a></td>
         <td class="vimages_2">Occurrences</td>
         <td class="vimages_three">Frequency</td>
-        <td class="vimages_3">T-test</td>
+        <td class="vimages_3"><a href="" ng-click="sortClick('-maxTTest')">T-test <span ng-class="arrowClass('-maxTTest')"></span></a></td>
     </tr>
-    <tr ng-repeat="feature in features" ng-class="feature.selected ? '' : 'disabled-table-row'">
+    <tr ng-repeat="feature in features|orderBy:sortKey:sortReverse" ng-class="feature.selected ? '' : 'disabled-table-row'">
         <td class="icon-td"><input type="checkbox" ng-model="feature.selected"> <b>{{feature.name}}</b>
         </td>
         <td>

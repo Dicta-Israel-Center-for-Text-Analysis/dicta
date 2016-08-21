@@ -35,7 +35,7 @@
     };
 });
 
-jTextMinerApp.directive('featureTable', function () {
+jTextMinerApp.directive('featureTable', function (ClassService) {
     return {
         restrict: 'AE',
         scope: {
@@ -49,6 +49,32 @@ jTextMinerApp.directive('featureTable', function () {
             $scope.maxTTestFilter = function (item) {
                 return (item.maxTTest >= 2.0);
             };
+
+            $scope.sortKey = '-maxTTest';
+            $scope.sortReverse = false;
+            $scope.sortClick = function (field){
+                if ($scope.sortKey==field) {
+                    $scope.sortReverse = !$scope.sortReverse;
+                }
+                else {
+                    $scope.sortKey = field;
+                    $scope.sortReverse = false;
+                }
+            }
+            $scope.arrowClass = function (field) {
+                if ($scope.sortKey == field) {
+                    if ($scope.sortReverse)
+                        return "fa fa-caret-up";
+                    else
+                        return "fa fa-caret-down";
+                }
+                return "";
+            }
+
+            $scope.classNameToBgStyle = function (name) {
+                return { "background-color": ClassService.classNameToColor(name) };
+            };
+
 
             /* currently unused
             $scope.isMoreDetails = false;

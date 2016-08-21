@@ -55,7 +55,7 @@ jTextMinerApp.factory("CAPIService", function ($resource) {
     );
 });
 
-jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, FeatureService, APIService, $location, InProgressService, ClassService, SelectClassService) {
+jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, APIService, $location, InProgressService, ClassService, SelectClassService) {
     var service = {};
 
     service.baseUrl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot5/api/JTextMinerAPI";
@@ -139,10 +139,10 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         this.data.classificationCrossValidationFolds = ClassificationService.Classification_CrossValidationFolds;
         this.data.corpusMaxId = ClassService.Corpus_maxId;
 
-        this.data.featureSets = FeatureService.Feature_sets;
+        this.data.featureSets = ClassificationService.featureCollection.Feature_sets;
         this.data.corpusClasses = ClassService.Corpus_classes;
 
-        this.data.featuresData = FeatureService.featuresData;
+        this.data.featuresData = ClassificationService.featureCollection.featuresData;
 
         this.data.selectTestTextKeys = SelectClassService.lastTestSetSelectedRootKeys;
         this.data.cvResultData = this.cvResultData;
@@ -160,7 +160,7 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
 
     service.NewExperiment = function () {
         this.updateResultData([]);
-        FeatureService.updateFeaturesData({});
+        ClassificationService.featureCollection.updateFeaturesData({});
         SegmentationService.SegmentationDefaultValues();
 
         this.data = {};

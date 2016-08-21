@@ -2,24 +2,29 @@
     return {
         restrict: 'AE',
         scope: {
-            showDeleteButton: '=showDeleteButton'
+            showDeleteButton: '=showDeleteButton',
+            featureCollection: '='
         },
         templateUrl: 'partials/templates/FeatureSetTemplate.html',
-        controller: ['$scope', 'FeatureService', function ($scope, FeatureService) {
-            $scope.Feature_sets = FeatureService.Feature_sets;
+        controller: ['$scope', function ($scope) {
+            $scope.Feature_sets = $scope.featureCollection.Feature_sets;
             $scope.deleteFeatureSet = function (index) {
-                FeatureService.deleteFeatureSet(index);
+                $scope.featureCollection.deleteFeatureSet(index);
             };
             $scope.editFeatureSet = function (index) {
                 var featuresData;
-                if (FeatureService.featuresData.features !== undefined && FeatureService.featuresData.features.length > index)
-                    featuresData = FeatureService.featuresData.features[index];
+                if ($scope.featureCollection.featuresData.features !== undefined && $scope.featureCollection.featuresData.features.length > index)
+                    featuresData = $scope.featureCollection.featuresData.features[index];
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
                     scope: $scope,
-                    data: {featureSet: FeatureService.Feature_sets[index], featuresData: featuresData}
+                    data: {
+                        featureCollection: $scope.featureCollection,
+                        featureSet: $scope.featureCollection.Feature_sets[index],
+                        featuresData: featuresData
+                    }
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);
                 }, function (reason) {
@@ -34,30 +39,18 @@ jTextMinerApp.directive('featureTable', function () {
     return {
         restrict: 'AE',
         scope: {
-            isSelectDisabled: '=isSelectDisabled'
+            isSelectDisabled: '=isSelectDisabled',
+            features: '='
         },
         templateUrl: 'partials/templates/FeatureTableTemplate.html',
-        controller: ['$scope', 'FeatureService', function ($scope, FeatureService) {
+        controller: ['$scope', function ($scope) {
             $scope.predicate = '-maxTTest';
-
-            $scope.Feature_sets = FeatureService.Feature_sets;
-
-            $scope.featuresData = FeatureService.featuresData;
-            /*
-            $scope.$watch('featuresData', function () {
-                if (!angular.isUndefined($scope.featuresData)) {
-                    FeatureService.updateFeaturesData($scope.featuresData);
-                }
-            });
-            */
-            $scope.$on('featuresDataUpdated', function () {
-                $scope.featuresData = FeatureService.featuresData;
-            });
 
             $scope.maxTTestFilter = function (item) {
                 return (item.maxTTest >= 2.0);
             };
 
+            /* currently unused
             $scope.isMoreDetails = false;
             $scope.moreDetails = function () {
                 $scope.isMoreDetails = true;
@@ -75,6 +68,7 @@ jTextMinerApp.directive('featureTable', function () {
             $scope.$on('totalNumberOfFeaturesUpdated', function () {
                 $scope.TotalNumberOfFeatures = FeatureService.totalNumberOfFeatures;
             });
+            */
         }]
     };
 });

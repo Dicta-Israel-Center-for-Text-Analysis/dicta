@@ -1,6 +1,8 @@
 ﻿
-jTextMinerApp.factory('ClassificationService', function ($rootScope) {
-    var root = {};
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory) {
+    var root = {
+        featureCollection: FeatureCollectionFactory.newCollection()
+    };
 
     //Classification data members and update functions
     root.Classification_CrossValidationFolds = 10;

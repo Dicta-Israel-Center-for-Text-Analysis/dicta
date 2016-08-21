@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, FeatureService, InProgressService) {
+jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, ClassificationService, InProgressService) {
     
     $scope.showInProcess = ExperimentService.isReady != 1;
     $scope.$on('isReady_Updated', function () {
@@ -7,16 +7,16 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
     });
     
     
-    $scope.Feature_sets = FeatureService.Feature_sets;
+    $scope.Feature_sets = ClassificationService.featureCollection.Feature_sets;
     $scope.$on('featureSetDataUpdated', function () {
-        $scope.Feature_sets = FeatureService.Feature_sets;
-        $scope.featuresData = FeatureService.featuresData;
+        $scope.Feature_sets = ClassificationService.featureCollection.Feature_sets;
+        $scope.featuresData = ClassificationService.featureCollection.featuresData;
     });
 
-    $scope.featuresData = FeatureService.featuresData;
+    $scope.featuresData = ClassificationService.featureCollection.featuresData;
     $scope.$watch('featuresData', function () {
         if (!angular.isUndefined($scope.featuresData)) {
-            FeatureService.updateFeaturesData($scope.featuresData);
+            ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
         }
     });
     
@@ -42,10 +42,10 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
 
         $scope.data.expName = ExperimentService.ExperimentName;
 
-        $scope.data.featureSets = FeatureService.Feature_sets;
+        $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
         $scope.data.corpusClasses = ExperimentService.Corpus_classes;
 
-        $scope.data.featuresData = FeatureService.featuresData;
+        $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
 
     }
     $scope.AddFeatureSet = function () {
@@ -69,7 +69,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
             InProgressService.updateIsReady(1);
             var results = response;
             $scope.featuresData = results;
-            FeatureService.updateFeaturesData(results);
+            ClassificationService.featureCollection.updateFeaturesData(results);
             focus('focusIndexTop');
 
         });
@@ -77,22 +77,22 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
 
     $scope.predicate = '-maxTTest';
 
-    $scope.TotalNumberOfFeatures = FeatureService.totalNumberOfFeatures;
+    $scope.TotalNumberOfFeatures = ClassificationService.featureCollection.totalNumberOfFeatures;
     $scope.$on('totalNumberOfFeaturesUpdated', function () {
-        $scope.TotalNumberOfFeatures = FeatureService.totalNumberOfFeatures;
+        $scope.TotalNumberOfFeatures = ClassificationService.featureCollection.totalNumberOfFeatures;
     });
 
     $scope.checkAll = function () {
         for (var i = 0; i < $scope.featuresData.features.length; i++) {
             $scope.featuresData.features[i].selected = true;
         }
-        FeatureService.updateFeaturesData($scope.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
     };
     $scope.uncheckAll = function () {
         for (var i = 0; i < $scope.featuresData.features.length; i++) {
             $scope.featuresData.features[i].selected = false;
         }
-        FeatureService.updateFeaturesData($scope.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
     };
     $scope.checkTTest = function () {
         for (var i = 0; i < $scope.featuresData.features.length; i++) {
@@ -101,7 +101,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
             else
                 $scope.featuresData.features[i].selected = false;
         }
-        FeatureService.updateFeaturesData($scope.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
     };
     $scope.indexTop = 200;
     $scope.checkMostTop = function () {
@@ -115,7 +115,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
                 features[i].selected = false;
             count++;
         }
-        FeatureService.updateFeaturesData($scope.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
     };
     
 });

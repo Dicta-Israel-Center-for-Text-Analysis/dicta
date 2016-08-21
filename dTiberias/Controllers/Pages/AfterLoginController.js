@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, CAPIService) {
+jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, CAPIService) {
 
     $scope.isShow = false;
     ExperimentService.updateExperimentTypeModelValue("Classification");
@@ -104,7 +104,7 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         InProgressService.updateIsReady(1);
                         AlertsService.determineAlert({msg: 'DownloadStoredExperiment', type: 'success'});
                         $scope.UpdateData(response);
-                        FeatureService.updateTotalNumberOfFeatures(null);
+                        ClassificationService.featureCollection.updateTotalNumberOfFeatures(null);
                         $scope.UpdateExtractFeaturesData();
                         APIService.apiRun({crud: 'ExtractFeaturesClassification'}, $scope.data, function (response) {
                             var results = response;
@@ -149,10 +149,10 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
         ClassService.Corpus_maxId = data.corpusMaxId;
 
-        FeatureService.Feature_sets = data.featureSets;
+        ClassificationService.featureCollection.Feature_sets = data.featureSets;
         ClassService.Corpus_classes = data.corpusClasses;
 
-        FeatureService.updateFeaturesData(data.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
 
         SelectClassService.setTestSetRootKeys(data.selectTestTextKeys);
 
@@ -169,10 +169,10 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
 
         $scope.data.expName = ExperimentService.ExperimentName;
 
-        $scope.data.featureSets = FeatureService.Feature_sets;
+        $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
         $scope.data.corpusClasses = ClassService.Corpus_classes;
 
-        $scope.data.featuresData = FeatureService.featuresData;
+        $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
 
     }
 

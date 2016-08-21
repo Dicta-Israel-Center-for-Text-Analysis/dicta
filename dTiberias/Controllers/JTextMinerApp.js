@@ -40,20 +40,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'AfterLoginController',
         templateUrl: 'partials/Pages/partial-AfterLogin.html'
     })
-    .state('Experiment', {
-        url: '/Experiment',
-        controller: 'ExperimentController',
-        templateUrl: 'partials/Pages/partial-Experiment.html'
-    })
     .state('TestSet', {
         url: '/TestSet',
         controller: 'TestSetController',
         templateUrl: 'partials/Pages/partial-TestSet.html'
-    })
-    .state('Segmentation', {
-        url: '/Segmentation',
-        controller: 'SegmentationController',
-        templateUrl: 'partials/Pages/partial-Segmentation.html'
     })
     .state('Unmasking', {
         url: '/Unmasking',

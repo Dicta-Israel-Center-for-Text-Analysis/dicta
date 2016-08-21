@@ -1,6 +1,7 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngDialog, InProgressService, APIService, FeatureService, ClassService) {
-    
+jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngDialog, InProgressService, APIService, ClassService) {
+
+    var featureCollection = $scope.ngDialogData.featureCollection;
     $scope.showInProcess = InProgressService.isReady != 1;
     $scope.$on('isReady_Updated', function () {
         $scope.showInProcess = InProgressService.isReady != 1;
@@ -45,17 +46,17 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
 
     $scope.toggleFeature = function(feature) {
         feature.selected = !feature.selected;
-        FeatureService.updateTotalNumberOfFeatures(feature);
+        featureCollection.updateTotalNumberOfFeatures(feature);
     };
 
     $scope.saveFeatureSet = function () {
         if ($scope.newFeatureSet) {
-            FeatureService.FeatureSet_maxId = FeatureService.FeatureSet_maxId + 1;
+            featureCollection.FeatureSet_maxId = featureCollection.FeatureSet_maxId + 1;
             console.log("isIncludeLexeme: " + $scope.featureSet.includeLexeme);
             console.log("isSpoOnly: " + $scope.featureSet.spoOnly);
-            $scope.featureSet.id = FeatureService.FeatureSet_maxId;
-            $scope.featureSet.featureSetName = 'Default name' + FeatureService.FeatureSet_maxId;
-            FeatureService.Feature_sets.push($scope.featureSet);
+            $scope.featureSet.id = featureCollection.FeatureSet_maxId;
+            $scope.featureSet.featureSetName = 'Default name' + featureCollection.FeatureSet_maxId;
+            featureCollection.Feature_sets.push($scope.featureSet);
         }
         else {
             angular.copy($scope.featureSet, $scope.ngDialogData.featureSet);

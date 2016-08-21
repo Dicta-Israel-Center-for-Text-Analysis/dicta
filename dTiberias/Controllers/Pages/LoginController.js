@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.controller('LoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, FeatureService, ClassService, SelectClassService, SaveClassInterface) {
+jTextMinerApp.controller('LoginController', function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface) {
     $scope.currentUser = ExperimentService.user;
     $scope.showSignUp = false; //$scope.currentUser === 'user';
     if (ExperimentService.isNewExperiment)
@@ -121,7 +121,7 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
                         InProgressService.updateIsReady(1);
                         AlertsService.determineAlert({ msg: 'DownloadStoredExperiment', type: 'success' });
                         $scope.UpdateData(response);
-                        FeatureService.updateTotalNumberOfFeatures(null);
+                        ClassificationService.featureCollection.updateTotalNumberOfFeatures(null);
                         $scope.UpdateExtractFeaturesData();
                         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
                             var results = response;
@@ -165,10 +165,10 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
 
         ClassService.Corpus_maxId = data.corpusMaxId;
 
-        FeatureService.Feature_sets = data.featureSets;
+        ClassificationService.featureCollection.Feature_sets = data.featureSets;
         ClassService.Corpus_classes = data.corpusClasses;
 
-        FeatureService.updateFeaturesData(data.featuresData);
+        ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
     }
     $scope.UpdateExtractFeaturesData = function () {
         $scope.data = {};
@@ -178,10 +178,10 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
 
         $scope.data.expName = ExperimentService.ExperimentName;
 
-        $scope.data.featureSets = FeatureService.Feature_sets;
+        $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
         $scope.data.corpusClasses = ClassService.Corpus_classes;
 
-        $scope.data.featuresData = FeatureService.featuresData;
+        $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
 
     }
 

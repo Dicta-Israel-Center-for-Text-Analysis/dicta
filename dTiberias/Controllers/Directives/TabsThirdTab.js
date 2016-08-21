@@ -1,8 +1,9 @@
 ﻿jTextMinerApp.directive('tabsThirdTab', function () {
     return {
         restrict: 'AE',
+        scope: {},
         templateUrl: 'partials/templates/TabsThirdTab.html',
-        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
+        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
 
             $scope.tab = 1;
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -76,10 +77,10 @@
 
                 $scope.dataExtract.expName = ExperimentService.ExperimentName;
 
-                $scope.dataExtract.featureSets = FeatureService.Feature_sets;
+                $scope.dataExtract.featureSets = SegmentationService.featureCollection.Feature_sets;
                 $scope.dataExtract.corpusClasses = ClassService.Corpus_classes;
 
-                $scope.dataExtract.featuresData = FeatureService.featuresData;
+                $scope.dataExtract.featuresData = SegmentationService.featureCollection.featuresData;
 
                 $scope.dataExtract.segmentationActionMode = SegmentationService.Segmentation_ActionMode;
                 $scope.dataExtract.segmentationChunkBy = SegmentationService.Segmentation_ChunkBy;
@@ -99,9 +100,9 @@
                 $scope.dataRun.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
                 $scope.dataRun.selectedAlgorithmTypeAttributes = ExperimentService.selectedAlgorithmTypeAttributes;
 
-                $scope.dataRun.featureSets = FeatureService.Feature_sets;
+                $scope.dataRun.featureSets = SegmentationService.featureCollection.Feature_sets;
 
-                $scope.dataRun.featuresData = FeatureService.featuresData;
+                $scope.dataRun.featuresData = SegmentationService.featureCollection.featuresData;
 
 
                 $scope.dataRun.segmentationActionMode = SegmentationService.Segmentation_ActionMode;
@@ -138,7 +139,6 @@
 
                 APIService.apiRun({ crud: 'ExtractFeaturesSegmentation' }, $scope.dataExtract, function (response) {
                     var results = response;
-                    $scope.featuresData = results;
                     $scope.UpdateDataForRun();
                     InProgressService.updateIsReady(0);
 
@@ -146,7 +146,8 @@
                         InProgressService.updateIsReady(1);
                         var results = response;
                         $scope.resultData = results;
-                        FeatureService.updateFeaturesData(results.featuresData);
+                        $scope.featuresData = results.featuresData;
+                        SegmentationService.featureCollection.updateFeaturesData(results.featuresData);
                     });
 
                 });

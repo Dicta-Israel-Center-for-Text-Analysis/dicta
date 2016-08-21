@@ -7,7 +7,7 @@ jTextMinerApp.directive('trainingClasses', function () {
         scope: {
             showDeleteButton: '=showDeleteButton'
         },
-        controller: ['$scope', 'ExperimentService', 'APIService', 'FeatureService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, FeatureService, ClassService, InProgressService) {
+        controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, ClassificationService, ClassService, InProgressService) {
             $scope.colors = ['Red', 'Green', 'Blue'];
 
             $scope.classes = ClassService.Corpus_classes;
@@ -27,7 +27,7 @@ jTextMinerApp.directive('trainingClasses', function () {
 
                 APIService.apiRun({ crud: 'DeleteClass' }, data, function (response) {
                     ClassService.Corpus_classes.splice(index, 1);
-                    FeatureService.updateFeaturesData({});
+                    ClassificationService.featureCollection.updateFeaturesData({});
                     ClassService.updateIsAllBibleValue(true);
                     for (var i = 0; i < ClassService.Corpus_classes.length; i++) {
                         var corpusClass = ClassService.Corpus_classes[i];

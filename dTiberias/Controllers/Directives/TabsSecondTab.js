@@ -2,7 +2,7 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsSecondTab.html',
-        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'FeatureService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, FeatureService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService) {
+        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService) {
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;
@@ -43,10 +43,10 @@
 
                 $scope.data.expName = ExperimentService.ExperimentName;
 
-                $scope.data.featureSets = FeatureService.Feature_sets;
+                $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
                 $scope.data.corpusClasses = ClassService.Corpus_classes;
 
-                $scope.data.featuresData = FeatureService.featuresData;
+                $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
 
             }
 
@@ -63,10 +63,10 @@
 
                 ClassService.Corpus_maxId = data.corpusMaxId;
 
-                FeatureService.Feature_sets = data.featureSets;
+                ClassificationService.featureCollection.Feature_sets = data.featureSets;
                 ClassService.Corpus_classes = data.corpusClasses;
 
-                FeatureService.updateFeaturesData(data.featuresData);
+                ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
             }
 
 
@@ -126,7 +126,7 @@
             });
             $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
                 ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
-                FeatureService.updateFeaturesData({});
+                ClassificationService.featureCollection.updateFeaturesData({});
                 ClassService.Corpus_maxId = ClassService.Corpus_maxId + 1;
                 //ExperimentService.Corpus_classes.push({
                 ClassService.pushCorpus_classes({
@@ -154,7 +154,7 @@
                     APIService.apiRun({ crud: 'ExtractFeaturesClassification' }, $scope.data, function (response) {
                         var results = response;
                         $scope.featuresData = results;
-                        FeatureService.updateFeaturesData($scope.featuresData);
+                        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
                         InProgressService.updateIsReady(1);
                         $scope.NextToResult();
                     }, function (errorResponse) {InProgressService.setError(errorResponse.statusText);});
@@ -195,6 +195,8 @@
 
                         ExperimentService.updateCvResultData(response);
                         $scope.UpdateDataForGettingResult();
+                        $scope.data.testSetTitlesCommonPrefix = SelectClassService.testSetTitlesCommonPrefix;
+
                         APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
                             InProgressService.updateIsReady(1);
                             ExperimentService.tsResultData = response2;
@@ -254,10 +256,10 @@
                 //$scope.data.classificationSplitRatioCrossValidation = ExperimentService.Classification_Split_ratio_cross_validation;
                 $scope.data.corpusMaxId = ClassService.Corpus_maxId;
 
-                $scope.data.featureSets = FeatureService.Feature_sets;
+                $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
                 $scope.data.corpusClasses = ClassService.Corpus_classes;
 
-                $scope.data.featuresData = FeatureService.featuresData;
+                $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
             }
 
             // CV
@@ -394,10 +396,11 @@
 
 
             // feature dialog
-            $scope.featuresData = FeatureService.featuresData;
+            $scope.featuresData = ClassificationService.featureCollection.featuresData;
+            $scope.featureCollection = ClassificationService.featureCollection;
 
             $scope.$on('featuresDataUpdated', function () {
-                $scope.featuresData = FeatureService.featuresData;
+                $scope.featuresData = ClassificationService.featureCollection.featuresData;
             });
 
             $scope.OpenSelectFeatureSet = function () {
@@ -405,6 +408,7 @@
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
+                    data: { featureCollection: ClassificationService.featureCollection },
                     scope: $scope
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);

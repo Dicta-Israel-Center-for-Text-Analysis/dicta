@@ -1,5 +1,7 @@
-﻿jTextMinerApp.factory('SegmentationService', function ($rootScope) {
-    var root = {};
+﻿jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollectionFactory) {
+    var root = {
+        featureCollection: FeatureCollectionFactory.newCollection()
+    };
 
     root.SegmentationDefaultValues = function () {
         this.Segmentation_ActionMode = 'SelectOnlineCorpus';

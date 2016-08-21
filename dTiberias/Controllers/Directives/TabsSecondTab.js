@@ -195,7 +195,6 @@
 
                         ExperimentService.updateCvResultData(response);
                         $scope.UpdateDataForGettingResult();
-                        $scope.data.testSetTitlesCommonPrefix = SelectClassService.testSetTitlesCommonPrefix;
 
                         APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
                             InProgressService.updateIsReady(1);
@@ -333,6 +332,18 @@
                     $scope.legend = $sce.trustAsHtml(results.legend);
                 });
             }
+
+            function cleanTitle(name){
+                var trimmed = name.replace(/.rtf$/,'');
+                // there's not going to be anything left if this is the only key
+                if (trimmed.length == SelectClassService.testSetTitlesCommonPrefix.length) {
+                    return trimmed.substring(trimmed.lastIndexOf('_') + 1);
+                }
+                else {
+                    return trimmed.substring((SelectClassService.testSetTitlesCommonPrefix.length + 1));
+                }
+            }
+
             $scope.setSelectedTestFile = function (item, index) {
 
                 $scope.inited = false;
@@ -348,6 +359,7 @@
                     var results = response;
                     item.htmlText = results.htmlText;
                     item.featureList = results.features;
+                    item.title = cleanTitle(item.name);
                     $scope.testSetChunks[index] = item;
                     $scope.legend = $sce.trustAsHtml(results.legend);
 

@@ -17,9 +17,9 @@
                             <select autofocus class="form-control" name="TokenizerTypeGroup" ng-model="featureSet.tokenizerType">
                                 <option value="Word">Words</option>
                                 <option value="Letter" > Letters</option>
-                                <option ng-show="isAllBible" value="SyntaxClause">Syntax -- Clause types</option>
-                                <option ng-show="isAllBible" value="SyntaxPhrase" >Syntax -- Phrase Function Sequences </option>
-                                <option ng-show="isAllBible" value="Morphology" > Morphology </option>
+                                <option ng-disabled="!featureEnabled('Morphology')" value="Morphology" >Morphology </option>
+                                <option ng-disabled="!featureEnabled('SyntaxClause')" value="SyntaxClause">Syntax -- Clause types</option>
+                                <option ng-disabled="!featureEnabled('SyntaxPhrase')" value="SyntaxPhrase" >Syntax -- Phrase Function Sequences </option>
                                 <option disabled value="PartsOfSpeech" > Parts of speech</option>
                             </select>
                         </div>
@@ -31,8 +31,8 @@
                                 <span>tokenized</span>
                             </label>
 
-                            <label ng-show="isAllBible"  class="checkbox">
-                                <input type="checkbox" ng-model="featureSet.vocalized" />
+                            <label ng-show="isAllBible" ng-disabled="!featureEnabled('vocalized')" class="checkbox">
+                                <input type="checkbox"  ng-model="featureSet.vocalized" />
                                 <span>vocalized</span>
                             </label>
                     </div>

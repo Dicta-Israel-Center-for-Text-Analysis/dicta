@@ -7,7 +7,7 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         $scope.showInProcess = InProgressService.isReady != 1;
     });
 
-    $scope.isAllBible = ClassService.isAllBible
+    $scope.isAllBible = ClassService.isAllBible;
     $scope.$on('isAllBibleValueUpdated', function () {
         $scope.isAllBible = ClassService.isAllBible;
     });
@@ -36,6 +36,46 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
             includeNumber: false,
             includePunctuation: false
         };
+    }
+
+    var corpusSets = {};
+
+    // this doesn't belong here, but rather in a service that holds both the classes and feature sets, so it's here until after refactoring
+    for (var i = 0; i < ClassService.Corpus_classes.length; i++) {
+        var currentClass = ClassService.Corpus_classes[i];
+        var classKeys = currentClass.selectedText.split(', ');
+        for (var j = 0; j < classKeys.length; j++) {
+            var key = classKeys[j];
+            if (key.length > 0) {
+                var corpus = key.split('/')[0];
+                corpusSets[corpus] = true;
+            }
+        }
+    }
+
+    var corpusList = Object.keys(corpusSets);
+    $scope.isAllBible = corpusList.length == 1 && corpusList[0] == 'Bible';
+
+    var onlyBibleMishnaOrTosefta = true;
+    for (var i = 0; i < corpusList.length; i++) {
+        if (['Bible', 'Mishnah', 'Tosefta'].indexOf(corpusList[i]) == -1)
+            onlyBibleMishnaOrTosefta = false;
+    }
+
+    $scope.featureEnabled = function (featureName) {
+        if (['SyntaxClause','SyntaxPhrase'].indexOf(featureName) > -1)
+            return false;
+        else if (featureName == 'Morphology' && !onlyBibleMishnaOrTosefta)
+            return false;
+        else if(!$scope.isAllBible) {
+            if (featureName == 'vocalized')
+                return false;
+        }
+        return true;
+    }
+
+    if (!$scope.featureEnabled('vocalized')) {
+        $scope.featureSet.vocalized = false;
     }
 
     $scope.featureSetChanged = false;

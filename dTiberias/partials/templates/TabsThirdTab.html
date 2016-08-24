@@ -87,7 +87,7 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
-        <div ng-show="!showInProcess" class="col-md-1">
+        <div ng-show="!showInProcess && resultData !== undefined && resultData.segments !== undefined" class="col-md-1">
             <div class="sid-bar0" style="font-size:10px;">
                  {{resultData.segments.length}} segments
             </div>

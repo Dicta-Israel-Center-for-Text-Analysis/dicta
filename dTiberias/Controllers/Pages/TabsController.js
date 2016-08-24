@@ -1,35 +1,19 @@
 ﻿// create the controller and inject Angular's $scope
 jTextMinerApp.controller('TabsController', function ($scope, ClassService, $rootScope, SelectClassService, SaveClassInterface) {
-    
-    $scope.goToZeroTab = function ()
+    $scope.tabNumber = 0;
+    $scope.goToTab = function (tabNumber)
     {
-        $scope.zeroTabClass = "active";
-        $scope.firstTabClass = "";
-        $scope.secondTabClass = "";
-        $scope.thirdTabClass = "";
-    }
-    $scope.goToFirstTab = function ()
-    {
-        $scope.zeroTabClass = "";
-        $scope.firstTabClass = "active";
-        $scope.secondTabClass = "";
-        $scope.thirdTabClass = "";
-    }
-    $scope.goToSecondTab = function ()
-    {
-        $scope.zeroTabClass = "";
-        $scope.firstTabClass = "";
-        $scope.secondTabClass = "active";
-        $scope.thirdTabClass = "";
-    }
-    $scope.goToThirdTab = function ()
-    {
-        $scope.zeroTabClass = "";
-        $scope.firstTabClass = "";
-        $scope.secondTabClass = "";
-        $scope.thirdTabClass = "active";
-    }
-    $scope.goToZeroTab();
+        $scope.tabNumber = tabNumber;
+        switch(tabNumber) {
+            case 1: tiberias_tour(ParallelsTour); break;
+            case 2: tiberias_tour(ClassificationTour); break;
+            case 3: tiberias_tour(SegmentationTour); break;
+        }
+    };
+
+    $scope.tabClass = function(tabNumber){
+        return $scope.tabNumber == tabNumber ? "active" : "";
+    };
 
     $scope.SelectedTestClassText = function () {
         if (SaveClassInterface.testSetActionMode == 'SelectOnlineCorpus')

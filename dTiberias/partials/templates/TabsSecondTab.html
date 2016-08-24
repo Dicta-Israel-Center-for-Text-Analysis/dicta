@@ -11,20 +11,20 @@
         <div class="box-left-side">
 
             <div class="box-in">
-                <h2><a ng-click="ContinueToAddClass('SelectOnlineCorpus');">-Add a class <span class="fa fa-caret-down"></span></a> 
+                <h2><a id="classificationChooseClass" ng-click="ContinueToAddClass('SelectOnlineCorpus');">-Add a class <span class="fa fa-caret-down"></span></a>
                     <img title="There are three ways to add texts for this class. You can upload a zip file from your own computer. You can choose texts from one of our stored libraries. (For now only the Hebrew Bible is available.). You can choose a class you've previously used from a dropdown list (coming soon)." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">    
                 </h2>
                 <training-classes show-delete-button="true"></training-classes>
 
             </div>
             <div class="clearfix"></div>
-            <div class="box-found new-box">
+            <div id="classificationChooseAlgo" class="box-found new-box">
                 <p class="alogrithim">algorithm</p>
                 <p ng-click="OpenSelectAlgorithm();" class="alogrithim-class"><img src="images/secondTab/setting.png" alt="" /> {{selectedAlgorithmTypeName}} </p>
                 <img title="Choose which learning algorithm you wish to use for classification. If you're not sure what to do, leave the default settings and skip to the next stage." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
             </div>
             <div class="clearfix"></div>
-            <div class="feature-set">
+            <div id="classificationChooseFeatureSet" class="feature-set">
                 <p class="alogrithim">feature set</p>
                             
                 <feature-sets show-delete-button="true" feature-collection="featureCollection"></feature-sets>

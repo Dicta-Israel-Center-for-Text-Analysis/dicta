@@ -2,7 +2,7 @@
     return {
         restrict: 'AE',
         templateUrl: 'partials/templates/TabsSecondTab.html',
-        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService) {
+        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService) {
             $scope.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {
                 $scope.showInProcess = InProgressService.isReady != 1;

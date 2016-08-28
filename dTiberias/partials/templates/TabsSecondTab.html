@@ -185,7 +185,7 @@
                                             <p class="reprencented"><i class="fa fa-star"></i> Represented ({{(testFile.featureList | positiveInfluence: $index).length}})</p>
                                             <table>
                                                 <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: $index">
-                                                    <td class="reprencented-content"  title="{{feature.title}}">{{feature.name}}</td>
+                                                    <td class="reprencented-content"  title="{{feature.title}}">{{convertFeatureName(feature.name)}}</td>
                                                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                     <td class="frequenct-content">
                                                         <feature-frequency-graph feature-id='reprencented_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'

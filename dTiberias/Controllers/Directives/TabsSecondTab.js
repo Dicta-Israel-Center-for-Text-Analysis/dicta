@@ -435,10 +435,18 @@
                     dotsNail += ". ";
                 }
                 return $sce.trustAsHtml(dotsNail);
-            }
+            };
 
             $scope.scrollTo = function (index) {
                 window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);
+            };
+
+            $scope.convertFeatureName = function (featureName) {
+                var converted = featureName;
+                if (converted.indexOf('_') > -1) {
+                    converted = prettyPrintMorphology(converted);
+                }
+                return converted;
             }
         }]
     };

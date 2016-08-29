@@ -84,12 +84,31 @@ var ClassificationTour = {
     id: "Classification-tour",
     tourVersion: 1,
     steps: [{
-        title: "Classifying Texts",
-        content: "<p>In order to classify a text, you first need to define which classes the algorithm should choose between. Use this button to add at least two classes.</p>",
-        target: "classificationChooseClass",
-        placement: "right",
-        zindex: 9999
-    },
+            title: "Classifying Texts",
+            content: "<p>In order to classify a text, you first need to define which classes the algorithm should choose between. Use this button to add at least two classes.</p>",
+            target: "classificationChooseClass",
+            placement: "right",
+            zindex: 9999,
+            showNextButton: false,
+            nextOnTargetClick: true
+        },
+        {
+            title: "Classifying Texts",
+            content: "<p>Please choose a second class.</p>",
+            target: "classificationChooseClass",
+            placement: "right",
+            zindex: 9999,
+            showNextButton: false,
+            nextOnTargetClick: true
+        },
+        {
+            title: "Classifying Texts",
+            content: "<p>You can choose additional classes if you like, or you can continue.</p>",
+            target: "classificationChooseClass",
+            placement: "right",
+            zindex: 9999,
+            nextOnTargetClick: true
+        },
         {
             title: "Algorithm Settings",
             content: "<p>If you are familiar with classification algorithms, you can choose which algorithm to use and modify the settings. If not, you can leave the default settings as is.</p>",
@@ -109,6 +128,25 @@ var ClassificationTour = {
     onClose: function(){tiberias_tour_over(ClassificationTour)},
     onEnd: function(){tiberias_tour_over(ClassificationTour)}
 };
+var FeatureSetSelectionTour = {
+
+    id: "featureSetSelection-tour",
+    tourVersion: 1,
+    steps: [{
+            title: "Feature Set Settings",
+            content: "<p>Tiberias can use several different types of features for classifying texts.</p>" +
+            "<p>You can choose between using words as features or letters, and for some texts Tiberias also supports using word morphology. New types of features are still under development.</p>",
+            target: "featureSetChooseFeatureType",
+            placement: "right",
+            zindex: 9999,
+            showNextButton: false,
+            nextOnTargetClick: true
+        },
+    ],
+    onClose: function(){tiberias_tour_over(FeatureSetSelectionTour)},
+    onEnd: function(){tiberias_tour_over(FeatureSetSelectionTour)}
+};
+
 var SegmentationTour = {
     id: "segmentation-tour",
     tourVersion: 1,
@@ -133,7 +171,7 @@ function tiberias_tour_over(tour){
     {
         cookieString += " " + tourState + ":" + tourHash[tourState];
     }
-    $.cookie('seenTour', cookieString);
+    $.cookie('seenTour', cookieString, { expires: 1825, path: '/' });
 }
 
 function tiberias_tour_state_object() {

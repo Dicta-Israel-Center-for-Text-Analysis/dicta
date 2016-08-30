@@ -58,6 +58,9 @@ jTextMinerApp.factory("CAPIService", function ($resource) {
 jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, APIService, $location, InProgressService, ClassService, SelectClassService) {
     var service = {};
 
+    //FIXME: circular dependency
+    ClassificationService.ExperimentServiceFixMe = service;
+
     service.baseUrl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot5/api/JTextMinerAPI";
     //service.baseUrl = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
 

@@ -32,25 +32,9 @@
 
                 ClassService.updateExperimentActionMode(actionMode);
                 //$scope.Next();
-            }
+            };
 
-
-            $scope.UpdateExtractFeaturesData = function () {
-                $scope.data = {};
-                $scope.data.userLogin = ExperimentService.user;
-                $scope.data.expType = ExperimentService.ExperimentTypeModel;
-
-
-                $scope.data.expName = ExperimentService.ExperimentName;
-
-                $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
-                $scope.data.corpusClasses = ClassService.Corpus_classes;
-
-                $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
-
-            }
-
-
+            // set all the different data structures that hold classification data based on a saved data structure
             $scope.UpdateDataForNewExperiment = function (data) {
                 //ExperimentService.updateExperimentModeValue();
                 ExperimentService.updateExperimentTypeModelValue(data.expType);
@@ -142,81 +126,17 @@
 
             }
 
-
-
-            $scope.ContinueToResult = function () {
-                ExperimentService.updateExperimentTypeModelValue('Classification');
-
-                if (!$scope.featuresData || !$scope.featuresData.features || $scope.featuresData.features.length == 0) {
-                    InProgressService.updateIsReady(0);
-                    $scope.UpdateExtractFeaturesData();
-
-                    APIService.apiRun({ crud: 'ExtractFeaturesClassification' }, $scope.data, function (response) {
-                        var results = response;
-                        $scope.featuresData = results;
-                        ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
-                        InProgressService.updateIsReady(1);
-                        $scope.NextToResult();
-                    }, function (errorResponse) {InProgressService.setError(errorResponse.statusText);});
-                }
-                else {
-                    $scope.NextToResult();
-                }
+            $scope.runClassification = function () {
+                ClassificationService.runClassification()
+                    .then(function (response2) {
+                    $scope.testSetResults = response2.testSetResults;
+                    $scope.testSetChunks = [];
+                    for (var testFileIndex in $scope.testSetResults) {
+                        $scope.setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
+                    }
+                });
             }
-            $scope.NextToResult = function () {
-                //UnknownTestClass
-                var classData = SaveClassInterface; // {};
-                classData.actionMode = classData.testSetActionMode;
-                InProgressService.updateIsReady(0);
-                if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-                    classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
-                }
 
-                classData.expType = 'Classification';
-                APIService.apiRun({ crud: 'UnknownTestClass' }, classData, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    $scope.unknownClasses.splice(0, 1);
-                    $scope.addUnknownClass(1, results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks);
-                    ClassService.TestSet_unknown_class = $scope.unknownClasses;
-
-                    //CV
-                    $scope.Classification_ExperimentType = 'CV';
-                    ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
-
-                    AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
-                    InProgressService.updateIsReady(0);
-                    $scope.UpdateDataForGettingResult();
-
-                    APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response) {
-                        //Test set
-                        $scope.Classification_ExperimentType = 'TestSet';
-                        ClassificationService.updateClassification_ExperimentTypeValue($scope.Classification_ExperimentType);
-
-                        ExperimentService.updateCvResultData(response);
-                        $scope.UpdateDataForGettingResult();
-
-                        APIService.apiRun({ crud: 'RunClassification' }, $scope.data, function (response2) {
-                            InProgressService.updateIsReady(1);
-                            ExperimentService.tsResultData = response2;
-                            $scope.TSResultData = response2;
-                            $scope.testSetChunks = [];
-                            var sortedResults = TreeService.treeSort($scope.TSResultData.testSetResults,
-                                function(item) {
-                                    return item.name.replace(/_/g,'/').replace(/.rtf$/,'');
-                                });
-                            $scope.TSResultData.testSetResults = sortedResults;
-                            ExperimentService.tsResultData.testSetResults = sortedResults;
-                            for (var testFileIndex in sortedResults) {
-                                $scope.setSelectedTestFile(sortedResults[testFileIndex], testFileIndex);
-                            }
-                        });
-                    });
-
-
-                    });
-
-            }
             $scope.CVResultData = ExperimentService.cvResultData;
             $scope.$on('cvResultDataUpdated', function () {
                 $scope.CVResultData = ExperimentService.cvResultData;
@@ -224,10 +144,10 @@
             $scope.TSResultData = ExperimentService.tsResultData;
             $scope.$on('tsResultDataUpdated', function () {
                 alert("tsResultDataUpdated");
-                $scope.TSResultData = ExperimentService.tsResultData;
+                $scope.testSetResults = ExperimentService.tsResultData.testSetResults;
                 $scope.testSetChunks = [];
-                for (testFileIndex in $scope.TSResultData.testSetResults) {
-                    $scope.testSetChunks.push($scope.TSResultData.testSetResults[testFileIndex]);
+                for (testFileIndex in $scope.testSetResults) {
+                    $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
                 }
                 if ($scope.testSetChunks.length > 0) {
                     $scope.data = {};
@@ -241,25 +161,6 @@
                     });
                 }
             });
-            $scope.UpdateDataForGettingResult = function () {
-                $scope.data = {};
-                $scope.data.userLogin = ExperimentService.user;
-                $scope.data.expType = ExperimentService.ExperimentTypeModel;
-                $scope.data.expName = ExperimentService.ExperimentName;
-                $scope.data.selectedAlgorithmTypeId = ExperimentService.selectedAlgorithmTypeId;
-                $scope.data.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
-                $scope.data.selectedAlgorithmTypeAttributes = ExperimentService.selectedAlgorithmTypeAttributes;
-                $scope.data.classificationExperimentMode = ClassificationService.Classification_ExperimentType;
-                //$scope.data.classificationCrossValidationType = ExperimentService.Classification_CrossValidationType;
-                $scope.data.classificationCrossValidationFolds = ClassificationService.Classification_CrossValidationFolds;
-                //$scope.data.classificationSplitRatioCrossValidation = ExperimentService.Classification_Split_ratio_cross_validation;
-                $scope.data.corpusMaxId = ClassService.Corpus_maxId;
-
-                $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
-                $scope.data.corpusClasses = ClassService.Corpus_classes;
-
-                $scope.data.featuresData = ClassificationService.featureCollection.featuresData;
-            }
 
             // CV
             $scope.Feature_sets = ExperimentService.Feature_sets;
@@ -318,8 +219,8 @@
             });
 
             $scope.testSetChunks = [];
-            for (testFileIndex in $scope.TSResultData.testSetResults) {
-                $scope.testSetChunks.push($scope.TSResultData.testSetResults[testFileIndex]);
+            for (testFileIndex in $scope.testSetResults) {
+                $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
             }
             if ($scope.testSetChunks.length > 0) {
                 $scope.data = {};
@@ -363,7 +264,7 @@
                     $scope.testSetChunks[index] = item;
                     $scope.legend = $sce.trustAsHtml(results.legend);
 
-                    if ($scope.testSetChunks.length == $scope.TSResultData.testSetResults.length)
+                    if ($scope.testSetChunks.length == $scope.testSetResults.length)
                     {
                         $scope.countFilesPerClass = [];
                         for (currentClass in $scope.classes) {

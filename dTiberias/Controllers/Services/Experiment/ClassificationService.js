@@ -28,14 +28,37 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
         $rootScope.$broadcast("ClassificationValuesUpdated");
     }
 
+    root.DeleteClass = function (index) {
+        var currentClass = ClassService.Corpus_classes[index];
+        var deleteData = {
+            title: currentClass.title,
+            id: currentClass.id,
+            userLogin: ExperimentService.user,
+            expType: ExperimentService.ExperimentTypeModel,
+            expName: ExperimentService.ExperimentName
+        };
+        InProgressService.updateIsReady(0);
+
+        return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function (response) {
+            ClassService.Corpus_classes.splice(index, 1);
+            ClassificationService.featureCollection.updateFeaturesData({});
+            ClassService.updateIsAllBibleValue(true);
+            for (var i = 0; i < ClassService.Corpus_classes.length; i++) {
+                var corpusClass = ClassService.Corpus_classes[i];
+                ClassService.updateIsAllBibleValue(ClassService.isAllBible && corpusClass.bible);
+            }
+            InProgressService.updateIsReady(1);
+        }).$promise;
+    };
+
     root.runClassification = function () {
         return prepareClassification()
         .then(runClassificationInternal);
     };
     function prepareClassification () {
         root.ExperimentServiceFixMe.updateExperimentTypeModelValue('Classification');
-        var $scope = {}; // FIXME: dummy
-        if (!$scope.featuresData || !$scope.featuresData.features || $scope.featuresData.features.length == 0) {
+        // in theory, if nothing has changed, this can be skipped, but we don't yet have code that can check
+        if (true) {
             InProgressService.updateIsReady(0);
 
             var apiCallData = {
@@ -58,7 +81,10 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 function (errorResponse) {
                     InProgressService.setError(errorResponse.statusText);
                 }
-            ).$promise;
+            ).$promise
+                .then(
+                    APIService.apiRun( {} )
+                );
         }
         else
             return $q.when(null);

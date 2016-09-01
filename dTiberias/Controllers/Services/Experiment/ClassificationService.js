@@ -81,10 +81,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 function (errorResponse) {
                     InProgressService.setError(errorResponse.statusText);
                 }
-            ).$promise
-                .then(
-                    APIService.apiRun( {} )
-                );
+            ).$promise;
         }
         else
             return $q.when(null);

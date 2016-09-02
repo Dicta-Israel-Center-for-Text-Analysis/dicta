@@ -1,5 +1,6 @@
-﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService) {
+﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService, ClassificationService) {
     var classData = {};
+    ClassificationService.SaveClassInterfaceFixMe = classData;
 
     classData.testSetActionMode = 'SelectOnlineCorpus';
     $rootScope.$on('ExperimentTestSetActionModeValuesUpdated', function () {

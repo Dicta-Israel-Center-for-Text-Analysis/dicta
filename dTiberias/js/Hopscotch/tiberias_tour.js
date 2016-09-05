@@ -201,6 +201,11 @@ function tiberias_tour(tour) {
     }, 500);
 }
 
+function tiberias_tour_pause() {
+    if (hopscotch.getState())
+        hopscotch.endTour(false, false);
+}
+
 jTextMinerApp.run(function($rootScope){
     $rootScope.$on('$stateChangeSuccess',
         function (event, toState, toParams, fromState, fromParams) {

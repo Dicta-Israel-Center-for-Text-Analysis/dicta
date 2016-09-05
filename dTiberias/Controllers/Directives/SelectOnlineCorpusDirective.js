@@ -29,12 +29,12 @@
 
             // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
             // list selected nodes by key
-            $scope.selectedNodes = SelectClassService.lastSelectedRootKeys;
+            $scope.selectedNodes = SelectClassService.lastSelectedRootKeys.map(function(key){return key.substring("/Dicta Corpus/".length)});
             recalculatePartials();
 
             $rootScope.$on('lastSelectedRootKeys', function (event, args) {
                 if (Array.isArray(args)) {
-                    $scope.selectedNodes = args;
+                    $scope.selectedNodes = args.map(function(key){return key.substring("/Dicta Corpus/".length)});
                     recalculatePartials();
                 }
             });
@@ -142,7 +142,7 @@
 
                 recalculatePartials();
 
-                $rootScope.$broadcast('lastSelectedRootKeys', $scope.selectedNodes);
+                $rootScope.$broadcast('lastSelectedRootKeys', $scope.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;}));
             };
 
             $scope.selectCrumb = function (crumbNumber) {

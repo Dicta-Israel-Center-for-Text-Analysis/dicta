@@ -47,7 +47,8 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         for (var j = 0; j < classKeys.length; j++) {
             var key = classKeys[j];
             if (key.length > 0) {
-                var corpus = key.split('/')[0];
+                // should be 0, but we're removing /Dicta Corpus/
+                var corpus = key.split('/')[2];
                 corpusSets[corpus] = true;
             }
         }

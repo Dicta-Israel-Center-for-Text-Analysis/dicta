@@ -158,7 +158,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 root.ExperimentServiceFixMe.tsResultData = response2;
                 var sortedResults = TreeService.treeSort(response2.testSetResults,
                     function (item) {
-                        return item.name.replace(/_/g, '/').replace(/.rtf$/, '');
+                        return item.name.replace('/Dicta Corpus/','').replace(/_/g, '/').replace(/.rtf$/, '');
                     });
                 root.ExperimentServiceFixMe.tsResultData.testSetResults = sortedResults;
                 return sortedResults;

@@ -128,12 +128,11 @@
 }
 
 function prettyPrintMorphology(converted) {
-    converted = converted.replace(/^@_/, '').replace(/_$/, '');
+    converted = converted.replace(/^@/, '').replace(/_$/, '');
     for (var term in morphologyIdDict) {
-        converted = converted.replace(term, morphologyIdDict[term] + ', ');
+        converted = converted.replace('#' + term,', ' + morphologyIdDict[term]);
     }
-    // temporary conversion; the format of the string is supposed to change to something simpler
-    converted = converted.replace(/_([^ ]*)_/g, '$1, ').replace(/, _/g, ', ').replace(/, $/, '');
+    converted = converted.replace(/#/g, ', ').replace(/^, /, '');
     return converted;
 }
 

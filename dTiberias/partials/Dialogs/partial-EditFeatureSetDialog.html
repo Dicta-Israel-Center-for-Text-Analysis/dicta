@@ -1,6 +1,6 @@
 ﻿<div class="">
     <in-progress></in-progress>
-    <div class="modal-content" style="width: 900px;left: calc(50% - 450px)">
+    <div class="modal-content" style="width: 1000px;left: calc(50% - 450px)">
         <div class="modal-header">
             <h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -92,11 +92,15 @@
                 </div>
 
 
-                <div ng-if="featuresData && !featureSetChanged" class="col-sm-12">
+                <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">
                     <hr>
                     <div class="feature" style="height: 500px;overflow-y: auto">
                         <feature-table is-select-disabled="false" features="featuresData" is-morphology="featureSet.tokenizerType == 'Morphology'"></feature-table>
                     </div>
+                </div>
+                <div ng-if="!featuresData.length || featureSetChanged" class="col-sm-12 text-center">
+                    <hr>
+                    <button class="btn btn-primary" ng-click="extractFeatures()"><strong>Save Changes and View Features</strong></button>
                 </div>
             </div>
         </div>

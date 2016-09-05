@@ -52,10 +52,11 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
     };
 
     root.runClassification = function () {
-        return prepareClassification()
+        return root.prepareClassification()
         .then(runClassificationInternal);
     };
-    function prepareClassification () {
+
+    root.prepareClassification = function() {
         root.ExperimentServiceFixMe.updateExperimentTypeModelValue('Classification');
         // in theory, if nothing has changed, this can be skipped, but we don't yet have code that can check
         if (true) {

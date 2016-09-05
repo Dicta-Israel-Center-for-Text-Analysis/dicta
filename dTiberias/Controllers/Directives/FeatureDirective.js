@@ -150,9 +150,6 @@ jTextMinerApp.directive('featureSets', function (ngDialog) {
                 $scope.featureCollection.deleteFeatureSet(index);
             };
             $scope.editFeatureSet = function (index) {
-                var featuresData;
-                if ($scope.featureCollection.featuresData.features !== undefined && $scope.featureCollection.featuresData.features.length > index)
-                    featuresData = $scope.featureCollection.featuresData.features[index];
                 ngDialog.openConfirm({
                     template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
                     controller: 'EditFeatureSetDialogController',
@@ -160,8 +157,7 @@ jTextMinerApp.directive('featureSets', function (ngDialog) {
                     scope: $scope,
                     data: {
                         featureCollection: $scope.featureCollection,
-                        featureSet: $scope.featureCollection.Feature_sets[index],
-                        featuresData: featuresData
+                        featureIndex: index
                     }
                 }).then(function (value) {
                     console.log('Modal promise resolved. Value: ', value);

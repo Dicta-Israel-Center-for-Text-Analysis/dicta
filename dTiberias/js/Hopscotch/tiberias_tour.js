@@ -134,14 +134,56 @@ var FeatureSetSelectionTour = {
     tourVersion: 1,
     steps: [{
             title: "Feature Set Settings",
-            content: "<p>Tiberias can use several different types of features for classifying texts.</p>" +
-            "<p>You can choose between using words as features or letters, and for some texts Tiberias also supports using word morphology. New types of features are still under development.</p>",
+            content: "<p>Tiberias can use several different types of features for classifying texts.</p><br>" +
+            "<p>You can choose between using words or letters as features, and for some texts Tiberias also supports using word morphology. New types of features are still under development.</p><br>" +
+            "<p>Feature types that aren't available can't be selected.</p>",
             target: "featureSetChooseFeatureType",
             placement: "right",
-            zindex: 9999,
+            zindex: 10001
+        },
+        {
+            title: "Feature Set Settings",
+            content: "<p>You can limit the number of features that will be used in the model that will classify the text. The default uses 250 features.</p>",
+            target: "featureSetChooseNumber",
+            placement: "right",
+            zindex: 10001
+        },
+        {
+            title: "Feature Set Settings",
+            content: "<p>The model can use each feature in isolation (\"Unigrams\") or use features in groups of two (\"Bigrams\") or three (\"Trigrams\").</p><br>" +
+            "<p>For instance, if the feature type is \"Words\", then Trigrams will use groups of three words to build the model.</p>",
+            target: "featureSetUniBiTrigram",
+            placement: "right",
+            zindex: 10001
+        },
+        {
+            title: "Feature Set Settings",
+            content: "<p>You can choose how a feature that appears is weighted:</p>" +
+            "<ul><li>Binary - just look at whether it is present or not.</li></ul>" +
+            "<ul><li>Frequency - how often does it appear in the document.</li></ul>" +
+            "<ul><li>Tf-Idf - weight both the frequency and how rare the term is in all the documents that are being evaluated.</li></ul>",
+            target: "featureSetFeatureWeight",
+            placement: "left",
+            zindex: 10001
+        },
+        {
+            title: "Feature Set Settings",
+            content: "<p>Click here to see what features the system will find with the current settings.</p>",
+            target: "featureSetExtractFeatures",
+            placement: "top",
+            zindex: 10001,
             showNextButton: false,
             nextOnTargetClick: true
         },
+        {
+            title: "Feature Set Settings",
+            content: "<p>This table shows the features found in the texts.</p><br>" +
+            "<p>You can use the checkboxes to tell the system to ignore a specific feature.</p>",
+            target: "featureSetFeatureTable",
+            placement: "left",
+            zindex: 10001,
+            delay: 5000
+        }
     ],
     onClose: function(){tiberias_tour_over(FeatureSetSelectionTour)},
     onEnd: function(){tiberias_tour_over(FeatureSetSelectionTour)}

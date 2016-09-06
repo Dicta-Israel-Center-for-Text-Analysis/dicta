@@ -135,4 +135,5 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
         $scope.saveFeatureSet();
         $scope.confirm();
     }
+    tiberias_tour(FeatureSetSelectionTour);
 });

@@ -14,7 +14,7 @@
                 <div class="row form-horizontal">
                     <div class="col-sm-5">
                         <div class="syntax_content">
-                            <select autofocus class="form-control" name="TokenizerTypeGroup" ng-model="featureSet.tokenizerType">
+                            <select id="featureSetChooseFeatureType" autofocus class="form-control" name="TokenizerTypeGroup" ng-model="featureSet.tokenizerType">
                                 <option value="Word">Words</option>
                                 <option value="Letter" > Letters</option>
                                 <option ng-disabled="!featureEnabled('Morphology')" value="Morphology" >Morphology </option>
@@ -64,7 +64,7 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-7 form-inline">
+                <div id="featureSetChooseNumber" class="col-sm-5 form-inline">
                     <select class="form-control" name="FilterTypeGroup" ng-model="featureSet.filterType">
                         <option value="Common"> Use most common</option>
                         <option value="None">Use all features</option>
@@ -75,15 +75,18 @@
                         <input type="checkbox" ng-model="featureSet.fromEachClass"/> Per class
                     </label>
                 </div>
+                <div class="col-sm-2 form-inline">
+                    <select id="featureSetUniBiTrigram" class="form-control" ng-model="featureSet.featureType" name="FeatureType">
+                        <option>Unigram</option>
+                        <option>Bigram</option>
+                        <option>Trigram</option>
+                    </select>
+                </div>
+
                 <div class="col-sm-5 form-inline">
                     <div class="per_class">
-                        <select class="form-control" ng-model="featureSet.featureType" name="FeatureType">
-                            <option>Unigram</option>
-                            <option>Bigram</option>
-                            <option>Trigram</option>
-                        </select>
-                        <span class="">Feature Weight</span>
-                        <select class="form-control" name="FeatureWeightGroup" ng-model="featureSet.normalizerType">
+                         <span class="">Feature Weight</span>
+                        <select id="featureSetFeatureWeight" class="form-control" name="FeatureWeightGroup" ng-model="featureSet.normalizerType">
                             <option value="Binary">Binary</option>
                             <option value="Frequency">Frequency</option>
                             <option value="TfIdf">Tf-Idf</option>
@@ -94,13 +97,13 @@
 
                 <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">
                     <hr>
-                    <div class="feature" style="height: 500px;overflow-y: auto">
+                    <div id="featureSetFeatureTable" class="feature" style="height: 500px;overflow-y: auto">
                         <feature-table is-select-disabled="false" features="featuresData" is-morphology="featureSet.tokenizerType == 'Morphology'"></feature-table>
                     </div>
                 </div>
                 <div ng-if="!featuresData.length || featureSetChanged" class="col-sm-12 text-center">
                     <hr>
-                    <button class="btn btn-primary" ng-click="extractFeatures()"><strong>Save Changes and View Features</strong></button>
+                    <button id="featureSetExtractFeatures" class="btn btn-primary" ng-click="extractFeatures()"><strong>Save Changes and View Features</strong></button>
                 </div>
             </div>
         </div>
@@ -118,6 +121,7 @@
             </div>
         </div>
     </div>
+    <script>tiberias_tour(FeatureSetSelectionTour);</script>
 </div>
 <!--
     <table style="width:100%;" ng-show="!showInProcess">

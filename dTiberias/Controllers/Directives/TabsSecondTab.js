@@ -324,9 +324,9 @@
                     data: { featureCollection: ClassificationService.featureCollection },
                     scope: $scope
                 }).then(function (value) {
-                    console.log('Modal promise resolved. Value: ', value);
+                    tiberias_tour_pause();
                 }, function (reason) {
-                    console.log('Modal promise rejected. Reason: ', reason);
+                    tiberias_tour_pause();
                 });
             };
 

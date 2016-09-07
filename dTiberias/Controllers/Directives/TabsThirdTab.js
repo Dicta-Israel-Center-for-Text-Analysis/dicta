@@ -87,7 +87,7 @@
 
                 InProgressService.updateIsReady(0);
 
-                $scope.dataExtract.select_RootKeys = SelectClassService.lastSelectedRootKeys;
+                $scope.dataExtract.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
             }
 
 

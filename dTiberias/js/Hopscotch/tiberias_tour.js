@@ -2,8 +2,8 @@ var AfterLoginTour = {
     id: "afterLogin-tour",
     steps: [
         {
-            title: "Welcome to Tiberias!",
-            content: "<p>It looks like this is your first time here.</p><p>Tiberias gives you different tools for analyzing texts. To use any of the tools, you first need to choose what you want to analyze. Choose this button to select texts from Dicta's online corpus of text.</p>",
+            title: "Welcome to Dicta!",
+            content: "<p>It looks like this is your first time here.</p><p>Dicta gives you different tools for analyzing texts. To use any of the tools, you first need to choose what you want to analyze. Choose this button to select texts from Dicta's online corpus of text.</p>",
             target: "libraryBtn",
             placement: "top",
             // this zindex puts the tour under ngDialog dialog boxes
@@ -25,7 +25,7 @@ var TabTour = {
     id: "tab-tour",
     tourVersion: 1,
     steps: [{
-            title: "Introduction to Tiberias Tools",
+            title: "Introduction to Dicta Tools",
             content: "<p>This tab shows the texts you just selected.</p>",
             target: "selectedTextTab",
             placement: "bottom",
@@ -134,8 +134,8 @@ var FeatureSetSelectionTour = {
     tourVersion: 1,
     steps: [{
             title: "Feature Set Settings",
-            content: "<p>Tiberias can use several different types of features for classifying texts.</p><br>" +
-            "<p>You can choose between using words or letters as features, and for some texts Tiberias also supports using word morphology. New types of features are still under development.</p><br>" +
+            content: "<p>Dicta can use several different types of features for classifying texts.</p><br>" +
+            "<p>You can choose between using words or letters as features, and for some texts Dicta also supports using word morphology. New types of features are still under development.</p><br>" +
             "<p>Feature types that aren't available can't be selected.</p>",
             target: "featureSetChooseFeatureType",
             placement: "right",

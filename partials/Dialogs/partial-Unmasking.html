@@ -1,0 +1,60 @@
+﻿<div class="ngdialog-message">
+    <h3>Select parameters of Varification algorithm</h3>
+    <fieldset>
+        <legend>Varification Experiment parameters</legend>
+        <table style="width:100%;">
+            <tr>
+                <td title="To chunk the input files to minimum Chunk's_size words">Chunk's size (smallest)
+                    <input class="width_150" style="width:150px;" ng-model="Unmasking_ChunkSize" id="Chunk_size" type="text" value="{{Unmasking_ChunkSize}}" />
+                </td>
+            </tr>
+            <tr>
+                <td title="To rank the features accordng to Ranking_type">Ranking feature type
+                    <select class="width_150"  ng-model="Unmasking_RankingFeatureType" id="Ranking_feature_type" value="{{Unmasking_RankingFeatureType}}">
+                        <option>SVMRanker</option>
+                        <option>InfoGainRanker</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td title="How many times calculate the accuracy for each fold and for each iteration">Number of times
+                    <input class="width_150"  ng-model="Unmasking_NumberOfTimes" id="Number_of_times" type="text" value="{{Unmasking_NumberOfTimes}}" />
+                </td>
+            </tr>
+            <tr>
+                <td title="To devide the data to How many folds"># Cross validation
+                    <input class="width_150"  ng-model="Unmasking_NumberOfCrossValidation" id="Cross_validation" type="text" value="{{Unmasking_NumberOfCrossValidation}}" />
+                </td>
+            </tr>
+            <tr>
+                <td title="How many iteration to delete features and to calculate accuracy"># iteration
+                    <input class="width_150"  ng-model="Unmasking_NumberOfIteration" id="iteration" type="text" value="{{Unmasking_NumberOfIteration}}" />
+                </td>
+            </tr>
+            <tr>
+                <td title="To remove Number_features_to_delete top contributing features (in each direction) from data"># features to delete
+                    <input class="width_150"  ng-model="Unmasking_NumberOfFeaturesToDelete" id="features_to_delete" type="text" value="{{Unmasking_NumberOfFeaturesToDelete}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Algorithm</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>Algorithm type
+                    <select class="width_150"  id="AlgorithmType" ng-model="selectedAlgorithmType" ng-options="item as item.name for item in algorithms"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>Attributes
+                    <input class="width_100_percent" ng-model="selectedAlgorithmType.attributes" type="text" value="{{selectedAlgorithmType.attributes}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm()">Done</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+</div>

@@ -1,0 +1,145 @@
+﻿<h4>Varification page</h4>
+<!-- NAVIGATION -->
+
+
+<!-- links
+    https://docs.angularjs.org/tutorial/step_07
+    https://scotch.io/tutorials/angular-routing-using-ui-router
+    https://scotch.io/tutorials/single-page-apps-with-angularjs-routing-and-templating
+    -->
+
+<div id="main">
+
+    <table style="width:100%;">
+        <tr>
+            <td>
+                Choose two texts
+                <br />
+                Tiberias will build a graph
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table ng-show="classes.length" class="nav mytable">
+                    <tr>
+                        <td>Class name</td>
+                        <td>Chunking mode</td>
+                        <td>Chunking size</td>
+                        <td># Chunks</td>
+                        <td>Selected texts</td>
+                        <td>Update</td>
+                    </tr>
+                    <tr ng-repeat="item in classes" id="{{item.id}}">
+                        <td><img src="images/done.png" />{{item.title}}</td>
+                        <td>{{item.chunkMode}}</td>
+                        <td>{{item.chunkSize}}</td>
+                        <td>{{item.numberOfChunks}}</td>
+                        <td>{{item.selectedText}}</td>
+                        <td><img src="images/select.gif" ng-click="UpdateClass($index);" /></td>
+                    </tr>
+                    <tr></tr>
+                </table>
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Choose feature set for document representation</legend>
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <input ng-model="Unmasking_FeatureSet" type="radio" name="Unmasking_FeatureSet_Group" value="Default" /> Use default (250 most common tokenized words in corpus)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="10%">
+                                    <tr>
+                                        <td>
+                                            <input ng-click="OpenSelectFeatureSet();" ng-model="Unmasking_FeatureSet" type="radio" name="Unmasking_FeatureSet_Group" value="Select" /> Select
+                                        </td>
+                                        <td ng-show="Unmasking_FeatureSet=='Select'">
+                                            <button class="button small-block-grid-1 radius" ng-click="OpenSelectFeatureSet();">
+                                                Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Choose parameters of algorithm</legend>
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <input ng-model="Unmasking_LearningAlgorithm" type="radio" name="Unmasking_LearningAlgorithm_Group" value="Default" /> Use default (SMO, 3 times, 5 folds, 10 iteration, 250 word, SVM ranker, 3 features to delete)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="10%">
+                                    <tr>
+                                        <td>
+                                            <input ng-click="OpenSelectParametersOfAlgorithm();" ng-model="Unmasking_LearningAlgorithm" type="radio" name="Unmasking_LearningAlgorithm_Group" value="Select" /> Select <span ng-show="Unmasking_LearningAlgorithm=='Select'">({{selectedAlgorithmType.name}}, {{Unmasking_NumberOfTimes}} times, {{Unmasking_NumberOfCrossValidation}} folds, {{Unmasking_NumberOfIteration}} iteration, {{Unmasking_ChunkSize}} word, {{Unmasking_RankingFeatureType}} ranker, {{Unmasking_NumberOfFeaturesToDelete}} features to delete)</span>
+                                        </td>
+                                        <td ng-show="Unmasking_LearningAlgorithm=='Select'">
+                                            <button class="button small-block-grid-1 radius" ng-click="OpenSelectParametersOfAlgorithm();">
+                                                Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <hr />
+            </td>
+        </tr>
+       
+    </table>
+
+</div>
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <table>
+        <tr>
+            <td>
+                <button class="button small-block-grid-1 radius" ng-click="Back();">
+                    Back
+                </button>
+            </td>
+            <td>
+                <table style="height:75px; width:75px;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <div ng-show="showInProcess">
+                                <img src="images/processing.gif" />
+                            </div>
+                            <div ng-show="!showInProcess">
+                                <img src="images/ready.jpg" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <button class="button small-block-grid-1 radius" ng-click="Next();">
+                    Run
+                </button>
+            </td>
+        </tr>
+    </table>
+
+</nav>

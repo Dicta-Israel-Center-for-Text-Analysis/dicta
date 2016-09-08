@@ -1,0 +1,126 @@
+﻿
+<header-page></header-page>
+
+
+<experiment-menu></experiment-menu>
+
+
+<div class="main-box-1">
+    <div class="container fix-pad">
+        <div class="main-title">
+            <ul class="nav nav-tabs">
+                <li id="selectedTextTab" class="{{tabClass(0)}}">
+                    <a data-toggle="tab" ng-click="goToTab(0)">
+                        <b>
+                            Selected Text
+                            <img title="" data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
+                        </b>
+
+                    </a>
+                </li>
+                <li id="parallelsTab" class="{{tabClass(1)}}">
+                    <a data-toggle="tab" ng-click="goToTab(1)">
+                        <b>Find Parallels
+                            <img title="Search any selected library for paraphrases of each passage in your text." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">    
+                        </b>
+
+                    </a>
+                </li>
+                <li id="classificationTab" class="{{tabClass(2)}}">
+                    <a data-toggle="tab" ng-click="goToTab(2)">
+
+                        <b>Classify 
+                            <img title="Define a classification problem by choosing training texts from Dicta's library and determine which the class of each unit of your text. For example, choose training texts from different periods and determine the period of your text. (You can choose to classify the text as a whole or each unit of the text individually.) Advanced users can decide whether to base the classification on lexical features, morphological features and other features according to availability." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
+                        </b>
+                    </a>
+                </li>
+                <li id="segmentationTab" class="{{tabClass(3)}}">
+                    <a data-toggle="tab" ng-click="goToTab(3)">
+
+                        <b>Source Criticism
+                            <img title="Decompose a text into authorial/stylistic components. You can do this for any text, regardless of the number of actual authors. You choose the number of components you want, as well as the granularity of the decomposition." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
+                        </b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container fix-pad">
+
+        <div class="box-body">
+            <div class="main-box-header">
+                <div class="col-md-6 box-deut-left">
+
+                    <h3 style="
+                        height: 40px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        width: 1000px;
+                        " title="{{SelectedTestClassText()}}">
+                        Selected test text: {{SelectedTestClassText()}}
+                        <img src="images/secondTab/info.png" alt="" />
+                    </h3>
+                    <div ng-show="isShow" class="deut-icon">
+                        <ul>
+                            <li><img src="images/secondTab/genre.png" alt="" /> <span>Prose</span></li>
+                            <li><img src="images/secondTab/period.png" alt="" /> <span>Biblical</span></li>
+                            <li><img src="images/secondTab/region.png" alt="" /> <span>Israel</span></li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-6 box-deut-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-box-body newtabs">
+        <div class="container bdmo">
+            <div class="box-body-bg">
+                <div ng-show="tabNumber==0" class="tab-pane fade in active">
+                    <tabs-zero-tab></tabs-zero-tab>
+                </div>
+                <div ng-show="tabNumber==1" class="tab-pane fade in active">
+                    <tabs-first-tab></tabs-first-tab>
+                </div>
+                <div ng-show="tabNumber==2" class="tab-pane fade in active">
+                    <tabs-second-tab></tabs-second-tab>
+                </div>
+                <div ng-show="tabNumber==3" class="tab-pane fade in active">
+                    <tabs-third-tab></tabs-third-tab>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer-page></footer-page>
+
+
+<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
+        <div class="ngdialog-overlay"></div>
+        <div class="ngdialog-content" role="document">
+            <div class="ngdialog-message">
+                <action-mode></action-mode>
+                <in-progress></in-progress>
+                <br />
+                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
+                    <browse-this-computer show-class-name=""></browse-this-computer>
+                </div>
+                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
+                    <select-online-corpus></select-online-corpus>
+
+                </div>
+            </div>
+            <div class="ngdialog-buttons" ng-show="!showInProcess">
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
+                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script>tiberias_tour(TabTour);</script>
+</div>

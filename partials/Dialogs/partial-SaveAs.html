@@ -1,0 +1,19 @@
+﻿<div class="ngdialog-message">
+    <h3>Save as</h3>
+    <fieldset>
+        <legend>Select name</legend>
+        <table style="width:100%;">
+            <tr>
+                <td>name</td>
+                <td>
+                    <input ng-model="expName" type="text" value="{{expName}}" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="Save()">Save</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+
+</div>

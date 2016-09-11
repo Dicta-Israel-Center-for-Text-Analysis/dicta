@@ -33,9 +33,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
         var deleteData = {
             title: currentClass.title,
             id: currentClass.id,
-            userLogin: ExperimentServiceFixMe.user,
-            expType: ExperimentServiceFixMe.ExperimentTypeModel,
-            expName: ExperimentServiceFixMe.ExperimentName
+            userLogin: root.ExperimentServiceFixMe.user,
+            expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
+            expName: root.ExperimentServiceFixMe.ExperimentName
         };
         InProgressService.updateIsReady(0);
 

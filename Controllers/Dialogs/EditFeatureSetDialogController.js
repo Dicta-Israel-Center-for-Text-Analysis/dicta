@@ -126,8 +126,13 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
             featureSet = $scope.featureSet;
         }
         else {
+            if (angular.equals($scope.featureSet, featureSet)) {
+                angular.copy($scope.featuresData, featuresData);
+            }
+            else {
+                angular.copy([], featuresData);
+            }
             angular.copy($scope.featureSet, featureSet);
-            angular.copy($scope.featuresData, featuresData);
         }
     }
 

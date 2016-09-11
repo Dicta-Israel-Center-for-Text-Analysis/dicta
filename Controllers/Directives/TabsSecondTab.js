@@ -127,6 +127,9 @@
             }
 
             $scope.runClassification = function () {
+                $scope.countFilesPerClass = [];
+                $scope.testSetChunks = [];
+
                 ClassificationService.runClassification()
                     .then(function (response2) {
                     $scope.testSetResults = response2.testSetResults;

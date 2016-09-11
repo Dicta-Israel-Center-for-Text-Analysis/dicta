@@ -75,7 +75,31 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 { crud: 'ExtractFeaturesClassification' },
                 apiCallData,
                 function (results) {
-                    //TODO: $scope.featuresData = results;
+                    // build a string of all the names of the features in the set
+                    function nameString (featureSet) {
+                        return featureSet.map(function (feature) { return feature.name;}).sort().join(":::;");
+                    }
+                    // check if we need to carry over selections from the previous feature set
+                    if (root.featureCollection.featuresData.features) {
+                        // first make a list of the old strings representing the names in the set
+                        var oldFeatureStrings = root.featureCollection.featuresData.features.map(function (set) {
+                            return nameString(set);
+                        });
+                        for (var i = 0; i < results.features.length; i++) {
+                            var oldSet = oldFeatureStrings.indexOf(nameString(results.features[i]));
+                            // if it exists, then we have the same set as before, so copy the checkboxes
+                            if (oldSet > -1) {
+                                // collect the old settings into an object
+                                var oldSelectedFeatures = {};
+                                root.featureCollection.featuresData.features[oldSet]
+                                    .forEach(function (feature) { oldSelectedFeatures[feature.name] = feature.selected});
+                                // apply them
+                                for (var j = 0; j < results.features[i].length; j++) {
+                                    results.features[i][j].selected = oldSelectedFeatures[results.features[i][j].name];
+                                }
+                            }
+                        }
+                    }
                     root.featureCollection.updateFeaturesData(results);
                     InProgressService.updateIsReady(1);
                 },

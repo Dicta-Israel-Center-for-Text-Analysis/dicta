@@ -233,8 +233,7 @@ function tiberias_tour(tour) {
     setTimeout(function () {
         var tourHash = tiberias_tour_state_object();
         if (tourHash[tour.id] !== undefined && tourHash[tour.id] == tour.tourVersion) {
-            // the if is temporary for repeated testing
-            if ($.cookie('userLogin').indexOf('o') == -1) return;
+            return;
         }
         if (!tour.debounce || Date.now() - tour.debounce > 1000) {
             tour.debounce = Date.now();

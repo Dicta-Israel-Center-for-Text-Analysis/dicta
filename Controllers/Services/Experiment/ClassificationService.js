@@ -41,7 +41,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
         return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function (response) {
             ClassService.Corpus_classes.splice(index, 1);
-            ClassificationService.featureCollection.updateFeaturesData({});
+            root.featureCollection.updateFeaturesData({});
             ClassService.updateIsAllBibleValue(true);
             for (var i = 0; i < ClassService.Corpus_classes.length; i++) {
                 var corpusClass = ClassService.Corpus_classes[i];

@@ -77,6 +77,7 @@
     
     service.reset = function () {
         var newCopy = angular.copy(initialServiceValues);
+        // manual copy so that function properties aren't deleted
         for (var prop in newCopy)
         {
             service[prop] = newCopy[prop];

@@ -202,6 +202,8 @@ jTextMinerApp.controller('LoginController', function ($scope, ngDialog, Experime
             template: 'partials/Dialogs/partial-Login.html',
             controller: 'DlgLoginController',
             className: 'ngdialog-theme-default',
+            closeByEscape: true,
+            closeByDocument: true,
             scope: $scope
         }).then(function (value) {
             //console.log('Modal promise resolved. Value: ', value);

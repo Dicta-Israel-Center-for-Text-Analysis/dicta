@@ -53,6 +53,8 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
             template: 'partials/Dialogs/partial-EditFeatureSetDialog.html',
             controller: 'AddFeatureSetDialogController',
             className: 'ngdialog-theme-default',
+            closeByEscape: true,
+            closeByDocument: true,
             scope: $scope
         }).then(function (value) {
             $scope.featuresData = {};

@@ -155,6 +155,8 @@ jTextMinerApp.directive('featureSets', function (ngDialog) {
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
                     scope: $scope,
+                    closeByEscape: true,
+                    closeByDocument: true,
                     data: {
                         featureCollection: $scope.featureCollection,
                         featureIndex: index

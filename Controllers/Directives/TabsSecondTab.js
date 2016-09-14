@@ -325,6 +325,8 @@
                     controller: 'EditFeatureSetDialogController',
                     className: 'ngdialog-theme-default override-background',
                     data: { featureCollection: ClassificationService.featureCollection },
+                    closeByEscape: true,
+                    closeByDocument: true,
                     scope: $scope
                 }).then(function (value) {
                     tiberias_tour_pause();

@@ -1,5 +1,5 @@
 ﻿var morphologyIdDict = {
-    "PREFIX_FUNCTION_CONJUNCTION": "conj
+    "PREFIX_FUNCTION_CONJUNCTION": "conj",
     "PREFIX_FUNCTION_DEFINITEARTICLE": "def",
     "PREFIX_FUNCTION_INTERROGATIVE": "interrogative",
     "PREFIX_FUNCTION_PREPOSITION": "prep",

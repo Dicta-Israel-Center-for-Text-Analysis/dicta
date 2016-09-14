@@ -28,7 +28,7 @@
                     <div ng-show="featureSet.tokenizerType == 'Word'" class="col-sm-3">
                             <label ng-show="!isAllBible"  class="checkbox">
                                 <input type="checkbox" ng-model="featureSet.tokenized" />
-                                <span>tokenized</span>
+                                <span>tokenized without punctuation</span>
                             </label>
 
                             <label ng-show="isAllBible" ng-disabled="!featureEnabled('vocalized')" class="checkbox">

@@ -13,9 +13,9 @@
             fromEachClass: false,
             includeLexeme: false,
             spoOnly: false,
-            vocalized: true,
+            vocalized: false,
             sinDot: false,
-            tokenized: false,
+            tokenized: true,
             includeNumber: false,
             includePunctuation: false
         };

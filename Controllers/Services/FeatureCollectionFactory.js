@@ -13,7 +13,7 @@
             fromEachClass: false,
             includeLexeme: false,
             spoOnly: false,
-            vocalized: false,
+            vocalized: true,
             sinDot: false,
             tokenized: true,
             includeNumber: false,

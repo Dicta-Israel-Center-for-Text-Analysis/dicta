@@ -243,7 +243,7 @@
                                             <p class="reprencented">Missing ({{(testFile.featureList | negativeInfluence: $index).length}})</p>
                                             <table class="_missing">
                                                 <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'influence' | negativeInfluence: $index">
-                                                    <td class="reprencented-content" title="{{feature.title}}">{{feature.name}}</td>
+                                                    <td class="reprencented-content" title="{{feature.title}}">{{convertFeatureName(feature.name)}}</td>
                                                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number: 0}}</td>
                                                     <td class="frequenct-content">
                                                         <feature-frequency-graph feature-id='missing_{{indexOfColor(oneclass.title)}}{{testFile.name | makeValidId}}{{$index}}'

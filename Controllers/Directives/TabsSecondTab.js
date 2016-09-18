@@ -108,6 +108,11 @@
             $scope.$on('Corpus_classesValueUpdated', function () {
                 $scope.classes = ClassService.Corpus_classes;
             });
+
+            $scope.clearOldResults = function () {
+                $scope.testSetChunks = [];
+            }
+
             $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
                 ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
                 ClassificationService.featureCollection.updateFeaturesData({});
@@ -327,6 +332,10 @@
 
             $scope.$on('featuresDataUpdated', function () {
                 $scope.featuresData = ClassificationService.featureCollection.featuresData;
+                // any changes to the featuresData means that the old results are no longer valid
+                if (Object.keys($scope.featuresData).length == 0) {
+                    $scope.clearOldResults();
+                }
             });
 
             $scope.OpenSelectFeatureSet = function () {

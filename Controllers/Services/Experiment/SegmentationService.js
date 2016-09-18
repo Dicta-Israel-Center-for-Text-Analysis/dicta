@@ -3,6 +3,10 @@
         featureCollection: FeatureCollectionFactory.newCollection()
     };
 
+    // the default feature set for segmentation is different than for other experiments
+    root.featureCollection.Feature_sets[0].vocalized = false;
+    root.featureCollection.Feature_sets[0].tokenized = true;
+
     root.SegmentationDefaultValues = function () {
         this.Segmentation_ActionMode = 'SelectOnlineCorpus';
         this.Segmentation_ChunkBy = 'NumberOfSentence';

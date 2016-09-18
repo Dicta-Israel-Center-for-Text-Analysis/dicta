@@ -15,7 +15,7 @@
             spoOnly: false,
             vocalized: true,
             sinDot: false,
-            tokenized: true,
+            tokenized: false,
             includeNumber: false,
             includePunctuation: false
         };

@@ -3,7 +3,7 @@ var AfterLoginTour = {
     steps: [
         {
             title: "Welcome to Dicta!",
-            content: "<p>It looks like this is your first time here.</p><p>Dicta gives you different tools for analyzing texts. To use any of the tools, you first need to choose what you want to analyze. Choose this button to select texts from Dicta's online corpus of text.</p>",
+            content: "<p>It looks like this is your first time here.</p><p>Dicta gives you different tools for analyzing texts. To use any of the tools, you first need to choose which text you want to analyze. Choose this button to select texts from Dicta's online corpus of text.</p>",
             target: "libraryBtn",
             placement: "top",
             // this zindex puts the tour under ngDialog dialog boxes
@@ -25,15 +25,15 @@ var TabTour = {
     id: "tab-tour",
     tourVersion: 1,
     steps: [{
-            title: "Introduction to Dicta Tools",
-            content: "<p>This tab shows the texts you just selected.</p>",
-            target: "selectedTextTab",
-            placement: "bottom",
-            zindex: 9999
-        },
+        title: "Introduction to Dicta Tools",
+        content: "<p>This tab shows the texts you just selected.</p>",
+        target: "selectedTextTab",
+        placement: "bottom",
+        zindex: 9999
+    },
         {
             title: "Parallels Tab",
-            content: "<p>Select this tab to find texts in our online corpus that are similar to the text that you selected.</p>",
+            content: "<p>Select this tab to find passages in our current corpus that are similar to passages in the text that you selected.</p>",
             target: "parallelsTab",
             placement: "bottom",
             zindex: 9999
@@ -41,15 +41,14 @@ var TabTour = {
         {
             title: "Classification Tab",
             content: "<p>Select this tab to automatically classify your text according to classes you choose.</p>" +
-            "<p>For instance, you can see if your text is more similar to Talmud Bavli or to Mishnah, and see which features of the text make it similar to each.</p>",
+            "<p>For instance, you can see if your text is more similar to Tosefta or to Mishnah, and see which features of the text make it similar to each.</p>",
             target: "classificationTab",
             placement: "bottom",
             zindex: 9999
         },
         {
             title: "Segmentation Tab",
-            content: "<p>Select this tab to automatically split the text you selected into two or more groups of text. The tool automatically finds features that are only present in parts of the text, and uses those features to classify all the text into the number of groups you choose.</p>" +
-            "<p>This is useful if you have a text that you think was composed by multiple authors or in multiple styles, and you want to identify which parts go together with each other.</p>",
+            content: "<p> If you suspect that your selected text was composed by multiple authors or in multiple styles, select this tab to automatically decompose it into stylistic threads. </p>",
             target: "segmentationTab",
             placement: "bottom",
             zindex: 9999
@@ -63,14 +62,14 @@ var ParallelsTour = {
     tourVersion: 1,
     steps: [{
         title: "Finding Parallels",
-        content: "<p>Choose which type of parallels you're looking for. \"Longer matches only\" is more likely to show texts with parallel contents, while \"Include shorter matches\" will also include short phrases, which can be useful to identify borrowed phrases.</p>",
+        content: "<p>Choose which type of parallels you're looking for. \"Longer matches only\" is more likely to show texts with parallel contents, while \"Include shorter matches\" will also include short phrases, which can be useful for identifying borrowed phrases.</p>",
         target: "parallelsControls",
         placement: "right",
         zindex: 9999
     },
         {
             title: "Advanced Controls",
-            content: "<p>The advanced controls let you set a minimum length for a match and maximum number of words to ignore that don't match within the parallel.</p>",
+            content: "<p>The advanced controls let you set a minimum number of matching words and a maximum number of unmatched words.</p>",
             target: "parallelsAdvancedControls",
             placement: "right",
             zindex: 9999
@@ -84,14 +83,14 @@ var ClassificationTour = {
     id: "Classification-tour",
     tourVersion: 1,
     steps: [{
-            title: "Classifying Texts",
-            content: "<p>In order to classify a text, you first need to define which classes the algorithm should choose between. Use this button to add at least two classes.</p>",
-            target: "classificationChooseClass",
-            placement: "right",
-            zindex: 9999,
-            showNextButton: false,
-            nextOnTargetClick: true
-        },
+        title: "Classifying Texts",
+        content: "<p>To classify a text, you need to define which classes the algorithm should choose between. Each class is defined by a set of example texts belonging to the class that you choose from our corpus. Use this button to add at least two classes.</p>",
+        target: "classificationChooseClass",
+        placement: "right",
+        zindex: 9999,
+        showNextButton: false,
+        nextOnTargetClick: true
+    },
         {
             title: "Classifying Texts",
             content: "<p>Please choose a second class.</p>",
@@ -118,7 +117,7 @@ var ClassificationTour = {
         },
         {
             title: "Feature Set Settings",
-            content: "<p>You can choose which features to use to classify the text.</p><p>You can select \"Feature Sets\", which tells the system what type of features to use for classification, such as actual words or morphology (for those texts that support it).</p><p>You can also edit a feature set and tell the system to ignore certain features - for a feature set of words, for instance, you can tell it to ignore specific words.</p>",
+            content: "<p>You can choose which features to use to classify the text.</p><p>You can select \"Feature Sets\", which tells the system what type of features to use for classification, such as words or morphology (for those texts that support it).</p><p>You can edit a feature set, choosing to eliminate individual features.</p>",
             target: "classificationChooseFeatureSet",
             placement: "right",
             zindex: 9999
@@ -133,42 +132,42 @@ var FeatureSetSelectionTour = {
     id: "featureSetSelection-tour",
     tourVersion: 1,
     steps: [{
-            title: "Feature Set Settings",
-            content: "<p>Dicta can use several different types of features for classifying texts.</p><br>" +
-            "<p>You can choose between using words or letters as features, and for some texts Dicta also supports using word morphology. New types of features are still under development.</p><br>" +
-            "<p>Feature types that aren't available can't be selected.</p>",
-            target: "featureSetChooseFeatureType",
-            placement: "right",
-            zindex: 10001
-        },
+        title: "Feature Set Settings",
+        content: "<p>Dicta can use several different types of features for classifying texts.</p><br>" +
+        "<p>You can choose between using words or letters as features; for some texts, Dicta also supports using morphological and syntactic features. (New types of features are under development.)</p><br>" +
+        "<p>Feature types that aren't available can't be selected.</p>",
+        target: "featureSetChooseFeatureType",
+        placement: "right",
+        zindex: 10001
+    },
         {
             title: "Feature Set Settings",
-            content: "<p>You can limit the number of features that will be used in the model that will classify the text. The default uses 250 features.</p>",
+            content: "<p>You can define the number of features that will be considered for constructing a classifier. The default is the 250 most common features of the type you selected.</p>",
             target: "featureSetChooseNumber",
             placement: "right",
             zindex: 10001
         },
         {
             title: "Feature Set Settings",
-            content: "<p>The model can use each feature in isolation (\"Unigrams\") or use features in groups of two (\"Bigrams\") or three (\"Trigrams\").</p><br>" +
-            "<p>For instance, if the feature type is \"Words\", then Trigrams will use groups of three words to build the model.</p>",
+            content: "<p>The model can use each feature in isolation (\"Unigrams\") or use features in sequences of two (\"Bigrams\") or three (\"Trigrams\").</p><br>" +
+            "<p>For instance, if the feature type is \"Words\", then Trigrams will use sequences of three words to build the model.</p>",
             target: "featureSetUniBiTrigram",
             placement: "right",
             zindex: 10001
         },
         {
             title: "Feature Set Settings",
-            content: "<p>You can choose how a feature that appears is weighted:</p>" +
-            "<ul><li>Binary - just look at whether it is present or not.</li></ul>" +
-            "<ul><li>Frequency - how often does it appear in the document.</li></ul>" +
-            "<ul><li>Tf-Idf - weight both the frequency and how rare the term is in all the documents that are being evaluated.</li></ul>",
+            content: "<p>You can choose how a feature is weighted in formally representing a document:</p>" +
+            "<ul><li>Binary - is the feature present (1) or not (0).</li></ul>" +
+            "<ul><li>Frequency - how frequently does the feature appear in the document.</li></ul>" +
+            "<ul><li>Tf-Idf - how frequently does the feature appear in the document and how infrequently in the corpus generally.</li></ul>",
             target: "featureSetFeatureWeight",
             placement: "left",
             zindex: 10001
         },
         {
             title: "Feature Set Settings",
-            content: "<p>Click here to see what features the system will find with the current settings.</p>",
+            content: "<p>Click here to see which features are currently selected.</p>",
             target: "featureSetExtractFeatures",
             placement: "top",
             zindex: 10001,
@@ -178,7 +177,7 @@ var FeatureSetSelectionTour = {
         {
             title: "Feature Set Settings",
             content: "<p>This table shows the features found in the texts.</p><br>" +
-            "<p>You can use the checkboxes to tell the system to ignore a specific feature.</p>",
+            "<p>Use the checkboxes to unselect individual features.</p>",
             target: "featureSetFeatureTable",
             placement: "left",
             zindex: 10001,
@@ -194,7 +193,7 @@ var SegmentationTour = {
     tourVersion: 1,
     steps: [{
         title: "Source Criticism",
-        content: "<p>This tool allows you to take a text that you suspect has multiple authors or sources and automatically divide it into sections that have features in common with each other. Choose how many different sections to split it into.</p>",
+        content: "<p>Choose the number of stylistic threads into which to decompose your text.</p>",
         target: "segmentationControls",
         placement: "right",
         zindex: 9999

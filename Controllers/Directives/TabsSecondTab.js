@@ -248,6 +248,16 @@
                 }
             }
 
+            function prettyPrintMorphologyClassification(html) {
+                function prettyPrintWord(word) {
+                    return '[' + prettyPrintMorphology(word) + ']';
+                }
+                if (/@#BASEFORM/.test(html)) {
+                    return html.replace(/(@#[A-Z_0-9#]*)/g, prettyPrintWord);
+                }
+                return html;
+            }
+
             $scope.setSelectedTestFile = function (item, index) {
 
                 $scope.inited = false;
@@ -261,7 +271,7 @@
                 APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
                     InProgressService.updateIsReady(1);
                     var results = response;
-                    item.htmlText = results.htmlText;
+                    item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
                     item.featureList = results.features;
                     item.title = cleanTitle(item.name);
                     $scope.testSetChunks[index] = item;

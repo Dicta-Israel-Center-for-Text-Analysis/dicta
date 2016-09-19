@@ -103,6 +103,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                     list.push(itemToInsert);
                 }
 
+                var trimmedSources = source.map(function(oneSource){return oneSource.replace(/^\/Dicta Corpus\//,'')});
+
                 for (var k = 0; k < results.length; k = k + 1) {
                     var currentChunk = results[k];
                     for (var j = 0; j < currentChunk.data.length; j = j + 1) {
@@ -116,7 +118,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                             path += "/" + paths[i].trim();
                         }
 
-                        if (source[k] === path)
+                        if (trimmedSources[k] === path)
                             continue; // do  not add parallel of the same chunk
 
                         numOfParallels += 1;

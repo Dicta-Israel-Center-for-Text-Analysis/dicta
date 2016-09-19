@@ -150,8 +150,7 @@
                 $scope.CVResultData = ExperimentService.cvResultData;
             });
             $scope.TSResultData = ExperimentService.tsResultData;
-            $scope.$on('tsResultDataUpdated', function () {
-                alert("tsResultDataUpdated");
+            function updateTestSetChunks() {
                 $scope.testSetResults = ExperimentService.tsResultData.testSetResults;
                 $scope.testSetChunks = [];
                 for (testFileIndex in $scope.testSetResults) {
@@ -168,7 +167,9 @@
                         $scope.legend = $sce.trustAsHtml(results.legend);
                     });
                 }
-            });
+            }
+            updateTestSetChunks();
+            $scope.$on('tsResultDataUpdated', updateTestSetChunks);
 
             // CV
             $scope.Feature_sets = ExperimentService.Feature_sets;

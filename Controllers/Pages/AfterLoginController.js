@@ -104,13 +104,14 @@ jTextMinerApp.controller('AfterLoginController', function ($scope, ngDialog, Exp
                         InProgressService.updateIsReady(1);
                         AlertsService.determineAlert({msg: 'DownloadStoredExperiment', type: 'success'});
                         $scope.UpdateData(response);
-                        ClassificationService.featureCollection.updateTotalNumberOfFeatures(null);
-                        $scope.UpdateExtractFeaturesData();
-                        APIService.apiRun({crud: 'ExtractFeaturesClassification'}, $scope.data, function (response) {
-                            var results = response;
-                            //$location.path($scope.ExperimentTypeModel);
-                            $scope.GoToNextTab();
-                        });
+                        // ClassificationService.featureCollection.updateTotalNumberOfFeatures(null);
+                        // $scope.UpdateExtractFeaturesData();
+                        // APIService.apiRun({crud: 'ExtractFeaturesClassification'}, $scope.data, function (response) {
+                        //     var results = response;
+                        //     //$location.path($scope.ExperimentTypeModel);
+                        //     $scope.GoToNextTab();
+                        // });
+                        $scope.GoToNextTab();
 
                     });
                 }

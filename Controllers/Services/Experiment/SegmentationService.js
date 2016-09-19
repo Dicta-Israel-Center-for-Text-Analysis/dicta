@@ -4,7 +4,7 @@
     };
 
     // the default feature set for segmentation is different than for other experiments
-    root.featureCollection.Feature_sets[0].vocalized = false;
+    root.featureCollection.Feature_sets[0].vocalized = true;
     root.featureCollection.Feature_sets[0].tokenized = true;
 
     root.SegmentationDefaultValues = function () {

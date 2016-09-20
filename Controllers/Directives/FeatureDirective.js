@@ -35,7 +35,7 @@
     "BASEFORM_POS_SHEL_PREP": "prep",
     "BASEFORM_GENDER_MASCULINE": "mas",
     "BASEFORM_GENDER_FEMININE": "fem",
-    "BASEFORM_GENDER_MASCULINEFEMININE": "masc/phem",
+    "BASEFORM_GENDER_MASCULINEFEMININE": "masc/fem",
     "BASEFORM_NUMBER_SINGULAR": "sing",
     "BASEFORM_NUMBER_PLURAL": "plural",
     "BASEFORM_NUMBER_DUAL": "dual",
@@ -55,7 +55,7 @@
     "BASEFORM_TENSE_TOINFINITIVE": "inf",
     "BASEFORM_TENSE_BAREINFINITIVE": "orig",
     "BASEFORM_POLARITY_POSITIVE": "pos",
-    "BASEFORM_POLARITY_POSITIVE": "neg",
+    "BASEFORM_POLARITY_NEGATIVE": "neg",
     "BASEFORM_BINYAN_PAAL": "paal",
     "BASEFORM_BINYAN_NIFAL": "nifal",
     "BASEFORM_BINYAN_HIFIL": "hifil",
@@ -128,11 +128,17 @@
 }
 
 function prettyPrintMorphology(converted) {
-    converted = converted.replace(/^@/, '').replace(/_$/, '');
-    for (var term in morphologyIdDict) {
-        converted = converted.replace('#' + term,', ' + morphologyIdDict[term]);
+    function dictLookup(term) {
+        var morphArray = term.split('#');
+        // first element is '@', not part of the morphology
+        morphArray.shift();
+
+        return morphArray.map(
+                function(item) { return morphologyIdDict.hasOwnProperty(item) ? morphologyIdDict[item] : item}
+            ).join(', ');
     }
-    converted = converted.replace(/#/g, ', ').replace(/^, /, '');
+
+    converted = converted.replace(/^@(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
     return converted;
 }
 

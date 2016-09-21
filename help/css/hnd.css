@@ -1,0 +1,442 @@
+﻿/* ========== Text Styles ========== */
+hr { color: #000000}
+body, table, span.rvts0 /* Normal text */
+{
+ font-size: 10pt;
+ font-family: 'Arial', 'Helvetica', sans-serif;
+ font-style: normal;
+ font-weight: normal;
+ color: #000000;
+ text-decoration: none;
+}
+span.rvts1 /* Heading */
+{
+ font-weight: bold;
+ color: #0000ff;
+}
+span.rvts2 /* Subheading */
+{
+ font-weight: bold;
+ color: #000080;
+}
+span.rvts3 /* Keywords */
+{
+ font-style: italic;
+ color: #800000;
+}
+a.rvts4, span.rvts4 /* Jump 1 */
+{
+ color: #008000;
+ text-decoration: underline;
+}
+a.rvts5, span.rvts5 /* Jump 2 */
+{
+ color: #008000;
+ text-decoration: underline;
+}
+span.rvts6
+{
+}
+span.rvts7
+{
+ font-weight: bold;
+ color: #0000ff;
+}
+span.rvts8
+{
+ font-weight: bold;
+ color: #000080;
+}
+span.rvts9
+{
+ font-style: italic;
+ color: #800000;
+}
+a.rvts10, span.rvts10
+{
+ color: #008000;
+ text-decoration: underline;
+}
+a.rvts11, span.rvts11
+{
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts12 /* Font Style */
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-style: italic;
+ color: #c0c0c0;
+}
+a.rvts13, span.rvts13 /* Font Style */
+{
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+ font-style: italic;
+ color: #6666ff;
+ text-decoration: underline;
+}
+span.rvts14
+{
+ font-size: 11pt;
+ color: #000000;
+}
+a.rvts15, span.rvts15
+{
+ font-size: 11pt;
+ color: #000000;
+ text-decoration: underline;
+}
+span.rvts16
+{
+ font-size: 11pt;
+ font-weight: bold;
+ color: #000000;
+ text-decoration: underline;
+}
+span.rvts17
+{
+ font-size: 12pt;
+ font-family: 'Arial (Hebrew)';
+}
+a.rvts18, span.rvts18
+{
+ font-size: 12pt;
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts19
+{
+ font-size: 12pt;
+}
+a.rvts20, span.rvts20
+{
+ font-size: 12pt;
+ font-family: 'Arial (Hebrew)';
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts21
+{
+ font-family: 'Arial (Hebrew)';
+}
+span.rvts22
+{
+ font-size: 12pt;
+ font-family: 'Arial (Hebrew)';
+ font-weight: bold;
+ text-decoration: underline;
+}
+span.rvts23
+{
+ font-size: 12pt;
+ font-weight: bold;
+ color: #000000;
+ text-decoration: underline;
+}
+span.rvts24
+{
+ font-size: 12pt;
+ font-weight: bold;
+ text-decoration: underline;
+}
+span.rvts25
+{
+ font-weight: bold;
+ text-decoration: underline;
+}
+span.rvts26
+{
+ font-weight: bold;
+ color: #ff0000;
+ text-decoration: underline;
+}
+span.rvts27
+{
+ background-color: #00ff00;
+}
+span.rvts28
+{
+}
+span.rvts29
+{
+ background-color: #00ff00;
+}
+span.rvts30
+{
+ background-color: #92d050;
+}
+span.rvts31
+{
+ color: #ff0000;
+}
+a.rvts32, span.rvts32
+{
+ color: #ff0000;
+ text-decoration: underline;
+}
+span.rvts33
+{
+ color: #ff0000;
+}
+span.rvts34
+{
+ font-family: 'Arial (Hebrew)';
+ color: #ff0000;
+}
+span.rvts35
+{
+ font-family: 'Arial (Hebrew)';
+ color: #0000ff;
+}
+span.rvts36
+{
+ color: #0000ff;
+}
+span.rvts37
+{
+ color: #000000;
+}
+span.rvts38
+{
+ background-color: #92d050;
+}
+span.rvts39
+{
+ font-family: 'Arial (Hebrew)';
+ color: ;
+}
+span.rvts40
+{
+ color: ;
+}
+span.rvts41
+{
+ color: #0000ff;
+}
+span.rvts42
+{
+ color: #00b050;
+}
+span.rvts43
+{
+ color: ;
+ background-color: #00b050;
+}
+span.rvts44
+{
+ color: #000000;
+ background-color: #00ff00;
+}
+span.rvts45
+{
+ font-family: 'Arial (Hebrew)';
+ color: #000000;
+}
+span.rvts46
+{
+ color: #000000;
+}
+span.rvts47
+{
+ font-size: 12pt;
+ color: #222222;
+}
+a.rvts48, span.rvts48
+{
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts49
+{
+ font-family: 'Arial (Hebrew)';
+}
+span.rvts50
+{
+ font-weight: bold;
+}
+span.rvts51
+{
+ font-style: italic;
+}
+span.rvts52
+{
+ color: #4f81bd;
+}
+span.rvts53
+{
+ color: #4f81bd;
+}
+span.rvts54
+{
+ font-style: italic;
+}
+a.rvts55, span.rvts55
+{
+ text-decoration: none;
+}
+span.rvts56
+{
+ font-size: 16pt;
+ font-family: 'Tahoma', 'Geneva', sans-serif;
+}
+span.rvts57
+{
+}
+span.rvts58
+{
+ font-style: italic;
+}
+span.rvts59
+{
+ font-size: 16pt;
+}
+a.rvts60, span.rvts60
+{
+ font-style: italic;
+ text-decoration: none;
+}
+a.rvts61, span.rvts61
+{
+ font-style: italic;
+ color: #0000ff;
+ text-decoration: underline;
+}
+a.rvts62, span.rvts62
+{
+ font-style: italic;
+ text-decoration: none;
+}
+span.rvts63
+{
+ font-weight: bold;
+}
+span.rvts64
+{
+ font-family: 'David';
+}
+span.rvts65
+{
+ font-family: 'David';
+ text-decoration: underline;
+}
+span.rvts66
+{
+}
+a.rvts67, span.rvts67
+{
+ text-decoration: none;
+}
+a.rvts68, span.rvts68
+{
+ text-decoration: underline;
+}
+/* ========== Para Styles ========== */
+p,ul,ol /* Paragraph Style */
+{
+ text-align: left;
+ text-indent: 0px;
+ padding: 0px 0px 0px 0px;
+ margin: 0px 0px 0px 0px;
+}
+.rvps1 /* Centered */
+{
+ text-align: center;
+}
+.rvps2
+{
+}
+.rvps3
+{
+ text-align: center;
+}
+.rvps4
+{
+ text-indent: 48px;
+}
+.rvps5 /* Paragraph Style */
+{
+ text-align: center;
+ border-color: #c0c0c0;
+ border-style: solid;
+ border-width: 1px;
+ border-right: none;
+ border-left: none;
+ padding: 2px 0px 2px 0px;
+ margin: 7px 0px 7px 0px;
+}
+.rvps6
+{
+}
+.rvps7
+{
+ margin: 0px 0px 0px 48px;
+}
+.rvps8
+{
+ margin: 0px 0px 0px 96px;
+}
+.rvps9
+{
+ margin: 0px 0px 0px 144px;
+}
+.rvps10
+{
+}
+.rvps11
+{
+ line-height: 1.50;
+}
+.rvps12
+{
+ line-height: 1.50;
+ margin: 0px 0px 0px 18px;
+}
+.rvps13
+{
+ margin: 0px 0px 0px 48px;
+}
+.rvps14
+{
+ margin: 0px 0px 0px 18px;
+}
+.rvps15
+{
+ margin: 0px 0px 8px 0px;
+}
+.rvps16
+{
+ margin: 8px 0px 8px 0px;
+}
+.rvps17
+{
+ margin: 8px 0px 8px 0px;
+}
+.rvps18
+{
+ text-align: right;
+ margin: 0px 18px 8px 0px;
+}
+.rvps19
+{
+ line-height: 1.15;
+ margin: 0px 0px 13px 0px;
+}
+.rvps20
+{
+ margin: 8px 0px 0px 0px;
+}
+.rvps21
+{
+ margin: 0px 0px 8px 18px;
+}
+/* ========== Lists ========== */
+.list0 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: disc;}
+.list1 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;}
+.list2 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: square;}
+.list3 {text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;}
+.list4 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: decimal;}
+.list5 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: lower-alpha;}
+.list6 {text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: lower-roman;}
+.list7 {text-indent: 0px; margin-left: 0px; list-style-position: outside; list-style-type: decimal;}
+.list8 {text-indent: 0px; margin-left: 66px; list-style-position: outside; list-style-type: lower-alpha;}
+.list9 {text-indent: 0px; margin-left: 18px; list-style-position: outside;}

@@ -1,0 +1,10 @@
+var 
+ sTopicId : string;
+begin
+ sTopicId := HndTopics.CreateTopic();
+ HndTopics.SetTopicCaption(sTopicId,'test'); 
+ 
+ 
+ 
+ sTopicId := HndTopics.GetCurrentTopic(); 
+end.

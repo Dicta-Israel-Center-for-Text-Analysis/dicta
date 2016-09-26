@@ -117,7 +117,10 @@
 
             }
 
+            $scope.isAllBibleSegmentation=true;
+
             $scope.RunExperiment = function () {
+                SelectClassService.lastTestSetSelectedRootKeys.forEach(function(key){if(!key.startsWith('/Dicta Corpus/Bible/')) {$scope.isAllBibleSegmentation = false;}});
                 AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
                 $scope.showClassDialog = false;
                 InProgressService.updateIsReady(0);

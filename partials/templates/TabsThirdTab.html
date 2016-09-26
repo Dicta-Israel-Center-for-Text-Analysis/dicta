@@ -78,7 +78,7 @@ $(document).ready(function () {
                         <div id="section{{$index}}" ng-repeat="hSegment in resultData.segments" >
                             <div ng-repeat="segment in hSegment">
                                 <div dir="rtl" class="A{{segment.classIndex}}">
-                                <span style="font-size:8px;">({{segment.prefix}})</span> {{createSegment(segment.text)}}
+                                <span style="font-size:8px;" ng-show="isAllBibleSegmentation">({{segment.prefix}})</span> {{createSegment(segment.text)}}
                                 </div>
                             </div>
                         </div>

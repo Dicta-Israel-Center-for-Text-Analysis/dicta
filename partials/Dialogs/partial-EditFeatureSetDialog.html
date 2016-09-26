@@ -54,10 +54,10 @@
                         </label>
                     </div>
 
-                        <div class="col-sm-3" ng-show="isAllBible && featureSet.tokenizerType == 'SyntaxPhrase'">
+                        <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'SyntaxPhrase'">
                             <label class="checkbox"><input type="checkbox" ng-model="featureSet.spoOnly" /> Subj, Pred and Obj only</label>
                     </div>
-                    <div class="col-sm-3" ng-show="isAllBible && featureSet.tokenizerType == 'Morphology'">
+                    <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Morphology'">
                         <label class="checkbox"><input type="checkbox" ng-model="featureSet.includeLexeme" /> include lexeme</label>
                     </div>
                 </div>

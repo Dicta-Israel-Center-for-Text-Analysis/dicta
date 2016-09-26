@@ -1,0 +1,89 @@
+﻿<html>
+	
+<head>
+	<title>History issued</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.6.2.573">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "JTextMinerDocumentation.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("Historyissued");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">History issued</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="Newweb.html">New web</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="Newweb.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="Knownissues.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Existjavaapplication.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts6">1. if the collection row is not empty or null then the try button will be shown - </span><span class="rvts27">ok</span></p>
+<p class="rvps2"><span class="rvts6">2. introduce isShowTrianBible and isShowTestBible in CorpusController.js with &nbsp;$scope. and ExperimentService variables - </span><span class="rvts27">ok</span></p>
+<p class="rvps2"><span class="rvts6">3. Introduce selectedTestRootKeys in ExperimentService and update values and also in scope of &nbsp;CorpusController.js- </span><span class="rvts27">ok</span></p>
+<p class="rvps2"><span class="rvts6">4. &nbsp;pass these 3 variables of ExperimentService as a parameter of request in service call of partialfeature - </span><span class="rvts27">ok</span></p>
+<p class="rvps4"><span class="rvts6">* The data.class does not include the corpusSelectedRootKey data that was sent by client. </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">High priority tasks</span></p>
+<p class="rvps2"><span class="rvts6">1. Selected &nbsp;Special corpus &nbsp;and Special test, and the texts for each item should be selected in the same when it will back from features or anywhere. </span><span class="rvts27">ok</span></p>
+<p class="rvps2"><span class="rvts6">2. We have to pass the selectedRootKeys and selected texts group by selcted classes to the service. i.e. json should looks like::: &nbsp;selectedRootKeys: {"1": ["Genesis","Exodus","Leviticus"],"2":["Samuel 1","Samuel 2"]} </span><span class="rvts27">ok</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">1. In the Exprement: if Experiment type is classification we are expecting zip files, other wise txt files - </span><span class="rvts27">done</span></p>
+<p class="rvps2"><span class="rvts6">2. In Experiment if experiment type is segmentation and upload one test file then it will call the api. (api/test/partialfeature) - </span><span class="rvts27">done</span></p>
+<p class="rvps2"><span class="rvts6">3. Add a remove button on right pannel of features and if any row is &nbsp;selected of feature set list then will be enable, if remove button is clicked then selected row will be deleted.- </span><span class="rvts27">done</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p></p>
+<p class="rvps5"><span class="rvts12">Created with the Personal Edition of HelpNDoc: </span><a class="rvts13" href="http://www.helpndoc.com">Free CHM Help documentation generator</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;Dates&gt; by &lt;Authors&gt;. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

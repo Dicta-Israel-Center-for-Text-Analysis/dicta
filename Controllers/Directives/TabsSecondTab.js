@@ -258,8 +258,8 @@
                 function prettyPrintWord(word) {
                     return '[' + prettyPrintMorphology(word) + ']';
                 }
-                if (/@#BASEFORM/.test(html)) {
-                    return html.replace(/(@#[A-Z_0-9#]*)/g, prettyPrintWord);
+                if (/@[^ #]*#BASEFORM/.test(html)) {
+                    return html.replace(/(@[^ #]*#[A-Z_0-9#]*)/g, prettyPrintWord);
                 }
                 return html;
             }

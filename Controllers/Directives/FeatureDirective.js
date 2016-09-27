@@ -125,21 +125,25 @@
     "BASEFORM_QUANTIFIERTYPE_PARTITIVE": "part",
     "BASEFORM_QUANTIFIERTYPE_DETERMINER": "det",
     "BASEFORM_PARTICIPLE_VERB": "verb",
-    "BASEFORM_PARTICIPLE_NOUN_ADJ": "noun/adj"
+    "BASEFORM_PARTICIPLE_NOUN_ADJ": "noun/adj",
+    "BASEFORM_POS_INITIALISM": "init.",
+    "BASEFORM_POS_FOREIGN": "foreign"
 }
 
 function prettyPrintMorphology(converted) {
     function dictLookup(term) {
-        var morphArray = term.split('#');
-        // first element is '@', not part of the morphology
-        morphArray.shift();
+        // get rid of leading @
+        var morphArray = term.substring(1).split('#');
+        // first element might be the lemma if present
+        var lemma = morphArray.shift();
 
-        return morphArray.map(
+        var lemmaPrint = lemma ? lemma + ' - ' : '';
+        return lemmaPrint + morphArray.map(
                 function(item) { return morphologyIdDict.hasOwnProperty(item) ? morphologyIdDict[item] : item}
             ).join(', ');
     }
 
-    converted = converted.replace(/^@(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
+    converted = converted.replace(/^@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
     return converted;
 }
 

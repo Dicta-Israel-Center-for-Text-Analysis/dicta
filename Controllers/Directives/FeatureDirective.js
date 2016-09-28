@@ -198,19 +198,20 @@ jTextMinerApp.directive('featureTable', function (ClassService) {
                 return (item.maxTTest >= 2.0);
             };
 
-            $scope.sortKey = '-maxTTest';
+            $scope.sortKey = ['-maxTTest'];
             $scope.sortReverse = false;
             $scope.sortClick = function (field){
-                if ($scope.sortKey==field) {
+                if ($scope.sortKey[0]==field) {
                     $scope.sortReverse = !$scope.sortReverse;
                 }
                 else {
-                    $scope.sortKey = field;
+                    $scope.sortKey[1] = $scope.sortKey[0];
+                    $scope.sortKey[0] = field;
                     $scope.sortReverse = false;
                 }
             }
             $scope.arrowClass = function (field) {
-                if ($scope.sortKey == field) {
+                if ($scope.sortKey[0] == field) {
                     if ($scope.sortReverse)
                         return "fa fa-caret-up";
                     else

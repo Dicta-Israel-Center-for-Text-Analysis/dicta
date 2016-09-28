@@ -121,13 +121,13 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
 
     $scope.saveFeatureSet = function () {
         if ($scope.newFeatureSet) {
-            featureCollection.FeatureSet_maxId = featureCollection.FeatureSet_maxId + 1;
             console.log("isIncludeLexeme: " + $scope.featureSet.includeLexeme);
             console.log("isSpoOnly: " + $scope.featureSet.spoOnly);
             $scope.featureSet.id = featureCollection.FeatureSet_maxId;
+            featureCollection.FeatureSet_maxId++;
             $scope.featureSet.featureSetName = 'Default name' + featureCollection.FeatureSet_maxId;
             featureCollection.Feature_sets.push($scope.featureSet);
-            featureIndex = $scope.featureSet.id;
+            featureIndex = featureCollection.Feature_sets.length - 1;
             featureSet = $scope.featureSet;
             featureCollection.updateFeaturesData({});
         }

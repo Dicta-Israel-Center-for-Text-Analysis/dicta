@@ -79,7 +79,7 @@ jTextMinerApp.controller('EditFeatureSetDialogController', function ($scope, ngD
 
     $scope.featureEnabled = function (featureName) {
         if (['SyntaxClause','SyntaxPhrase'].indexOf(featureName) > -1)
-            return false;
+            return $scope.isAllBible;
         else if (featureName == 'Morphology' && !onlyBibleMishnaOrTosefta)
             return false;
         else if(!$scope.isAllBible) {

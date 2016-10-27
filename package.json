@@ -1,0 +1,11 @@
+{
+  "name": "dicta-front-end",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-ui-router": "^0.3.1"
+  }
+}

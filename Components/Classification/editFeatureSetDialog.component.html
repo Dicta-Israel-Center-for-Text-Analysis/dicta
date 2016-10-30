@@ -1,0 +1,231 @@
+﻿<div class="">
+    <in-progress></in-progress>
+    <div class="modal-content" style="width: 1000px;left: calc(50% - 450px)">
+        <div class="modal-header">
+            <h4>
+                <button type="button" class="close" data-dismiss="modal" ng-click="closeThisDialog('button')" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <span style="color: #337ab7">Edit Feature Set</span></h4>
+
+
+        </div>
+        <div class="modal-body">
+            <div class="syntax_area1">
+                <div class="row form-horizontal">
+                    <div class="col-sm-5">
+                        <div class="syntax_content">
+                            <select id="featureSetChooseFeatureType" autofocus class="form-control" name="TokenizerTypeGroup" ng-model="featureSet.tokenizerType">
+                                <option value="Word">Words</option>
+                                <option value="Letter" > Letters</option>
+                                <option ng-disabled="!featureEnabled('Morphology')" value="Morphology" >Morphology </option>
+                                <option ng-disabled="!featureEnabled('SyntaxClause')" value="SyntaxClause">Syntax -- Clause types</option>
+                                <option ng-disabled="!featureEnabled('SyntaxPhrase')" value="SyntaxPhrase" >Syntax -- Phrase Function Sequences </option>
+                                <option disabled value="PartsOfSpeech" > Parts of speech</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div ng-show="featureSet.tokenizerType == 'Word'" class="col-sm-3">
+                            <label ng-show="!isAllBible"  class="checkbox">
+                                <input type="checkbox" ng-model="featureSet.tokenized" />
+                                <span>tokenized without punctuation</span>
+                            </label>
+
+                            <label ng-show="isAllBible" ng-disabled="!featureEnabled('vocalized')" class="checkbox">
+                                <input type="checkbox"  ng-model="featureSet.vocalized" />
+                                <span>vocalized</span>
+                            </label>
+                    </div>
+                    <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Word'">
+                        <label ng-show="isAllBible" class="checkbox">
+                            <input  type="checkbox" ng-model="featureSet.sinDot" />
+                            <span>shin\sin dot</span>
+                        </label>
+                    </div>
+                    <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Letter'">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="featureSet.includeNumber" /> inc. numbers
+                        </label>
+                    </div>
+
+                    <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Letter'">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-model="featureSet.includePunctuation" /> inc. punctuation
+                        </label>
+                    </div>
+
+                        <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'SyntaxPhrase'">
+                            <label class="checkbox"><input type="checkbox" ng-model="featureSet.spoOnly" /> Subj, Pred and Obj only</label>
+                    </div>
+                    <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Morphology'">
+                        <label class="checkbox"><input type="checkbox" ng-model="featureSet.includeLexeme" /> include lexeme</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div id="featureSetChooseNumber" class="col-sm-5 form-inline">
+                    <select class="form-control" name="FilterTypeGroup" ng-model="featureSet.filterType">
+                        <option value="Common"> Use most common</option>
+                        <option value="None">Use all features</option>
+                    </select>
+                    <input class="form-control" ng-show="featureSet.filterType=='Common'" style="width:50px;"
+                           ng-model="featureSet.filterCount" type="text" />
+                    <label class="checkbox" ng-show="featureSet.filterType=='Common'">
+                        <input type="checkbox" ng-model="featureSet.fromEachClass"/> Per class
+                    </label>
+                </div>
+                <div class="col-sm-2 form-inline">
+                    <select id="featureSetUniBiTrigram" class="form-control" ng-model="featureSet.featureType" name="FeatureType">
+                        <option>Unigram</option>
+                        <option>Bigram</option>
+                        <option>Trigram</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-5 form-inline">
+                    <div class="per_class">
+                         <span class="">Feature Weight</span>
+                        <select id="featureSetFeatureWeight" class="form-control" name="FeatureWeightGroup" ng-model="featureSet.normalizerType">
+                            <option value="Binary">Binary</option>
+                            <option value="Frequency">Frequency</option>
+                            <option value="TfIdf">Tf-Idf</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">
+                    <hr>
+                    <div id="featureSetFeatureTable" class="feature" style="height: 500px;overflow-y: auto">
+                        <feature-table is-select-disabled="false" features="featuresData" is-morphology="featureSet.tokenizerType == 'Morphology'"></feature-table>
+                    </div>
+                </div>
+                <div ng-if="!featuresData.length || featureSetChanged" class="col-sm-12 text-center">
+                    <hr>
+                    <button id="featureSetExtractFeatures" class="btn btn-primary" ng-click="extractFeatures()"><strong>Save Changes and View Features</strong></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="footer_content1">
+                        <h4><span data-dismiss="modal" ng-click="$ctrl.onDiscard()">Discard Changes </span>
+                            <button class="btn btn-primary" ng-click="saveFeatureSetAndReturn()"><strong> <i class="fa fa-check-circle-o"></i> Save
+                                Feature Set </strong></button>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>tiberias_tour(FeatureSetSelectionTour);</script>
+</div>
+<!--
+    <table style="width:100%;" ng-show="!showInProcess">
+        <tr>
+            <td valign="top">
+                <fieldset>
+                    <legend>Feature type</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Word" /> Words
+                            </td>
+                            <td>
+                                <input ng-show="!isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isTokenized" />
+                                <span ng-show="!isAllBible">tokenized</span>
+                                <input ng-show="isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isVocalized" />
+                                <span ng-show="isAllBible">vocalized</span>
+                            </td>
+                            <td>
+                                <input ng-show="isAllBible" type="checkbox" ng-model="isSinDot" />
+                                <span ng-show="isAllBible" >shin\sin dot</span>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                                                   </tr>
+                        <tr>
+                            <td style="color:gray;"><input disabled type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="PartsOfSpeech" /> Parts of speech</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="3"><hr /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Use</td>
+                                        <td>
+                                            <select ng-model="FeatureType" value="{{FeatureType}}">
+                                                <option>Unigram</option>
+                                                <option>Bigram</option>
+                                                <option>Trigram</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Feature weight</legend>
+                    <table>
+                        <tr>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Binary" />Binary</td>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Frequency" />Frequency</td>
+                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="TfIdf" />Tf-Idf</td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset>
+                    <legend>Filter</legend>
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="Common" />
+                                            Use
+                                        </td>
+                                        <td><input style="width:50px;" ng-model="FilterCount" type="text" value="{{FilterCount}}" /></td>
+                                        <td>most frequent</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-model="isFromEachClass" /> Per class
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="None" />
+                                Use all features
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+
+        </tr>
+    </table>
+
+<div class="ngdialog-buttons" ng-show="!showInProcess">
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="addFeatureSetAndReturn()">Add feature set</button>
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+</div>-->

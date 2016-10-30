@@ -32,13 +32,11 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     })
     .state('Login', {
         url: '/Login',
-        controller: 'LoginController',
-        templateUrl: 'partials/Pages/partial-Login.html'
+        template: '<login-page></login-page>'
     })
     .state('AfterLogin', {
         url: '/AfterLogin',
-        controller: 'AfterLoginController',
-        templateUrl: 'partials/Pages/partial-AfterLogin.html'
+        template: '<after-login-page></after-login-page>'
     })
     .state('TestSet', {
         url: '/TestSet',
@@ -67,8 +65,7 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     })
     .state('Tabs', {
         url: '/Tabs',
-        controller: 'TabsController',
-        templateUrl: 'partials/Pages/partial-Tabs.html'
+        template: '<tabs></tabs>'
     })
     
 });

@@ -100,7 +100,10 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             }
                         }
                     }
-                    root.featureCollection.updateFeaturesData(results);
+                    // we need the toJSON because we later pass this data back to the server,
+                    // and we don't want the extra values that a resource has.
+                    // It simply creates an object, not a JSON string.
+                    root.featureCollection.updateFeaturesData(results.toJSON());
                     InProgressService.updateIsReady(1);
                 },
                 function (errorResponse) {

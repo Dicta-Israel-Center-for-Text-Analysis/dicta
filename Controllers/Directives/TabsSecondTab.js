@@ -376,6 +376,17 @@
                 }
                 return converted;
             }
+
+            $scope.showCrossvalidation = function () {
+                ngDialog.openConfirm({
+                    template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.CVResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
+                    plain: true,
+                    data: { CVResultData: $scope.CVResultData },
+                    closeByEscape: true,
+                    closeByDocument: true,
+                    className: 'ngdialog-theme-default override-background'
+                });
+            }
         }]
     };
 });

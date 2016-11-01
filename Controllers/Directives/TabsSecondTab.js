@@ -387,6 +387,24 @@
                     className: 'ngdialog-theme-default override-background'
                 });
             }
+
+            $scope.OpenViewAllFeatures = function () {
+                ClassificationService.prepareClassification().then(
+                    function(){
+                        ngDialog.openConfirm({
+                            template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
+                            plain: true,
+                            data: {
+                                features: ClassificationService.featureCollection.featuresData.features.reduce(function(a, b) {
+                                    return a.concat(b);
+                                }, [])
+                            },
+                            closeByEscape: true,
+                            closeByDocument: true,
+                            className: 'ngdialog-theme-default override-background'
+                        })}
+                );
+            }
         }]
     };
 });

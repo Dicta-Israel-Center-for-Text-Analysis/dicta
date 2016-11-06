@@ -377,5 +377,34 @@
                 }
                 return converted;
             }
+
+            $scope.showCrossvalidation = function () {
+                ngDialog.openConfirm({
+                    template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.CVResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
+                    plain: true,
+                    data: { CVResultData: $scope.CVResultData },
+                    closeByEscape: true,
+                    closeByDocument: true,
+                    className: 'ngdialog-theme-default override-background'
+                });
+            }
+
+            $scope.OpenViewAllFeatures = function () {
+                ClassificationService.prepareClassification().then(
+                    function(){
+                        ngDialog.openConfirm({
+                            template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
+                            plain: true,
+                            data: {
+                                features: ClassificationService.featureCollection.featuresData.features.reduce(function(a, b) {
+                                    return a.concat(b);
+                                }, [])
+                            },
+                            closeByEscape: true,
+                            closeByDocument: true,
+                            className: 'ngdialog-theme-default override-background'
+                        })}
+                );
+            }
         }]
     });

@@ -33,11 +33,12 @@
                     <li><a ng-click="OpenSelectFeatureSet();"><i class="fa fa-plus"></i> Add a feature set</a> 
                         <img title="Choose which types of features you wish to use for characterizing training texts and classifying other texts. Available feature types include words, morphology, syntax and more (depending on the nature of your corpus). If you're not sure what to do, leave the default settings and skip to the next stage." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
                     </li>
+                    <li><a ng-click="OpenViewAllFeatures();"><i class="fa fa-eye"></i> View features</a> </li>
                 </ul>
             </div>
             <div class="clearfix"></div>
             <div class="cross-verification">
-                <p ng-show="CVResultData.classes.length>1"> Cross validition {{CVResultData.accuracy[0] | number: 1}}%</p>
+                <p ng-show="CVResultData.classes.length>1"> Cross validation {{CVResultData.accuracy[0] | number: 1}}% <span ng-click="showCrossvalidation()"><i class="fa fa-eye"></i></span></p>
                 <a ng-show="classes.length < 2">Classify (still need classes)</a>
                 <a ng-show="classes.length >=2" ng-click="runClassification();">Classify My Text</a>
             </div>

@@ -3,7 +3,7 @@
     <div class="modal-content" style="width: 1000px;left: calc(50% - 450px)">
         <div class="modal-header">
             <h4>
-                <button type="button" class="close" data-dismiss="modal" ng-click="closeThisDialog('button')" aria-label="Close"><span
+                <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.onDiscard()" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <span style="color: #337ab7">Edit Feature Set</span></h4>
 
@@ -123,109 +123,3 @@
     </div>
     <script>tiberias_tour(FeatureSetSelectionTour);</script>
 </div>
-<!--
-    <table style="width:100%;" ng-show="!showInProcess">
-        <tr>
-            <td valign="top">
-                <fieldset>
-                    <legend>Feature type</legend>
-                    <table>
-                        <tr>
-                            <td>
-                                <input type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="Word" /> Words
-                            </td>
-                            <td>
-                                <input ng-show="!isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isTokenized" />
-                                <span ng-show="!isAllBible">tokenized</span>
-                                <input ng-show="isAllBible" style="margin-left:20px;" type="checkbox" ng-model="isVocalized" />
-                                <span ng-show="isAllBible">vocalized</span>
-                            </td>
-                            <td>
-                                <input ng-show="isAllBible" type="checkbox" ng-model="isSinDot" />
-                                <span ng-show="isAllBible" >shin\sin dot</span>
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                                                   </tr>
-                        <tr>
-                            <td style="color:gray;"><input disabled type="radio" name="TokenizerTypeGroup" ng-model="TokenizerType" value="PartsOfSpeech" /> Parts of speech</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
-
-                        <tr>
-                            <td colspan="3"><hr /></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>Use</td>
-                                        <td>
-                                            <select ng-model="FeatureType" value="{{FeatureType}}">
-                                                <option>Unigram</option>
-                                                <option>Bigram</option>
-                                                <option>Trigram</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </fieldset>
-                <fieldset>
-                    <legend>Feature weight</legend>
-                    <table>
-                        <tr>
-                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Binary" />Binary</td>
-                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="Frequency" />Frequency</td>
-                            <td><input type="radio" name="FeatureWeightGroup" ng-model="NormalizerType" value="TfIdf" />Tf-Idf</td>
-                        </tr>
-                    </table>
-                </fieldset>
-                <fieldset>
-                    <legend>Filter</legend>
-                    <table>
-                        <tr>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="Common" />
-                                            Use
-                                        </td>
-                                        <td><input style="width:50px;" ng-model="FilterCount" type="text" value="{{FilterCount}}" /></td>
-                                        <td>most frequent</td>
-                                    </tr>
-                                </table>
-
-                            </td>
-                            <td>
-                                <input type="checkbox" ng-model="isFromEachClass" /> Per class
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="radio" name="FilterTypeGroup" ng-model="FilterType" value="None" />
-                                Use all features
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </td>
-
-        </tr>
-    </table>
-
-<div class="ngdialog-buttons" ng-show="!showInProcess">
-    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="addFeatureSetAndReturn()">Add feature set</button>
-    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
-</div>-->

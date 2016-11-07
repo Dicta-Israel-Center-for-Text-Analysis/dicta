@@ -127,7 +127,53 @@
     "BASEFORM_PARTICIPLE_VERB": "verb",
     "BASEFORM_PARTICIPLE_NOUN_ADJ": "noun/adj",
     "BASEFORM_POS_INITIALISM": "init.",
-    "BASEFORM_POS_FOREIGN": "foreign"
+    "BASEFORM_POS_FOREIGN": "foreign",
+
+    "@AjCl": "Adjective clause",
+    "@CPen": "Casus pendens",
+    "@Defc": "Defective clause atom",
+    "@Ellp": "Ellipsis",
+    "@InfA": "Infinitive absolute clause",
+    "@InfC": "Infinitive construct clause",
+    "@MSyn": "Macrosyntactic sign",
+    "@NmCl": "Nominal clause",
+    "@Ptcp": "Participle clause",
+    "@Reop": "Reopening",
+    "@Unkn": "Unknown",
+    "@Voct": "Vocative clause",
+    "@Way0": "Wayyiqtol-null clause",
+    "@WayX": "Wayyiqtol-X clause",
+    "@WIm0": "We-imperative-null clause",
+    "@WImX": "We-imperative-X clause",
+    "@WQt0": "We-qatal-null clause",
+    "@WQtX": "We-qatal-X clause",
+    "@WxI0": "We-x-imperative-null clause",
+    "@WXIm": "We-X-imperative clause",
+    "@WxIX": "We-x-imperative-X clause",
+    "@WxQ0": "We-x-qatal-null clause",
+    "@WXQt": "We-X-qatal clause",
+    "@WxQX": "We-x-qatal-X clause",
+    "@WxY0": "We-x-yiqtol-null clause",
+    "@WXYq": "We-X-yiqtol clause",
+    "@WxYX": "We-x-yiqtol-X clause",
+    "@WYq0": "We-yiqtol-null clause",
+    "@WYqX": "We-yiqtol-X clause",
+    "@xIm0": "x-imperative-null clause",
+    "@XImp": "X-imperative clause",
+    "@xImX": "x-imperative-X clause",
+    "@XPos": "Extraposition",
+    "@xQt0": "x-qatal-null clause",
+    "@XQtl": "X-qatal clause",
+    "@xQtX": "x-qatal-X clause",
+    "@xYq0": "x-yiqtol-null clause",
+    "@XYqt": "X-yiqtol clause",
+    "@xYqX": "x-yiqtol-X clause",
+    "@ZIm0": "Zero-imperative-null clause",
+    "@ZImX": "Zero-imperative-X clause",
+    "@ZQt0": "Zero-qatal-null clause",
+    "@ZQtX": "Zero-qatal-X clause",
+    "@ZYq0": "Zero-yiqtol-null clause",
+    "@ZYqX": "Zero-yiqtol-X clause"
 }
 
 function prettyPrintMorphology(converted) {
@@ -143,7 +189,11 @@ function prettyPrintMorphology(converted) {
             ).join(', ');
     }
 
+    // we match things that look like morphology - @ followed by any text until #, then a series of terms starting with #
     converted = converted.replace(/^@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
+
+    // we match things that look like syntax clause types, @ followed by 4 chars
+    converted = converted.replace(/@[A-Za-z0-9]{4}\b/g, x => morphologyIdDict.hasOwnProperty(x) ? morphologyIdDict[x] : x);
     return converted;
 }
 

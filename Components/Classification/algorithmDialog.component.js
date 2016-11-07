@@ -1,12 +1,17 @@
 ﻿// create the controller and inject Angular's $scope
 jTextMinerApp.component('algorithmDialog', {
-    bindings: { onConfirm: '&' },
+    bindings: {
+        onConfirm: '&',
+        selectedAlgorithm: '<',
+        onDiscard: '&',
+        onAlgorithmChange: '&'
+    },
     templateUrl: "Components/Classification/algorithmDialog.component.html",
-    controller: function ($scope, ngDialog, ExperimentService) {
-        $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-        $scope.$watch('selectedAlgorithmType', function () {
-            ExperimentService.updateselectedAlgorithmTypeValue($scope.selectedAlgorithmType.id, $scope.selectedAlgorithmType.name, $scope.selectedAlgorithmType.attributes);
-        });
-
+    controller: function ($scope, ExperimentService) {
+        this.algorithms = ExperimentService.algorithms;
+        this.updateAndClose = function () {
+            this.onAlgorithmChange({newAlgorithm: this.selectedAlgorithm});
+            this.onConfirm();
+        }
     }
 });

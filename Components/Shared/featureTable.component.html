@@ -7,7 +7,7 @@
         <td class="vimages_3"><a href="" ng-click="sortClick('-maxTTest')">T-test <span ng-class="arrowClass('-maxTTest')"></span></a></td>
     </tr>
     <tr ng-repeat="feature in $ctrl.features|orderBy:sortKey:sortReverse" ng-class="feature.selected ? '' : 'disabled-table-row'">
-        <td class="icon-td"><input type="checkbox" ng-if="!isSelectDisabled" ng-model="feature.selected"> <b>{{convertFeatureName(feature.name)}}</b>
+        <td class="icon-td"><input type="checkbox" ng-if="!$ctrl.isSelectDisabled" ng-model="feature.selected"> <b>{{convertFeatureName(feature.name)}}</b>
         </td>
         <td>
             <div class="class-dot" ng-style="classNameToBgStyle(feature.className)"></div>

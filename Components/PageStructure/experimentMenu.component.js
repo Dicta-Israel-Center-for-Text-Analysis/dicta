@@ -11,7 +11,7 @@
             $scope.SaveExperiment = function () {
                 ngDialog.openConfirm({
                     template: '<save-as-dialog onConfirm="confirm()" onCancel="closeThisDialog(\'button\')"></save-as-dialog>',
-                    controller: 'SaveAsController',
+                    plain: true,
                     className: 'ngdialog-theme-default',
                     scope: $scope
                 }).then(function (value) {

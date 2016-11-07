@@ -6,18 +6,20 @@
             <tr>
                 <td>Algorithm type:</td>
                 <td>
-                    <select id="AlgorithmType" ng-model="selectedAlgorithmType" ng-options="item as item.name for item in algorithms"></select>
+                    <select id="AlgorithmType" ng-model="$ctrl.selectedAlgorithm" ng-options="item as item.name for item in $ctrl.algorithms"></select>
                 </td>
             </tr>
             <tr>
                 <td>Attributes:</td>
                 <td>
-                    <input ng-model="selectedAlgorithmType.attributes" type="text" value="{{selectedAlgorithmType.attributes}}" />
+                    <input ng-model="$ctrl.selectedAlgorithm.attributes" type="text" value="{{$ctrl.selectedAlgorithm.attributes}}" />
                 </td>
             </tr>
         </table>
     </fieldset>
 </div>
 <div class="ngdialog-buttons">
-    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="$ctrl.onConfirm()">Done</button>
+
+    <button type="button" class="ngdialog-button ngdialog-button-cancel" ng-click="$ctrl.onDiscard()">Cancel</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="$ctrl.updateAndClose()">Done</button>
 </div>

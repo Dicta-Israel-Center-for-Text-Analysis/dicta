@@ -306,10 +306,19 @@
                 return $sce.trustAsHtml(text);
             };
 
+            $scope.updateAlgorithm = function (algorithmSettings) {
+                ExperimentService.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
+            }
+
             // advanced  - algorithems
             $scope.OpenSelectAlgorithm = function () {
                 ngDialog.openConfirm({
-                    template: '<algorithm-dialog on-confirm="confirm()"></algorithm-dialog>',
+                    template: '<algorithm-dialog ' +
+                    'on-confirm="confirm()" ' +
+                    'on-discard="closeThisDialog()" ' +
+                    'selected-algorithm="selectedAlgorithmType" ' +
+                    'on-algorithm-change="updateAlgorithm(newAlgorithm)">' +
+                    '</algorithm-dialog>',
                     plain: true,
                     className: 'ngdialog-theme-plain',
                     scope: $scope
@@ -380,6 +389,19 @@
                     converted = prettyPrintMorphology(converted);
                 }
                 return converted;
+            }
+
+            $scope.SaveExperiment = function () {
+                ngDialog.openConfirm({
+                    template: '<save-as-dialog on-confirm="confirm()" on-cancel="closeThisDialog(\'button\')"></save-as-dialog>',
+                    plain: true,
+                    className: 'ngdialog-theme-default',
+                    scope: $scope
+                }).then(function (value) {
+                    console.log('Modal promise resolved. Value: ', value);
+                }, function (reason) {
+                    console.log('Modal promise rejected. Reason: ', reason);
+                });
             }
 
             $scope.showCrossvalidation = function () {

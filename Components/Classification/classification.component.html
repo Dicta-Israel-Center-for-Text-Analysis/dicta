@@ -242,7 +242,7 @@
                                                     <td class="infl-content">{{feature.influence | number : 2}}</td>
                                                 </tr>
                                             </table>
-                                            <p class="reprencented">Missing ({{(testFile.featureList | negativeInfluence: $index).length}})</p>
+                                            <p class="reprencented">Insufficient occurrences ({{(testFile.featureList | negativeInfluence: $index).length}})</p>
                                             <table class="_missing">
                                                 <tr ng-repeat="feature in testFile.featureList | orderBy:test_predicate:reverse | orderBy:'influence' | negativeInfluence: $index">
                                                     <td class="reprencented-content" title="{{feature.title}}"><b>{{convertFeatureName(feature.name)}}</b></td>

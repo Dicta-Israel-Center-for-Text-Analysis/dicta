@@ -59,10 +59,14 @@
                 $scope.showAddClassDialog = false;
             }
 
+            $scope.fixmeCounter = 0;
             $scope.saveClass = function () {
                 $scope.showClassDialog = false;
                 $scope.showAddClassDialog = false;
                 ExperimentService.updateExperimentTypeModelValue('Classification');
+                // workaround for server bug - force names to be alphabetical
+                var prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
+                ClassService.updateClassName(prefix + " - " + ClassService.ClassName);
                 var classData = SaveClassInterface; // {};
                 
                 if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {

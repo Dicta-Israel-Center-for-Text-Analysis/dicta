@@ -150,8 +150,14 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         this.data.featuresData = ClassificationService.featureCollection.featuresData;
 
         this.data.selectTestTextKeys = SelectClassService.lastTestSetSelectedRootKeys;
-        this.data.cvResultData = this.cvResultData;
-        this.data.tsResultData = this.tsResultData;
+        // copy so we can modify it
+        this.data.cvResultData = angular.copy(this.cvResultData);
+        // the server can't handle this yet
+        delete this.data.cvResultData.classificationList;
+        // same thing
+        this.data.tsResultData = angular.copy(this.tsResultData);
+        delete this.data.tsResultData.classificationList;
+
     }
 
     service.SaveExperiment = function () {

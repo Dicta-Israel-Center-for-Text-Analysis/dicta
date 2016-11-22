@@ -78,7 +78,7 @@
                 $scope.dataExtract.featureSets = SegmentationService.featureCollection.Feature_sets;
                 $scope.dataExtract.corpusClasses = ClassService.Corpus_classes;
 
-                $scope.dataExtract.featuresData = SegmentationService.featureCollection.featuresData;
+                $scope.dataExtract.featuresData = {};
 
                 $scope.dataExtract.segmentationActionMode = SegmentationService.Segmentation_ActionMode;
                 $scope.dataExtract.segmentationChunkBy = SegmentationService.Segmentation_ChunkBy;

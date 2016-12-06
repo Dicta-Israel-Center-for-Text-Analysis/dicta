@@ -1,234 +1,159 @@
 ﻿jTextMinerApp.component('classification', {
-        templateUrl: 'Components/Classification/classification.component.html',
-        controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService) {
+    templateUrl: 'Components/Classification/classification.component.html',
+    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', '$http', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, $http) {
+        $scope.showInProcess = InProgressService.isReady != 1;
+        $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;
-            $scope.$on('isReady_Updated', function () {
-                $scope.showInProcess = InProgressService.isReady != 1;
-            });
-            $scope.countFilesPerClass = [];
-            
-            $scope.colors = ClassService.colors;
-            $scope.indexOfColor = function (val) {
-                var l = $scope.classes.length;
-                for (k = 0; k < l; k = k + 1) {
-                    if (angular.equals($scope.classes[k].title, val)) {
-                        return $scope.colors[k];
-                    }
-                }
-                return "Grey";
-            }
+        });
+        $scope.countFilesPerClass = [];
 
-            $scope.classNameToColor = ClassService.classNameToColor;
-
-            // someone pressed the "Add Class" button, so show the dialog
-            $scope.ContinueToAddClass = function (actionMode) {
-
-                $rootScope.$broadcast('lastSelectedRootKeys', []);
-                $scope.showAddClassDialog = true;
-
-                ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
-
-                ClassService.updateExperimentActionMode(actionMode);
-                //$scope.Next();
-            };
-
-            // set all the different data structures that hold classification data based on a saved data structure
-            $scope.UpdateDataForNewExperiment = function (data) {
-                //ExperimentService.updateExperimentModeValue();
-                ExperimentService.updateExperimentTypeModelValue(data.expType);
-                ExperimentService.updateExperimentName(data.expName);
-
-                ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
-
-                ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
-                ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
-
-                ClassService.Corpus_maxId = data.corpusMaxId;
-
-                ClassificationService.featureCollection.Feature_sets = data.featureSets;
-                ClassService.Corpus_classes = data.corpusClasses;
-
-                ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
-            }
-
-
-
-            // Bible
-            $scope.cancelClass = function () {
-                $scope.showClassDialog = false;
-                $scope.showAddClassDialog = false;
-            }
-
-            $scope.fixmeCounter = 0;
-            $scope.saveClass = function () {
-                $scope.showClassDialog = false;
-                $scope.showAddClassDialog = false;
-                ExperimentService.updateExperimentTypeModelValue('Classification');
-                // workaround for server bug - force names to be alphabetical
-                var prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
-                ClassService.updateClassName(prefix + " - " + ClassService.ClassName);
-                var classData = SaveClassInterface; // {};
-                
-                if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
-                    classData.totalNumberOfWords = BrowseClassService.LastClassTotalNumberOfWords;
-                    InProgressService.updateIsReady(0);
-                    APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response;
-                        $scope.addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
-
-                    });
-                }
-                else if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-                    InProgressService.updateIsReady(0);
-                    classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
-                    APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response;
-                        $scope.addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
-
-                    });
-                }
-                else if (angular.equals(classData.actionMode, 'LoadStoredClass')) {
-                    InProgressService.updateIsReady(0);
-
-                    var selRootNodes = $("#classTree").dynatree("getTree").getActiveNode();
-                    // Get a list of ALL selected nodes
-                    // selRootNodes = $("#classTree").dynatree("getTree").getSelectedNodes(false);
-                    var selRootKeys = selRootNodes.data.key;
-                    classData.activeKey = selRootKeys;
-                    APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response;
-                        $scope.addClass(results.select_ClassName, results.selectedText, 'unknown', '', results.numberOfChunks, results.totalNumberOfWords, true);
-
-                    });
+        $scope.colors = ClassService.colors;
+        $scope.indexOfColor = function (val) {
+            var l = $scope.classes.length;
+            for (k = 0; k < l; k = k + 1) {
+                if (angular.equals($scope.classes[k].title, val)) {
+                    return $scope.colors[k];
                 }
             }
+            return "Grey";
+        }
 
-            $scope.classes = ClassService.Corpus_classes;
-            $scope.$on('Corpus_classesValueUpdated', function () {
-                $scope.classes = ClassService.Corpus_classes;
-            });
+        $scope.classNameToColor = ClassService.classNameToColor;
 
-            $scope.clearOldResults = function () {
-                $scope.testSetChunks = [];
-            }
+        // someone pressed the "Add Class" button, so show the dialog
+        $scope.ContinueToAddClass = function (actionMode) {
 
-            $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
-                ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
-                ClassificationService.featureCollection.updateFeaturesData({});
-                ClassService.Corpus_maxId = ClassService.Corpus_maxId + 1;
-                //ExperimentService.Corpus_classes.push({
-                ClassService.pushCorpus_classes({
-                    id: ClassService.Corpus_maxId,
-                    title: newItemName,
-                    selectedText: text,
-                    chunkMode: mode,
-                    chunkSize: size,
-                    numberOfChunks: number,
-                    totalNumberOfWords: total,
-                    bible: is_Bible
+            $rootScope.$broadcast('lastSelectedRootKeys', []);
+            $scope.showAddClassDialog = true;
+
+            ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
+
+            ClassService.updateExperimentActionMode(actionMode);
+            //$scope.Next();
+        };
+
+        // set all the different data structures that hold classification data based on a saved data structure
+        $scope.UpdateDataForNewExperiment = function (data) {
+            //ExperimentService.updateExperimentModeValue();
+            ExperimentService.updateExperimentTypeModelValue(data.expType);
+            ExperimentService.updateExperimentName(data.expName);
+
+            ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
+
+            ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
+            ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
+
+            ClassService.Corpus_maxId = data.corpusMaxId;
+
+            ClassificationService.featureCollection.Feature_sets = data.featureSets;
+            ClassService.Corpus_classes = data.corpusClasses;
+
+            ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
+        }
+
+
+
+        // Bible
+        $scope.cancelClass = function () {
+            $scope.showClassDialog = false;
+            $scope.showAddClassDialog = false;
+        }
+
+        $scope.fixmeCounter = 0;
+        $scope.saveClass = function () {
+            $scope.showClassDialog = false;
+            $scope.showAddClassDialog = false;
+            ExperimentService.updateExperimentTypeModelValue('Classification');
+            // workaround for server bug - force names to be alphabetical
+            var prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
+            ClassService.updateClassName(prefix + " - " + ClassService.ClassName);
+            var classData = SaveClassInterface; // {};
+
+            if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
+                classData.totalNumberOfWords = BrowseClassService.LastClassTotalNumberOfWords;
+                InProgressService.updateIsReady(0);
+                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
+                    InProgressService.updateIsReady(1);
+                    var results = response;
+                    $scope.addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
+
                 });
-
             }
+            else if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
+                InProgressService.updateIsReady(0);
+                classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
+                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
+                    InProgressService.updateIsReady(1);
+                    var results = response;
+                    $scope.addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
 
-            $scope.runClassification = function () {
-                $scope.countFilesPerClass = [];
-                $scope.testSetChunks = [];
+                });
+            }
+            else if (angular.equals(classData.actionMode, 'LoadStoredClass')) {
+                InProgressService.updateIsReady(0);
 
-                ClassificationService.runClassification()
-                    .then(function (response2) {
+                var selRootNodes = $("#classTree").dynatree("getTree").getActiveNode();
+                // Get a list of ALL selected nodes
+                // selRootNodes = $("#classTree").dynatree("getTree").getSelectedNodes(false);
+                var selRootKeys = selRootNodes.data.key;
+                classData.activeKey = selRootKeys;
+                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
+                    InProgressService.updateIsReady(1);
+                    var results = response;
+                    $scope.addClass(results.select_ClassName, results.selectedText, 'unknown', '', results.numberOfChunks, results.totalNumberOfWords, true);
+
+                });
+            }
+        }
+
+        $scope.classes = ClassService.Corpus_classes;
+        $scope.$on('Corpus_classesValueUpdated', function () {
+            $scope.classes = ClassService.Corpus_classes;
+        });
+
+        $scope.clearOldResults = function () {
+            $scope.testSetChunks = [];
+        }
+
+        $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
+            ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
+            ClassificationService.featureCollection.updateFeaturesData({});
+            ClassService.Corpus_maxId = ClassService.Corpus_maxId + 1;
+            //ExperimentService.Corpus_classes.push({
+            ClassService.pushCorpus_classes({
+                id: ClassService.Corpus_maxId,
+                title: newItemName,
+                selectedText: text,
+                chunkMode: mode,
+                chunkSize: size,
+                numberOfChunks: number,
+                totalNumberOfWords: total,
+                bible: is_Bible
+            });
+
+        }
+
+        $scope.runClassification = function () {
+            $scope.countFilesPerClass = [];
+            $scope.testSetChunks = [];
+
+            ClassificationService.runClassification()
+                .then(function (response2) {
                     $scope.testSetResults = response2.testSetResults;
                     $scope.testSetChunks = [];
                     for (var testFileIndex in $scope.testSetResults) {
                         $scope.setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
                     }
                 });
-            }
+        }
 
+        $scope.CVResultData = ExperimentService.cvResultData;
+        $scope.$on('cvResultDataUpdated', function () {
             $scope.CVResultData = ExperimentService.cvResultData;
-            $scope.$on('cvResultDataUpdated', function () {
-                $scope.CVResultData = ExperimentService.cvResultData;
-            });
-            $scope.TSResultData = ExperimentService.tsResultData;
-            function updateTestSetChunks() {
-                $scope.testSetResults = ExperimentService.tsResultData.testSetResults;
-                $scope.testSetChunks = [];
-                for (testFileIndex in $scope.testSetResults) {
-                    $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
-                }
-                if ($scope.testSetChunks.length > 0) {
-                    $scope.data = {};
-                    $scope.data.userLogin = ExperimentService.user;
-                    $scope.data.index = 0;
-                    $scope.currentIndex = 0;
-                    APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response;
-                        $scope.legend = $sce.trustAsHtml(results.legend);
-                    });
-                }
-            }
-            updateTestSetChunks();
-            $scope.$on('tsResultDataUpdated', updateTestSetChunks);
-
-            // CV
-            $scope.Feature_sets = ExperimentService.Feature_sets;
-            $scope.featuresData = ExperimentService.featuresData;
-
-
-            $scope.cv_predicate = 'className';
-            $scope.cv_predicate = '-maxTTest';
-
-            //$scope.CVResultData = ExperimentService.resultData;
-            $scope.$on('valuesUpdated', function () {
-                //$scope.resultData = ExperimentService.resultData;
-                //$scope.htmlSegmentation = $sce.trustAsHtml($scope.resultData.htmlSegmentation);
-
-            });
-
-            $scope.unknownClasses = ClassService.TestSet_unknown_class;
-            $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {
-                $scope.unknownClasses.push({
-                    id: index,
-                    title: newItemName,
-                    selectedText: text,
-                    chunkMode: mode,
-                    chunkSize: size,
-                    numberOfChunks: number
-                });
-            }
-
-            //TEST SET
-            $scope.textAlign = 'left';
-            if (ClassService.isAllBible)
-                $scope.textAlign = 'right';
-
-
-            $scope.Feature_sets = ExperimentService.Feature_sets;
-            $scope.featuresData = ExperimentService.featuresData;
-
-            $scope.updateCurrentFeatureListToEmpty = function () {
-                $scope.tab = 1;
-            }
-            $scope.updateCurrentFeatureList = function () {
-                $scope.tab = 2;
-            }
-
-
-            $scope.numberOfAppearancesInDoc = function (item) {
-                return (item.numberOfAppearancesInDoc > 0);
-            };
-
-
-            $scope.test_predicate = 'orderByClass';
-
-            $scope.showInProcess = InProgressService.isReady != 1;
-            $scope.$on('isReady_Updated', function () {
-                $scope.showInProcess = InProgressService.isReady != 1;
-            });
-
+        });
+        $scope.TSResultData = ExperimentService.tsResultData;
+        function updateTestSetChunks() {
+            $scope.testSetResults = ExperimentService.tsResultData.testSetResults;
             $scope.testSetChunks = [];
             for (testFileIndex in $scope.testSetResults) {
                 $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
@@ -244,193 +169,360 @@
                     $scope.legend = $sce.trustAsHtml(results.legend);
                 });
             }
+        }
+        updateTestSetChunks();
+        $scope.$on('tsResultDataUpdated', updateTestSetChunks);
 
-            function cleanTitle(name){
-                var trimmed = name.replace(/.rtf$/,'');
-                // there's not going to be anything left if this is the only key
-                if (trimmed.length == SelectClassService.testSetTitlesCommonPrefix.length) {
-                    return trimmed.substring(trimmed.lastIndexOf('_') + 1);
-                }
-                else {
-                    return trimmed.substring((SelectClassService.testSetTitlesCommonPrefix.length + 1));
-                }
+        // CV
+        $scope.Feature_sets = ExperimentService.Feature_sets;
+        $scope.featuresData = ExperimentService.featuresData;
+
+
+        $scope.cv_predicate = 'className';
+        $scope.cv_predicate = '-maxTTest';
+
+        //$scope.CVResultData = ExperimentService.resultData;
+        $scope.$on('valuesUpdated', function () {
+            //$scope.resultData = ExperimentService.resultData;
+            //$scope.htmlSegmentation = $sce.trustAsHtml($scope.resultData.htmlSegmentation);
+
+        });
+
+        $scope.unknownClasses = ClassService.TestSet_unknown_class;
+        $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {
+            $scope.unknownClasses.push({
+                id: index,
+                title: newItemName,
+                selectedText: text,
+                chunkMode: mode,
+                chunkSize: size,
+                numberOfChunks: number
+            });
+        }
+
+        //TEST SET
+
+        $scope.Feature_sets = ExperimentService.Feature_sets;
+        $scope.featuresData = ExperimentService.featuresData;
+
+        $scope.updateCurrentFeatureListToEmpty = function () {
+            $scope.tab = 1;
+        }
+        $scope.updateCurrentFeatureList = function () {
+            $scope.tab = 2;
+        }
+
+
+        $scope.numberOfAppearancesInDoc = function (item) {
+            return (item.numberOfAppearancesInDoc > 0);
+        };
+
+
+        $scope.test_predicate = 'orderByClass';
+
+        $scope.showInProcess = InProgressService.isReady != 1;
+        $scope.$on('isReady_Updated', function () {
+            $scope.showInProcess = InProgressService.isReady != 1;
+        });
+
+        $scope.testSetChunks = [];
+        for (testFileIndex in $scope.testSetResults) {
+            $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
+        }
+        if ($scope.testSetChunks.length > 0) {
+            $scope.data = {};
+            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.index = 0;
+            $scope.currentIndex = 0;
+            APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+                InProgressService.updateIsReady(1);
+                var results = response;
+                $scope.legend = $sce.trustAsHtml(results.legend);
+            });
+        }
+
+        function cleanTitle(name){
+            var trimmed = name.replace(/.rtf$/,'');
+            // there's not going to be anything left if this is the only key
+            if (trimmed.length == SelectClassService.testSetTitlesCommonPrefix.length) {
+                return trimmed.substring(trimmed.lastIndexOf('_') + 1);
             }
-
-            function prettyPrintMorphologyClassification(html) {
-                function prettyPrintWord(word) {
-                    return '[' + prettyPrintMorphology(word) + ']';
-                }
-                if (/@[^ #]*#BASEFORM/.test(html)) {
-                    return html.replace(/(@[^ #]*#[A-Z_0-9#]*)/g, prettyPrintWord);
-                }
-                return html;
+            else {
+                return trimmed.substring((SelectClassService.testSetTitlesCommonPrefix.length + 1));
             }
+        }
 
-            $scope.setSelectedTestFile = function (item, index) {
+        function prettyPrintMorphologyClassification(html) {
+            function prettyPrintWord(word) {
+                return '[' + prettyPrintMorphology(word) + ']';
+            }
+            if (/@[^ #]*#BASEFORM/.test(html)) {
+                return html.replace(/(@[^ #]*#[A-Z_0-9#]*)/g, prettyPrintWord);
+            }
+            return html;
+        }
 
-                $scope.inited = false;
+        $scope.setSelectedTestFile = function (item, index) {
 
-                InProgressService.updateIsReady(0);
+            $scope.inited = false;
 
-                $scope.data = {};
-                $scope.data.userLogin = ExperimentService.user;
-                $scope.data.index = item.index;
-                $scope.currentIndex = item.index;
-                APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
-                    item.featureList = results.features;
-                    item.title = cleanTitle(item.name);
-                    $scope.testSetChunks[index] = item;
-                    $scope.legend = $sce.trustAsHtml(results.legend);
+            InProgressService.updateIsReady(0);
 
-                    if ($scope.testSetChunks.length == $scope.testSetResults.length)
+            $scope.data = {};
+            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.index = item.index;
+            $scope.currentIndex = item.index;
+            var featureTypeMap = {
+                "Word":"WORDS",
+                "Letter":"LETTERS",
+                "Morphology":"MORPHOLOGY",
+                "SyntaxClause":"SYNTAX_CLAUSE_TYPES",
+                "SyntaxPhrase":"SYNTAX_PHRASE_SEQUENCES"
+            };
+            var nGramMap = {
+                "Unigram": 1,
+                "Bigram": 2,
+                "Trigram": 3
+            };
+
+            var filter = function() {
+                var featureSet = ClassificationService.featureCollection.Feature_sets[0];
+                if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
+                    return "TEXT_ONLY";
+                }
+                if (featureSet.tokenizerType == "Morphology") {
+                    return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
+                }
+                if (featureSet.tokenizerType == "SyntaxPhrase" && featureSet.spoOnly) {
+                    return "SUBJECT_PREDICATE_OBJECT";
+                }
+                return "";
+                // filter = featureSet.
+                //     includeLexeme: false,
+                //     spoOnly: false,
+                //     vocalized: true,
+                //     sinDot: false,
+                //     tokenized: false,
+                //     includeNumber: false,
+                //     includePunctuation: false
+            }();
+            var featuresRequest = {
+                "key":
+                {
+                    "keyType": "DICTA_CORPUS",
+                    "key": item.name.replace(/.rtf$/,'').replace(/_/g,'/')
+                }
+                ,
+                "chunkType": "LARGE",
+                "featureSettings": {
+                    "type": featureTypeMap[ClassificationService.featureCollection.Feature_sets[0].tokenizerType],
+                    "filter": filter,
+                    "nGram": nGramMap[ClassificationService.featureCollection.Feature_sets[0].featureType]
+                }
+            };
+            var textRequest = {
+                "keys": [
                     {
-                        $scope.countFilesPerClass = [];
-                        for (currentClass in $scope.classes) {
-                            var l = 0;
-                            for (testFile in $scope.testSetChunks) {
-                                if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
-                                    l = l + 1;
-                            }
-                            $scope.countFilesPerClass.push(l);
-                        }
+                        "keyType": "DICTA_CORPUS",
+                        "key": item.name.replace(/.rtf$/,'').replace(/_/g,'/')
                     }
-                });
-
-                $scope.inited = true;
+                ],
+                "chunkType": "LARGE"
             };
-            $scope.tab = '1';
-            $scope.convert2TrustAsHtml = function (text) {
-                return $sce.trustAsHtml(text);
-            };
+            var featuresList;
+            APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+                InProgressService.updateIsReady(1);
+                var results = response;
+                //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
+                item.featureList = results.features;
+                item.title = cleanTitle(item.name);
+                $scope.testSetChunks[index] = item;
+                $scope.legend = $sce.trustAsHtml(results.legend);
 
-            $scope.updateAlgorithm = function (algorithmSettings) {
-                ExperimentService.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
-            }
+                if ($scope.testSetChunks.length == $scope.testSetResults.length)
+                {
+                    $scope.countFilesPerClass = [];
+                    for (currentClass in $scope.classes) {
+                        var l = 0;
+                        for (testFile in $scope.testSetChunks) {
+                            if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
+                                l = l + 1;
+                        }
+                        $scope.countFilesPerClass.push(l);
+                    }
+                }
+            }).$promise.then(
+                x =>
+                    $http.post(APIService.APIUrl + "/TextFeatures/ListFeatures", featuresRequest)
+                        .then(function(response) {
+                            featuresList = response.data[0].features;
+                        })
+                        .then(() =>
+                            $http.post(APIService.APIUrl + "/TextFeatures/GetText", textRequest)
+                                .then(function(response) {
+                                    var words = response.data[0].text.split(' ');
+                                    var currentOffset = 0;
+                                    var pieces = [];
+                                    function hack(name) {
+                                        if (ClassificationService.featureCollection.Feature_sets[0].tokenizerType == "SyntaxPhrase"
+                                            || ClassificationService.featureCollection.Feature_sets[0].tokenizerType == "SyntaxClause")
+                                            return prettyPrintMorphology(name);
+                                        else
+                                            return name;
+                                    }
+                                    for (var word of words){
+                                        var wordFeatures = featuresList
+                                            .filter(feature => feature.textStart < currentOffset + word.length
+                                            && currentOffset <= feature.textStart + feature.textLength );
+                                        var hoverText =
+                                            wordFeatures.map(feature => feature.name)
+                                                .join(' ');
+                                        if (hoverText.length > 0) {
+                                            var blah = false;
+                                            var colors = item.featureList
+                                                .filter(feature => wordFeatures
+                                                    .some(wordFeature => hack(wordFeature.name) == feature.name))
+                                                .map(feature => ClassService.classIndexToColor(feature.maxClassIndex));
+                                            if (colors.length > 0) blah = true;
+                                            pieces.push("<span " + ( blah ? "style='font-weight: bold; color: "+ colors[0] +"'" :"")+"title='"+ prettyPrintMorphology(hoverText) +"'>" + word +"</span>")
+                                        }
+                                        else
+                                            pieces.push(word);
+                                        currentOffset += word.length + 1;
+                                    }
+                                    var html = pieces.join(' ');
+                                    item.htmlText = html;
+                                })));
 
-            // advanced  - algorithems
-            $scope.OpenSelectAlgorithm = function () {
-                ngDialog.openConfirm({
-                    template: '<algorithm-dialog ' +
-                    'on-confirm="confirm()" ' +
-                    'on-discard="closeThisDialog()" ' +
-                    'selected-algorithm="selectedAlgorithmType" ' +
-                    'on-algorithm-change="updateAlgorithm(newAlgorithm)">' +
-                    '</algorithm-dialog>',
-                    plain: true,
-                    className: 'ngdialog-theme-plain',
-                    scope: $scope
-                }).then(function (value) {
-                    console.log('Modal promise resolved. Value: ', value);
-                }, function (reason) {
-                    console.log('Modal promise rejected. Reason: ', reason);
-                });
-            };
-            $scope.algorithms = ExperimentService.algorithms;
+            $scope.inited = true;
+        };
+        $scope.tab = '1';
+
+        $scope.updateAlgorithm = function (algorithmSettings) {
+            ExperimentService.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
+        }
+
+        // advanced  - algorithems
+        $scope.OpenSelectAlgorithm = function () {
+            ngDialog.openConfirm({
+                template: '<algorithm-dialog ' +
+                'on-confirm="confirm()" ' +
+                'on-discard="closeThisDialog()" ' +
+                'selected-algorithm="selectedAlgorithmType" ' +
+                'on-algorithm-change="updateAlgorithm(newAlgorithm)">' +
+                '</algorithm-dialog>',
+                plain: true,
+                className: 'ngdialog-theme-plain',
+                scope: $scope
+            }).then(function (value) {
+                console.log('Modal promise resolved. Value: ', value);
+            }, function (reason) {
+                console.log('Modal promise rejected. Reason: ', reason);
+            });
+        };
+        $scope.algorithms = ExperimentService.algorithms;
+        $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
+        $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
+        $scope.$on('selectedAlgorithmTypebroadcast', function () {
             $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
             $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
-            $scope.$on('selectedAlgorithmTypebroadcast', function () {
-                $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-                $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
 
-            });
+        });
 
 
-            // feature dialog
+        // feature dialog
+        $scope.featuresData = ClassificationService.featureCollection.featuresData;
+        $scope.featureCollection = ClassificationService.featureCollection;
+
+        $scope.$on('featuresDataUpdated', function () {
             $scope.featuresData = ClassificationService.featureCollection.featuresData;
-            $scope.featureCollection = ClassificationService.featureCollection;
+            // any changes to the featuresData means that the old results are no longer valid
+            if (Object.keys($scope.featuresData).length == 0) {
+                $scope.clearOldResults();
+            }
+        });
 
-            $scope.$on('featuresDataUpdated', function () {
-                $scope.featuresData = ClassificationService.featureCollection.featuresData;
-                // any changes to the featuresData means that the old results are no longer valid
-                if (Object.keys($scope.featuresData).length == 0) {
-                    $scope.clearOldResults();
-                }
+        $scope.OpenSelectFeatureSet = function () {
+            ngDialog.openConfirm({
+                template: '<edit-feature-set-dialog ' +
+                'feature-collection="ngDialogData.featureCollection" ' +
+                'on-confirm="confirm()" ' +
+                'on-discard="closeThisDialog(\'button\')"></edit-feature-set-dialog>',
+                plain: true,
+                className: 'ngdialog-theme-default override-background',
+                data: { featureCollection: ClassificationService.featureCollection },
+                closeByEscape: true,
+                closeByDocument: true,
+                scope: $scope
+            }).then(function (value) {
+                tiberias_tour_pause();
+            }, function (reason) {
+                tiberias_tour_pause();
             });
+        };
 
-            $scope.OpenSelectFeatureSet = function () {
-                ngDialog.openConfirm({
-                    template: '<edit-feature-set-dialog ' +
-                        'feature-collection="ngDialogData.featureCollection" ' +
-                        'on-confirm="confirm()" ' +
-                        'on-discard="closeThisDialog(\'button\')"></edit-feature-set-dialog>',
-                    plain: true,
-                    className: 'ngdialog-theme-default override-background',
-                    data: { featureCollection: ClassificationService.featureCollection },
-                    closeByEscape: true,
-                    closeByDocument: true,
-                    scope: $scope
-                }).then(function (value) {
-                    tiberias_tour_pause();
-                }, function (reason) {
-                    tiberias_tour_pause();
-                });
-            };
-
-            $scope.createThumbnail = function (chunk) {
-                if (chunk == null)
-                    return "";
-                var dotsNail = "";
-                for (i = 0; i < chunk.length / 200; i = i + 1) {
-                    dotsNail += ". ";
-                }
-                return $sce.trustAsHtml(dotsNail);
-            };
-
-            $scope.scrollTo = function (index) {
-                window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);
-            };
-
-            $scope.convertFeatureName = function (featureName) {
-                var converted = featureName;
-                if (converted.indexOf('_') > -1) {
-                    converted = prettyPrintMorphology(converted);
-                }
-                return converted;
+        $scope.createThumbnail = function (chunk) {
+            if (chunk == null)
+                return "";
+            var dotsNail = "";
+            for (i = 0; i < chunk.length / 200; i = i + 1) {
+                dotsNail += ". ";
             }
+            return $sce.trustAsHtml(dotsNail);
+        };
 
-            $scope.SaveExperiment = function () {
-                ngDialog.openConfirm({
-                    template: '<save-as-dialog on-confirm="confirm()" on-cancel="closeThisDialog(\'button\')"></save-as-dialog>',
-                    plain: true,
-                    className: 'ngdialog-theme-default',
-                    scope: $scope
-                }).then(function (value) {
-                    console.log('Modal promise resolved. Value: ', value);
-                }, function (reason) {
-                    console.log('Modal promise rejected. Reason: ', reason);
-                });
-            }
+        $scope.scrollTo = function (index) {
+            window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);
+        };
 
-            $scope.showCrossvalidation = function () {
-                ngDialog.openConfirm({
-                    template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.CVResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
-                    plain: true,
-                    data: { CVResultData: $scope.CVResultData },
-                    closeByEscape: true,
-                    closeByDocument: true,
-                    className: 'ngdialog-theme-default override-background'
-                });
+        $scope.convertFeatureName = function (featureName) {
+            var converted = featureName;
+            if (converted.indexOf('_') > -1) {
+                converted = prettyPrintMorphology(converted);
             }
+            return converted;
+        }
 
-            $scope.OpenViewAllFeatures = function () {
-                ClassificationService.prepareClassification().then(
-                    function(){
-                        ngDialog.openConfirm({
-                            template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
-                            plain: true,
-                            data: {
-                                features: ClassificationService.featureCollection.featuresData.features.reduce(function(a, b) {
-                                    return a.concat(b);
-                                }, [])
-                            },
-                            closeByEscape: true,
-                            closeByDocument: true,
-                            className: 'ngdialog-theme-default override-background'
-                        })}
-                );
-            }
-        }]
-    });
+        $scope.SaveExperiment = function () {
+            ngDialog.openConfirm({
+                template: '<save-as-dialog on-confirm="confirm()" on-cancel="closeThisDialog(\'button\')"></save-as-dialog>',
+                plain: true,
+                className: 'ngdialog-theme-default',
+                scope: $scope
+            }).then(function (value) {
+                console.log('Modal promise resolved. Value: ', value);
+            }, function (reason) {
+                console.log('Modal promise rejected. Reason: ', reason);
+            });
+        }
+
+        $scope.showCrossvalidation = function () {
+            ngDialog.openConfirm({
+                template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.CVResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
+                plain: true,
+                data: { CVResultData: $scope.CVResultData },
+                closeByEscape: true,
+                closeByDocument: true,
+                className: 'ngdialog-theme-default override-background'
+            });
+        }
+
+        $scope.OpenViewAllFeatures = function () {
+            ClassificationService.prepareClassification().then(
+                function(){
+                    ngDialog.openConfirm({
+                        template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
+                        plain: true,
+                        data: {
+                            features: ClassificationService.featureCollection.featuresData.features.reduce(function(a, b) {
+                                return a.concat(b);
+                            }, [])
+                        },
+                        closeByEscape: true,
+                        closeByDocument: true,
+                        className: 'ngdialog-theme-default override-background'
+                    })}
+            );
+        }
+    }]
+});

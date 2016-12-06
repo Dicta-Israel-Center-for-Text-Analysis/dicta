@@ -173,8 +173,39 @@
     "@ZQt0": "Zero-qatal-null clause",
     "@ZQtX": "Zero-qatal-X clause",
     "@ZYq0": "Zero-yiqtol-null clause",
-    "@ZYqX": "Zero-yiqtol-X clause"
-}
+    "@ZYqX": "Zero-yiqtol-X clause",
+
+    "Adju": "Adjunct",
+    "Cmpl": "Complement",
+    "Conj": "Conjunction",
+    "EPPr": "Enclitic personal pronoun!",
+    "ExsS": "Existence with subject suffix",
+    "Exst": "Existence",
+    "Frnt": "Fronted element",
+    "Intj": "Interjection",
+    "IntS": "Interjection with subject suffix",
+    "Loca": "Locative",
+    "Modi": "Modifier",
+    "ModS": "Modifier with subject suffix",
+    "NCop": "Negative copula",
+    "NCoS": "Negative copula with subject suffix",
+    "Nega": "Negation",
+    "Objc": "Object",
+    "PrAd": "Predicative adjunct",
+    "PrcS": "Predicate complement with subject suffix",
+    "PreC": "Predicate complement",
+    "Pred": "Predicate",
+    "PreO": "Predicate with object suffix",
+    "PreS": "Predicate with subject suffix",
+    "PtcO": "Participle with object suffix",
+    "Ques": "Question",
+    "Rela": "Relative",
+    "Subj": "Subject",
+    "Supp": "Supplementary constituent",
+    "Time": "Time reference",
+    "Unkn": "Unknown",
+    "Voct": "Vocative"
+};
 
 function prettyPrintMorphology(converted) {
     function dictLookup(term) {
@@ -190,10 +221,19 @@ function prettyPrintMorphology(converted) {
     }
 
     // we match things that look like morphology - @ followed by any text until #, then a series of terms starting with #
-    converted = converted.replace(/^@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
+    converted = converted.replace(/@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');
 
     // we match things that look like syntax clause types, @ followed by 4 chars
     converted = converted.replace(/@[A-Za-z0-9]{4}\b/g, x => morphologyIdDict.hasOwnProperty(x) ? morphologyIdDict[x] : x);
+
+    function syntaxPhraseSeqLookup(seq) {
+        // get rid of leading @
+        var seqArray = seq.substring(1).split('_');
+        return seqArray.map(x => morphologyIdDict.hasOwnProperty(x) ? morphologyIdDict[x] : x)
+            .join(", ");
+    }
+    // match things that look like syntax phrase sequences, @ followed by groups of 4 chars joined with _
+    converted = converted.replace(/@\w{4}(_\w{4})*/g, syntaxPhraseSeqLookup);
     return converted;
 }
 

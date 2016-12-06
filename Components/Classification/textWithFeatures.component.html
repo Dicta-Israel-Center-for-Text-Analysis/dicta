@@ -1,0 +1,15 @@
+﻿<div id="section{{$ctrl.index}}" class="border-box">
+    <h2 class="{{$ctrl.classifiedColor}}">
+        <span class="align-left">{{$ctrl.testFile.title}}</span><span class="align-right">
+                                      {{$ctrl.testFile.length}} words, {{$ctrl.testFile.classifiedAs}},
+                                      <i ng-show="$ctrl.testFile.confidence==100">very high</i>
+                                      <i ng-show="$ctrl.testFile.confidence>=95 && $ctrl.testFile.confidence<100">high</i>
+                                      <i ng-show="$ctrl.testFile.confidence>=80 && $ctrl.testFile.confidence<95">medium</i>
+                                      <i ng-show="$ctrl.testFile.confidence<80">low</i>
+                                  </span>
+    </h2>
+    <p class="line-h2"
+       style='height: 350px; overflow: scroll; text-align: right'
+       ng-bind-html="convert2TrustAsHtml($ctrl.testFile.htmlText)">
+    </p>
+</div>

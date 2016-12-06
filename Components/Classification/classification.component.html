@@ -72,19 +72,7 @@
         <div ng-show="tab == '1'">
                   <div class="col-md-11">
                       <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
-                          <div id="section{{$index}}" class="border-box">
-                              <h2 class="{{indexOfColor(testFile.classifiedAs)}}">
-                                  <span class="align-left">{{testFile.title}}</span><span class="align-right">
-                                      {{testFile.length}} words, {{testFile.classifiedAs}},
-                                      <i ng-show="testFile.confidence==100">very high</i>
-                                      <i ng-show="testFile.confidence>=95 && testFile.confidence<100">high</i>
-                                      <i ng-show="testFile.confidence>=80 && testFile.confidence<95">medium</i>
-                                      <i ng-show="testFile.confidence<80">low</i>
-                                  </span>
-                              </h2>
-                              <p class="line-h2" style='height: 350px; overflow: scroll; text-align:{{textAlign}};' ng-bind-html="convert2TrustAsHtml(testFile.htmlText)">
-                              </p>
-                          </div>
+                          <text-with-features test-file="testFile" index="$index" classified-color="indexOfColor(testFile.classifiedAs)"></text-with-features>
                       </div>
 
                   </div>      

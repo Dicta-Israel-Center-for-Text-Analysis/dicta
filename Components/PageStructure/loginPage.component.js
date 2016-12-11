@@ -202,7 +202,7 @@ jTextMinerApp.component('loginPage',
 
         $scope.LoginDlg = function () {
             ngDialog.openConfirm({
-                template: '<login-dialog on-confirm="confirm()"></login-dialog>',
+                template: '<login-dialog on-confirm="confirm()" on-cancel="closeThisDialog()"></login-dialog>',
                 plain: true,
                 className: 'ngdialog-theme-default',
                 closeByEscape: true,

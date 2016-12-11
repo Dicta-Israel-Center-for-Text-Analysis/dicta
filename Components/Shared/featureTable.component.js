@@ -285,26 +285,5 @@ jTextMinerApp.component('featureTable', {
                 }
                 return converted;
             }
-
-
-            /* currently unused
-            $scope.isMoreDetails = false;
-            $scope.moreDetails = function () {
-                $scope.isMoreDetails = true;
-            }
-            $scope.fewerDetails = function () {
-                $scope.isMoreDetails = false;
-            }
-
-            $scope.TotalNumberOfFeatures = FeatureService.totalNumberOfFeatures;
-            $scope.updateTotalNumberOfFeatures = function(item)
-            {
-                FeatureService.updateTotalNumberOfFeatures(item);
-            }
-
-            $scope.$on('totalNumberOfFeaturesUpdated', function () {
-                $scope.TotalNumberOfFeatures = FeatureService.totalNumberOfFeatures;
-            });
-            */
         }]
 });

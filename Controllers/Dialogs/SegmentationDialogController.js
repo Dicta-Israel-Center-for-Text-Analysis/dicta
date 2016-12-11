@@ -1,5 +1,4 @@
-﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('SegmentationDialogController', function ($scope, ngDialog, ExperimentService, SegmentationService) {
+﻿jTextMinerApp.controller('SegmentationDialogController', function ($scope, ngDialog, ExperimentService, SegmentationService) {
 
     $scope.ActionMode = SegmentationService.Segmentation_ActionMode;
 

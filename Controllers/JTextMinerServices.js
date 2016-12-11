@@ -231,9 +231,5 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         $rootScope.$broadcast("valuesUpdated");
     }
 
-
-    
-
-
     return service;
 });

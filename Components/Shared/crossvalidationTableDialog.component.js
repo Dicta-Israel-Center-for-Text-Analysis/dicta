@@ -9,7 +9,8 @@ jTextMinerApp.directive('crossvalidationTableDialog', function () {
         controller: ['$scope', function($scope) {
             var ctrl = this;
 
-            // the inclusion of the following code is a hack to compensate for
+            // the inclusion of the following code is a hack to compensate for problems in sorting class names
+            // that might have numbers in the name
 
             /* From alphanum.js (C) Brian Huisman
              * Based on the Alphanum Algorithm by David Koelle

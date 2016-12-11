@@ -105,8 +105,10 @@
 
                 $scope.dataRun.segmentationActionMode = SegmentationService.Segmentation_ActionMode;
                 $scope.dataRun.segmentationChunkBy = SegmentationService.Segmentation_ChunkBy;
-                $scope.dataRun.segmentationSplitString = SegmentationService.Segmentation_SplitString;;
-                $scope.dataRun.segmentationNumberOfSentencePerChunk = SegmentationService.Segmentation_NumberOfSentencePerChunk;;
+                $scope.dataRun.segmentationSplitString = SegmentationService.Segmentation_SplitString;
+                ;
+                $scope.dataRun.segmentationNumberOfSentencePerChunk = SegmentationService.Segmentation_NumberOfSentencePerChunk;
+                ;
                 $scope.dataRun.segmentationSimilarityType = SegmentationService.Segmentation_SimilarityType;
                 $scope.dataRun.segmentationNumberOfClusters = SegmentationService.Segmentation_NumberOfClusters;
                 $scope.dataRun.segmentationCoreDocs = SegmentationService.Segmentation_CoreDocs;
@@ -115,35 +117,28 @@
 
             }
 
-            $scope.isAllBibleSegmentation=true;
+            $scope.isAllBibleSegmentation = true;
 
             $scope.RunExperiment = function () {
-                SelectClassService.lastTestSetSelectedRootKeys.forEach(function(key){if(!key.startsWith('/Dicta Corpus/Bible/')) {$scope.isAllBibleSegmentation = false;}});
-                AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
+                SelectClassService.lastTestSetSelectedRootKeys.forEach(function (key) {
+                    if (!key.startsWith('/Dicta Corpus/Bible/')) {
+                        $scope.isAllBibleSegmentation = false;
+                    }
+                });
+                AlertsService.determineAlert({msg: 'Check validation', type: 'success'});
                 $scope.showClassDialog = false;
                 InProgressService.updateIsReady(0);
-
-                /*
-                if (angular.equals($scope.data.actionMode, 'SelectOnlineCorpus')) {
-                    var selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(true);
-                    // Get a list of ALL selected nodes
-                    selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(false);
-                    var selRootKeys = $.map(selRootNodes, function (node) {
-                        return node.data.key;
-                    });
-                    $scope.data.select_RootKeys = selRootKeys;
-                }*/
 
                 ExperimentService.updateExperimentTypeModelValue('Segmentation');
 
                 $scope.UpdateDataForExtract();
 
-                APIService.apiRun({ crud: 'ExtractFeaturesSegmentation' }, $scope.dataExtract, function (response) {
+                APIService.apiRun({crud: 'ExtractFeaturesSegmentation'}, $scope.dataExtract, function (response) {
                     var results = response;
                     $scope.UpdateDataForRun();
                     InProgressService.updateIsReady(0);
 
-                    APIService.apiRun({ crud: 'RunSegmentation' }, $scope.dataRun, function (response) {
+                    APIService.apiRun({crud: 'RunSegmentation'}, $scope.dataRun, function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response;
                         $scope.resultData = results;
@@ -169,7 +164,7 @@
             $scope.createSegment = function (segment) {
                 return $sce.trustAsHtml(segment);
             }
-           
+
             $scope.createThumbnail = function (chunk) {
                 if (chunk == null)
                     return "";

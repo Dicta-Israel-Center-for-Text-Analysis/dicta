@@ -152,18 +152,6 @@
                 }
 
             };
-
-            // $scope.getSelectedKeys = function () {
-            //     var selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(true);
-            //     // Get a list of ALL selected nodes
-            //     selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(false);
-            //
-            //     var selRootKeys = $.map(selRootNodes, function (node) {
-            //         return node.data.key;
-            //     });
-            //     return selRootKeys;
-            // };
-
             
         }]
 });

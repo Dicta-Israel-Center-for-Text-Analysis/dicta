@@ -119,7 +119,6 @@
             ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
             ClassificationService.featureCollection.updateFeaturesData({});
             ClassService.Corpus_maxId = ClassService.Corpus_maxId + 1;
-            //ExperimentService.Corpus_classes.push({
             ClassService.pushCorpus_classes({
                 id: ClassService.Corpus_maxId,
                 title: newItemName,
@@ -130,8 +129,7 @@
                 totalNumberOfWords: total,
                 bible: is_Bible
             });
-
-        }
+        };
 
         $scope.runClassification = function () {
             $scope.countFilesPerClass = [];
@@ -145,7 +143,7 @@
                         $scope.setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
                     }
                 });
-        }
+        };
 
         $scope.CVResultData = ExperimentService.cvResultData;
         $scope.$on('cvResultDataUpdated', function () {
@@ -180,13 +178,6 @@
 
         $scope.cv_predicate = 'className';
         $scope.cv_predicate = '-maxTTest';
-
-        //$scope.CVResultData = ExperimentService.resultData;
-        $scope.$on('valuesUpdated', function () {
-            //$scope.resultData = ExperimentService.resultData;
-            //$scope.htmlSegmentation = $sce.trustAsHtml($scope.resultData.htmlSegmentation);
-
-        });
 
         $scope.unknownClasses = ClassService.TestSet_unknown_class;
         $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {

@@ -5,7 +5,7 @@
 
 
 var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.bootstrap.tabs', 'ui.indeterminate']);//, 'angularCharts']);
-// Example of how to set default values for all dialogs
+// set default values for all dialogs
 jTextMinerApp.config(['ngDialogProvider', function (ngDialogProvider) {
     ngDialogProvider.setDefaults({
         className: 'ngdialog-theme-default',

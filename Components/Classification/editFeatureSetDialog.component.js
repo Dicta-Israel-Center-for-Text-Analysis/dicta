@@ -1,5 +1,4 @@
-﻿// create the controller and inject Angular's $scope
-jTextMinerApp.component('editFeatureSetDialog', {
+﻿jTextMinerApp.component('editFeatureSetDialog', {
     bindings: {
         featureCollection: '<',
         featureIndex: '<',

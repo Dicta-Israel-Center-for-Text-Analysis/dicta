@@ -33,7 +33,7 @@ jTextMinerApp.service('fileUpload', ['$http', 'InProgressService', '$location', 
 jTextMinerApp.factory("APIService", function ($resource) {
     var baseurl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot6/api";
     baseurl = "http://localhost:8080/NewWebSite/api";
-    //baseurl = "http://ec2-54-93-223-242.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot8/api";
+    baseurl = "http://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/WebServiceJTextMinerNewRoot8/api";
     var url = baseurl + "/JTextMinerAPI";
 
     var APIService = $resource(url + "/:crud/:secondParam",

@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, AlertsService) {
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, AlertsService, UserService) {
     var root = {
         featureCollection: FeatureCollectionFactory.newCollection(),
         Classification_CrossValidationFolds: 10,
@@ -33,7 +33,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
         var deleteData = {
             title: currentClass.title,
             id: currentClass.id,
-            userLogin: root.ExperimentServiceFixMe.user,
+            userLogin: UserService.user,
             expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
             expName: root.ExperimentServiceFixMe.ExperimentName
         };
@@ -63,7 +63,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             InProgressService.updateIsReady(0);
 
             var apiCallData = {
-                userLogin: root.ExperimentServiceFixMe.user,
+                userLogin: UserService.user,
                 expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
                 expName: root.ExperimentServiceFixMe.ExperimentName,
                 featureSets: root.featureCollection.Feature_sets,
@@ -117,7 +117,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
     function createRequestForRunClassification() {
         return {
-            userLogin: root.ExperimentServiceFixMe.user,
+            userLogin: UserService.user,
             expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
             expName: root.ExperimentServiceFixMe.ExperimentName,
             selectedAlgorithmTypeId: root.ExperimentServiceFixMe.selectedAlgorithmTypeId,

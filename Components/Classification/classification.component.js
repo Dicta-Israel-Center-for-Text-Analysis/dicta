@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', '$http', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, $http) {
+    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', '$http', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, $http, UserService) {
         $scope.showInProcess = InProgressService.isReady != 1;
         $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -158,7 +158,7 @@
             }
             if ($scope.testSetChunks.length > 0) {
                 $scope.data = {};
-                $scope.data.userLogin = ExperimentService.user;
+                $scope.data.userLogin = UserService.user;
                 $scope.data.index = 0;
                 $scope.currentIndex = 0;
                 APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
@@ -222,7 +222,7 @@
         }
         if ($scope.testSetChunks.length > 0) {
             $scope.data = {};
-            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.userLogin = UserService.user;
             $scope.data.index = 0;
             $scope.currentIndex = 0;
             APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
@@ -260,7 +260,7 @@
             InProgressService.updateIsReady(0);
 
             $scope.data = {};
-            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.userLogin = UserService.user;
             $scope.data.index = item.index;
             $scope.currentIndex = item.index;
             var featureTypeMap = {

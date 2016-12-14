@@ -1,11 +1,11 @@
 ﻿jTextMinerApp.component('headerPage',
     {
         templateUrl: 'Components/PageStructure/header.component.html',
-        controller: ['$scope', 'ExperimentService', '$location', function ($scope, ExperimentService, $location) {
-            $scope.userLogin = ExperimentService.user;
+        controller: ['$scope', 'UserService', '$location', function ($scope, UserService, $location) {
+            $scope.userLogin = UserService.user;
             $scope.isShow = false;
 
-            if (ExperimentService.user == 'user')
+            if (!UserService.isLoggedIn())
                 $location.path('Login');
         }]
     }

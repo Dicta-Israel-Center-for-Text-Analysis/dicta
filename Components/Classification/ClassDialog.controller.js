@@ -1,4 +1,4 @@
-﻿jTextMinerApp.controller('ClassDialogController', function ($scope, ngDialog, ExperimentService, fileUpload, focus, APIService, InProgressService, ClassService) {
+﻿jTextMinerApp.controller('ClassDialogController', function ($scope, ngDialog, UserService, ExperimentService, fileUpload, focus, APIService, InProgressService, ClassService) {
 
     $scope.showInProcess = InProgressService.isReady != 1;
     $scope.$on('isReady_Updated', function () {
@@ -32,7 +32,7 @@
     $scope.inited = false;
     
     $scope.data = {};
-    $scope.data.userLogin = ExperimentService.user;
+    $scope.data.userLogin = UserService.user;
     $scope.data.expType = ExperimentService.ExperimentTypeModel;
 
     $scope.inited = true;

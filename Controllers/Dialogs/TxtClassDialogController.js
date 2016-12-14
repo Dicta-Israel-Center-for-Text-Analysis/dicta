@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('TxtClassDialogController', function ($scope, ngDialog, ExperimentService, fileUpload, focus, SegmentationService, BrowseClassService, InProgressService, ClassService) {
+jTextMinerApp.controller('TxtClassDialogController', function ($scope, ngDialog, ExperimentService, fileUpload, focus, SegmentationService, BrowseClassService, InProgressService, ClassService, UserService) {
     
     focus('Browse_focusTxtFile');
 
@@ -46,7 +46,7 @@ jTextMinerApp.controller('TxtClassDialogController', function ($scope, ngDialog,
         var txtFile = $scope.txtFile;
         console.log('file is ' + JSON.stringify(txtFile));
         var uploadUrl = ExperimentService.baseUrl + "/uploadTxtFile";
-        fileUpload.uploadFileToUrl(txtFile, uploadUrl, 'txtFile', ExperimentService.user);
+        fileUpload.uploadFileToUrl(txtFile, uploadUrl, 'txtFile', UserService.user);
     };
 
     $scope.$on('countWordsForUploadedTxtFileUpdated', function () {

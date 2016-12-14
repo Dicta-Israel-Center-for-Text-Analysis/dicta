@@ -2,15 +2,11 @@
 jTextMinerApp.component('loginPage',
 {
     templateUrl:'Components/PageStructure/loginPage.component.html',
-    controller: function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface) {
-        $scope.currentUser = ExperimentService.user;
+    controller: function ($scope, ngDialog, UserService, ExperimentService, $location, APIService, AlertsService, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface) {
+        $scope.currentUser = UserService.user;
         $scope.showSignUp = false; //$scope.currentUser === 'user';
         if (ExperimentService.isNewExperiment)
             ExperimentService.isNewExperiment = false;
-
-        if (ExperimentService.user == 'none')
-            $location.path('Login');
-
 
         $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
         $scope.$watch('ExperimentTypeModel', function () {
@@ -20,22 +16,12 @@ jTextMinerApp.component('loginPage',
         $scope.$on('valuesUpdated', function () {
             $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
         });
-        $scope.$on('userUpdated', function () {
-            $scope.currentUser = ExperimentService.user;
-            $scope.showSignUp = $scope.currentUser==='user';
-
-        });
-
 
         $scope.ExperimentMode = ExperimentService.ExperimentMode;
         $scope.$watch('ExperimentMode', function () {
             ExperimentService.updateExperimentModeValue($scope.ExperimentMode);
         });
 
-
-        $scope.Back = function () {
-            $location.path('Login');
-        }
         $scope.NewExperimentName = ExperimentService.NewExperimentName;
         $scope.LoadPreviousResults = '';
 
@@ -61,17 +47,6 @@ jTextMinerApp.component('loginPage',
 
             ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
 
-            var selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(true);
-            // Get a list of ALL selected nodes
-            selRootNodes = $("#trainTree").dynatree("getTree").getSelectedNodes(false);
-
-            var selRootKeys = $.map(selRootNodes, function (node) {
-                return node.data.key;
-            });
-            for (var i in selRootKeys) {
-                $("#trainTree").dynatree("getTree").getNodeByKey(selRootKeys[i]).select(false);
-            }
-
             ClassService.updateExperimentActionMode(actionMode);
             //$scope.Next();
         }
@@ -90,7 +65,7 @@ jTextMinerApp.component('loginPage',
                         ExperimentService.updateNewExperimentName($scope.NewExperimentName);
 
                         $scope.data = {};
-                        $scope.data.userLogin = ExperimentService.user;
+                        $scope.data.userLogin = UserService.user;
                         $scope.data.expType = ExperimentService.ExperimentTypeModel;
 
                         // http://www.aspsnippets.com/Articles/AngularJS-Get-and-display-Current-Date-and-Time.aspx
@@ -116,7 +91,7 @@ jTextMinerApp.component('loginPage',
                         ExperimentService.updateStoredExperimentName($scope.LoadPreviousResults);
 
                         $scope.data = {};
-                        $scope.data.userLogin = ExperimentService.user;
+                        $scope.data.userLogin = UserService.user;
                         $scope.data.expType = ExperimentService.ExperimentTypeModel;
                         $scope.data.expName = ExperimentService.ExperimentName;
 
@@ -139,16 +114,12 @@ jTextMinerApp.component('loginPage',
             }
         }
 
-        focus('focusMe');
-
-
-
         $scope.fileNameList = [];
         $scope.searchedFileNameList = [];
         $scope.comparedFileNameList = [];
 
         $scope.data = {};
-        $scope.data.userLogin = ExperimentService.user;
+        $scope.data.userLogin = UserService.user;
         $scope.data.expType = ExperimentService.ExperimentTypeModel;
         APIService.apiGetArray({ crud: 'GetUploadStoredExperiments' }, $scope.data, function (response) {
             $scope.fileNameList = response;
@@ -175,7 +146,7 @@ jTextMinerApp.component('loginPage',
         }
         $scope.UpdateExtractFeaturesData = function () {
             $scope.data = {};
-            $scope.data.userLogin = ExperimentService.user;
+            $scope.data.userLogin = UserService.user;
             $scope.data.expType = ExperimentService.ExperimentTypeModel;
 
 
@@ -209,7 +180,7 @@ jTextMinerApp.component('loginPage',
                 closeByDocument: true,
                 scope: $scope
             }).then(function (value) {
-                //console.log('Modal promise resolved. Value: ', value);
+                // successful login
                 $location.path('AfterLogin');
             }, function (reason) {
                 console.log('Modal promise rejected. Reason: ', reason);
@@ -219,20 +190,10 @@ jTextMinerApp.component('loginPage',
 
         var cookieUsername = $.cookie('userLogin');
         if (cookieUsername != null) {
-            $scope.userLogin = cookieUsername;
-            $scope.data = {};
-            $scope.data.userLogin = $scope.userLogin;
-            APIService.apiRun({crud: 'CheckUserLogin'}, $scope.data, function (response) {
-                if (response.userLogin.length != 0) {
-
-                    AlertsService.determineAlert({
-                        msg: 'Login success! Hi ' + $scope.userLogin + ', please choose one of the experiments below and click on "Next"',
-                        type: 'success'
-                    });
-                    ExperimentService.updateUser($scope.userLogin);
+            UserService.tryLogin(cookieUsername)
+                .then(function () {
                     $location.path('AfterLogin');
-                }
-            });
+                });
         }
 
     }

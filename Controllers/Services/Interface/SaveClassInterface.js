@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService, ClassificationService) {
+﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService, ClassificationService, UserService) {
     var classData = {
         testSetActionMode: 'SelectOnlineCorpus',
         actionMode: ClassService.ExperimentActionMode,
@@ -15,7 +15,7 @@
         select_ChunkSize: SelectClassService.Select_ChunkSize,
         select_RootKeys: SelectClassService.lastSelectedRootKeys,
         activeKey: '',
-        userLogin: ExperimentService.user,
+        userLogin: UserService.user,
         expType: ExperimentService.ExperimentTypeModel,
         expName: ExperimentService.ExperimentName
 };
@@ -67,7 +67,7 @@
     
 
     $rootScope.$on('valuesUpdated', function () {
-        classData.userLogin = ExperimentService.user;
+        classData.userLogin = UserService.user;
         classData.expType = ExperimentService.ExperimentTypeModel;
         classData.expName = ExperimentService.ExperimentName;
     });

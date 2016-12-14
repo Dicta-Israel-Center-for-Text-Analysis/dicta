@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, ClassificationService, InProgressService) {
+jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, ClassificationService, InProgressService, UserService) {
     
     $scope.showInProcess = ExperimentService.isReady != 1;
     $scope.$on('isReady_Updated', function () {
@@ -29,7 +29,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
 
     $scope.UpdateData = function () {
         $scope.data = {};
-        $scope.data.userLogin = ExperimentService.user;
+        $scope.data.userLogin = UserService.user;
         $scope.data.expType = ExperimentService.ExperimentTypeModel;
 
 

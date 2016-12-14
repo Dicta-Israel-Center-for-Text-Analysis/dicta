@@ -30,7 +30,7 @@ jTextMinerApp.service('fileUpload', ['$http', 'InProgressService', '$location', 
 }]);
 
 
-jTextMinerApp.factory("APIService", function ($resource) {
+jTextMinerApp.factory("APIService", function ($resource, $http) {
     var baseurl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot6/api";
     baseurl = "http://localhost:8080/NewWebSite/api";
     baseurl = "http://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/WebServiceJTextMinerNewRoot8/api";
@@ -44,6 +44,9 @@ jTextMinerApp.factory("APIService", function ($resource) {
         }
     );
     APIService.APIUrl = baseurl;
+    APIService.call = function (endpoint, data) {
+        return $http.post(url + "/" + endpoint, data);
+    }
     return APIService;
 });
 
@@ -67,11 +70,6 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
 
     service.baseUrl = APIService.APIUrl + "/JTextMinerAPI";
 
-    service.user = 'user';
-    service.updateUser = function (value) {
-        this.user = value;
-        $rootScope.$broadcast("userUpdated");
-    }
     service.isNewExperiment = true;
 
     

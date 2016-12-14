@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog) {
+        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'UserService', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, UserService) {
 
             $scope.tab = 1;
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -69,7 +69,7 @@
 
             $scope.UpdateDataForExtract = function () {
                 $scope.dataExtract = {};
-                $scope.dataExtract.userLogin = ExperimentService.user;
+                $scope.dataExtract.userLogin = UserService.user;
                 $scope.dataExtract.expType = ExperimentService.ExperimentTypeModel;
 
 
@@ -91,7 +91,7 @@
 
             $scope.UpdateDataForRun = function () {
                 $scope.dataRun = {};
-                $scope.dataRun.userLogin = ExperimentService.user;
+                $scope.dataRun.userLogin = UserService.user;
                 $scope.dataRun.expType = ExperimentService.ExperimentTypeModel;
                 $scope.dataRun.expName = ExperimentService.ExperimentName;
                 $scope.dataRun.selectedAlgorithmTypeId = ExperimentService.selectedAlgorithmTypeId;

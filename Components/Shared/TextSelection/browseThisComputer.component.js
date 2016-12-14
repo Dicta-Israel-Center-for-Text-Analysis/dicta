@@ -3,7 +3,9 @@
             showClassName: '=showClassName'
         },
         templateUrl: 'Components/Shared/TextSelection/browseThisComputer.component.html',
-        controller: ['$scope', 'focus', 'ExperimentService', 'fileUpload', 'ngDialog', 'BrowseClassService', 'InProgressService', function ($scope, focus, ExperimentService, fileUpload, ngDialog, BrowseClassService, InProgressService) {
+        controller: ['$scope', 'focus', 'ExperimentService', 'fileUpload', 'ngDialog', 'BrowseClassService',
+            'InProgressService', 'UserService',
+            function ($scope, focus, ExperimentService, fileUpload, ngDialog, BrowseClassService, InProgressService, UserService) {
             focus('Browse_focusZipFile');
 
             //$scope.showClassName = true;
@@ -63,7 +65,7 @@
                 var zipFile = $scope.zipFile;
                 console.log('file is ' + JSON.stringify(zipFile));
                 var uploadUrl = ExperimentService.baseUrl + "/uploadZipFile";
-                fileUpload.uploadFileToUrl(zipFile, uploadUrl, 'zipFile', ExperimentService.user);
+                fileUpload.uploadFileToUrl(zipFile, uploadUrl, 'zipFile', UserService.user);
             };
 
             $scope.$on('countWordsForUploadedZipFileUpdated', function () {

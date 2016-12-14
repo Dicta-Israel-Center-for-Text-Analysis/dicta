@@ -10,10 +10,10 @@
             </div>
             <div class="modal-body">
 
-                <div class="row" ng-show="onError">
+                <div class="row" ng-show="$ctrl.onError">
                     <div class="col-xs-offset-1 col-xs-10
                                 alert alert-dismissable alert-danger">
-                        Login failed. Please try again.
+                        {{$ctrl.errorMsg}}
                     </div>
                 </div>
                 <div class="row">
@@ -22,19 +22,15 @@
                             <label for="firstName" class="col-sm-3 control-label">User</label>
 
                             <div class="col-sm-9"><input id="firstName" tabindex="1" autofocus
-                                                         ng-enter="Login()" ng-model="userLogin" type="text"
-                                                         value="{{userLogin}}"/>
+                                                         ng-enter="$ctrl.Login()" ng-model="$ctrl.userLogin" type="text"/>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button ng-click="Login()" class="btn btn-primary sign-in-btn"> Sign in</button>
+                <button ng-click="$ctrl.Login()" class="btn btn-primary sign-in-btn"> Sign in</button>
             </div>
         </div>
     </div>
-</div>
-<div class="ngdialog-buttons">
-   
 </div>

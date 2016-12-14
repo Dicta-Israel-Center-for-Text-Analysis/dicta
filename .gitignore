@@ -1,0 +1,10 @@
+.idea/
+dTiberias/oldimport/
+node_modules/.bin/
+node_modules/eslint*
+node_modules/angular-mocks/
+node_modules/jasmine-core/
+node_modules/karma*
+.eslintrc.js
+*.htm.orig
+*.html.orig

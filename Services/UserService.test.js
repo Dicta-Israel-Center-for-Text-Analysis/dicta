@@ -4,25 +4,34 @@ describe('Service: JTextMinerApp.UserService', function () {
     beforeEach(module('JTextMinerApp'));
 
     // instantiate service
-    var service;
+    var UserService;
     var httpBackend;
 
     //update the injection
     beforeEach(inject(function (_UserService_, $httpBackend) {
-        service = _UserService_;
+        UserService = _UserService_;
         $httpBackend.whenPOST(/.*CheckUserLogin.*/).respond({userLogin: 'eden'});
         httpBackend = $httpBackend;
     }));
 
     it('should default to logged out.', function () {
-        expect(service.isLoggedIn()).toBe(false);
+        expect(UserService.isLoggedIn()).toBe(false);
     });
 
     it('should succeed in logging in eden.', function () {
         httpBackend.expectPOST(/.*CheckUserLogin/);
-        var loginPromise = service.tryLogin('eden');
-        inject(function($rootScope) {$rootScope.$digest()});
+        var loginPromise = UserService.tryLogin('eden');
         httpBackend.flush();
-        expect(service.isLoggedIn()).toBe(true);
+        expect(UserService.isLoggedIn()).toBe(true);
+        expect(UserService.user).toBe("eden");
+    });
+
+    it('should succeed in logging out eden.', function () {
+        httpBackend.expectPOST(/.*CheckUserLogin/);
+        var loginPromise = UserService.tryLogin('eden');
+        httpBackend.flush();
+        UserService.logout();
+        expect(UserService.isLoggedIn()).toBe(false);
+        expect(UserService.user).toBe(null);
     });
 });

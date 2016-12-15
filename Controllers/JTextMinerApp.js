@@ -12,11 +12,8 @@ jTextMinerApp.config(['ngDialogProvider', function (ngDialogProvider) {
         plain: false,
         showClose: false,
         closeByDocument: true,
-        closeByEscape: false,
-        appendTo: false,
-        preCloseCallback: function () {
-            console.log('default pre-close callback');
-        }
+        closeByEscape: true,
+        appendTo: false
     });
 }]);
 

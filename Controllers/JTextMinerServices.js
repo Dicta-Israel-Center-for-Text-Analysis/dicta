@@ -47,19 +47,10 @@ jTextMinerApp.factory("APIService", function ($resource, $http) {
     APIService.call = function (endpoint, data) {
         return $http.post(url + "/" + endpoint, data);
     }
+    APIService.callParallels = function (data) {
+        return $http.post("http://www.dictaparallelsserver.com/api/parallels", data);
+    }
     return APIService;
-});
-
-
-jTextMinerApp.factory("CAPIService", function ($resource) {
-    var url = "http://www.dictaparallelsserver.com/api";
-   
-    return $resource(url + "/:crud/:secondParam",
-        { crud: "@crud", secondParam: "@secondParam" },
-        {
-            "apiRun": { method: 'POST', isArray: true }
-        }
-    );
 });
 
 jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, APIService, $location, InProgressService, ClassService, SelectClassService) {
@@ -177,23 +168,11 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         this.data.userLogin = this.user;
         ClassService.Corpus_classes = [];
 
-        /*
-        // http://www.aspsnippets.com/Articles/AngularJS-Get-and-display-Current-Date-and-Time.aspx
-        var date = new Date();
-        $scope.formatedDate = $filter('date')(new Date(), 'dd.MM.yyyy HH-mm-ss');
-
-        //ExperimentService.ExperimentName += ' ' + $scope.formatedDate;
-        $scope.data.expName = ExperimentService.ExperimentName;
-        */
         APIService.apiRun({ crud: 'CheckUserLogin' }, this.data, function (response) {
             $location.path('Login');
         });
-
-        
     }
     // end save and load exp
-
-
 
     service.isShowTrianBible = false;
     service.isShowTestBible = false;

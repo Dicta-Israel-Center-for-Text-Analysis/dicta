@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPIService, SaveClassInterface, InProgressService) {
+jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, SaveClassInterface, InProgressService) {
     var root = {
         smallUnits: [],
         sourceForSmallUnits: [],
@@ -74,8 +74,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, CAPI
                     }
                 );
             }
-            CAPIService.apiRun({ crud: 'parallels' }, data, function (response3) {
-                var results = response3;
+            APIService.callParallels(data).then(function (response3) {
+                var results = response3.data;
                 var groupNameDict = {};
                 var groups = [];
                 var numOfParallelsInGroups = [];

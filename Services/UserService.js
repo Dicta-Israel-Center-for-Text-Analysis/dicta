@@ -12,7 +12,7 @@ angular.module('JTextMinerApp')
     var Service = {
         $user: null,
         tryLogin (username) {
-            var triedLogin = APIService.call('CheckUserLogin', { userLogin: username })
+            var triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
                 .then(handleLoginAPIResponse);
             triedLogin.catch(handleLoginAPIError);
             return triedLogin;

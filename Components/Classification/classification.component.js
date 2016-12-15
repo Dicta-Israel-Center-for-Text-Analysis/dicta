@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', '$http', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, $http, UserService) {
+    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, UserService) {
         $scope.showInProcess = InProgressService.isReady != 1;
         $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -344,12 +344,12 @@
                 }
             }).$promise.then(
                 x =>
-                    $http.post(APIService.APIUrl + "/TextFeatures/ListFeatures", featuresRequest)
+                    APIService.call("TextFeatures/ListFeatures", featuresRequest)
                         .then(function(response) {
                             featuresList = response.data[0].features;
                         })
                         .then(() =>
-                            $http.post(APIService.APIUrl + "/TextFeatures/GetText", textRequest)
+                            APIService.call("TextFeatures/GetText", textRequest)
                                 .then(function(response) {
                                     var words = response.data[0].text.split(' ');
                                     var currentOffset = 0;

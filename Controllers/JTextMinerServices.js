@@ -7,21 +7,31 @@ jTextMinerApp.factory('focus', function ($rootScope, $timeout) {
     }
 });
 
-jTextMinerApp.service('fileUpload', ['$http', 'InProgressService', '$location', 'BrowseClassService', function ($http, InProgressService, $location, BrowseClassService) {
-    this.uploadFileToUrl = function (file, uploadUrl, argument_name, userLoginName) {
+jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'BrowseClassService', function (APIService, InProgressService, BrowseClassService) {
+    this.uploadFileToUrl = function (file, argument_name, userLoginName) {
         var fd = new FormData();
         fd.append(argument_name, file);
         fd.append('userLogin', userLoginName);
-        $http.post(uploadUrl, fd, {
+        var uploadUrl;
+        switch(argument_name) {
+            case 'zipFile':
+                uploadUrl = "JTextMinerAPI/uploadZipFile"; break;
+            case 'txtFile':
+                uploadUrl = "JTextMinerAPI/uploadTxtFile"; break;
+            default:
+                throw "Unknown upload type.";
+        }
+        APIService.call(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         })
         .success(function (data) {
-            //$scope.Browse_NumberOfFiles
-            if (argument_name == 'zipFile')
-                BrowseClassService.updateCountWordsForUploadedZipFile(data);
-            else if (argument_name == 'txtFile')
-                BrowseClassService.updateCountWordsForUploadedTxtFile(data);
+            switch(argument_name) {
+                case 'zipFile':
+                    BrowseClassService.updateCountWordsForUploadedZipFile(data); break;
+                case 'txtFile':
+                    BrowseClassService.updateCountWordsForUploadedTxtFile(data); break;
+            }
         })
         .error(function () {
             InProgressService.updateIsReady(-1);
@@ -29,37 +39,11 @@ jTextMinerApp.service('fileUpload', ['$http', 'InProgressService', '$location', 
     }
 }]);
 
-
-jTextMinerApp.factory("APIService", function ($resource, $http) {
-    var baseurl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot6/api";
-    baseurl = "http://localhost:8080/NewWebSite/api";
-    baseurl = "http://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/WebServiceJTextMinerNewRoot8/api";
-    var url = baseurl + "/JTextMinerAPI";
-
-    var APIService = $resource(url + "/:crud/:secondParam",
-        { crud: "@crud", secondParam: "@secondParam" },
-        {
-            "apiRun": { method: 'POST', isArray: false },
-            "apiGetArray": { method: 'POST', isArray: true },
-        }
-    );
-    APIService.APIUrl = baseurl;
-    APIService.call = function (endpoint, data) {
-        return $http.post(url + "/" + endpoint, data);
-    }
-    APIService.callParallels = function (data) {
-        return $http.post("http://www.dictaparallelsserver.com/api/parallels", data);
-    }
-    return APIService;
-});
-
 jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, APIService, $location, InProgressService, ClassService, SelectClassService) {
     var service = {};
 
     //FIXME: circular dependency
     ClassificationService.ExperimentServiceFixMe = service;
-
-    service.baseUrl = APIService.APIUrl + "/JTextMinerAPI";
 
     service.isNewExperiment = true;
 

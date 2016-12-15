@@ -13,3 +13,4 @@ node_modules/angular-ui-bootstrap/template
 node_modules/jquery/src
 node_modules/ng-dialog/tests
 node_modules/ng-dialog/example
+node_modules/hopscotch/src

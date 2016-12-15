@@ -9,6 +9,7 @@
     "angular-ui-bootstrap": "^2.3.1",
     "angular-ui-indeterminate": "^1.0.0",
     "angular-ui-router": "^0.3.1",
+    "hopscotch": "^0.2.6",
     "jquery": "^3.1.1",
     "ng-dialog": "^0.6.4"
   },

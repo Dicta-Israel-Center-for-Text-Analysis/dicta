@@ -11,22 +11,22 @@
             <div class="col-md-4 menu-mid">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="">Our Product</a></li>
-                    <li><a ng-show="showSignUp" href="">About Us</a></li>
-                    <li><a ng-show="showSignUp" href="">Team</a></li>
+                    <li><a ng-show="$ctrl.showSignUp" href="">About Us</a></li>
+                    <li><a ng-show="$ctrl.showSignUp" href="">Team</a></li>
                 </ul>
             </div>
             <div class="col-md-4 menu-signup">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
-                        <a ng-show="showSignUp" href="">Sign Up</a>
+                        <a ng-show="$ctrl.showSignUp" href="">Sign Up</a>
                     </li>
-                    <li><a ng-click="LoginDlg();">Sign In</a></li>
+                    <li><a ng-click="$ctrl.LoginDlg();">Sign In</a></li>
                 </ul>
             </div>
-            <div ng-show="!showSignUp" class="col-md-4 menu-signup">
+            <div ng-show="!$ctrl.showSignUp" class="col-md-4 menu-signup">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active">
-                        <a ng-show="showSignUp" href="">Hi {{currentUser}}</a>
+                        <a ng-show="$ctrl.showSignUp" href="">Hi {{currentUser}}</a>
                     </li>
                 </ul>
             </div>
@@ -43,9 +43,9 @@
                 Using the power of machine learning <br />
                 for analyzing Hebrew texts.
             </p>
-            <h3>Already a member? <a ng-click="LoginDlg();">Sign In</a></h3>
+            <h3>Already a member? <a ng-click="$ctrl.LoginDlg();">Sign In</a></h3>
         </div>
-        <div ng-show="showSignUp" class="col-md-5 banner-right">
+        <div ng-show="$ctrl.showSignUp" class="col-md-5 banner-right">
             <form class="form-horizontal">
                 <div class="form-group">
                     <h2>
@@ -100,8 +100,8 @@
         <div class="col-md-4 footer-mid">
             <p>e-Mail: tempeden@walla.com</p>
             <ul>
-                <li><a ng-show="showSignUp" href=""><i class="fa fa-facebook"></i></a></li>
-                <li><a ng-show="showSignUp" href=""><i class="fa fa-twitter"></i></a></li>
+                <li><a ng-show="$ctrl.showSignUp" href=""><i class="fa fa-facebook"></i></a></li>
+                <li><a ng-show="$ctrl.showSignUp" href=""><i class="fa fa-twitter"></i></a></li>
             </ul>
         </div>
         <div class="col-md-4 footer-right">
@@ -109,31 +109,3 @@
         </div>
     </div>
 </footer>
-
-
-
-
-
-<div ng-show="showClassDialog" ng-controller="ClassDialogController">
-    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
-        <div class="ngdialog-overlay"></div>
-        <div class="ngdialog-content" role="document">
-            <div class="ngdialog-message">
-                <action-mode></action-mode>
-                <in-progress></in-progress>
-                <br />
-                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
-                    <browse-this-computer show-class-name=""></browse-this-computer>
-                </div>
-                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
-                    <select-online-corpus></select-online-corpus>
-
-                </div>
-            </div>
-            <div class="ngdialog-buttons" ng-show="!showInProcess">
-                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
-                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -2,9 +2,6 @@
 
     AlertsService.determineAlert({ msg: 'Here are the results, you may start new experiment by clicking on "New experiment" button', type: 'success' });
 
-    if (ExperimentService.isNewExperiment)
-        $location.path('Experiment');
-
     $scope.NewExperiment = function () {
         ExperimentService.NewExperiment();
         //location.reload(true);

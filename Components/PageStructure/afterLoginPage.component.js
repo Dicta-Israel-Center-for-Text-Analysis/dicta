@@ -10,8 +10,6 @@ jTextMinerApp.component('afterLoginPage',
         $scope.isShow = false;
         ExperimentService.updateExperimentTypeModelValue("Classification");
         $scope.currentUser = UserService.user;
-        if (ExperimentService.isNewExperiment)
-            ExperimentService.isNewExperiment = false;
 
         $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
         $scope.$watch('ExperimentTypeModel', function () {

@@ -1,10 +1,8 @@
 ﻿jTextMinerApp.component('loginPage',
 {
     templateUrl:'Components/PageStructure/loginPage.component.html',
-    controller: function (ngDialog, UserService, ExperimentService, $location) {
+    controller: function (ngDialog, UserService, $location) {
         this.showSignUp = false;
-        if (ExperimentService.isNewExperiment)
-            ExperimentService.isNewExperiment = false;
 
         this.LoginDlg = function () {
             ngDialog.openConfirm({

@@ -45,9 +45,6 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     //FIXME: circular dependency
     ClassificationService.ExperimentServiceFixMe = service;
 
-    service.isNewExperiment = true;
-
-    
     service.ExperimentMode = 'NewExperiment';
     service.updateExperimentModeValue = function (value) {
         this.ExperimentMode = value;
@@ -158,17 +155,6 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     }
     // end save and load exp
 
-    service.isShowTrianBible = false;
-    service.isShowTestBible = false;
-    service.updateIsShowTestBible = function (value) {
-        this.isShowTestBible = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-    service.updateIsShowTrianBible = function (value) {
-        this.isShowTrianBible = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-
     // Results
     service.cvResultData = [];
     service.updateCvResultData = function (value) {
@@ -183,12 +169,6 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     service.resultData = [];
     service.updateResultData = function (value) {
         this.resultData = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-
-    service.selectedTestFileIndex = 0;
-    service.updateSelectedTestFileIndex = function (value) {
-        this.selectedTestFileIndex = value;
         $rootScope.$broadcast("valuesUpdated");
     }
 

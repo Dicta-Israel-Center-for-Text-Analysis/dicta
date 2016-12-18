@@ -44,8 +44,6 @@
     }];
     service.TestSet_known_classes = [];
 
-
-
     //Corpus
     service.Corpus_classes = [];
     service.pushCorpus_classes = function (value) {
@@ -60,13 +58,6 @@
         $rootScope.$broadcast("valuesUpdated");
     }
 
-    service.selectedClassIndex = 0;
-    service.updateSelectedClassIndex = function (value) {
-        this.selectedClassIndex = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-
-
     service.selectedRootKeys = [];
     service.updateSelectedRootKeys = function (value) {
         this.selectedRootKeys = value;
@@ -78,7 +69,6 @@
         this.selectedTestRootKeys = value;
         $rootScope.$broadcast("valuesUpdated");
     }
-
 
     service.KnownTestSet = false;
 

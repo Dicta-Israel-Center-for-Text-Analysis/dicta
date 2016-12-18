@@ -34,7 +34,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             title: currentClass.title,
             id: currentClass.id,
             userLogin: UserService.user,
-            expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
+            expType: 'Classification',
             expName: root.ExperimentServiceFixMe.ExperimentName
         };
         InProgressService.updateIsReady(0);
@@ -57,14 +57,13 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
     };
 
     root.prepareClassification = function() {
-        root.ExperimentServiceFixMe.updateExperimentTypeModelValue('Classification');
         // in theory, if nothing has changed, this can be skipped, but we don't yet have code that can check
         if (true) {
             InProgressService.updateIsReady(0);
 
             var apiCallData = {
                 userLogin: UserService.user,
-                expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
+                expType: 'Classification',
                 expName: root.ExperimentServiceFixMe.ExperimentName,
                 featureSets: root.featureCollection.Feature_sets,
                 corpusClasses: ClassService.Corpus_classes,
@@ -118,7 +117,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
     function createRequestForRunClassification() {
         return {
             userLogin: UserService.user,
-            expType: root.ExperimentServiceFixMe.ExperimentTypeModel,
+            expType: 'Classification',
             expName: root.ExperimentServiceFixMe.ExperimentName,
             selectedAlgorithmTypeId: root.ExperimentServiceFixMe.selectedAlgorithmTypeId,
             selectedAlgorithmTypeName: root.ExperimentServiceFixMe.selectedAlgorithmTypeName,

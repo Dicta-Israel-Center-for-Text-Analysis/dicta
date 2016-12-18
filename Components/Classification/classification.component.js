@@ -34,8 +34,6 @@
 
         // set all the different data structures that hold classification data based on a saved data structure
         $scope.UpdateDataForNewExperiment = function (data) {
-            //ExperimentService.updateExperimentModeValue();
-            ExperimentService.updateExperimentTypeModelValue(data.expType);
             ExperimentService.updateExperimentName(data.expName);
 
             ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
@@ -63,7 +61,6 @@
         $scope.saveClass = function () {
             $scope.showClassDialog = false;
             $scope.showAddClassDialog = false;
-            ExperimentService.updateExperimentTypeModelValue('Classification');
             // workaround for server bug - force names to be sorted correctly
             var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
             ClassService.updateClassName(prefix + " - " + ClassService.ClassName);

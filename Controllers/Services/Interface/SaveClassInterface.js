@@ -16,7 +16,7 @@
         select_RootKeys: SelectClassService.lastSelectedRootKeys,
         activeKey: '',
         userLogin: UserService.user,
-        expType: ExperimentService.ExperimentTypeModel,
+        expType: 'Classification',
         expName: ExperimentService.ExperimentName
 };
     ClassificationService.SaveClassInterfaceFixMe = classData;
@@ -68,7 +68,6 @@
 
     $rootScope.$on('valuesUpdated', function () {
         classData.userLogin = UserService.user;
-        classData.expType = ExperimentService.ExperimentTypeModel;
         classData.expName = ExperimentService.ExperimentName;
     });
 

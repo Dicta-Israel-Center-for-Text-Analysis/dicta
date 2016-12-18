@@ -1,16 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
 jTextMinerApp.controller('UnmaskingController', function ($scope, ExperimentService, $location, ngDialog, AlertsService) {
-
-    $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
-    $scope.$watch('ExperimentTypeModel', function () {
-        ExperimentService.updateExperimentTypeModelValue($scope.ExperimentTypeModel);
-    });
-    
-    $scope.$on('valuesUpdated', function () {
-        $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
-    });
-
-    $scope.ExperimentMode = 'NewExperiment';
     $scope.Unmasking_FeatureSet = 'Default';
     $scope.Unmasking_LearningAlgorithm = 'Default';
     //Unmasking data members and watch functions

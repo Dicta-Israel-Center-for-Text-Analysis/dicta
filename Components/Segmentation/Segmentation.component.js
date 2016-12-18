@@ -9,16 +9,6 @@
                 $scope.showInProcess = InProgressService.isReady != 1;
             });
 
-            ExperimentService.updateExperimentTypeModelValue('Segmentation');
-            $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
-            $scope.$watch('ExperimentTypeModel', function () {
-                ExperimentService.updateExperimentTypeModelValue($scope.ExperimentTypeModel);
-            });
-
-            $scope.$on('valuesUpdated', function () {
-                $scope.ExperimentTypeModel = ExperimentService.ExperimentTypeModel;
-            });
-
             //Segmentation data members and watch functions
             $scope.Segmentation_ChunkBy = SegmentationService.Segmentation_ChunkBy;
             $scope.Segmentation_SplitString = SegmentationService.Segmentation_SplitString;
@@ -70,7 +60,7 @@
             $scope.UpdateDataForExtract = function () {
                 $scope.dataExtract = {};
                 $scope.dataExtract.userLogin = UserService.user;
-                $scope.dataExtract.expType = ExperimentService.ExperimentTypeModel;
+                $scope.dataExtract.expType = 'Segmentation';
 
 
                 $scope.dataExtract.expName = ExperimentService.ExperimentName;
@@ -92,7 +82,7 @@
             $scope.UpdateDataForRun = function () {
                 $scope.dataRun = {};
                 $scope.dataRun.userLogin = UserService.user;
-                $scope.dataRun.expType = ExperimentService.ExperimentTypeModel;
+                $scope.dataRun.expType = 'Segmentation';
                 $scope.dataRun.expName = ExperimentService.ExperimentName;
                 $scope.dataRun.selectedAlgorithmTypeId = ExperimentService.selectedAlgorithmTypeId;
                 $scope.dataRun.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
@@ -128,8 +118,6 @@
                 AlertsService.determineAlert({msg: 'Check validation', type: 'success'});
                 $scope.showClassDialog = false;
                 InProgressService.updateIsReady(0);
-
-                ExperimentService.updateExperimentTypeModelValue('Segmentation');
 
                 $scope.UpdateDataForExtract();
 

@@ -40,41 +40,36 @@ jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'BrowseC
 }]);
 
 jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationService, SegmentationService, APIService, $location, InProgressService, ClassService, SelectClassService) {
-    var service = {};
+    var service = {
+        ExperimentName: '',
+        NewExperimentName: 'name',
+        StoredExperimentName: '',
+        selectedAlgorithmTypeId: 0,
+        selectedAlgorithmTypeName: 'Weka_SMO',
+        selectedAlgorithmTypeAttributes: '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"',
+        cvResultData: [],
+        tsResultData: [],
+        resultData: []
+    };
 
     //FIXME: circular dependency
     ClassificationService.ExperimentServiceFixMe = service;
 
-    service.ExperimentMode = 'NewExperiment';
-    service.updateExperimentModeValue = function (value) {
-        this.ExperimentMode = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-
-    service.ExperimentName = '';
     service.updateExperimentName = function (value) {
         this.ExperimentName = value;
         $rootScope.$broadcast("valuesUpdated");
     }
 
-    service.NewExperimentName = 'name';
     service.updateNewExperimentName = function (value) {
         this.NewExperimentName = value;
         this.updateExperimentName(value);
         $rootScope.$broadcast("valuesUpdated");
     }
-    service.StoredExperimentName = '';
     service.updateStoredExperimentName = function (value) {
         this.StoredExperimentName = value;
         this.updateExperimentName(value);
         $rootScope.$broadcast("valuesUpdated");
     }
-    service.ExperimentTypeModel = 'Classification';
-    service.updateExperimentTypeModelValue = function (value) {
-        this.ExperimentTypeModel = value;
-        $rootScope.$broadcast("valuesUpdated");
-    }
-
    
     service.algorithms = [
          { id: 0, name: 'Weka_SMO', attributes: '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"' },
@@ -91,9 +86,6 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
          { id: 11, name: 'Weka_AttributeSelectedClassifier', attributes: '-E \"weka.attributeSelection.InfoGainAttributeEval\" -S \"weka.attributeSelection.Ranker -T -1.7976931348623157E308 -N -1\" -W weka.classifiers.functions.SMO -- -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 1.0\"' },
          { id: 12, name: 'SVM_Light', attributes: '' }
     ];
-    service.selectedAlgorithmTypeId = 0;
-    service.selectedAlgorithmTypeName = 'Weka_SMO';
-    service.selectedAlgorithmTypeAttributes = '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"';
     service.updateselectedAlgorithmTypeValue = function (id, name, attributes) {
         this.selectedAlgorithmTypeId = id;
         this.selectedAlgorithmTypeName = name;
@@ -101,12 +93,11 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
         $rootScope.$broadcast("selectedAlgorithmTypebroadcast");
     }
 
-
     // save and load exp
     service.UpdateData = function () {
         this.data = {};
         this.data.userLogin = this.user;
-        this.data.expType = this.ExperimentTypeModel;
+        this.data.expType = 'Classification';
         this.data.expName = this.ExperimentName;
         this.data.selectedAlgorithmTypeId = this.selectedAlgorithmTypeId;
         this.data.selectedAlgorithmTypeName = this.selectedAlgorithmTypeName;
@@ -156,17 +147,14 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
     // end save and load exp
 
     // Results
-    service.cvResultData = [];
     service.updateCvResultData = function (value) {
         this.cvResultData = value;
         $rootScope.$broadcast("cvResultDataUpdated");
     }
-    service.tsResultData = [];
     service.updateTsResultData = function (value) {
         this.tsResultData = value;
         $rootScope.$broadcast("tsResultDataUpdated");
     }
-    service.resultData = [];
     service.updateResultData = function (value) {
         this.resultData = value;
         $rootScope.$broadcast("valuesUpdated");

@@ -30,7 +30,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
     $scope.UpdateData = function () {
         $scope.data = {};
         $scope.data.userLogin = UserService.user;
-        $scope.data.expType = ExperimentService.ExperimentTypeModel;
+        $scope.data.expType = 'Classification';
 
 
         $scope.data.expName = ExperimentService.ExperimentName;

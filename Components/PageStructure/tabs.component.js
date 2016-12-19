@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('tabs',
 {
     templateUrl: "Components/PageStructure/tabs.component.html",
-    controller: function ($scope, ClassService, $rootScope, SelectClassService, SaveClassInterface) {
+    controller: function ($scope, ClassService, $rootScope, SelectClassService) {
         $scope.tabNumber = 0;
         $scope.goToTab = function (tabNumber) {
             tiberias_tour_pause();
@@ -18,7 +18,7 @@
         };
 
         $scope.SelectedTestClassText = function () {
-            if (SaveClassInterface.testSetActionMode == 'SelectOnlineCorpus')
+            if (ClassService.ExperimentTestSetActionMode == 'SelectOnlineCorpus')
                 return SelectClassService.lastTestSetSelectedRootKeys.join(', ');
             else
                 return "Uploaded Text";

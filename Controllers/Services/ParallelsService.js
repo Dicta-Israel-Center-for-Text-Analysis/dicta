@@ -55,7 +55,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
         InProgressService.updateIsReady(0);
         root.haveResults = false;
 
-        APIService.apiRun({ crud: 'UnknownTestClassAsSmallUnits' }, SaveClassInterface, function (response2) {
+        APIService.apiRun({ crud: 'UnknownTestClassAsSmallUnits' }, SaveClassInterface.getInstance(), function (response2) {
             var source = response2.source;
             var data = {
                 chunks: response2.chunks,

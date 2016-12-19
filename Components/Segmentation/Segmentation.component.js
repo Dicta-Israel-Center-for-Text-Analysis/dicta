@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'UserService', function ($scope, ExperimentService, $location, focus, APIService, $filter, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, UserService) {
+        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'SegmentationService', 'InProgressService', 'ClassService', 'SelectClassService', '$sce', 'UserService', function ($scope, ExperimentService, $location, focus, APIService, $filter, SegmentationService, InProgressService, ClassService, SelectClassService, $sce, UserService) {
 
             $scope.tab = 1;
             $scope.showInProcess = InProgressService.isReady != 1;

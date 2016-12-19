@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('selectOnlineCorpus', {
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
-        controller: ['$scope', '$rootScope', '$http', 'TreeService', 'SelectClassService', function ($scope, $rootScope, $http, TreeService, SelectClassService) {
+        controller: ['$scope', '$rootScope', 'TreeService', 'SelectClassService', function ($scope, $rootScope, TreeService, SelectClassService) {
             $scope.showBibleDialog = false;
             $scope.showTalmudDialog = true;
 
@@ -9,7 +9,7 @@
             }
             initBreadCrumbs();
 
-            TreeService.ready.then(function() {
+            TreeService.readyPromise.then(function() {
                 $scope.corpusTree = TreeService.corpusTree;
                 $scope.treeNode = $scope.corpusTree;
                 initCurrentLevel(null);

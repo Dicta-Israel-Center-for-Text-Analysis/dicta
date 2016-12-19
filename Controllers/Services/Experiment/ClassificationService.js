@@ -193,7 +193,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
     }
 
     function runClassificationInternal() {
-        var classData = root.SaveClassInterfaceFixMe;
+        var classData = root.SaveClassInterfaceFixMe.getInstance();
         classData.actionMode = classData.testSetActionMode;
         InProgressService.updateIsReady(0);
         if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {

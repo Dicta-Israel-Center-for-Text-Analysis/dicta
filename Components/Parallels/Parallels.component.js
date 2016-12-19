@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('parallels',
     {
         templateUrl: 'Components/Parallels/Parallels.component.html',
-        controller: ['$scope', '$location', 'InProgressService', 'SaveClassInterface', 'SelectClassService', 'ExperimentService', 'ParallelsService', '$sce', function ($scope, $location, InProgressService, SaveClassInterface, SelectClassService, ExperimentService, ParallelsService, $sce) {
+        controller: ['$scope', '$location', 'InProgressService', 'SelectClassService', 'ExperimentService', 'ParallelsService', '$sce', function ($scope, $location, InProgressService, SelectClassService, ExperimentService, ParallelsService, $sce) {
             $scope.parallels = ParallelsService;
             $scope.selectClassService = SelectClassService;
 

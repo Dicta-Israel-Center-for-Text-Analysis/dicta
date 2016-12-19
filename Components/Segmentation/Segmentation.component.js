@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'UserService', function ($scope, ExperimentService, $location, focus, APIService, $filter, AlertsService, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, UserService) {
+        controller: ['$scope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'SegmentationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'UserService', function ($scope, ExperimentService, $location, focus, APIService, $filter, SegmentationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, UserService) {
 
             $scope.tab = 1;
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -115,7 +115,6 @@
                         $scope.isAllBibleSegmentation = false;
                     }
                 });
-                AlertsService.determineAlert({msg: 'Check validation', type: 'success'});
                 $scope.showClassDialog = false;
                 InProgressService.updateIsReady(0);
 

@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'AlertsService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, AlertsService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, UserService) {
+    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, UserService) {
         $scope.showInProcess = InProgressService.isReady != 1;
         $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;

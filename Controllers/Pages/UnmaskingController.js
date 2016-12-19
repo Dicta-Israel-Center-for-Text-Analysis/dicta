@@ -1,5 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('UnmaskingController', function ($scope, ExperimentService, $location, ngDialog, AlertsService) {
+jTextMinerApp.controller('UnmaskingController', function ($scope, ExperimentService, $location, ngDialog) {
     $scope.Unmasking_FeatureSet = 'Default';
     $scope.Unmasking_LearningAlgorithm = 'Default';
     //Unmasking data members and watch functions
@@ -26,7 +26,6 @@ jTextMinerApp.controller('UnmaskingController', function ($scope, ExperimentServ
         $location.path('Experiment');
     }
     $scope.Next = function () {
-        AlertsService.determineAlert({ msg: 'Check validation', type: 'success' });
     }
 
     $scope.classes = ExperimentService.Unmasking_classes;

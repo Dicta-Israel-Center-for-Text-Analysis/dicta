@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('afterLoginPage',
 {
     templateUrl: 'Components/PageStructure/afterLoginPage.component.html',
-    controller: function ($scope, ngDialog, ExperimentService, $location, APIService, focus, AlertsService, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, UserService) {
+    controller: function ($scope, ngDialog, ExperimentService, $location, APIService, focus, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, UserService) {
 
         if (!UserService.isLoggedIn())
             $location.path('Login');
@@ -23,7 +23,6 @@
 
             APIService.apiRun({crud: 'DownloadStoredExperiment'}, $scope.data, function (response) {
                 InProgressService.updateIsReady(1);
-                AlertsService.determineAlert({msg: 'DownloadStoredExperiment', type: 'success'});
                 $scope.UpdateData(response);
                 $scope.GoToNextTab();
 

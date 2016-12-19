@@ -1,5 +1,5 @@
 ﻿
-jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, AlertsService, UserService) {
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService) {
     var root = {
         featureCollection: FeatureCollectionFactory.newCollection(),
         Classification_CrossValidationFolds: 10,
@@ -159,7 +159,6 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
                 root.updateClassification_ExperimentTypeValue('CV');
 
-                AlertsService.determineAlert({msg: 'Check validation', type: 'success'});
                 InProgressService.updateIsReady(0);
             }
         ).$promise;

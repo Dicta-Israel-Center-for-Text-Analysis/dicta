@@ -9,7 +9,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
         groups: [],
         numOfParallelsInGroups: [],
         numOfParallels: 0,
-        parrallelsPerChunk: [],
+        parallelsPerChunk: [],
         haveResults: false
     };
 
@@ -46,8 +46,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
         this.numOfParallels = val;
         $rootScope.$broadcast("ParallelsUpdates");
     };
-    root.updateparrallelsPerChunk = function (val) {
-        this.parrallelsPerChunk = val;
+    root.updateparallelsPerChunk = function (val) {
+        this.parallelsPerChunk = val;
         $rootScope.$broadcast("ParallelsUpdates");
     };
 
@@ -171,7 +171,7 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
                 root.updategroups(groups);
                 root.updatenumOfParallelsInGroups(numOfParallelsInGroups);
                 root.updatenumOfParallels(numOfParallels);
-                root.updateparrallelsPerChunk(parallelsPerChunk);
+                root.updateparallelsPerChunk(parallelsPerChunk);
                 root.haveResults = true;
 
                 InProgressService.updateIsReady(1);

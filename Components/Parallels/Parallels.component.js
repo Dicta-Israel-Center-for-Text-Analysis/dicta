@@ -33,7 +33,7 @@
             $scope.groups = ParallelsService.groups;
             $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
             $scope.numOfParallels = ParallelsService.numOfParallels;
-            $scope.parrallelsPerChunk = ParallelsService.parrallelsPerChunk;
+            $scope.parallelsPerChunk = ParallelsService.parallelsPerChunk;
             $scope.$on('ParallelsUpdates', function () {
                 $scope.smallUnits = ParallelsService.smallUnits;
                 $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
@@ -41,7 +41,7 @@
                 $scope.groups = ParallelsService.groups;
                 $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
                 $scope.numOfParallels = ParallelsService.numOfParallels;
-                $scope.parrallelsPerChunk = ParallelsService.parrallelsPerChunk;
+                $scope.parallelsPerChunk = ParallelsService.parallelsPerChunk;
             });
 
             $scope.markParallels = function (chunk) {

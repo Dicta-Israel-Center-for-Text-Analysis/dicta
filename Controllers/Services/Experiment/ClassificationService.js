@@ -1,13 +1,12 @@
 ﻿
-jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService) {
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService, SaveClassInterface, ExperimentService) {
     var root = {
         featureCollection: FeatureCollectionFactory.newCollection(),
         Classification_CrossValidationFolds: 10,
         Classification_ExperimentType: 'CV',
         Classification_isKeepingChunksFromSameFileTogether: false,
         Classification_TestSetExperimentType: 'Unknown',
-        ExperimentServiceFixMe: null,
-        SaveClassInterfaceFixMe: null
+        Experiment: ExperimentService.newExperiment()
     };
 
     //Classification update functions
@@ -35,7 +34,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             id: currentClass.id,
             userLogin: UserService.user,
             expType: 'Classification',
-            expName: root.ExperimentServiceFixMe.ExperimentName
+            expName: root.Experiment.ExperimentName
         };
         InProgressService.updateIsReady(0);
 
@@ -64,7 +63,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             var apiCallData = {
                 userLogin: UserService.user,
                 expType: 'Classification',
-                expName: root.ExperimentServiceFixMe.ExperimentName,
+                expName: root.Experiment.ExperimentName,
                 featureSets: root.featureCollection.Feature_sets,
                 corpusClasses: ClassService.Corpus_classes,
                 featuresData: root.featureCollection.featuresData
@@ -118,14 +117,14 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
         return {
             userLogin: UserService.user,
             expType: 'Classification',
-            expName: root.ExperimentServiceFixMe.ExperimentName,
-            selectedAlgorithmTypeId: root.ExperimentServiceFixMe.selectedAlgorithmTypeId,
-            selectedAlgorithmTypeName: root.ExperimentServiceFixMe.selectedAlgorithmTypeName,
-            selectedAlgorithmTypeAttributes: root.ExperimentServiceFixMe.selectedAlgorithmTypeAttributes,
+            expName: root.Experiment.ExperimentName,
+            selectedAlgorithmTypeId: root.Experiment.selectedAlgorithmTypeId,
+            selectedAlgorithmTypeName: root.Experiment.selectedAlgorithmTypeName,
+            selectedAlgorithmTypeAttributes: root.Experiment.selectedAlgorithmTypeAttributes,
             classificationExperimentMode: root.Classification_ExperimentType,
-            //classificationCrossValidationType: root.ExperimentServiceFixMe.Classification_CrossValidationType,
+            //classificationCrossValidationType: root.Experiment.Classification_CrossValidationType,
             classificationCrossValidationFolds: root.Classification_CrossValidationFolds,
-            //classificationSplitRatioCrossValidation: root.ExperimentServiceFixMe.Classification_Split_ratio_cross_validation,
+            //classificationSplitRatioCrossValidation: root.Experiment.Classification_Split_ratio_cross_validation,
             corpusMaxId: ClassService.Corpus_maxId,
     
             featureSets: root.featureCollection.Feature_sets,
@@ -170,7 +169,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             createRequestForRunClassification(),
             function (response) {
                 root.updateClassification_ExperimentTypeValue('TestSet');
-                root.ExperimentServiceFixMe.updateCvResultData(response);
+                root.Experiment.updateCvResultData(response);
             }
         ).$promise;
     }
@@ -181,19 +180,19 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             createRequestForRunClassification(),
             function (response2) {
                 InProgressService.updateIsReady(1);
-                root.ExperimentServiceFixMe.tsResultData = response2;
+                root.Experiment.tsResultData = response2;
                 var sortedResults = TreeService.treeSort(response2.testSetResults,
                     function (item) {
                         return item.name.replace(/_/g, '/').replace('/Dicta Corpus/','').replace(/.rtf$/, '');
                     });
-                root.ExperimentServiceFixMe.tsResultData.testSetResults = sortedResults;
+                root.Experiment.tsResultData.testSetResults = sortedResults;
                 return sortedResults;
             }
         ).$promise;
     }
 
     function runClassificationInternal() {
-        var classData = root.SaveClassInterfaceFixMe.getInstance();
+        var classData = root.SaveClassInterface.getInstance();
         classData.actionMode = classData.testSetActionMode;
         InProgressService.updateIsReady(0);
         if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
@@ -205,6 +204,42 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
         .then(callRunClassificationFirstTime)
         .then(classifyTestSet);
     }
+
+    // save and load exp
+    root.createSaveRequest = function () {
+        var saveRequest = {
+            userLogin: UserService.user,
+            expType: 'Classification',
+            expName: this.ExperimentName,
+            selectedAlgorithmTypeId: ExperimentService.selectedAlgorithmTypeId,
+            selectedAlgorithmTypeName: ExperimentService.selectedAlgorithmTypeName,
+            selectedAlgorithmTypeAttributes: ExperimentService.selectedAlgorithmTypeAttributes,
+            classificationExperimentMode: this.Classification_ExperimentType,
+            classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
+            corpusMaxId: ClassService.Corpus_maxId,
+            featureSets: this.featureCollection.Feature_sets,
+            corpusClasses: ClassService.Corpus_classes,
+            featuresData: this.featureCollection.featuresData,
+            selectTestTextKeys: SelectClassService.lastTestSetSelectedRootKeys
+        };
+        // copy so we can modify it
+        saveRequest.cvResultData = angular.copy(ExperimentService.cvResultData);
+        // the server can't handle this yet
+        delete saveRequest.cvResultData.classificationList;
+        // same thing
+        saveRequest.tsResultData = angular.copy(ExperimentService.tsResultData);
+        delete saveRequest.tsResultData.classificationList;
+        return saveRequest;
+    }
+
+    root.SaveExperiment = function () {
+        InProgressService.updateIsReady(0);
+        APIService.apiRun({ crud: 'SaveClassification' }, this.createSaveRequest(), function (response) {
+            InProgressService.updateIsReady(1);
+            var results = response;
+        });
+    };
+    // end save and load exp
 
 
     return root;

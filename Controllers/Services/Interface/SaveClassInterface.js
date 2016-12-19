@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService, ClassificationService, UserService) {
+﻿jTextMinerApp.factory('SaveClassInterface', function ($rootScope, BrowseClassService, SelectClassService, ClassService, ExperimentService, UserService) {
     var classData = {
         getInstance() {
             return {
@@ -23,7 +23,5 @@
             }
         }
     };
-    ClassificationService.SaveClassInterfaceFixMe = classData;
-
     return classData;
 });

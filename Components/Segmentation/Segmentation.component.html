@@ -6,14 +6,14 @@
     <div class="col-md-4 border-author">
         <div id="segmentationControls" class="button-slider author-text">
             <h2>Decompose text by style</h2>
-            <p>Decompose the text into <input class="author-assumed" ng-model="Segmentation_NumberOfClusters" id="clusters" name="clusters" type="number" /> components. <img title="Choose the number of threads to which to decompose the text." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png"></p>
+            <p>Decompose the text into <input class="author-assumed" ng-model="$ctrl.experiment.Segmentation_NumberOfClusters" id="clusters" name="clusters" type="number" /> components. <img title="Choose the number of threads to which to decompose the text." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png"></p>
 
 
             <p class="refine-segmentation">Choose granularity:</p>
             <img title="How granular do you want the decomposition to be." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
              
             <input id="NumberOfSentencesLockedInId" 
-                    ng-model="Segmentation_NumberOfSentencesLockedIn"
+                    ng-model="$ctrl.experiment.Segmentation_NumberOfSentencesLockedIn"
                     type="text" data-slider-min="10" data-slider-max="90" 
                     data-slider-step="1"
                     data-slider-id='NumberOfSentencesLockedInIdSlider' />
@@ -33,7 +33,7 @@ $(document).ready(function () {
         var scope = angular.element($("#NumberOfSentencesLockedInId")).scope(); // $rootScope; //
         //alert(scope);
         //alert(scope.Segmentation_NumberOfSentencesLockedIn);
-        scope.Segmentation_NumberOfSentencesLockedIn = slideEvt.value;
+        scope.$ctrl.experiment.Segmentation_NumberOfSentencesLockedIn = slideEvt.value;
         //alert(slideEvt.value);
     });
 
@@ -44,7 +44,7 @@ $(document).ready(function () {
             <div class="clearfix"></div>
             <div class="author-refine-section">
                 <p class="advance"><i class="fa fa-wrench" aria-hidden="true"></i><a href="">Advanced</a></p>
-                <button ng-click="RunExperiment();" class="btn segments-btn">Go</button>
+                <button ng-click="$ctrl.RunExperiment();" class="btn segments-btn">Go</button>
             </div>
         </div>
 
@@ -54,11 +54,11 @@ $(document).ready(function () {
 
     <div class="col-md-8">
         <div class="box-right-side">
-            <div class="view-text" ng-show="resultData.htmlSegmentation">
+            <div class="view-text" ng-show="$ctrl.experiment.resultData.htmlSegmentation">
                 <ul class="list-inline">
-                    <li ng-class=" tab == '1' ? 'active' : ''"><a ng-click="tab = 1">View text</a></li>
+                    <li ng-class=" $ctrl.tab == '1' ? 'active' : ''"><a ng-click="$ctrl.tab = 1">View text</a></li>
                     <li><a>|</a></li>
-                    <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="tab = 2">View features</a></li>
+                    <li ng-class=" $ctrl.tab == '2' ? 'active' : ''"><a ng-click="$ctrl.tab = 2">View features</a></li>
                 </ul>
             </div>
 
@@ -66,32 +66,32 @@ $(document).ready(function () {
 
         </div>
     </div>
-    <div ng-show="tab == '1'">
+    <div ng-show="$ctrl.tab == '1'">
         <div class="col-md-7">
-            <div ng-show="resultData.htmlSegmentation" class="box-right-side">
+            <div ng-show="$ctrl.experiment.resultData.htmlSegmentation" class="box-right-side">
                 <div class="border-box">
                     <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
                     <p class="line-h">
-                        <div id="section{{$index}}" ng-repeat="hSegment in resultData.segments" >
+                        <div id="section{{$index}}" ng-repeat="hSegment in $ctrl.experiment.resultData.segments" >
                             <div ng-repeat="segment in hSegment">
                                 <div dir="rtl" class="A{{segment.classIndex}}">
-                                <span style="font-size:8px;" ng-show="isAllBibleSegmentation">({{segment.prefix}})</span> {{createSegment(segment.text)}}
+                                <span style="font-size:8px;" ng-show="$ctrl.experiment.isAllBibleSegmentation">({{segment.prefix}})</span> {{$ctrl.createSegment(segment.text)}}
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="false" dir="rtl" ng-bind-html="htmlSegmentation"></div>
+                        <div ng-show="false" dir="rtl" ng-bind-html="$ctrl.htmlSegmentation"></div>
                     </p>
                 </div>
             </div>
         </div>
-        <div ng-show="!showInProcess && resultData !== undefined && resultData.segments !== undefined" class="col-md-1">
+        <div ng-show="!$ctrl.showInProcess && $ctrl.experiment.resultData !== undefined && $ctrl.experiment.resultData.segments !== undefined" class="col-md-1">
             <div class="sid-bar0" style="font-size:10px;">
-                 {{resultData.segments.length}} segments
+                 {{$ctrl.experiment.resultData.segments.length}} segments
             </div>
 
-            <div ng-click="scrollTo($index)"  ng-repeat="hSegment in resultData.segments" class="sid-bar" style="background-color:{{hSegment[0].classColor}};">
+            <div ng-click="scrollTo($index)"  ng-repeat="hSegment in $ctrl.experiment.resultData.segments" class="sid-bar" style="background-color:{{hSegment[0].classColor}};">
                 <p style="direction:rtl;" class="line-h">
-                    <span ng-repeat="segment in hSegment" ng-bind-html="createThumbnail(segment.text)"></span>
+                    <span ng-repeat="segment in hSegment" ng-bind-html="$ctrl.createThumbnail(segment.text)"></span>
                 </p>
             </div>
 
@@ -99,8 +99,8 @@ $(document).ready(function () {
             </div>
         </div>
     </div>
-    <div ng-show="tab =='2'">
+    <div ng-show="$ctrl.tab =='2'">
         <div class="col-md-8">
-            <feature-table is-select-disabled="true" features="featuresData.features[0]"></feature-table>
+            <feature-table is-select-disabled="true" features="$ctrl.experiment.featuresData.features[0]"></feature-table>
         </div>
     </div>

@@ -48,27 +48,20 @@ angular.module('JTextMinerApp')
             return {
                 experimentGUID: generateGUID(),
                 experimentName: 'Untitled',
-                storedExperimentName: '',
                 selectedAlgorithmTypeId: 0,
                 selectedAlgorithmTypeName: algorithms[0].name,
                 selectedAlgorithmTypeAttributes: algorithms[0].attributes,
                 cvResultData: [],
                 tsResultData: [],
                 resultData: [],
-                updateStoredExperimentName(value) {
-                    this.storedExperimentName = value;
-                    this.updateExperimentName(value);
-                    $rootScope.$broadcast("valuesUpdated");
-                },
                 updateExperimentName(value) {
-                    this.ExperimentName = value;
+                    this.experimentName = value;
                     $rootScope.$broadcast("valuesUpdated");
                 },
                 updateSelectedAlgorithmTypeValue (id, name, attributes) {
                     this.selectedAlgorithmTypeId = id;
                     this.selectedAlgorithmTypeName = name;
                     this.selectedAlgorithmTypeAttributes = attributes;
-                    $rootScope.$broadcast("selectedAlgorithmTypebroadcast");
                 },
                 updateCvResultData  (value) {
                     this.cvResultData = value;

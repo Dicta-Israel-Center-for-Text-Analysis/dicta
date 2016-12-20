@@ -14,7 +14,7 @@
         $scope.LoadExperiment = function (fileName) {
             $scope.LoadPreviousResults = fileName;
 
-            ExperimentService.updateStoredExperimentName($scope.LoadPreviousResults);
+            ExperimentService.updateExperimentName($scope.LoadPreviousResults);
 
             $scope.data = {};
             $scope.data.userLogin = UserService.user;

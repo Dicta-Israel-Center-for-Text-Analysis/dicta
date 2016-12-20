@@ -77,11 +77,6 @@ jTextMinerApp.controller('UnmaskingController', function ($scope, ExperimentServ
     ExperimentService.selectedAlgorithmTypeId = 0;
     $scope.algorithms = ExperimentService.algorithms;
     $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-    $scope.$on('selectedAlgorithmTypebroadcast', function () {
-        $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-        $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
-
-    });
 
 
 });

@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('ClassService', function ($rootScope, SegmentationService) {
+﻿jTextMinerApp.factory('ClassService', function ($rootScope) {
     var service = {};
 
     // TODO: remove this, since these colors aren't really used
@@ -25,12 +25,10 @@
     service.ExperimentActionMode = 'SelectOnlineCorpus';//'BrowseThisComputer';
     service.updateExperimentActionMode = function (value) {
         this.ExperimentActionMode = value;
-        SegmentationService.updateSegmentation_ActionModeValue(value);
         $rootScope.$broadcast("ExperimentActionModeValuesUpdated");
     }
     service.updateExperimentTestSetActionMode = function (value) {
         this.ExperimentTestSetActionMode = value;
-        SegmentationService.updateSegmentation_ActionModeValue(value);
         $rootScope.$broadcast("ExperimentTestSetActionModeValuesUpdated");
     }
 

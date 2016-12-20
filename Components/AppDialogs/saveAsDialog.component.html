@@ -6,14 +6,14 @@
             <tr>
                 <td>name</td>
                 <td>
-                    <input ng-model="expName" type="text" value="{{expName}}" />
+                    <input ng-model="expName" type="text" value="{{$ctrl.expName}}" />
                 </td>
             </tr>
         </table>
     </fieldset>
 </div>
 <div class="ngdialog-buttons">
-    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="Save()">Save</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="$ctrl.Save()">Save</button>
     <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="$ctrl.onCancel()">Cancel</button>
 
 </div>

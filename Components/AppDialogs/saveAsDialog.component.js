@@ -1,13 +1,17 @@
 ﻿// create the controller and inject Angular's $scope
 jTextMinerApp.component('saveAsDialog', {
-    bindings: { onConfirm: '&', onCancel: '&' },
+    bindings: {
+        onConfirm: '&',
+        onCancel: '&',
+        experiment: '='
+    },
     templateUrl: 'Components/AppDialogs/saveAsDialog.component.html',
-    controller: function ($scope, ngDialog, ExperimentService) {
+    controller: function ($scope, ngDialog) {
         var ctrl = this;
-        $scope.expName = ExperimentService.ExperimentName;
-        $scope.Save = function () {
-            ExperimentService.updateExperimentName($scope.expName);
-            ExperimentService.SaveExperiment();
+        ctrl.expName = ctrl.experiment.ExperimentName;
+        ctrl.Save = function () {
+            ctrl.experiment.updateExperimentName(ctrl.expName);
+            ctrl.experiment.SaveExperiment();
             ctrl.onConfirm();
         }
     }

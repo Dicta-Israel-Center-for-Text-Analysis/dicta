@@ -32,8 +32,6 @@
         $scope.StartNewExperiment = function (actionMode) {
             $scope.showClassDialog = true;
 
-            ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
-
             ClassService.updateExperimentActionMode(actionMode);
         }
 
@@ -50,24 +48,24 @@
         });
 
         $scope.UpdateData = function (data) {
-            ExperimentService.updateExperimentName(data.expName);
+            // ExperimentService.updateExperimentName(data.expName);
 
-            ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
+            // ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
 
-            ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
-            ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
+            // ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
+            // ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
 
             ClassService.Corpus_maxId = data.corpusMaxId;
 
-            ClassificationService.featureCollection.Feature_sets = data.featureSets;
+            // ClassificationService.featureCollection.Feature_sets = data.featureSets;
             ClassService.Corpus_classes = data.corpusClasses;
 
-            ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
+            // ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
 
             SelectClassService.setTestSetRootKeys(data.selectTestTextKeys);
 
-            ExperimentService.updateCvResultData(data.cvResultData);
-            ExperimentService.updateTsResultData(data.tsResultData);
+            // ExperimentService.updateCvResultData(data.cvResultData);
+            // ExperimentService.updateTsResultData(data.tsResultData);
 
 
         }

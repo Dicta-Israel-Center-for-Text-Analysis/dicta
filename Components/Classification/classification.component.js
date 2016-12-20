@@ -1,6 +1,8 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
     controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, UserService) {
+        var ctrl = this;
+        ctrl.experiment = ClassificationService.newExperiment();
         $scope.showInProcess = InProgressService.isReady != 1;
         $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -26,30 +28,11 @@
             $rootScope.$broadcast('lastSelectedRootKeys', []);
             $scope.showAddClassDialog = true;
 
-            ClassService.updateClassName('class ' + ClassService.Corpus_maxId);
+            ClassService.ClassName = 'class ' + ClassService.Corpus_maxId;
 
             ClassService.updateExperimentActionMode(actionMode);
             //$scope.Next();
         };
-
-        // set all the different data structures that hold classification data based on a saved data structure
-        $scope.UpdateDataForNewExperiment = function (data) {
-            ExperimentService.updateExperimentName(data.expName);
-
-            ExperimentService.updateselectedAlgorithmTypeValue(data.selectedAlgorithmTypeId, data.selectedAlgorithmTypeName, data.selectedAlgorithmTypeAttributes);
-
-            ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
-            ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
-
-            ClassService.Corpus_maxId = data.corpusMaxId;
-
-            ClassificationService.featureCollection.Feature_sets = data.featureSets;
-            ClassService.Corpus_classes = data.corpusClasses;
-
-            ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
-        }
-
-
 
         // Bible
         $scope.cancelClass = function () {
@@ -63,7 +46,7 @@
             $scope.showAddClassDialog = false;
             // workaround for server bug - force names to be sorted correctly
             var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
-            ClassService.updateClassName(prefix + " - " + ClassService.ClassName);
+            ClassService.ClassName = prefix + " - " + ClassService.ClassName;
             var classData = SaveClassInterface.getInstance();
 
             if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
@@ -86,21 +69,6 @@
 
                 });
             }
-            else if (angular.equals(classData.actionMode, 'LoadStoredClass')) {
-                InProgressService.updateIsReady(0);
-
-                var selRootNodes = $("#classTree").dynatree("getTree").getActiveNode();
-                // Get a list of ALL selected nodes
-                // selRootNodes = $("#classTree").dynatree("getTree").getSelectedNodes(false);
-                var selRootKeys = selRootNodes.data.key;
-                classData.activeKey = selRootKeys;
-                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    $scope.addClass(results.select_ClassName, results.selectedText, 'unknown', '', results.numberOfChunks, results.totalNumberOfWords, true);
-
-                });
-            }
         }
 
         $scope.classes = ClassService.Corpus_classes;
@@ -114,8 +82,8 @@
 
         $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
             ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
-            ClassificationService.featureCollection.updateFeaturesData({});
-            ClassService.Corpus_maxId = ClassService.Corpus_maxId + 1;
+            ctrl.experiment.featureCollection.updateFeaturesData({});
+            ClassService.Corpus_maxId += 1;
             ClassService.pushCorpus_classes({
                 id: ClassService.Corpus_maxId,
                 title: newItemName,
@@ -132,9 +100,9 @@
             $scope.countFilesPerClass = [];
             $scope.testSetChunks = [];
 
-            ClassificationService.runClassification()
+            ctrl.experiment.runClassification()
                 .then(function (response2) {
-                    $scope.testSetResults = response2.testSetResults;
+                    $scope.testSetResults = response2;
                     $scope.testSetChunks = [];
                     for (var testFileIndex in $scope.testSetResults) {
                         $scope.setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
@@ -142,13 +110,11 @@
                 });
         };
 
-        $scope.CVResultData = ExperimentService.cvResultData;
-        $scope.$on('cvResultDataUpdated', function () {
-            $scope.CVResultData = ExperimentService.cvResultData;
-        });
-        $scope.TSResultData = ExperimentService.tsResultData;
+        $scope.CVResultData = ctrl.experiment.Experiment.cvResultData;
+
+        $scope.TSResultData = ctrl.experiment.tsResultData;
         function updateTestSetChunks() {
-            $scope.testSetResults = ExperimentService.tsResultData.testSetResults;
+            $scope.testSetResults = ctrl.experiment.Experiment.tsResultData.testSetResults;
             $scope.testSetChunks = [];
             for (testFileIndex in $scope.testSetResults) {
                 $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
@@ -169,8 +135,8 @@
         $scope.$on('tsResultDataUpdated', updateTestSetChunks);
 
         // CV
-        $scope.Feature_sets = ExperimentService.Feature_sets;
-        $scope.featuresData = ExperimentService.featuresData;
+        $scope.Feature_sets = ctrl.experiment.Feature_sets;
+        $scope.featuresData = ctrl.experiment.featuresData;
 
 
         $scope.cv_predicate = 'className';
@@ -190,8 +156,8 @@
 
         //TEST SET
 
-        $scope.Feature_sets = ExperimentService.Feature_sets;
-        $scope.featuresData = ExperimentService.featuresData;
+        $scope.Feature_sets = ctrl.experiment.featureCollection.Feature_sets;
+        $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
 
         $scope.updateCurrentFeatureListToEmpty = function () {
             $scope.tab = 1;
@@ -274,7 +240,7 @@
             };
 
             var filter = function() {
-                var featureSet = ClassificationService.featureCollection.Feature_sets[0];
+                var featureSet = ctrl.experiment.featureCollection.Feature_sets[0];
                 if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
                     return "TEXT_ONLY";
                 }
@@ -303,9 +269,9 @@
                 ,
                 "chunkType": "LARGE",
                 "featureSettings": {
-                    "type": featureTypeMap[ClassificationService.featureCollection.Feature_sets[0].tokenizerType],
+                    "type": featureTypeMap[ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType],
                     "filter": filter,
-                    "nGram": nGramMap[ClassificationService.featureCollection.Feature_sets[0].featureType]
+                    "nGram": nGramMap[ctrl.experiment.featureCollection.Feature_sets[0].featureType]
                 }
             };
             var textRequest = {
@@ -352,8 +318,8 @@
                                     var currentOffset = 0;
                                     var pieces = [];
                                     function hack(name) {
-                                        if (ClassificationService.featureCollection.Feature_sets[0].tokenizerType == "SyntaxPhrase"
-                                            || ClassificationService.featureCollection.Feature_sets[0].tokenizerType == "SyntaxClause")
+                                        if (ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxPhrase"
+                                            || ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxClause")
                                             return prettyPrintMorphology(name);
                                         else
                                             return name;
@@ -387,7 +353,7 @@
         $scope.tab = '1';
 
         $scope.updateAlgorithm = function (algorithmSettings) {
-            ExperimentService.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
+            ctrl.experiment.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
         }
 
         // advanced  - algorithems
@@ -408,22 +374,16 @@
                 console.log('Modal promise rejected. Reason: ', reason);
             });
         };
-        $scope.algorithms = ExperimentService.algorithms;
-        $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-        $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
-        $scope.$on('selectedAlgorithmTypebroadcast', function () {
-            $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
-            $scope.selectedAlgorithmTypeName = ExperimentService.selectedAlgorithmTypeName;
-
-        });
-
+        $scope.algorithms = ExperimentService.ALGORITHMS;
+        $scope.selectedAlgorithmType = ExperimentService.ALGORITHMS[ctrl.experiment.Experiment.selectedAlgorithmTypeId];
+        $scope.selectedAlgorithmTypeName = ctrl.experiment.Experiment.selectedAlgorithmTypeName;
 
         // feature dialog
-        $scope.featuresData = ClassificationService.featureCollection.featuresData;
-        $scope.featureCollection = ClassificationService.featureCollection;
+        $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
+        $scope.featureCollection = ctrl.experiment.featureCollection;
 
         $scope.$on('featuresDataUpdated', function () {
-            $scope.featuresData = ClassificationService.featureCollection.featuresData;
+            $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
             // any changes to the featuresData means that the old results are no longer valid
             if (Object.keys($scope.featuresData).length == 0) {
                 $scope.clearOldResults();
@@ -438,7 +398,7 @@
                 'on-discard="closeThisDialog(\'button\')"></edit-feature-set-dialog>',
                 plain: true,
                 className: 'ngdialog-theme-default override-background',
-                data: { featureCollection: ClassificationService.featureCollection },
+                data: { featureCollection: ctrl.experiment.featureCollection },
                 closeByEscape: true,
                 closeByDocument: true,
                 scope: $scope
@@ -496,13 +456,13 @@
         }
 
         $scope.OpenViewAllFeatures = function () {
-            ClassificationService.prepareClassification().then(
+            ctrl.experiment.prepareClassification().then(
                 function(){
                     ngDialog.openConfirm({
                         template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
                         plain: true,
                         data: {
-                            features: ClassificationService.featureCollection.featuresData.features.reduce(function(a, b) {
+                            features: ctrl.experiment.featureCollection.featuresData.features.reduce(function(a, b) {
                                 return a.concat(b);
                             }, [])
                         },

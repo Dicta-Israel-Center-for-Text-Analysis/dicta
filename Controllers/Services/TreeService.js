@@ -11,7 +11,7 @@ jTextMinerApp.factory('TreeService', function ($http) {
         // list - the list to be sorted
         // getKeyFunc - a function that takes a list item and returns its key
         treeSort (list, getKeyFunc) {
-            var nextItems = treeObject.corpusTree.slice(); // copies the array
+            var nextItems = service.corpusTree.slice(); // copies the array
             var sortedItems = [];
             while (nextItems.length > 0) {
                 var currentItem = nextItems.shift();

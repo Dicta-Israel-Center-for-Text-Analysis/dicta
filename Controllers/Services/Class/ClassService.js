@@ -76,13 +76,7 @@
         $rootScope.$broadcast("isAllBibleValueUpdated");
     }
 
-    service.ClassName = '';
-    service.updateClassName = function (value) {
-        this.ClassName = value;
-        //BrowseClassService.updateBrowse_ClassName(value);
-        //SelectClassService.updateSelect_ClassName(value);
-        $rootScope.$broadcast("ClassNameUpdated");
-    }
+    service.ClassName = 'Class 0';
 
     return service;
 });

@@ -8,7 +8,7 @@ jTextMinerApp.component('algorithmDialog', {
     },
     templateUrl: "Components/Classification/algorithmDialog.component.html",
     controller: function ($scope, ExperimentService) {
-        this.algorithms = ExperimentService.algorithms;
+        this.algorithms = ExperimentService.ALGORITHMS;
         this.updateAndClose = function () {
             this.onAlgorithmChange({newAlgorithm: this.selectedAlgorithm});
             this.onConfirm();

@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', '$rootScope', 'ExperimentService', '$location', 'focus', 'APIService', '$filter', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'TreeService', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, $location, focus, APIService, $filter, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, TreeService, BrowseClassService, UserService) {
+    controller: ['$scope', '$rootScope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, BrowseClassService, UserService) {
         var ctrl = this;
         ctrl.experiment = ClassificationService.newExperiment();
         $scope.showInProcess = InProgressService.isReady != 1;
@@ -28,7 +28,7 @@
             $rootScope.$broadcast('lastSelectedRootKeys', []);
             $scope.showAddClassDialog = true;
 
-            ClassService.ClassName = 'class ' + ClassService.Corpus_maxId;
+            ClassService.ClassName = 'Class ' + ClassService.Corpus_maxId;
 
             ClassService.updateExperimentActionMode(actionMode);
             //$scope.Next();
@@ -69,16 +69,16 @@
 
                 });
             }
-        }
+        };
 
         $scope.classes = ClassService.Corpus_classes;
         $scope.$on('Corpus_classesValueUpdated', function () {
             $scope.classes = ClassService.Corpus_classes;
         });
 
-        $scope.clearOldResults = function () {
+        ctrl.clearOldResults = function () {
             $scope.testSetChunks = [];
-        }
+        };
 
         $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
             ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
@@ -110,9 +110,6 @@
                 });
         };
 
-        $scope.CVResultData = ctrl.experiment.Experiment.cvResultData;
-
-        $scope.TSResultData = ctrl.experiment.tsResultData;
         function updateTestSetChunks() {
             $scope.testSetResults = ctrl.experiment.Experiment.tsResultData.testSetResults;
             $scope.testSetChunks = [];
@@ -132,40 +129,6 @@
             }
         }
         updateTestSetChunks();
-        $scope.$on('tsResultDataUpdated', updateTestSetChunks);
-
-        // CV
-        $scope.Feature_sets = ctrl.experiment.Feature_sets;
-        $scope.featuresData = ctrl.experiment.featuresData;
-
-
-        $scope.cv_predicate = 'className';
-        $scope.cv_predicate = '-maxTTest';
-
-        $scope.unknownClasses = ClassService.TestSet_unknown_class;
-        $scope.addUnknownClass = function (index, newItemName, text, mode, size, number) {
-            $scope.unknownClasses.push({
-                id: index,
-                title: newItemName,
-                selectedText: text,
-                chunkMode: mode,
-                chunkSize: size,
-                numberOfChunks: number
-            });
-        }
-
-        //TEST SET
-
-        $scope.Feature_sets = ctrl.experiment.featureCollection.Feature_sets;
-        $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
-
-        $scope.updateCurrentFeatureListToEmpty = function () {
-            $scope.tab = 1;
-        }
-        $scope.updateCurrentFeatureList = function () {
-            $scope.tab = 2;
-        }
-
 
         $scope.numberOfAppearancesInDoc = function (item) {
             return (item.numberOfAppearancesInDoc > 0);
@@ -356,7 +319,7 @@
             ctrl.experiment.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
         }
 
-        // advanced  - algorithems
+        // advanced  - algorithms
         $scope.OpenSelectAlgorithm = function () {
             ngDialog.openConfirm({
                 template: '<algorithm-dialog ' +
@@ -379,14 +342,11 @@
         $scope.selectedAlgorithmTypeName = ctrl.experiment.Experiment.selectedAlgorithmTypeName;
 
         // feature dialog
-        $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
-        $scope.featureCollection = ctrl.experiment.featureCollection;
 
-        $scope.$on('featuresDataUpdated', function () {
-            $scope.featuresData = ctrl.experiment.featureCollection.featuresData;
+        $scope.$watch('$ctrl.experiment.featureCollection.featuresData', function () {
             // any changes to the featuresData means that the old results are no longer valid
-            if (Object.keys($scope.featuresData).length == 0) {
-                $scope.clearOldResults();
+            if (Object.keys(ctrl.experiment.featureCollection.featuresData).length == 0) {
+                ctrl.clearOldResults();
             }
         });
 
@@ -395,7 +355,8 @@
                 template: '<edit-feature-set-dialog ' +
                 'feature-collection="ngDialogData.featureCollection" ' +
                 'on-confirm="confirm()" ' +
-                'on-discard="closeThisDialog(\'button\')"></edit-feature-set-dialog>',
+                'on-discard="closeThisDialog(\'button\')"' +
+                'run-extract="$ctrl.experiment.prepareClassification()"></edit-feature-set-dialog>',
                 plain: true,
                 className: 'ngdialog-theme-default override-background',
                 data: { featureCollection: ctrl.experiment.featureCollection },
@@ -437,23 +398,19 @@
                 plain: true,
                 className: 'ngdialog-theme-default',
                 scope: $scope
-            }).then(function (value) {
-                console.log('Modal promise resolved. Value: ', value);
-            }, function (reason) {
-                console.log('Modal promise rejected. Reason: ', reason);
             });
         }
 
         $scope.showCrossvalidation = function () {
             ngDialog.openConfirm({
-                template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.CVResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
+                template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.cvResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
                 plain: true,
-                data: { CVResultData: $scope.CVResultData },
+                data: { cvResultData: ctrl.experiment.Experiment.cvResultData },
                 closeByEscape: true,
                 closeByDocument: true,
                 className: 'ngdialog-theme-default override-background'
             });
-        }
+        };
 
         $scope.OpenViewAllFeatures = function () {
             ctrl.experiment.prepareClassification().then(
@@ -462,9 +419,8 @@
                         template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
                         plain: true,
                         data: {
-                            features: ctrl.experiment.featureCollection.featuresData.features.reduce(function(a, b) {
-                                return a.concat(b);
-                            }, [])
+                            features: ctrl.experiment.featureCollection.featuresData.features
+                                .reduce((a, b) => a.concat(b), [])
                         },
                         closeByEscape: true,
                         closeByDocument: true,

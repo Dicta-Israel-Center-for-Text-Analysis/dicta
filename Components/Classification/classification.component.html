@@ -14,7 +14,7 @@
                 <img title="There are three ways to add texts for this class. You can upload a zip file from your own computer. You can choose texts from one of our stored libraries. (For now only the Hebrew Bible is available.). You can choose a class you've previously used from a dropdown list (coming soon)."
                      data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
             </h2>
-            <training-classes show-delete-button="true"></training-classes>
+            <training-classes classification-experiment="$ctrl.experiment" show-delete-button="true"></training-classes>
 
         </div>
         <div class="clearfix"></div>
@@ -30,7 +30,8 @@
         <div id="classificationChooseFeatureSet" class="feature-set">
             <p class="alogrithim">feature set</p>
 
-            <feature-sets show-delete-button="true" feature-collection="featureCollection"></feature-sets>
+            <feature-sets show-delete-button="true" feature-collection="$ctrl.experiment.featureCollection"
+                          run-extract="$ctrl.experiment.prepareClassification()"></feature-sets>
 
             <ul class="list-unstyled">
                 <li><a ng-click="OpenSelectFeatureSet();"><i class="fa fa-plus"></i> Add a feature set</a>
@@ -42,7 +43,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="cross-verification">
-            <p ng-show="CVResultData.classes.length>1"> Cross validation {{CVResultData.accuracy[0] | number: 1}}% <span
+            <p ng-show="$ctrl.experiment.Experiment.cvResultData.classes.length>1"> Cross validation {{$ctrl.experiment.Experiment.cvResultData.accuracy[0] | number: 1}}% <span
                     ng-click="showCrossvalidation()"><i class="fa fa-eye"></i></span></p>
             <a ng-show="classes.length < 2">Classify (still need classes)</a>
             <a ng-show="classes.length >=2" ng-click="runClassification();">Classify My Text</a>
@@ -63,10 +64,10 @@
     <div class="box-right-side">
         <div class="view-text">
             <ul class="list-inline">
-                <li ng-class=" tab == '1' ? 'active' : ''"><a ng-click="updateCurrentFeatureListToEmpty()">View text</a>
+                <li ng-class="tab == 1 ? 'active' : ''"><a ng-click="tab = 1">View text</a>
                 </li>
                 <li><a>|</a></li>
-                <li ng-class=" tab == '2' ? 'active' : ''"><a ng-click="updateCurrentFeatureList()">View features</a>
+                <li ng-class="tab == 2 ? 'active' : ''"><a ng-click="tab = 2">View features</a>
                 </li>
             </ul>
         </div>

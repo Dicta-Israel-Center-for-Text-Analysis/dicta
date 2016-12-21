@@ -63,14 +63,6 @@ angular.module('JTextMinerApp')
                     this.selectedAlgorithmTypeName = name;
                     this.selectedAlgorithmTypeAttributes = attributes;
                 },
-                updateCvResultData  (value) {
-                    this.cvResultData = value;
-                    $rootScope.$broadcast("cvResultDataUpdated");
-                },
-                updateTsResultData (value) {
-                    this.tsResultData = value;
-                    $rootScope.$broadcast("tsResultDataUpdated");
-                },
                 updateResultData (value) {
                     this.resultData = value;
                     $rootScope.$broadcast("valuesUpdated");

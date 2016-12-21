@@ -171,7 +171,7 @@
                         .then(
                             function (response) {
                                 this.Classification_ExperimentType = 'TestSet';
-                                this.Experiment.updateCvResultData(response.data);
+                                this.Experiment.cvResultData = response.data;
                             }.bind(this)
                         );
                 },

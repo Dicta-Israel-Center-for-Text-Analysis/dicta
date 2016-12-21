@@ -1,7 +1,8 @@
 jTextMinerApp.component('featureSets', {
         bindings: {
             showDeleteButton: '=',
-            featureCollection: '='
+            featureCollection: '=',
+            runExtract: '&'
         },
         templateUrl: 'Components/Shared/featureSets.component.html',
         controller: ['$scope', 'ngDialog', function ($scope, ngDialog) {
@@ -16,7 +17,8 @@ jTextMinerApp.component('featureSets', {
                     'on-confirm="confirm()" ' +
                     'on-discard="closeThisDialog(\'button\')" ' +
                     'feature-collection="ngDialogData.featureCollection" ' +
-                    'feature-index="ngDialogData.featureIndex"></edit-feature-set-dialog>',
+                    'feature-index="ngDialogData.featureIndex"' +
+                    'run-extract="$ctrl.runExtract()"></edit-feature-set-dialog>',
                     plain: true,
                     className: 'ngdialog-theme-default override-background',
                     scope: $scope,

@@ -3,7 +3,8 @@
         featureCollection: '<',
         featureIndex: '<',
         onConfirm: '&',
-        onDiscard: '&'
+        onDiscard: '&',
+        runExtract: '&'
     },
     templateUrl: "Components/Classification/editFeatureSetDialog.component.html",
     controller: function ($scope, ngDialog, InProgressService, APIService, ClassService, ClassificationService, $timeout, SelectClassService) {
@@ -125,7 +126,7 @@
 
     $scope.extractFeatures = function () {
         $scope.saveFeatureSet();
-        ClassificationService.prepareClassification().then(showNewFeatures);
+        ctrl.runExtract().then(showNewFeatures);
     }
 
     $scope.saveFeatureSet = function () {

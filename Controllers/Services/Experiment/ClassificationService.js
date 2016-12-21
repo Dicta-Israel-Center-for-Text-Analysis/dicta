@@ -7,7 +7,7 @@
                 Classification_ExperimentType: 'CV',
                 Classification_isKeepingChunksFromSameFileTogether: false,
                 Classification_TestSetExperimentType: 'Unknown',
-                Experiment: ExperimentService.newExperiment(),
+                base: ExperimentService.newExperiment(),
 
                 //Classification update functions
                 updateClassification_CrossValidationFoldsValue(value) {
@@ -30,7 +30,7 @@
                         id: currentClass.id,
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.Experiment.ExperimentName
+                        expName: this.base.ExperimentName
                     };
                     InProgressService.updateIsReady(0);
 
@@ -60,7 +60,7 @@
                         var apiCallData = {
                             userLogin: UserService.user,
                             expType: 'Classification',
-                            expName: this.Experiment.ExperimentName,
+                            expName: this.base.ExperimentName,
                             featureSets: this.featureCollection.Feature_sets,
                             corpusClasses: ClassService.Corpus_classes,
                             featuresData: this.featureCollection.featuresData
@@ -118,14 +118,14 @@
                     return {
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.Experiment.ExperimentName,
-                        selectedAlgorithmTypeId: this.Experiment.selectedAlgorithmTypeId,
-                        selectedAlgorithmTypeName: this.Experiment.selectedAlgorithmTypeName,
-                        selectedAlgorithmTypeAttributes: this.Experiment.selectedAlgorithmTypeAttributes,
+                        expName: this.base.ExperimentName,
+                        selectedAlgorithmTypeId: this.base.selectedAlgorithmTypeId,
+                        selectedAlgorithmTypeName: this.base.selectedAlgorithmTypeName,
+                        selectedAlgorithmTypeAttributes: this.base.selectedAlgorithmTypeAttributes,
                         classificationExperimentMode: this.Classification_ExperimentType,
-                        //classificationCrossValidationType: this.Experiment.Classification_CrossValidationType,
+                        //classificationCrossValidationType: this.base.Classification_CrossValidationType,
                         classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
-                        //classificationSplitRatioCrossValidation: this.Experiment.Classification_Split_ratio_cross_validation,
+                        //classificationSplitRatioCrossValidation: this.base.Classification_Split_ratio_cross_validation,
                         corpusMaxId: ClassService.Corpus_maxId,
 
                         featureSets: this.featureCollection.Feature_sets,
@@ -171,7 +171,7 @@
                         .then(
                             function (response) {
                                 this.Classification_ExperimentType = 'TestSet';
-                                this.Experiment.cvResultData = response.data;
+                                this.base.cvResultData = response.data;
                             }.bind(this)
                         );
                 },
@@ -181,12 +181,12 @@
                         .then(
                         function (response2) {
                             InProgressService.updateIsReady(1);
-                            this.Experiment.tsResultData = response2.data;
+                            this.base.tsResultData = response2.data;
                             var sortedResults = TreeService.treeSort(response2.data.testSetResults,
                                 function (item) {
                                     return item.name.replace(/_/g, '/').replace('/Dicta Corpus/', '').replace(/.rtf$/, '');
                                 });
-                            this.Experiment.tsResultData.testSetResults = sortedResults;
+                            this.base.tsResultData.testSetResults = sortedResults;
                             return sortedResults;
                         }.bind(this)
                     );
@@ -211,7 +211,7 @@
                     var saveRequest = {
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.Experiment.ExperimentName,
+                        expName: this.base.ExperimentName,
                         selectedAlgorithmTypeId: ExperimentService.selectedAlgorithmTypeId,
                         selectedAlgorithmTypeName: ExperimentService.selectedAlgorithmTypeName,
                         selectedAlgorithmTypeAttributes: ExperimentService.selectedAlgorithmTypeAttributes,
@@ -224,11 +224,11 @@
                         selectTestTextKeys: SelectClassService.lastTestSetSelectedRootKeys
                     };
                     // copy so we can modify it
-                    saveRequest.cvResultData = angular.copy(this.Experiment.cvResultData);
+                    saveRequest.cvResultData = angular.copy(this.base.cvResultData);
                     // the server can't handle this yet
                     delete saveRequest.cvResultData.classificationList;
                     // same thing
-                    saveRequest.tsResultData = angular.copy(this.Experiment.tsResultData);
+                    saveRequest.tsResultData = angular.copy(this.base.tsResultData);
                     delete saveRequest.tsResultData.classificationList;
                     return saveRequest;
                 },

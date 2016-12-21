@@ -11,7 +11,7 @@
                 Segmentation_CoreDocs: 80,
                 Segmentation_NumberOfWordsInFeatureSet: 5,
                 Segmentation_NumberOfSentencesLockedIn: 25,
-                experiment: ExperimentService.newExperiment()
+                base: ExperimentService.newExperiment()
             };
             // the default feature set for segmentation is different than for other experiments
             segmentationExperiment.featureCollection = FeatureCollectionFactory.newCollection();
@@ -48,9 +48,9 @@
                     userLogin: UserService.user,
                     expType: 'Segmentation',
                     expName: 'name',
-                    selectedAlgorithmTypeId: this.experiment.selectedAlgorithmTypeId,
-                    selectedAlgorithmTypeName: this.experiment.selectedAlgorithmTypeName,
-                    selectedAlgorithmTypeAttributes: this.experiment.selectedAlgorithmTypeAttributes,
+                    selectedAlgorithmTypeId: this.base.selectedAlgorithmTypeId,
+                    selectedAlgorithmTypeName: this.base.selectedAlgorithmTypeName,
+                    selectedAlgorithmTypeAttributes: this.base.selectedAlgorithmTypeAttributes,
                     featureSets: this.featureCollection.Feature_sets,
                     featuresData: this.featureCollection.featuresData,
                     segmentationActionMode: this.Segmentation_ActionMode,

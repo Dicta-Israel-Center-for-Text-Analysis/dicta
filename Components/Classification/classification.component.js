@@ -137,11 +137,6 @@
 
         $scope.test_predicate = 'orderByClass';
 
-        $scope.showInProcess = InProgressService.isReady != 1;
-        $scope.$on('isReady_Updated', function () {
-            $scope.showInProcess = InProgressService.isReady != 1;
-        });
-
         $scope.testSetChunks = [];
         for (testFileIndex in $scope.testSetResults) {
             $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
@@ -331,10 +326,6 @@
                 plain: true,
                 className: 'ngdialog-theme-plain',
                 scope: $scope
-            }).then(function (value) {
-                console.log('Modal promise resolved. Value: ', value);
-            }, function (reason) {
-                console.log('Modal promise rejected. Reason: ', reason);
             });
         };
         $scope.algorithms = ExperimentService.ALGORITHMS;

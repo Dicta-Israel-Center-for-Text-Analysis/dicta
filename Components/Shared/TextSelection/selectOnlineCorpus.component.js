@@ -1,9 +1,6 @@
 ﻿jTextMinerApp.component('selectOnlineCorpus', {
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
         controller: ['$scope', '$rootScope', 'TreeService', 'SelectClassService', function ($scope, $rootScope, TreeService, SelectClassService) {
-            $scope.showBibleDialog = false;
-            $scope.showTalmudDialog = true;
-
             function initBreadCrumbs() {
                 $scope.breadCrumbs = ['All Collections'];
             }

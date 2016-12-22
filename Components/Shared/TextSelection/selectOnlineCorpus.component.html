@@ -6,11 +6,7 @@
         )
     </div>-->
     <br />
-    <div ng-show="showBibleDialog" style="height: 400px; overflow: scroll;">
-        <!-- http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html -->
-        <div id="trainTree"></div>
-    </div>
-    <div ng-show="showTalmudDialog" style="height: 400px; overflow-y: scroll;">
+    <div style="height: 400px; overflow-y: scroll;">
         <ol class="breadcrumb">
             <li ng-repeat="crumb in breadCrumbs"><a ng-click="selectCrumb($index)">{{crumb}}</a></li>
         </ol>

@@ -168,7 +168,7 @@
 
 
 
-<div ng-show="showClassDialog" ng-controller="ClassDialogController">
+<div ng-show="showClassDialog">
     <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
         <div class="ngdialog-overlay"></div>
         <div class="ngdialog-content" role="document">
@@ -177,7 +177,7 @@
                 <in-progress></in-progress>
                 <br />
                 <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
-                    <browse-this-computer show-class-name=""></browse-this-computer>
+                    <browse-this-computer></browse-this-computer>
                 </div>
                 <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
                     <select-online-corpus></select-online-corpus>

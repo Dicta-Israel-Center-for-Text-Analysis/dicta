@@ -1,5 +1,4 @@
-﻿
-<header-page></header-page>
+﻿<header-page></header-page>
 
 
 <experiment-menu></experiment-menu>
@@ -98,29 +97,3 @@
 </div>
 
 <footer-page></footer-page>
-
-
-<div ng-show="showClassDialog" ng-controller="ClassDialogController">
-    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
-        <div class="ngdialog-overlay"></div>
-        <div class="ngdialog-content" role="document">
-            <div class="ngdialog-message">
-                <action-mode></action-mode>
-                <in-progress></in-progress>
-                <br />
-                <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
-                    <browse-this-computer show-class-name=""></browse-this-computer>
-                </div>
-                <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
-                    <select-online-corpus></select-online-corpus>
-
-                </div>
-            </div>
-            <div class="ngdialog-buttons" ng-show="!showInProcess">
-                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary" ng-click="saveClass()">Select as test text</button>
-                <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary" ng-click="cancelClass()">Cancel</button>
-            </div>
-        </div>
-    </div>
-    <script>tiberias_tour(TabTour);</script>
-</div>

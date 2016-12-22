@@ -26,24 +26,29 @@
         $scope.ContinueToAddClass = function (actionMode) {
 
             $rootScope.$broadcast('lastSelectedRootKeys', []);
-            $scope.showAddClassDialog = true;
 
             ClassService.ClassName = 'Class ' + ClassService.Corpus_maxId;
+
+            ngDialog.openConfirm({
+                template: '<add-class-dialog ' +
+                'on-confirm="confirm(); ngDialogData.saveClass();" ' +
+                'on-cancel="closeThisDialog()" ' +
+                'class-object="ngDialogData.classObject">' +
+                '</add-class-dialog>',
+                plain: true,
+                className: 'ngdialog-theme-default',
+                data: {
+                    classObject: ClassService,
+                    saveClass: $scope.saveClass
+                }
+            });
 
             ClassService.updateExperimentActionMode(actionMode);
             //$scope.Next();
         };
 
-        // Bible
-        $scope.cancelClass = function () {
-            $scope.showClassDialog = false;
-            $scope.showAddClassDialog = false;
-        }
-
         $scope.fixmeCounter = 1;
         $scope.saveClass = function () {
-            $scope.showClassDialog = false;
-            $scope.showAddClassDialog = false;
             // workaround for server bug - force names to be sorted correctly
             var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
             ClassService.ClassName = prefix + " - " + ClassService.ClassName;
@@ -176,8 +181,6 @@
 
         $scope.setSelectedTestFile = function (item, index) {
 
-            $scope.inited = false;
-
             InProgressService.updateIsReady(0);
 
             $scope.data = {};
@@ -306,7 +309,6 @@
                                     item.htmlText = html;
                                 })));
 
-            $scope.inited = true;
         };
         $scope.tab = '1';
 

@@ -1,14 +1,9 @@
 ﻿jTextMinerApp.component('browseThisComputer', {
-        scope: {
-            showClassName: '=showClassName'
-        },
         templateUrl: 'Components/Shared/TextSelection/browseThisComputer.component.html',
         controller: ['$scope', 'focus', 'fileUpload', 'ngDialog', 'BrowseClassService',
             'InProgressService', 'UserService',
             function ($scope, focus, fileUpload, ngDialog, BrowseClassService, InProgressService, UserService) {
             focus('Browse_focusZipFile');
-
-            //$scope.showClassName = true;
 
             //input
             $scope.Browse_DoNotChunk_ChunkSize = BrowseClassService.Browse_DoNotChunk_ChunkSize;

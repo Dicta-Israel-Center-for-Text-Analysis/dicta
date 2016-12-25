@@ -2,6 +2,7 @@
     var classData = {
         getInstance() {
             return {
+                // most of these are unused, but are needed for API calls
                 testSetActionMode: ClassService.ExperimentTestSetActionMode,
                 actionMode: ClassService.ExperimentActionMode,
                 browse_ClassName: ClassService.ClassName,
@@ -15,7 +16,7 @@
                 select_ChunkMode: SelectClassService.Select_ChunkMode,
                 select_MinimumChunkSize: SelectClassService.Select_MinimumChunkSize,
                 select_ChunkSize: SelectClassService.Select_ChunkSize,
-                select_RootKeys: SelectClassService.lastSelectedRootKeys,
+                select_RootKeys: SelectClassService.lastTestSetSelectedRootKeys,
                 activeKey: '',
                 userLogin: UserService.user,
                 expType: 'Classification',

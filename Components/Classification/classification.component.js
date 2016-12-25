@@ -52,7 +52,9 @@
             // workaround for server bug - force names to be sorted correctly
             var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
             ClassService.ClassName = prefix + " - " + ClassService.ClassName;
+            // get a data structure, but reset the select_RootKeys to the value just picked!
             var classData = SaveClassInterface.getInstance();
+            classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
 
             if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
                 classData.totalNumberOfWords = BrowseClassService.LastClassTotalNumberOfWords;

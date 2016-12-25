@@ -198,9 +198,6 @@
                     var classData = SaveClassInterface.getInstance();
                     classData.actionMode = classData.testSetActionMode;
                     InProgressService.updateIsReady(0);
-                    if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-                        classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
-                    }
 
                     classData.expType = 'Classification';
                     return this.callUnknownTestClass(classData)

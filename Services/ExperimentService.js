@@ -38,7 +38,6 @@ angular.module('JTextMinerApp')
                 selectedAlgorithmTypeId: 0,
                 selectedAlgorithmTypeName: algorithms[0].name,
                 selectedAlgorithmTypeAttributes: algorithms[0].attributes,
-                resultData: [],
                 updateExperimentName(value) {
                     this.experimentName = value;
                     $rootScope.$broadcast("valuesUpdated");
@@ -47,10 +46,6 @@ angular.module('JTextMinerApp')
                     this.selectedAlgorithmTypeId = id;
                     this.selectedAlgorithmTypeName = name;
                     this.selectedAlgorithmTypeAttributes = attributes;
-                },
-                updateResultData (value) {
-                    this.resultData = value;
-                    $rootScope.$broadcast("valuesUpdated");
                 }
             }
         }

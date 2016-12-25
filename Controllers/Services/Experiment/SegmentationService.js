@@ -11,6 +11,7 @@
                 Segmentation_CoreDocs: 80,
                 Segmentation_NumberOfWordsInFeatureSet: 5,
                 Segmentation_NumberOfSentencesLockedIn: 25,
+                resultData: [],
                 base: ExperimentService.newExperiment()
             };
             // the default feature set for segmentation is different than for other experiments
@@ -33,7 +34,7 @@
                     expType: 'Segmentation',
                     expName: 'name',
                     featureSets: this.featureCollection.Feature_sets,
-                    corpusClasses: ClassService.Corpus_classes,
+                    corpusClasses: [],
                     featuresData: {},
                     segmentationActionMode: this.Segmentation_ActionMode,
                     segmentationChunkBy: this.Segmentation_ChunkBy,

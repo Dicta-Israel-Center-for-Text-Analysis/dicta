@@ -19,13 +19,6 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
             ClassificationService.featureCollection.updateFeaturesData($scope.featuresData);
         }
     });
-    
-    $scope.resultData = ExperimentService.resultData;
-    $scope.$watch('resultData', function () {
-        if (!angular.isUndefined($scope.resultData)) {
-            ExperimentService.updateResultData($scope.resultData);
-        }
-    });
 
     $scope.UpdateData = function () {
         $scope.data = {};

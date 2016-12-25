@@ -8,19 +8,6 @@
 angular.module('JTextMinerApp')
     .factory('ExperimentService', function($rootScope) {
 
-    // http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-    function generateGUID () {
-        var buf = new Uint32Array(4);
-        window.crypto.getRandomValues(buf);
-        var idx = -1;
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            idx++;
-            var r = (buf[idx>>3] >> ((idx%8)*4))&15;
-            var v = c == 'x' ? r : (r&0x3|0x8);
-            return v.toString(16);
-        });
-    };
-
     var algorithms = [
         { id: 0, name: 'Weka_SMO', attributes: '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"' },
         { id: 1, name: 'Weka_BayesianLogisticRegression', attributes: '-D -Tl 5.0E-5 -S 0.5 -H 1 -V 0.27 -R R:0.01-316,3.16 -P 2 -F 10 -I 200 -N' },
@@ -46,13 +33,11 @@ angular.module('JTextMinerApp')
             // ClassService.Corpus_classes = [];
 
             return {
-                experimentGUID: generateGUID(),
+                experimentGUID: null,
                 experimentName: 'Untitled',
                 selectedAlgorithmTypeId: 0,
                 selectedAlgorithmTypeName: algorithms[0].name,
                 selectedAlgorithmTypeAttributes: algorithms[0].attributes,
-                cvResultData: [],
-                tsResultData: [],
                 resultData: [],
                 updateExperimentName(value) {
                     this.experimentName = value;

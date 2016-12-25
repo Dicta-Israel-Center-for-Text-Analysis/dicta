@@ -116,7 +116,7 @@
         };
 
         function updateTestSetChunks() {
-            $scope.testSetResults = ctrl.experiment.base.tsResultData.testSetResults;
+            $scope.testSetResults = ctrl.experiment.tsResultData.testSetResults;
             $scope.testSetChunks = [];
             for (testFileIndex in $scope.testSetResults) {
                 $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
@@ -398,7 +398,7 @@
             ngDialog.openConfirm({
                 template: '<crossvalidation-table-dialog crossvalidation-results="ngDialogData.cvResultData" on-confirm="confirm()"></crossvalidation-table-dialog>',
                 plain: true,
-                data: { cvResultData: ctrl.experiment.base.cvResultData },
+                data: { cvResultData: ctrl.experiment.cvResultData },
                 closeByEscape: true,
                 closeByDocument: true,
                 className: 'ngdialog-theme-default override-background'

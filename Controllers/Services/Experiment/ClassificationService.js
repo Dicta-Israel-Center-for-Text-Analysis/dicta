@@ -7,6 +7,8 @@
                 Classification_ExperimentType: 'CV',
                 Classification_isKeepingChunksFromSameFileTogether: false,
                 Classification_TestSetExperimentType: 'Unknown',
+                cvResultData: [],
+                tsResultData: [],
                 base: ExperimentService.newExperiment(),
 
                 //Classification update functions
@@ -171,7 +173,7 @@
                         .then(
                             function (response) {
                                 this.Classification_ExperimentType = 'TestSet';
-                                this.base.cvResultData = response.data;
+                                this.cvResultData = response.data;
                             }.bind(this)
                         );
                 },
@@ -181,12 +183,12 @@
                         .then(
                         function (response2) {
                             InProgressService.updateIsReady(1);
-                            this.base.tsResultData = response2.data;
+                            this.tsResultData = response2.data;
                             var sortedResults = TreeService.treeSort(response2.data.testSetResults,
                                 function (item) {
                                     return item.name.replace(/_/g, '/').replace('/Dicta Corpus/', '').replace(/.rtf$/, '');
                                 });
-                            this.base.tsResultData.testSetResults = sortedResults;
+                            this.tsResultData.testSetResults = sortedResults;
                             return sortedResults;
                         }.bind(this)
                     );
@@ -224,11 +226,11 @@
                         selectTestTextKeys: SelectClassService.lastTestSetSelectedRootKeys
                     };
                     // copy so we can modify it
-                    saveRequest.cvResultData = angular.copy(this.base.cvResultData);
+                    saveRequest.cvResultData = angular.copy(this.cvResultData);
                     // the server can't handle this yet
                     delete saveRequest.cvResultData.classificationList;
                     // same thing
-                    saveRequest.tsResultData = angular.copy(this.base.tsResultData);
+                    saveRequest.tsResultData = angular.copy(this.tsResultData);
                     delete saveRequest.tsResultData.classificationList;
                     return saveRequest;
                 },

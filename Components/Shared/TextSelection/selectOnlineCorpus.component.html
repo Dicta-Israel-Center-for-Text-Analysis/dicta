@@ -8,22 +8,22 @@
     <br />
     <div style="height: 400px; overflow-y: scroll;">
         <ol class="breadcrumb">
-            <li ng-repeat="crumb in breadCrumbs"><a ng-click="selectCrumb($index)">{{crumb}}</a></li>
+            <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb}}</a></li>
         </ol>
         <table class="table table-striped">
-            <tr ng-repeat="item in treeNode">
+            <tr ng-repeat="item in $ctrl.treeNode">
                 <td width="30px"><input
                         type="checkbox"
                         name="selectedNodes[]"
                         value="{{item.key}}"
                         id="{{item.key}}"
-                        ng-checked="isNodeSelected(item.key)"
-                        ng-click="toggleSelection(item.key)"
-                        ui-indeterminate="isNodePartial(item.key)"
+                        ng-checked="$ctrl.isNodeSelected(item.key)"
+                        ng-click="$ctrl.toggleSelection(item.key)"
+                        ui-indeterminate="$ctrl.isNodePartial(item.key)"
                 >
                 </td>
                 <td ng-switch="item.children != null && item.children.length > 0">
-                    <a ng-switch-default ng-click="expandNode(item.title)">{{item.title}}
+                    <a ng-switch-default ng-click="$ctrl.expandNode(item.title)">{{item.title}}
                         <span class="glyphicon glyphicon-menu-right"></span></a>
                     <span ng-switch-when="false">{{item.title}}</span>
                 </td>

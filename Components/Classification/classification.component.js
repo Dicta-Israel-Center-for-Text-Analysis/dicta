@@ -1,6 +1,6 @@
 ﻿jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', '$rootScope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'BrowseClassService', 'UserService', function ($scope, $rootScope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, BrowseClassService, UserService) {
+    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'BrowseClassService', 'UserService', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, BrowseClassService, UserService) {
         var ctrl = this;
         ctrl.experiment = ClassificationService.newExperiment();
         $scope.showInProcess = InProgressService.isReady != 1;
@@ -25,7 +25,7 @@
         // someone pressed the "Add Class" button, so show the dialog
         $scope.ContinueToAddClass = function (actionMode) {
 
-            $rootScope.$broadcast('lastSelectedRootKeys', []);
+            SelectClassService.lastSelectedRootKeys = [];
 
             ClassService.ClassName = 'Class ' + ClassService.Corpus_maxId;
 

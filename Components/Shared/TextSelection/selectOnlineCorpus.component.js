@@ -17,13 +17,6 @@
             $scope.selectedNodes = SelectClassService.lastSelectedRootKeys.map(function(key){return key.substring("/Dicta Corpus/".length)});
             recalculatePartials();
 
-            $scope.$on('lastSelectedRootKeys', function (event, args) {
-                if (Array.isArray(args)) {
-                    $scope.selectedNodes = args.map(function(key){return key.substring("/Dicta Corpus/".length)});
-                    recalculatePartials();
-                }
-            });
-
             function initCurrentLevel(parentNode) {
                 for (var i = 0; i < $scope.treeNode.length; i++) {
                     // add links back to the parent, so we can update selections
@@ -127,7 +120,7 @@
 
                 recalculatePartials();
 
-                $rootScope.$broadcast('lastSelectedRootKeys', $scope.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;}));
+                SelectClassService.lastSelectedRootKeys = ctrl.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;});
             };
 
             $scope.selectCrumb = function (crumbNumber) {

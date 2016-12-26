@@ -15,7 +15,7 @@
             var data = {
                 userLogin: UserService.user,
                 expType: "Classification",
-                expName: ExperimentService.ExperimentName
+                expName: ExperimentService.experimentName
             };
             
             APIService.apiRun({crud: 'DownloadStoredExperiment'}, data, function (response) {

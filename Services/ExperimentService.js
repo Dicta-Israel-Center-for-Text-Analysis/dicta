@@ -58,9 +58,7 @@ angular.module('JTextMinerApp')
 
             return APIService.call('JTextMinerAPI/NewExperiment', data)
                 .then(function (response) {
-                    InProgressService.updateIsReady(1);
-
-                    if (response.userLogin.length == 0) {
+                    if (response.data.userLogin.length == 0) {
                         throw "Reset server failed.";
                     }
                 });

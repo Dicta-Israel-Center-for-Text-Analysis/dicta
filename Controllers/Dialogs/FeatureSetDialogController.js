@@ -26,7 +26,7 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
         $scope.data.expType = 'Classification';
 
 
-        $scope.data.expName = ExperimentService.ExperimentName;
+        $scope.data.expName = ExperimentService.experimentName;
 
         $scope.data.featureSets = ClassificationService.featureCollection.Feature_sets;
         $scope.data.corpusClasses = ExperimentService.Corpus_classes;

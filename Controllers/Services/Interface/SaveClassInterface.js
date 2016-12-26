@@ -20,7 +20,7 @@
                 activeKey: '',
                 userLogin: UserService.user,
                 expType: 'Classification',
-                expName: ExperimentService.ExperimentName
+                expName: ExperimentService.newExperiment().experimentName
             }
         }
     };

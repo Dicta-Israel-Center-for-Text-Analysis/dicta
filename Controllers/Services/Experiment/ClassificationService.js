@@ -32,7 +32,7 @@
                         id: currentClass.id,
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.base.ExperimentName
+                        expName: this.base.experimentName
                     };
                     InProgressService.updateIsReady(0);
 
@@ -62,7 +62,7 @@
                         var apiCallData = {
                             userLogin: UserService.user,
                             expType: 'Classification',
-                            expName: this.base.ExperimentName,
+                            expName: this.base.experimentName,
                             featureSets: this.featureCollection.Feature_sets,
                             corpusClasses: ClassService.Corpus_classes,
                             featuresData: this.featureCollection.featuresData
@@ -120,7 +120,7 @@
                     return {
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.base.ExperimentName,
+                        expName: this.base.experimentName,
                         selectedAlgorithmTypeId: this.base.selectedAlgorithmTypeId,
                         selectedAlgorithmTypeName: this.base.selectedAlgorithmTypeName,
                         selectedAlgorithmTypeAttributes: this.base.selectedAlgorithmTypeAttributes,
@@ -210,7 +210,7 @@
                     var saveRequest = {
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.base.ExperimentName,
+                        expName: this.base.experimentName,
                         selectedAlgorithmTypeId: ExperimentService.selectedAlgorithmTypeId,
                         selectedAlgorithmTypeName: ExperimentService.selectedAlgorithmTypeName,
                         selectedAlgorithmTypeAttributes: ExperimentService.selectedAlgorithmTypeAttributes,

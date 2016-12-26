@@ -55,26 +55,23 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
         InProgressService.updateIsReady(0);
         root.haveResults = false;
 
-        APIService.apiRun({ crud: 'UnknownTestClassAsSmallUnits' }, SaveClassInterface.getInstance(), function (response2) {
-            var source = response2.source;
-            var data = {
-                chunks: response2.chunks,
-                minthreshold: minThreshold,
-                maxdistance: maxDistance
+        var source;
+        APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance())
+            .then(function (response) {
+                source = response.data.source;
+                var data = {
+                    chunks: response.data.chunks,
+                    minthreshold: minThreshold,
+                    maxdistance: maxDistance
 
-            };
-            root.updateSmallUnits(response2.chunks);
-            root.updateSourceForSmallUnits(response2.source);
-            var parallelsPerChunk = [];
-            for (var i = 0; i < root.smallUnits.length; i = i + 1) {
-                parallelsPerChunk.push(
-                    {
-                        name: "Chunk " + i,
-                        parallels: []
-                    }
-                );
-            }
-            APIService.callParallels(data).then(function (response3) {
+                };
+                root.updateSmallUnits(response.data.chunks);
+                root.updateSourceForSmallUnits(response.data.source);
+
+                return data;
+            })
+            .then(data => APIService.callParallels(data))
+            .then(function (response3) {
                 var results = response3.data;
                 var groupNameDict = {};
                 var groups = [];
@@ -105,18 +102,21 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
 
                 var trimmedSources = source.map(function(oneSource){return oneSource.replace(/^\/Dicta Corpus\//,'')});
 
+                var parallelsPerChunk = root.smallUnits.map(
+                    (unit, index) => ({
+                        name: "Chunk " + index,
+                        parallels: []
+                    })
+                );
+
                 for (var k = 0; k < results.length; k = k + 1) {
                     var currentChunk = results[k];
                     for (var j = 0; j < currentChunk.data.length; j = j + 1) {
                         var currentData = currentChunk.data[j];
-                        var paths = currentData.compName.split(":");
+                        var paths = currentData.compName.split(": ");
                         var group = (paths[0] + " > " + paths[1]);
-                        var title = paths[0];
-                        var path = paths[0];
-                        for (i = 1; i < paths.length; i = i + 1) {
-                            title += " > " + paths[i];
-                            path += "/" + paths[i].trim();
-                        }
+                        var title = paths.join(" > ");
+                        var path = paths.join("/");
 
                         if (trimmedSources[k] === path)
                             continue; // do  not add parallel of the same chunk
@@ -175,10 +175,11 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
                 root.haveResults = true;
 
                 InProgressService.updateIsReady(1);
-            }, function (errorResponse) {InProgressService.setError(errorResponse.statusText);});
-        }, function (errorResponse) {InProgressService.setError(errorResponse.statusText);});
+            })
+            .catch(function (errorResponse) {
+                InProgressService.setError(errorResponse.statusText);
+            });
+        };
 
-    };
-    
     return root;
 });

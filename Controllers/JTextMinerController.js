@@ -1,4 +1,4 @@
-﻿jTextMinerApp.controller('JTextMinerController', function ($scope, ExperimentService) {
+jTextMinerApp.controller('JTextMinerController', function () {
 });
 
 

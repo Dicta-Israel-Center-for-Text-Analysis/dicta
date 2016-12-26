@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('afterLoginPage',
 {
     templateUrl: 'Components/PageStructure/afterLoginPage.component.html',
-    controller: function ($scope, ngDialog, ExperimentService, $location, APIService, focus, InProgressService, $filter, ClassificationService, ClassService, SelectClassService, SaveClassInterface, ParallelsService, UserService) {
+    controller: function ($scope, ExperimentService, $location, APIService, InProgressService, ClassificationService, ClassService, SelectClassService, UserService) {
 
         if (!UserService.isLoggedIn())
             $location.path('Login');
@@ -24,23 +24,24 @@
                 $scope.GoToNextTab();
 
             });
-        }
+        };
 
         $scope.StartNewExperiment = function (actionMode) {
             $scope.showClassDialog = true;
 
             ClassService.updateExperimentActionMode(actionMode);
-        }
+        };
 
         $scope.fileNameList = [];
         $scope.searchedFileNameList = [];
         $scope.comparedFileNameList = [];
 
-        $scope.data = {};
-        $scope.data.userLogin = UserService.user;
+        var requestData = {
+            userLogin: UserService.user,
+            expType: "Classification"
+        };
 
-        $scope.data.expType = "Classification";
-        APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, $scope.data, function (response) {
+        APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, requestData, function (response) {
             $scope.fileNameList = response;
         });
 
@@ -63,14 +64,12 @@
 
             // ExperimentService.updateCvResultData(data.cvResultData);
             // ExperimentService.updateTsResultData(data.tsResultData);
-
-
-        }
+        };
 
         $scope.cancelClass = function () {
             $scope.showClassDialog = false;
 
-        }
+        };
 
         $scope.saveClass = function () {
             SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
@@ -80,7 +79,6 @@
                     () => $scope.GoToNextTab()
                 );
         };
-
 
         $scope.GoToNextTab = function () {
 

@@ -9,19 +9,16 @@
         $scope.isShow = false;
         $scope.currentUser = UserService.user;
 
-        $scope.LoadPreviousResults = '';
-
         $scope.LoadExperiment = function (fileName) {
-            $scope.LoadPreviousResults = fileName;
+            ExperimentService.updateExperimentName(fileName);
 
-            ExperimentService.updateExperimentName($scope.LoadPreviousResults);
-
-            $scope.data = {};
-            $scope.data.userLogin = UserService.user;
-            $scope.data.expType = "Classification";
-            $scope.data.expName = ExperimentService.ExperimentName;
-
-            APIService.apiRun({crud: 'DownloadStoredExperiment'}, $scope.data, function (response) {
+            var data = {
+                userLogin: UserService.user,
+                expType: "Classification",
+                expName: ExperimentService.ExperimentName
+            };
+            
+            APIService.apiRun({crud: 'DownloadStoredExperiment'}, data, function (response) {
                 InProgressService.updateIsReady(1);
                 $scope.UpdateData(response);
                 $scope.GoToNextTab();
@@ -78,39 +75,17 @@
         $scope.saveClass = function () {
             SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
 
-            $scope.data = {};
-            $scope.data.userLogin = UserService.user;
-            $scope.data.expType = 'Classification';
-
-            $scope.data.expName = ExperimentService.ExperimentName;
-
-            APIService.apiRun({crud: 'NewExperiment'}, $scope.data, function (response) {
-                InProgressService.updateIsReady(1);
-
-                if (response.userLogin.length != 0) {
-                    $scope.GoToNextTab();
-                }
-            });
+            ExperimentService.resetServer()
+                .then(
+                    () => $scope.GoToNextTab()
+                );
         };
 
 
         $scope.GoToNextTab = function () {
 
             InProgressService.updateIsReady(0);
-            //UnknownTestClass
-            var classData = SaveClassInterface.getInstance();
-
-            if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-                classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
-            }
-            classData.expType = 'Classification';
-            APIService.apiRun({crud: 'UnknownTestClassAsChunks'}, classData, function (response) {
-                ParallelsService.updateChunks(response.chunks);
-                ParallelsService.updateSource(response.source);
-                InProgressService.updateIsReady(1);
-                $location.path('Tabs');
-            });
-
+            $location.path('Tabs');
         };
 
         $scope.showInProcess = InProgressService.isReady != 1;

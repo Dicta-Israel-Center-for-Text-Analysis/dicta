@@ -3,8 +3,6 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
     var root = {
         smallUnits: [],
         sourceForSmallUnits: [],
-        chunks: [],
-        source: [],
         groupNames: [],
         groups: [],
         numOfParallelsInGroups: [],
@@ -20,14 +18,6 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
     };
     root.updateSourceForSmallUnits = function (items) {
         this.sourceForSmallUnits = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updateChunks = function (items) {
-        this.chunks = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updateSource = function (items) {
-        this.source = items;
         $rootScope.$broadcast("ParallelsUpdates");
     };
     root.updategroupNames = function (items) {

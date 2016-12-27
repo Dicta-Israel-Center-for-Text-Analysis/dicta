@@ -1,10 +1,10 @@
 ﻿<div class="col-md-12">
     <in-progress></in-progress>
 
-    <div ng-show="!showInProcess" ng-repeat="chunk in chunks track by $index" class="box-right-side">
+    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks track by $index" class="box-right-side">
         <div class="border-box">
-            <h2 style="background-color:#cfcfcf;">{{source[$index]}}</h2>
-            <p style="direction:rtl;" class="line-h2" ng-bind-html="chunkAsHTML(chunk)">
+            <h2 style="background-color:#cfcfcf;">{{$ctrl.source[$index]}}</h2>
+            <p style="direction:rtl;" class="line-h2" ng-bind-html="$ctrl.chunkAsHTML(chunk)">
             </p>
         </div>
     </div>

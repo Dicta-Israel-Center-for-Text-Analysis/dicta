@@ -59,22 +59,22 @@
             if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
                 classData.totalNumberOfWords = BrowseClassService.LastClassTotalNumberOfWords;
                 InProgressService.updateIsReady(0);
-                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    $scope.addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
-
-                });
+                return APIService.call('JTextMinerAPI/TrainClass', classData)
+                    .then( function (response) {
+                        InProgressService.updateIsReady(1);
+                        var results = response.data;
+                        $scope.addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
+                    });
             }
             else if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
                 InProgressService.updateIsReady(0);
                 classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
-                APIService.apiRun({ crud: 'TrainClass' }, classData, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    $scope.addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
-
-                });
+                return APIService.call('JTextMinerAPI/TrainClass', classData)
+                    .then(function (response) {
+                        InProgressService.updateIsReady(1);
+                        var results = response.data;
+                        $scope.addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
+                    });
             }
         };
 
@@ -107,7 +107,7 @@
             $scope.countFilesPerClass = [];
             $scope.testSetChunks = [];
 
-            ctrl.experiment.runClassification()
+            return ctrl.experiment.runClassification()
                 .then(function (response2) {
                     $scope.testSetResults = response2;
                     $scope.testSetChunks = [];

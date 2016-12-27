@@ -315,7 +315,7 @@
         $scope.tab = '1';
 
         $scope.updateAlgorithm = function (algorithmSettings) {
-            ctrl.experiment.updateselectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
+            ctrl.experiment.base.updateSelectedAlgorithmTypeValue(algorithmSettings.id, algorithmSettings.name, algorithmSettings.attributes)
         }
 
         // advanced  - algorithms
@@ -328,7 +328,7 @@
                 'on-algorithm-change="updateAlgorithm(newAlgorithm)">' +
                 '</algorithm-dialog>',
                 plain: true,
-                className: 'ngdialog-theme-plain',
+                className: 'ngdialog-theme-default',
                 scope: $scope
             });
         };

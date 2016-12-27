@@ -31,7 +31,7 @@ jTextMinerApp.controller('UnmaskingDialogController', function ($scope, ngDialog
 
     $scope.selectedAlgorithmType = ExperimentService.algorithms[ExperimentService.selectedAlgorithmTypeId];
     $scope.$watch('selectedAlgorithmType', function () {
-        ExperimentService.updateselectedAlgorithmTypeValue($scope.selectedAlgorithmType.id, $scope.selectedAlgorithmType.name, $scope.selectedAlgorithmType.attributes);
+        ExperimentService.updateSelectedAlgorithmTypeValue($scope.selectedAlgorithmType.id, $scope.selectedAlgorithmType.name, $scope.selectedAlgorithmType.attributes);
     });
     
 });

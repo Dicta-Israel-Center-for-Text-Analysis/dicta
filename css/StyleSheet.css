@@ -38,3 +38,36 @@
 #NumberOfSentencesLockedInIdSlider .slider-selection {
     background: #BABABA;
 }
+
+/* segmentation background colors */
+.A0 {
+    background: #ffe9d2;
+}
+
+.A1 {
+    background: #e4f4d9;
+}
+
+.A2 {
+    background: #8EC3EA;
+}
+
+.A3 {
+    background: Yellow;
+}
+
+.A4 {
+    background: Orange;
+}
+
+.A5 {
+    background: Purple;
+}
+
+.A6 {
+    background: #444444;
+}
+
+.A7 {
+    background: #888888;
+}

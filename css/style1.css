@@ -201,21 +201,6 @@ body {
     width: 21px;
 }
 
-.dot_blue {
-    color: #72B7EE;
-    font-size: 20px
-}
-
-.dot_green {
-    color: #35AE02;
-    font-size: 20px
-}
-
-.dot_orange {
-    color: #ff931e;
-    font-size: 12px;
-}
-
 .footer_area {
     border-top: 3px solid #778b95;
 }

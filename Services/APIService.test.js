@@ -13,6 +13,11 @@ describe('Service: JTextMinerApp.APIService', function () {
         httpBackend = $httpBackend;
     }));
 
+    afterEach(function() {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
     it('should provide a resource in response to a legacy call to APIService', function () {
         httpBackend.expectPOST(/JTextMinerAPI\/CheckUserLogin/).respond({userLogin: 'eden'});
         APIService.apiRun({ crud: 'CheckUserLogin' }, { userLogin: 'eden' })

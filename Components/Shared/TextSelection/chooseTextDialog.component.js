@@ -1,10 +1,12 @@
-﻿jTextMinerApp.component('addClassDialog', {
+﻿jTextMinerApp.component('chooseTextDialog', {
     bindings: {
         onConfirm: '&',
         onCancel: '&',
-        classObject: '='
+        classObject: '=',
+        saveMessage: '<',
+        namingMessage: '<'
     },
-    templateUrl: 'Components/Classification/addClassDialog.component.html',
+    templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
     controller: function ($scope, InProgressService, ClassService) {
 
         $scope.showInProcess = InProgressService.isReady != 1;

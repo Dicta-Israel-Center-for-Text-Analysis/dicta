@@ -10,11 +10,11 @@
             <select-online-corpus></select-online-corpus>
         </div>
         <br/>
-        <table style="width:100%;">
+        <table ng-if="$ctrl.namingMessage" style="width:100%;">
             <tr>
                 <td>
                     <div class="name-class">
-                        <label>Name this class: </label>
+                        <label>{{$ctrl.namingMessage}}: </label>
                         <input class="name-class form-control" focus-on="focusClassName" ng-model="$ctrl.classObject.ClassName"
                                type="text"/>
                     </div>
@@ -24,7 +24,7 @@
     </div>
     <div class="ngdialog-buttons" ng-show="!showInProcess">
         <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary"
-                ng-click="$ctrl.onConfirm()">Save class
+                ng-click="$ctrl.onConfirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>
         <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"
                 ng-click="$ctrl.onCancel()">Cancel

@@ -30,11 +30,13 @@
             ClassService.ClassName = 'Class ' + ClassService.Corpus_maxId;
 
             ngDialog.openConfirm({
-                template: '<add-class-dialog ' +
+                template: '<choose-text-dialog ' +
                 'on-confirm="confirm(); ngDialogData.saveClass();" ' +
                 'on-cancel="closeThisDialog()" ' +
-                'class-object="ngDialogData.classObject">' +
-                '</add-class-dialog>',
+                'class-object="ngDialogData.classObject"' +
+                'save-message="\'Save Class\'"' +
+                'naming-message="\'Name this class (optional)\'">' +
+                '</choose-text-dialog>',
                 plain: true,
                 className: 'ngdialog-theme-default',
                 data: {
@@ -44,7 +46,6 @@
             });
 
             ClassService.updateExperimentActionMode(actionMode);
-            //$scope.Next();
         };
 
         $scope.fixmeCounter = 1;
@@ -63,7 +64,7 @@
                     .then( function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response.data;
-                        $scope.addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
+                        addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
                     });
             }
             else if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
@@ -73,7 +74,7 @@
                     .then(function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response.data;
-                        $scope.addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
+                        addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
                     });
             }
         };
@@ -87,7 +88,7 @@
             $scope.testSetChunks = [];
         };
 
-        $scope.addClass = function (newItemName, text, mode, size, number, total, is_Bible) {
+        function addClass (newItemName, text, mode, size, number, total, is_Bible) {
             ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
             ctrl.experiment.featureCollection.updateFeaturesData({});
             ClassService.Corpus_maxId += 1;
@@ -112,53 +113,19 @@
                     $scope.testSetResults = response2;
                     $scope.testSetChunks = [];
                     for (var testFileIndex in $scope.testSetResults) {
-                        $scope.setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
+                        setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
                     }
                 });
         };
 
-        function updateTestSetChunks() {
-            $scope.testSetResults = ctrl.experiment.tsResultData.testSetResults;
-            $scope.testSetChunks = [];
-            for (testFileIndex in $scope.testSetResults) {
-                $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
-            }
-            if ($scope.testSetChunks.length > 0) {
-                $scope.data = {};
-                $scope.data.userLogin = UserService.user;
-                $scope.data.index = 0;
-                $scope.currentIndex = 0;
-                APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
-                    InProgressService.updateIsReady(1);
-                    var results = response;
-                    $scope.legend = $sce.trustAsHtml(results.legend);
-                });
-            }
-        }
-        updateTestSetChunks();
+        $scope.testSetResults = ctrl.experiment.tsResultData.testSetResults;
+        $scope.testSetChunks = $scope.testSetResults;
 
         $scope.numberOfAppearancesInDoc = function (item) {
             return (item.numberOfAppearancesInDoc > 0);
         };
 
-
         $scope.test_predicate = 'orderByClass';
-
-        $scope.testSetChunks = [];
-        for (testFileIndex in $scope.testSetResults) {
-            $scope.testSetChunks.push($scope.testSetResults[testFileIndex]);
-        }
-        if ($scope.testSetChunks.length > 0) {
-            $scope.data = {};
-            $scope.data.userLogin = UserService.user;
-            $scope.data.index = 0;
-            $scope.currentIndex = 0;
-            APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
-                InProgressService.updateIsReady(1);
-                var results = response;
-                $scope.legend = $sce.trustAsHtml(results.legend);
-            });
-        }
 
         function cleanTitle(name){
             var trimmed = name.replace(/.rtf$/,'');
@@ -181,14 +148,14 @@
             return html;
         }
 
-        $scope.setSelectedTestFile = function (item, index) {
+        function setSelectedTestFile (item, index) {
 
             InProgressService.updateIsReady(0);
 
             $scope.data = {};
             $scope.data.userLogin = UserService.user;
             $scope.data.index = item.index;
-            $scope.currentIndex = item.index;
+
             var featureTypeMap = {
                 "Word":"WORDS",
                 "Letter":"LETTERS",
@@ -247,9 +214,11 @@
                 "chunkType": "LARGE"
             };
             var featuresList;
-            APIService.apiRun({ crud: 'TestFileData' }, $scope.data, function (response) {
+            APIService.call('JTextMinerAPI/TestFileData', $scope.data)
+                .then(function (response)
+            {
                 InProgressService.updateIsReady(1);
-                var results = response;
+                var results = response.data;
                 //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
                 item.featureList = results.features;
                 item.title = cleanTitle(item.name);
@@ -258,6 +227,7 @@
 
                 if ($scope.testSetChunks.length == $scope.testSetResults.length)
                 {
+                    var classCounts = {};
                     $scope.countFilesPerClass = [];
                     for (currentClass in $scope.classes) {
                         var l = 0;
@@ -268,8 +238,8 @@
                         $scope.countFilesPerClass.push(l);
                     }
                 }
-            }).$promise.then(
-                x =>
+            }).then(
+                () =>
                     APIService.call("TextFeatures/ListFeatures", featuresRequest)
                         .then(function(response) {
                             featuresList = response.data[0].features;

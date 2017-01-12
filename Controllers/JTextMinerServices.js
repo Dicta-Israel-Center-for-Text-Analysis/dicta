@@ -64,7 +64,7 @@ jTextMinerApp.factory('ExperimentService', function ($rootScope, ClassificationS
 
     service.baseUrl = "http://ec2-52-58-251-124.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot6/api/JTextMinerAPI";
     service.baseUrl = "http://localhost:8080/NewWebSite/api/JTextMinerAPI";
-    service.baseUrl = "http://ec2-54-93-223-242.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot8/api/JTextMinerAPI";
+    service.baseUrl = "http://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com:80/WebServiceJTextMinerNewRoot8/api/JTextMinerAPI";
 
     service.user = 'user';
     service.updateUser = function (value) {

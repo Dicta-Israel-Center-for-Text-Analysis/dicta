@@ -9,9 +9,9 @@ jTextMinerApp.component('trainingClasses', {
         
         $scope.colors = ['Red', 'Green', 'Blue'];
 
-        $scope.classes = ClassService.Corpus_classes;
+        $scope.classes = ctrl.classificationExperiment.classes.Corpus_classes;
         $scope.$on('Corpus_classesValueUpdated', function () {
-            $scope.classes = ClassService.Corpus_classes;
+            $scope.classes = ctrl.classificationExperiment.classes.Corpus_classes;
         });
 
         $scope.DeleteClass = function (index) {

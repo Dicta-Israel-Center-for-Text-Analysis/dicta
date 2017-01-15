@@ -2,6 +2,7 @@ jTextMinerApp.component('featureSets', {
         bindings: {
             showDeleteButton: '=',
             featureCollection: '=',
+            classObject: '<',
             runExtract: '&'
         },
         templateUrl: 'Components/Shared/featureSets.component.html',
@@ -16,6 +17,7 @@ jTextMinerApp.component('featureSets', {
                     template: '<edit-feature-set-dialog ' +
                     'on-confirm="confirm()" ' +
                     'on-discard="closeThisDialog(\'button\')" ' +
+                    'class-object="$ctrl.classObject" ' +
                     'feature-collection="ngDialogData.featureCollection" ' +
                     'feature-index="ngDialogData.featureIndex"' +
                     'run-extract="$ctrl.runExtract()"></edit-feature-set-dialog>',

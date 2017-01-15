@@ -1,7 +1,8 @@
-﻿jTextMinerApp.component('afterLoginPage',
+jTextMinerApp.component('afterLoginPage',
 {
     templateUrl: 'Components/PageStructure/afterLoginPage.component.html',
-    controller: function ($scope, ExperimentService, $location, APIService, InProgressService, ClassificationService, ClassService, SelectClassService, UserService) {
+    controller: function ($scope, ExperimentService, $location, APIService, InProgressService, ClassificationService, ClassService, SelectClassService, UserService, ngDialog) {
+        var ctrl = this;
 
         if (!UserService.isLoggedIn())
             $location.path('Login');
@@ -26,12 +27,6 @@
             });
         };
 
-        $scope.StartNewExperiment = function (actionMode) {
-            $scope.showClassDialog = true;
-
-            ClassService.updateExperimentActionMode(actionMode);
-        };
-
         $scope.fileNameList = [];
         $scope.searchedFileNameList = [];
         $scope.comparedFileNameList = [];
@@ -53,10 +48,10 @@
             // ClassificationService.updateClassification_ExperimentTypeValue(data.classificationExperimentMode);
             // ClassificationService.updateClassification_CrossValidationFoldsValue(data.classificationCrossValidationFolds);
 
-            ClassService.Corpus_maxId = data.corpusMaxId;
+            //ClassService.Corpus_maxId = data.corpusMaxId;
 
             // ClassificationService.featureCollection.Feature_sets = data.featureSets;
-            ClassService.Corpus_classes = data.corpusClasses;
+            // ClassService.Corpus_classes = data.corpusClasses;
 
             // ClassificationService.featureCollection.updateFeaturesData(data.featuresData);
 
@@ -71,8 +66,8 @@
 
         };
 
-        $scope.saveClass = function () {
-            SelectClassService.setTestSetRootKeys(SelectClassService.lastSelectedRootKeys);
+        $scope.saveClass = function (selectionData) {
+            SelectClassService.setTestText(selectionData);
 
             ExperimentService.resetServer()
                 .then(
@@ -91,9 +86,17 @@
             $scope.showInProcess = InProgressService.isReady != 1;
         });
 
-        $scope.ActionMode = ClassService.ExperimentActionMode;
-        $scope.$on('ExperimentActionModeValuesUpdated', function () {
-            $scope.ActionMode = ClassService.ExperimentActionMode;
-        });
+        ctrl.showTextSelection = function(mode) {
+            ngDialog.openConfirm({
+                plain: true,
+                scope: $scope,
+                template: '<choose-text-dialog ' +
+                'on-confirm="saveClass(selectionData);confirm()" ' +
+                'on-cancel="cancelClass();confirm()" ' +
+                'save-message="\'Select as text text\'"' +
+                'starting-mode="\'' + mode + '\'">' +
+                '</choose-text-dialog>'
+            });
+        }
 }
 });

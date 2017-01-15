@@ -25,6 +25,7 @@
             <p class="alogrithim">feature set</p>
 
             <feature-sets show-delete-button="true" feature-collection="$ctrl.experiment.featureCollection"
+                          class-object="$ctrl.experiment.classes"
                           run-extract="$ctrl.experiment.prepareClassification()"></feature-sets>
 
             <ul class="list-unstyled">
@@ -214,7 +215,7 @@
                                                             classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                             otheraverage='{{feature.freqInOthers}}'
                                                             ttest='{{feature.tTestForEachClass[oneclass.title]}}'
-                                                            classcolor='{{classNameToColor(oneclass.title)}}'
+                                                            classcolor='{{classNameToColor(oneclass.title, classes)}}'
                                                     ></feature-frequency-graph>
                                                 </td>
 
@@ -240,7 +241,7 @@
                                                             classaverage='{{feature.averageForEachClass[oneclass.title]}}'
                                                             otheraverage='{{feature.freqInOthers}}'
                                                             ttest='{{feature.tTestForEachClass[oneclass.title]}}'
-                                                            classcolor='{{classNameToColor(oneclass.title)}}'></feature-frequency-graph>
+                                                            classcolor='{{classNameToColor(oneclass.title, classes)}}'></feature-frequency-graph>
                                                 </td>
                                                 <!--
                                                 <td class="frequenct-content">

@@ -1,4 +1,4 @@
-﻿var morphologyIdDict = {
+var morphologyIdDict = {
     "PREFIX_FUNCTION_CONJUNCTION": "conj",
     "PREFIX_FUNCTION_DEFINITEARTICLE": "def",
     "PREFIX_FUNCTION_INTERROGATIVE": "interrogative",
@@ -241,7 +241,8 @@ jTextMinerApp.component('featureTable', {
         bindings: {
             isSelectDisabled: '=',
             features: '=',
-            isMorphology: '='
+            isMorphology: '=',
+            classes: '<'
         },
         templateUrl: 'Components/Shared/featureTable.component.html',
         controller: ['$scope', 'ClassService', function ($scope, ClassService) {
@@ -275,7 +276,7 @@ jTextMinerApp.component('featureTable', {
             }
 
             $scope.classNameToBgStyle = function (name) {
-                return { "background-color": ClassService.classNameToColor(name) };
+                return { "background-color": ClassService.classNameToColor(name, ctrl.classes) };
             };
 
             $scope.convertFeatureName = function (featureName) {

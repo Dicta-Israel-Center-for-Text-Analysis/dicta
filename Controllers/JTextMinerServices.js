@@ -7,7 +7,7 @@ jTextMinerApp.factory('focus', function ($rootScope, $timeout) {
     }
 });
 
-jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'BrowseClassService', function (APIService, InProgressService, BrowseClassService) {
+jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', function (APIService, InProgressService) {
     this.uploadFileToUrl = function (file, argument_name, userLoginName) {
         var fd = new FormData();
         fd.append(argument_name, file);
@@ -21,19 +21,15 @@ jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'BrowseC
             default:
                 throw "Unknown upload type.";
         }
-        APIService.call(uploadUrl, fd, {
+        return APIService.call(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         })
-        .success(function (data) {
-            switch(argument_name) {
-                case 'zipFile':
-                    BrowseClassService.updateCountWordsForUploadedZipFile(data); break;
-                case 'txtFile':
-                    BrowseClassService.updateCountWordsForUploadedTxtFile(data); break;
-            }
+        .then(function (response) {
+            // this is an array of word counts
+            return response.data;
         })
-        .error(function () {
+        .catch(function () {
             InProgressService.updateIsReady(-1);
         });
     }

@@ -1,13 +1,14 @@
-﻿jTextMinerApp.component('editFeatureSetDialog', {
+jTextMinerApp.component('editFeatureSetDialog', {
     bindings: {
         featureCollection: '<',
         featureIndex: '<',
+        classObject: '<',
         onConfirm: '&',
         onDiscard: '&',
         runExtract: '&'
     },
     templateUrl: "Components/Classification/editFeatureSetDialog.component.html",
-    controller: function ($scope, ngDialog, InProgressService, APIService, ClassService, ClassificationService, $timeout, SelectClassService) {
+    controller: function ($scope, ngDialog, InProgressService, APIService, ClassificationService, $timeout, SelectClassService) {
     var ctrl = this;
     var featureCollection = ctrl.featureCollection;
     var featureIndex = ctrl.featureIndex;
@@ -17,11 +18,6 @@
     $scope.showInProcess = InProgressService.isReady != 1;
     $scope.$on('isReady_Updated', function () {
         $scope.showInProcess = InProgressService.isReady != 1;
-    });
-
-    $scope.isAllBible = ClassService.isAllBible;
-    $scope.$on('isAllBibleValueUpdated', function () {
-        $scope.isAllBible = ClassService.isAllBible;
     });
 
     if (featureIndex !== undefined) {
@@ -57,10 +53,10 @@
 
     // this doesn't belong here, but rather in a service that holds both the classes and feature sets, so it's here until after refactoring
     // get the class list
-    var keyListArray = ClassService.Corpus_classes.map(function (corpusclass) {
+    var keyListArray = this.classObject.Corpus_classes.map(function (corpusclass) {
         return corpusclass.selectedText;
     });
-    keyListArray = keyListArray.concat(SelectClassService.lastTestSetSelectedRootKeys);
+    keyListArray = keyListArray.concat(SelectClassService.testText.keys);
     for (var i = 0; i < keyListArray.length; i++) {
         var classKeys = keyListArray[i].split(', ');
         for (var j = 0; j < classKeys.length; j++) {

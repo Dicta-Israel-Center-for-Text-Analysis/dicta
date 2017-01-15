@@ -1,6 +1,6 @@
-﻿jTextMinerApp.component('classification', {
+jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'BrowseClassService', 'UserService', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, BrowseClassService, UserService) {
+    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', 'UserService', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, UserService) {
         var ctrl = this;
         ctrl.experiment = ClassificationService.newExperiment();
         $scope.showInProcess = InProgressService.isReady != 1;
@@ -25,84 +25,96 @@
         // someone pressed the "Add Class" button, so show the dialog
         $scope.ContinueToAddClass = function (actionMode) {
 
-            SelectClassService.lastSelectedRootKeys = [];
-
-            ClassService.ClassName = 'Class ' + ClassService.Corpus_maxId;
+            ctrl.experiment.classes.className = 'Class ' + ctrl.experiment.classes.Corpus_maxId;
 
             ngDialog.openConfirm({
                 template: '<choose-text-dialog ' +
-                'on-confirm="confirm(); ngDialogData.saveClass();" ' +
+                'on-confirm="confirm(); ngDialogData.saveClass(selectionData);" ' +
                 'on-cancel="closeThisDialog()" ' +
-                'class-object="ngDialogData.classObject"' +
+                'class-name="ngDialogData.className"' +
                 'save-message="\'Save Class\'"' +
                 'naming-message="\'Name this class (optional)\'">' +
                 '</choose-text-dialog>',
                 plain: true,
                 className: 'ngdialog-theme-default',
                 data: {
-                    classObject: ClassService,
+                    className: ctrl.experiment.classes.className,
                     saveClass: $scope.saveClass
                 }
             });
 
-            ClassService.updateExperimentActionMode(actionMode);
+            ctrl.experiment.classes.ExperimentActionMode = actionMode;
         };
 
         $scope.fixmeCounter = 1;
-        $scope.saveClass = function () {
+        $scope.saveClass = function (selectionData) {
             // workaround for server bug - force names to be sorted correctly
             var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
-            ClassService.ClassName = prefix + " - " + ClassService.ClassName;
+            ctrl.experiment.classes.className = prefix + " - " + ctrl.experiment.classes.className;
             // get a data structure, but reset the select_RootKeys to the value just picked!
-            var classData = SaveClassInterface.getInstance();
-            classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
 
-            if (angular.equals(classData.actionMode, 'BrowseThisComputer')) {
-                classData.totalNumberOfWords = BrowseClassService.LastClassTotalNumberOfWords;
+            if (angular.equals(selectionData.mode, 'BrowseThisComputer')) {
+                var classData = SaveClassInterface.getInstance({
+                    text: selectionData,
+                    className: selectionData.className,
+                    experimentName: ctrl.experiment.base.experimentName
+                });
                 InProgressService.updateIsReady(0);
                 return APIService.call('JTextMinerAPI/TrainClass', classData)
                     .then( function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response.data;
-                        addClass(results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks, results.totalNumberOfWords, false);
+                        addClass({
+                            title: results.browse_ClassName,
+                            selectedText: results.selectedText,
+                            chunkMode: results.browse_ChunkMode,
+                            chunkSize: results.browse_MinimumChunkSize,
+                            numberOfChunks: results.numberOfChunks,
+                            totalNumberOfWords: results.totalNumberOfWords,
+                            bible: false
+                        });
                     });
             }
-            else if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
+            else if (angular.equals(selectionData.mode, 'SelectOnlineCorpus')) {
                 InProgressService.updateIsReady(0);
-                classData.select_RootKeys = SelectClassService.lastSelectedRootKeys;
+                var classData = SaveClassInterface.getInstance({
+                    text: selectionData,
+                    className: selectionData.className,
+                    experimentName: ctrl.experiment.base.experimentName
+                });
                 return APIService.call('JTextMinerAPI/TrainClass', classData)
                     .then(function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response.data;
-                        addClass(results.select_ClassName, results.selectedText, 'By chapter', '', results.numberOfChunks, results.totalNumberOfWords, true);
+                        addClass({
+                            title: results.select_ClassName,
+                            selectedText: results.selectedText,
+                            chunkMode: 'By chapter',
+                            chunkSize: '',
+                            numberOfChunks: results.numberOfChunks,
+                            totalNumberOfWords: results.totalNumberOfWords,
+                            bible: true
+                        });
                     });
             }
         };
 
-        $scope.classes = ClassService.Corpus_classes;
+        $scope.classes = this.experiment.classes.Corpus_classes;
         $scope.$on('Corpus_classesValueUpdated', function () {
-            $scope.classes = ClassService.Corpus_classes;
+            $scope.classes = this.experiment.classes.Corpus_classes;
         });
 
         ctrl.clearOldResults = function () {
             $scope.testSetChunks = [];
         };
 
-        function addClass (newItemName, text, mode, size, number, total, is_Bible) {
-            ClassService.updateIsAllBibleValue(ClassService.isAllBible && is_Bible);
+        function addClass (classData) {
+            ctrl.experiment.classes.isAllBible = ctrl.experiment.classes.isAllBible && classData.bible;
             ctrl.experiment.featureCollection.updateFeaturesData({});
-            ClassService.Corpus_maxId += 1;
-            ClassService.pushCorpus_classes({
-                id: ClassService.Corpus_maxId,
-                title: newItemName,
-                selectedText: text,
-                chunkMode: mode,
-                chunkSize: size,
-                numberOfChunks: number,
-                totalNumberOfWords: total,
-                bible: is_Bible
-            });
-        };
+            ctrl.experiment.classes.Corpus_maxId += 1;
+            classData.id = ctrl.experiment.classes.Corpus_maxId;
+            ctrl.experiment.classes.Corpus_classes.push(classData);
+        }
 
         $scope.runClassification = function () {
             $scope.countFilesPerClass = [];
@@ -319,6 +331,7 @@
             ngDialog.openConfirm({
                 template: '<edit-feature-set-dialog ' +
                 'feature-collection="ngDialogData.featureCollection" ' +
+                'class-object="$ctrl.experiment.classes"' +
                 'on-confirm="confirm()" ' +
                 'on-discard="closeThisDialog(\'button\')"' +
                 'run-extract="$ctrl.experiment.prepareClassification()"></edit-feature-set-dialog>',

@@ -1,19 +1,29 @@
 ﻿jTextMinerApp.factory('SelectClassService', function () {
     var service = {
-        // unused; left for compatibility with save API
-        Select_NumberOfChapters: 0,
-        Select_NumberOfWords: 0,
-        Select_ChunkMode: 'DoNotChunk',
-        Select_MinimumChunkSize: 250,
-        Select_ChunkSize: 0,
-
-        lastSelectedRootKeys: [],
-        lastTestSetSelectedRootKeys: [],
+        newTextFromCorpus(keys){
+            return {
+                mode: 'SelectOnlineCorpus',
+                keys,
+                textInfo: {}
+            }
+        },
+        newTextFromUpload(filename, chunkMode, chunkSize){
+            return {
+                mode: 'BrowseThisComputer',
+                filename,
+                chunkMode,
+                chunkSize,
+                textInfo: {}
+            }
+        },
+        testText: null,
         testSetTitlesCommonPrefix: ""
     };
 
-    service.setTestSetRootKeys = function(rootKeys) {
-        service.lastTestSetSelectedRootKeys = rootKeys;
+    service.setTestText = function(text) {
+        service.testText = text;
+        if (text.mode != 'SelectOnlineCorpus') return;
+        var rootKeys = text.keys;
         // update testSetTitlesCommonPrefix
         var keyCopy = rootKeys.slice();             // copy the list of keys
         var oneKey = keyCopy.shift() || "";         // take the first key or if there isn't any, use ""

@@ -84,8 +84,8 @@
                     <p><b>Source Criticism:</b> Decompose a text into stylistic/authorial threads </p>
                     <div class="search-aterm-field">
                         <ul class="list-inline">
-                            <li><a id="libraryBtn" ng-click="StartNewExperiment('SelectOnlineCorpus');" class="btn btn-form-collection">Select <span style="font-size:8px">from Dicta libraries</span></a></li>
-                            <li><a id="uploadBtn" ng-click="StartNewExperiment('BrowseThisComputer');" class="btn btn-upload"><i class="fa fa-plus"></i> Upload <span style="font-size:8px">your own text</span></a></li>
+                            <li><a id="libraryBtn" ng-click="$ctrl.showTextSelection('SelectOnlineCorpus');" class="btn btn-form-collection">Select <span style="font-size:8px">from Dicta libraries</span></a></li>
+                            <li><a id="uploadBtn" ng-click="$ctrl.showTextSelection('BrowseThisComputer');" class="btn btn-upload"><i class="fa fa-plus"></i> Upload <span style="font-size:8px">your own text</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -165,15 +165,4 @@
         </div>
     </div>
 </footer>
-
-
-
-<div ng-show="showClassDialog">
-    <div aria-labelledby="ngdialog1-aria-labelledby" role="alertdialog" id="ngdialog10" class="ngdialog ngdialog-theme-default ng-scope">
-        <div class="ngdialog-overlay"></div>
-        <div class="ngdialog-content" role="document">
-           <choose-text-dialog on-confirm="saveClass()" on-cancel="cancelClass()" save-message="'Select as text text'"></choose-text-dialog>
-        </div>
-    </div>
-</div>
 <script>tiberias_tour(AfterLoginTour);</script>

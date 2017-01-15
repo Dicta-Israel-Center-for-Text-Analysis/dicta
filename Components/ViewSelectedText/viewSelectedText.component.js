@@ -1,4 +1,4 @@
-﻿jTextMinerApp.component('viewSelectedText', {
+jTextMinerApp.component('viewSelectedText', {
         templateUrl: 'Components/ViewSelectedText/viewSelectedText.component.html',
         controller: ['$scope', 'InProgressService', 'SelectClassService', '$sce', 'APIService', 'SaveClassInterface',
             function ($scope, InProgressService, SelectClassService, $sce, APIService, SaveClassInterface) {
@@ -13,12 +13,10 @@
             };
 
             //UnknownTestClass
-            var classData = SaveClassInterface.getInstance();
+            var classData = SaveClassInterface.getInstance({
+                text: SelectClassService.testText
+            });
 
-            if (angular.equals(classData.actionMode, 'SelectOnlineCorpus')) {
-                classData.select_RootKeys = SelectClassService.lastTestSetSelectedRootKeys;
-            }
-            classData.expType = 'Classification';
             APIService.apiRun({crud: 'UnknownTestClassAsChunks'}, classData, function (response) {
                 ctrl.chunks = response.chunks;
                 ctrl.source = response.source;

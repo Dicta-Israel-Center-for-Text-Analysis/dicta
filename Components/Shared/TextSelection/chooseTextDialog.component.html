@@ -1,13 +1,13 @@
 <div>
     <div class="ngdialog-message">
-        <action-mode></action-mode>
+        <action-mode on-action-mode-changed="$ctrl.changeActionMode(mode)"></action-mode>
         <in-progress></in-progress>
         <br/>
-        <div ng-show="ActionMode == 'BrowseThisComputer' && !showInProcess">
-            <browse-this-computer></browse-this-computer>
+        <div ng-show="$ctrl.actionMode == 'BrowseThisComputer' && !$ctrl.showInProcess">
+            <browse-this-computer browse-data="$ctrl.browseData"></browse-this-computer>
         </div>
-        <div ng-show="ActionMode == 'SelectOnlineCorpus' && !showInProcess">
-            <select-online-corpus></select-online-corpus>
+        <div ng-show="$ctrl.actionMode == 'SelectOnlineCorpus' && !$ctrl.showInProcess">
+            <select-online-corpus selection-text="$ctrl.selectionText"></select-online-corpus>
         </div>
         <br/>
         <table ng-if="$ctrl.namingMessage" style="width:100%;">
@@ -15,7 +15,9 @@
                 <td>
                     <div class="name-class">
                         <label>{{$ctrl.namingMessage}}: </label>
-                        <input class="name-class form-control" focus-on="focusClassName" ng-model="$ctrl.classObject.ClassName"
+                        <input class="name-class form-control" focus-on="focusClassName" ng-model="$ctrl.className"
+                               ng-change="$ctrl.userChangedName()"
+                               ng-style="$ctrl.calculateName ? { 'font-style': 'italic' } : null"
                                type="text"/>
                     </div>
                 </td>
@@ -24,7 +26,7 @@
     </div>
     <div class="ngdialog-buttons" ng-show="!showInProcess">
         <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary"
-                ng-click="$ctrl.onConfirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
+                ng-click="$ctrl.confirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>
         <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"
                 ng-click="$ctrl.onCancel()">Cancel

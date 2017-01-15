@@ -1,5 +1,5 @@
-﻿
-jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, SaveClassInterface, InProgressService) {
+
+jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, SelectClassService, SaveClassInterface, InProgressService) {
     var root = {
         smallUnits: [],
         sourceForSmallUnits: [],
@@ -46,7 +46,9 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Save
         root.haveResults = false;
 
         var source;
-        APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance())
+        APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance({
+            text: SelectClassService.testText
+        }))
             .then(function (response) {
                 source = response.data.source;
                 var data = {

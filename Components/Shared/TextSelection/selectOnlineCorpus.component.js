@@ -1,4 +1,5 @@
-﻿jTextMinerApp.component('selectOnlineCorpus', {
+jTextMinerApp.component('selectOnlineCorpus', {
+        bindings: { selectionText: '=' },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
         controller: ['TreeService', 'SelectClassService', function (TreeService, SelectClassService) {
             var ctrl = this;
@@ -15,7 +16,10 @@
 
             // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
             // list selected nodes by key
-            ctrl.selectedNodes = SelectClassService.lastSelectedRootKeys.map(function(key){return key.substring("/Dicta Corpus/".length)});
+            if (ctrl.selectionText && ctrl.selectionText.keys)
+                ctrl.selectedNodes = ctrl.selectionText.keys.map(function(key){return key.substring("/Dicta Corpus/".length)});
+            else
+                ctrl.selectedNodes = [];
             recalculatePartials();
 
             function initCurrentLevel(parentNode) {
@@ -121,7 +125,9 @@
 
                 recalculatePartials();
 
-                SelectClassService.lastSelectedRootKeys = ctrl.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;});
+                ctrl.selectionText = SelectClassService.newTextFromCorpus(
+                    ctrl.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;})
+                );
             };
 
             ctrl.selectCrumb = function (crumbNumber) {

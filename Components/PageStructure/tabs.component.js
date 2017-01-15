@@ -1,4 +1,4 @@
-﻿jTextMinerApp.component('tabs',
+jTextMinerApp.component('tabs',
 {
     templateUrl: "Components/PageStructure/tabs.component.html",
     controller: function ($scope, ClassService, $rootScope, SelectClassService) {
@@ -18,8 +18,8 @@
         };
 
         $scope.SelectedTestClassText = function () {
-            if (ClassService.ExperimentTestSetActionMode == 'SelectOnlineCorpus')
-                return SelectClassService.lastTestSetSelectedRootKeys.join(', ');
+            if (SelectClassService.testText && (SelectClassService.testText.mode == 'SelectOnlineCorpus'))
+                return SelectClassService.testText.keys.join(', ');
             else
                 return "Uploaded Text";
         }

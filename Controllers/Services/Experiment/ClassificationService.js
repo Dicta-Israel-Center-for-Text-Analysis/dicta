@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService, SaveClassInterface, ExperimentService) {
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService, SaveClassInterface, ExperimentService) {
     var root = {
         newExperiment() {
             return {
@@ -10,6 +10,7 @@
                 cvResultData: [],
                 tsResultData: [],
                 base: ExperimentService.newExperiment(),
+                classes: ClassService.newInstance(),
 
                 //Classification update functions
                 updateClassification_CrossValidationFoldsValue(value) {
@@ -26,7 +27,7 @@
                 },
 
                 DeleteClass(index) {
-                    var currentClass = ClassService.Corpus_classes[index];
+                    var currentClass = this.classes.Corpus_classes[index];
                     var deleteData = {
                         title: currentClass.title,
                         id: currentClass.id,
@@ -37,12 +38,12 @@
                     InProgressService.updateIsReady(0);
 
                     return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function () {
-                        ClassService.Corpus_classes.splice(index, 1);
+                        this.classes.Corpus_classes.splice(index, 1);
                         this.featureCollection.updateFeaturesData({});
-                        ClassService.updateIsAllBibleValue(true);
-                        for (var i = 0; i < ClassService.Corpus_classes.length; i++) {
-                            var corpusClass = ClassService.Corpus_classes[i];
-                            ClassService.updateIsAllBibleValue(ClassService.isAllBible && corpusClass.bible);
+                        //this.classes.updateIsAllBibleValue(true);
+                        for (var i = 0; i < this.classes.Corpus_classes.length; i++) {
+                            var corpusClass = this.classes.Corpus_classes[i];
+                            //this.classes.updateIsAllBibleValue(this.classes.isAllBible && corpusClass.bible);
                         }
                         InProgressService.updateIsReady(1);
                     }.bind(this)
@@ -64,7 +65,7 @@
                             expType: 'Classification',
                             expName: this.base.experimentName,
                             featureSets: this.featureCollection.Feature_sets,
-                            corpusClasses: ClassService.Corpus_classes,
+                            corpusClasses: this.classes.Corpus_classes,
                             featuresData: this.featureCollection.featuresData
                         };
 
@@ -128,10 +129,10 @@
                         //classificationCrossValidationType: this.base.Classification_CrossValidationType,
                         classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
                         //classificationSplitRatioCrossValidation: this.base.Classification_Split_ratio_cross_validation,
-                        corpusMaxId: ClassService.Corpus_maxId,
+                        corpusMaxId: this.classes.Corpus_maxId,
 
                         featureSets: this.featureCollection.Feature_sets,
-                        corpusClasses: ClassService.Corpus_classes,
+                        corpusClasses: this.classes.Corpus_classes,
 
                         featuresData: this.featureCollection.featuresData
                     };
@@ -143,23 +144,14 @@
                         classData,
                         function (results) {
                             InProgressService.updateIsReady(1);
-                            var unknownClasses = ClassService.TestSet_unknown_class;
-
-                            function addUnknownClass(index, newItemName, text, mode, size, number) {
-                                unknownClasses.push({
-                                    id: index,
-                                    title: newItemName,
-                                    selectedText: text,
-                                    chunkMode: mode,
-                                    chunkSize: size,
-                                    numberOfChunks: number
-                                });
-                            }
-
-                            unknownClasses.splice(0, 1);
-                            addUnknownClass(1, results.browse_ClassName, results.selectedText, results.browse_ChunkMode, results.browse_MinimumChunkSize, results.numberOfChunks);
-                            ClassService.TestSet_unknown_class = unknownClasses;
-
+                            this.classes.TestSet_unknown_class = [{
+                                    id: 1,
+                                    title: results.browse_ClassName,
+                                    selectedText: results.selectedText,
+                                    chunkMode: results.browse_ChunkMode,
+                                    chunkSize: results.browse_MinimumChunkSize,
+                                    numberOfChunks: results.numberOfChunks
+                                }];
                             this.Classification_ExperimentType = 'CV';
 
                             InProgressService.updateIsReady(0);
@@ -195,8 +187,11 @@
                 },
 
                 runClassificationInternal() {
-                    var classData = SaveClassInterface.getInstance();
-                    classData.actionMode = classData.testSetActionMode;
+                    var classData = SaveClassInterface.getInstance({
+                        experimentName: this.base.experimentName,
+                        testSet: true,
+                        text: SelectClassService.testText
+                    });
                     InProgressService.updateIsReady(0);
 
                     classData.expType = 'Classification';

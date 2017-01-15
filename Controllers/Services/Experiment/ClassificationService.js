@@ -232,9 +232,68 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         .then(function () {
                             InProgressService.updateIsReady(1);
                         });
-                }
+                },
                 // end save and load exp
+                fixmeCounter: 0,
+                saveClass(selectionData) {
+                    var experiment = this;
+                    function addClass (classData) {
+                        experiment.classes.isAllBible = experiment.classes.isAllBible && classData.bible;
+                        experiment.featureCollection.updateFeaturesData({});
+                        experiment.classes.Corpus_maxId += 1;
+                        classData.id = experiment.classes.Corpus_maxId;
+                        experiment.classes.Corpus_classes.push(classData);
+                    }
 
+                    // workaround for server bug - force names to be sorted correctly
+                    var prefix = this.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr(experiment.fixmeCounter++, 1);
+                    experiment.classes.className = prefix + " - " + experiment.classes.className;
+
+                    if (angular.equals(selectionData.mode, 'BrowseThisComputer')) {
+                        var classData = SaveClassInterface.getInstance({
+                            text: selectionData,
+                            className: selectionData.className,
+                            experimentName: experiment.base.experimentName
+                        });
+                        InProgressService.updateIsReady(0);
+                        return APIService.call('JTextMinerAPI/TrainClass', classData)
+                            .then( function (response) {
+                                InProgressService.updateIsReady(1);
+                                var results = response.data;
+                                addClass({
+                                    title: results.browse_ClassName,
+                                    selectedText: results.selectedText,
+                                    chunkMode: results.browse_ChunkMode,
+                                    chunkSize: results.browse_MinimumChunkSize,
+                                    numberOfChunks: results.numberOfChunks,
+                                    totalNumberOfWords: results.totalNumberOfWords,
+                                    bible: false
+                                });
+                            });
+                    }
+                    else if (angular.equals(selectionData.mode, 'SelectOnlineCorpus')) {
+                        InProgressService.updateIsReady(0);
+                        var classData = SaveClassInterface.getInstance({
+                            text: selectionData,
+                            className: selectionData.className,
+                            experimentName: experiment.base.experimentName
+                        });
+                        return APIService.call('JTextMinerAPI/TrainClass', classData)
+                            .then(function (response) {
+                                InProgressService.updateIsReady(1);
+                                var results = response.data;
+                                addClass({
+                                    title: results.select_ClassName,
+                                    selectedText: results.selectedText,
+                                    chunkMode: 'By chapter',
+                                    chunkSize: '',
+                                    numberOfChunks: results.numberOfChunks,
+                                    totalNumberOfWords: results.totalNumberOfWords,
+                                    bible: true
+                                });
+                            });
+                    }
+                }
             }
         }
     };

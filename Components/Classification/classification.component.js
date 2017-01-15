@@ -46,75 +46,15 @@ jTextMinerApp.component('classification', {
             ctrl.experiment.classes.ExperimentActionMode = actionMode;
         };
 
-        $scope.fixmeCounter = 1;
         $scope.saveClass = function (selectionData) {
-            // workaround for server bug - force names to be sorted correctly
-            var prefix = $scope.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr($scope.fixmeCounter++, 1);
-            ctrl.experiment.classes.className = prefix + " - " + ctrl.experiment.classes.className;
-            // get a data structure, but reset the select_RootKeys to the value just picked!
-
-            if (angular.equals(selectionData.mode, 'BrowseThisComputer')) {
-                var classData = SaveClassInterface.getInstance({
-                    text: selectionData,
-                    className: selectionData.className,
-                    experimentName: ctrl.experiment.base.experimentName
-                });
-                InProgressService.updateIsReady(0);
-                return APIService.call('JTextMinerAPI/TrainClass', classData)
-                    .then( function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response.data;
-                        addClass({
-                            title: results.browse_ClassName,
-                            selectedText: results.selectedText,
-                            chunkMode: results.browse_ChunkMode,
-                            chunkSize: results.browse_MinimumChunkSize,
-                            numberOfChunks: results.numberOfChunks,
-                            totalNumberOfWords: results.totalNumberOfWords,
-                            bible: false
-                        });
-                    });
-            }
-            else if (angular.equals(selectionData.mode, 'SelectOnlineCorpus')) {
-                InProgressService.updateIsReady(0);
-                var classData = SaveClassInterface.getInstance({
-                    text: selectionData,
-                    className: selectionData.className,
-                    experimentName: ctrl.experiment.base.experimentName
-                });
-                return APIService.call('JTextMinerAPI/TrainClass', classData)
-                    .then(function (response) {
-                        InProgressService.updateIsReady(1);
-                        var results = response.data;
-                        addClass({
-                            title: results.select_ClassName,
-                            selectedText: results.selectedText,
-                            chunkMode: 'By chapter',
-                            chunkSize: '',
-                            numberOfChunks: results.numberOfChunks,
-                            totalNumberOfWords: results.totalNumberOfWords,
-                            bible: true
-                        });
-                    });
-            }
-        };
+            ctrl.experiment.saveClass(selectionData);
+        }
 
         $scope.classes = this.experiment.classes.Corpus_classes;
-        $scope.$on('Corpus_classesValueUpdated', function () {
-            $scope.classes = this.experiment.classes.Corpus_classes;
-        });
 
         ctrl.clearOldResults = function () {
             $scope.testSetChunks = [];
         };
-
-        function addClass (classData) {
-            ctrl.experiment.classes.isAllBible = ctrl.experiment.classes.isAllBible && classData.bible;
-            ctrl.experiment.featureCollection.updateFeaturesData({});
-            ctrl.experiment.classes.Corpus_maxId += 1;
-            classData.id = ctrl.experiment.classes.Corpus_maxId;
-            ctrl.experiment.classes.Corpus_classes.push(classData);
-        }
 
         $scope.runClassification = function () {
             $scope.countFilesPerClass = [];

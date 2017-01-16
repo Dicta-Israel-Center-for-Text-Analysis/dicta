@@ -123,3 +123,17 @@ table.feature-set-table tbody tr td {
 .disabled-table-row .icon-td span {
     color: #dddddd;
 }
+
+/* ngDialog theme overrides */
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    width: 95%;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-button {
+    float: left;
+}
+
+.ngdialog.ngdialog-theme-default {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}

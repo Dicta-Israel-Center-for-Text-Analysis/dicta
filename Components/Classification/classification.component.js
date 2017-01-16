@@ -24,9 +24,6 @@ jTextMinerApp.component('classification', {
 
         // someone pressed the "Add Class" button, so show the dialog
         $scope.ContinueToAddClass = function (actionMode) {
-
-            ctrl.experiment.classes.className = 'Class ' + ctrl.experiment.classes.Corpus_maxId;
-
             ngDialog.openConfirm({
                 template: '<choose-text-dialog ' +
                 'on-confirm="confirm(); ngDialogData.saveClass(selectionData);" ' +

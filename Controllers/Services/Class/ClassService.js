@@ -40,7 +40,7 @@ jTextMinerApp.factory('ClassService', function ($rootScope) {
                 selectedTestRootKeys: [],
 
                 isAllBible: true,
-                className: 'Class 0'
+                get className() { return 'Class ' + this.Corpus_maxId; }
             }
         }
     };

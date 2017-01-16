@@ -55,7 +55,8 @@ jTextMinerApp.component('chooseTextDialog', {
                 case 'SelectOnlineCorpus': result = ctrl.selectionText; break;
                 case 'BrowseThisComputer': result = ctrl.browseData; break;
             }
-            result.className = ctrl.className;
+            if (ctrl.className)
+                result.className = ctrl.className;
             ctrl.onConfirm({
                 selectionData: result
             });

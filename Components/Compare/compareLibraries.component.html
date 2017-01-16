@@ -1,0 +1,49 @@
+<div class="col-md-12">
+    <in-progress></in-progress>
+    <br>
+    <div class="col-xs-4">
+        <button class="btn btn-default" ng-click="$ctrl.chooseText()">Choose a text to compare to:</button>
+        &nbsp;
+        <i ng-if="!$ctrl.experiment.classes.Corpus_classes[1].title">None Selected</i>
+        {{$ctrl.experiment.classes.Corpus_classes[1].title}}
+    </div>
+    <div class="col-xs-4">
+        <button class="btn btn-default" ng-click="$ctrl.chooseFeatures()">Choose features for comparison:</button>
+        &nbsp;
+        {{$ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType}}
+    </div>
+    <div class="col-xs-4">
+        <button class="btn btn-default" ng-click="$ctrl.chooseAlgorithm()">Choose algorithm for comparison:</button>
+        &nbsp;
+        {{$ctrl.experiment.base.selectedAlgorithmTypeName}}
+    </div>
+    <br><br><br>
+    <div class="col-xs-12">
+        <button class="btn btn-primary" ng-disabled="$ctrl.experiment.classes.Corpus_classes.length < 2"
+                ng-click="$ctrl.experiment.runClassification()">Run
+        </button>
+    </div>
+    <br>
+    <div ng-if="$ctrl.experiment.featureCollection.featuresData.features.length > 0">
+        <br>
+        <hr>
+        Crossvalidation:
+        {{$ctrl.experiment.cvResultData.accuracy[0] === false ? "Run again to calculate" : ""}}
+        <span ng-if="$ctrl.experiment.cvResultData.accuracy[0] !== false">
+        {{$ctrl.experiment.cvResultData.accuracy[0] | number: 1}}%
+        &nbsp;&nbsp;<button class="btn btn-default" ng-click="$ctrl.showCrossvalidation()">View details</button>
+            </span>
+        <hr>
+        <feature-table features="$ctrl.experiment.featureCollection.featuresData.features[0]"
+                       classes="$ctrl.experiment.classes.Corpus_classes"
+                       is-morphology="true"
+                       is-select-disabled="true"
+        ></feature-table>
+    </div>
+
+</div>
+
+    
+
+
+

@@ -14,7 +14,6 @@
                             Selected Text
                             <img title="" data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
                         </b>
-
                     </a>
                 </li>
                 <li id="parallelsTab" class="{{tabClass(1)}}">
@@ -38,6 +37,13 @@
 
                         <b>Source Criticism
                             <img title="Decompose a text into authorial/stylistic components. You can do this for any text, regardless of the number of actual authors. You choose the number of components you want, as well as the granularity of the decomposition." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
+                        </b>
+                    </a>
+                </li>
+                <li id="comparisonTab" class="{{tabClass(4)}}">
+                    <a data-toggle="tab" ng-click="goToTab(4)">
+                        <b>Compare to Other Text
+                            <img title="Compare Libraries" data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
                         </b>
                     </a>
                 </li>
@@ -90,6 +96,9 @@
                 </div>
                 <div ng-show="tabNumber==3" class="tab-pane fade in active">
                     <segmentation></segmentation>
+                </div>
+                <div ng-show="tabNumber==4" class="tab-pane fade in active">
+                    <compare-libraries></compare-libraries>
                 </div>
             </div>
         </div>

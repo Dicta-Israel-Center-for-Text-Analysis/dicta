@@ -234,7 +234,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         });
                 },
                 // end save and load exp
-                fixmeCounter: 0,
+                fixmeCounter: 1,
                 saveClass(selectionData) {
                     var experiment = this;
                     function addClass (classData) {
@@ -247,7 +247,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
                     // workaround for server bug - force names to be sorted correctly
                     var prefix = this.fixmeCounter++; //"ABCDEFGHIJKLMNOPQRSTUVWXYZ".substr(experiment.fixmeCounter++, 1);
-                    experiment.classes.className = prefix + " - " + experiment.classes.className;
+                    selectionData.className = prefix + " - " + selectionData.className;
 
                     if (angular.equals(selectionData.mode, 'BrowseThisComputer')) {
                         var classData = SaveClassInterface.getInstance({

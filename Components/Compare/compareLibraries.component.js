@@ -9,14 +9,18 @@ jTextMinerApp.component('compareLibraries', {
             });
             ctrl.experiment = ClassificationService.newExperiment();
             var selectionData = angular.extend({ className: 'First Text'}, SelectClassService.testText);
-            ctrl.experiment.saveClass(selectionData);
 
+            ctrl.firstRun = true;
             ctrl.chooseText = function () {
+                if (ctrl.firstRun) {
+                    ctrl.firstRun = false;
+                    ctrl.experiment.saveClass(selectionData);
+                }
                 ngDialog.openConfirm({
                         template: '<choose-text-dialog ' +
                         'on-confirm="confirm(); ngDialogData.saveClass(selectionData);" ' +
                         'on-cancel="closeThisDialog()" ' +
-                        'naming-message="\'Name this text:\'" ' +
+                        'naming-message="\'Name this text\'" ' +
                         'class-name="ngDialogData.className">' +
                         '</choose-text-dialog>',
                         plain: true,

@@ -35,12 +35,10 @@ jTextMinerApp.component('classification', {
                 plain: true,
                 className: 'ngdialog-theme-default',
                 data: {
-                    className: ctrl.experiment.classes.className,
+                    className: ctrl.experiment.classes.newClassName,
                     saveClass: $scope.saveClass
                 }
             });
-
-            ctrl.experiment.classes.ExperimentActionMode = actionMode;
         };
 
         $scope.saveClass = function (selectionData) {

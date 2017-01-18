@@ -25,7 +25,7 @@ jTextMinerApp.component('compareLibraries', {
                         '</choose-text-dialog>',
                         plain: true,
                         data: {
-                            className: ctrl.experiment.classes.className,
+                            className: ctrl.experiment.classes.newClassName,
                             saveClass: ctrl.saveClass
                         }
                     }

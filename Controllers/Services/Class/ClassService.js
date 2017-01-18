@@ -22,25 +22,14 @@ jTextMinerApp.factory('ClassService', function ($rootScope) {
 
         newInstance() {
             return {
-                ExperimentActionMode: 'SelectOnlineCorpus',//'BrowseThisComputer';
-                TestSet_unknown_class: [{
-                    id: "1",
-                    title: "Unknown",
-                    chunkMode: "",
-                    chunkSize: 0,
-                    numberOfChunks: 0,
-                    selectedText: ""
-                }],
-                TestSet_known_classes: [],
+                TestSet_unknown_class: [],
 
                 //Corpus
                 Corpus_classes: [],
                 Corpus_maxId: 0,
-                selectedRootKeys: [],
-                selectedTestRootKeys: [],
 
                 isAllBible: true,
-                get className() { return 'Class ' + this.Corpus_maxId; }
+                get newClassName() { return 'Class ' + this.Corpus_maxId; }
             }
         }
     };

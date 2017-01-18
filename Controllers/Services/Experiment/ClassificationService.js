@@ -202,6 +202,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
                 // save and load exp
                 createSaveRequest() {
+                    alert('Not implemented');
                     var saveRequest = {
                         userLogin: UserService.user,
                         expType: 'Classification',

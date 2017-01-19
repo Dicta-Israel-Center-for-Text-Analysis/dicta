@@ -81,12 +81,13 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                         var path = paths.join("/");
 
                         if (trimmedSources[k] === path)
-                            continue; // do  not add parallel of the same chunk
+                            continue; // do not add parallel of the same chunk
 
                         numOfParallels += 1;
 
                         // creates a list of groups, e.g. "Bible > Prophets"
-                        // we sort based on whichever member of the group we first see, since any sortOrder we get will still give the same order for the groups
+                        // we sort based on whichever member of the group we first see, since
+                        // any sortOrder we get within a group will still give the same order for the groups
                         if (!groupNameDict.hasOwnProperty(group)) {
                             var newGroup = {
                                 name: group,

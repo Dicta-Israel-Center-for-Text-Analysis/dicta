@@ -1,5 +1,5 @@
 
-jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, SelectClassService, SaveClassInterface, InProgressService) {
+jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassService, SaveClassInterface, InProgressService) {
     var root = {
         smallUnits: [],
         sourceForSmallUnits: [],
@@ -11,42 +11,12 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Sele
         haveResults: false
     };
 
-    // functions for broadcasting updates
-    root.updateSmallUnits = function (items) {
-        this.smallUnits = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updateSourceForSmallUnits = function (items) {
-        this.sourceForSmallUnits = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updategroupNames = function (items) {
-        this.groupNames = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updategroups = function (items) {
-        this.groups = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updatenumOfParallelsInGroups = function (items) {
-        this.numOfParallelsInGroups = items;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updatenumOfParallels = function (val) {
-        this.numOfParallels = val;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-    root.updateparallelsPerChunk = function (val) {
-        this.parallelsPerChunk = val;
-        $rootScope.$broadcast("ParallelsUpdates");
-    };
-
     root.runParallels = function (minThreshold, maxDistance) {
         InProgressService.updateIsReady(0);
         root.haveResults = false;
 
         var source;
-        APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance({
+        return APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance({
             text: SelectClassService.testText
         }))
             .then(function (response) {
@@ -57,8 +27,8 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Sele
                     maxdistance: maxDistance
 
                 };
-                root.updateSmallUnits(response.data.chunks);
-                root.updateSourceForSmallUnits(response.data.source);
+                root.smallUnits = response.data.chunks;
+                root.sourceForSmallUnits = response.data.source;
 
                 return data;
             })
@@ -159,11 +129,11 @@ jTextMinerApp.factory('ParallelsService', function ($rootScope, APIService, Sele
                     }
                 }
 
-                root.updategroupNames(groups.map(function(item){ return item.name }));
-                root.updategroups(groups);
-                root.updatenumOfParallelsInGroups(numOfParallelsInGroups);
-                root.updatenumOfParallels(numOfParallels);
-                root.updateparallelsPerChunk(parallelsPerChunk);
+                root.groupNames = groups.map(function(item){ return item.name });
+                root.groups = groups;
+                root.numOfParallelsInGroups = numOfParallelsInGroups;
+                root.numOfParallels = numOfParallels;
+                root.parallelsPerChunk = parallelsPerChunk;
                 root.haveResults = true;
 
                 InProgressService.updateIsReady(1);

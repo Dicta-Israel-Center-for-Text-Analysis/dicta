@@ -20,8 +20,17 @@
 
             $scope.advancedSettings = 0; // show the basic settings tab first
             $scope.runParallels = function () {
-                ParallelsService.runParallels($scope.minParallelLength, $scope.maxParallelSkip);
-            }
+                ParallelsService.runParallels($scope.minParallelLength, $scope.maxParallelSkip)
+                    .then(function () {
+                        $scope.smallUnits = ParallelsService.smallUnits;
+                        $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
+                        $scope.groupNames = ParallelsService.groupNames;
+                        $scope.groups = ParallelsService.groups;
+                        $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
+                        $scope.numOfParallels = ParallelsService.numOfParallels;
+                        $scope.parallelsPerChunk = ParallelsService.parallelsPerChunk;
+                    });
+            };
 
             $scope.minParallelLength = 12;
             $scope.maxParallelSkip = 6;
@@ -34,15 +43,6 @@
             $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
             $scope.numOfParallels = ParallelsService.numOfParallels;
             $scope.parallelsPerChunk = ParallelsService.parallelsPerChunk;
-            $scope.$on('ParallelsUpdates', function () {
-                $scope.smallUnits = ParallelsService.smallUnits;
-                $scope.sourceForSmallUnits = ParallelsService.sourceForSmallUnits;
-                $scope.groupNames = ParallelsService.groupNames;
-                $scope.groups = ParallelsService.groups;
-                $scope.numOfParallelsInGroups = ParallelsService.numOfParallelsInGroups;
-                $scope.numOfParallels = ParallelsService.numOfParallels;
-                $scope.parallelsPerChunk = ParallelsService.parallelsPerChunk;
-            });
 
             $scope.markParallels = function (chunk) {
                 $scope.currentGroup = $scope.groups[$scope.currentGroupIndex];

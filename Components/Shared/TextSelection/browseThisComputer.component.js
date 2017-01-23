@@ -22,7 +22,7 @@ jTextMinerApp.component('browseThisComputer', {
             ctrl.UploadZipFile = function () {
                 InProgressService.updateIsReady(0);
 
-                ctrl.browseData = SelectClassService.newTextFromUpload(ctrl.zipFile, 'DoNotChunk', 250);
+                ctrl.browseData = SelectClassService.newTextFromUpload(ctrl.zipFile.name, 'DoNotChunk', 250);
                 fileUpload.uploadFileToUrl(ctrl.zipFile, 'zipFile', UserService.user)
                     .then(function (wordCounts) {
                         InProgressService.updateIsReady(1);
@@ -31,7 +31,7 @@ jTextMinerApp.component('browseThisComputer', {
                         ctrl.browseData.textInfo.totalWordCount = wordCounts.reduce((a, b) => a + b, 0);
                         ctrl.browseData.textInfo.numberOfFiles = wordCounts.length;
 
-                        ctrl.browseData.textInfo.doNotChunk_ChunkSize = ctrl.browseData.numberOfFiles;
+                        ctrl.browseData.textInfo.doNotChunk_ChunkSize = ctrl.browseData.textInfo.numberOfFiles;
                         ctrl.calculateChunks();
 
                         focus('Browse_focusClassName');

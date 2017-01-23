@@ -14,7 +14,8 @@ jTextMinerApp.component('viewSelectedText', {
 
             //UnknownTestClass
             var classData = SaveClassInterface.getInstance({
-                text: SelectClassService.testText
+                text: SelectClassService.testText,
+                experimentName: 'Untitled'
             });
 
             APIService.apiRun({crud: 'UnknownTestClassAsChunks'}, classData, function (response) {

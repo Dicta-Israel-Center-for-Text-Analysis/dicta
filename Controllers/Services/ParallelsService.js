@@ -17,7 +17,8 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
 
         var source;
         return APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance({
-            text: SelectClassService.testText
+            text: SelectClassService.testText,
+            experimentName: 'Untitled'
         }))
             .then(function (response) {
                 source = response.data.source;

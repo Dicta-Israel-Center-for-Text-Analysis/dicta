@@ -13,6 +13,7 @@
                 filename,
                 chunkMode,
                 chunkSize,
+                keys: [],
                 textInfo: {}
             }
         },

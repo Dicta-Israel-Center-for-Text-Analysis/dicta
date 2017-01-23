@@ -137,3 +137,29 @@ table.feature-set-table tbody tr td {
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+.tab-content {
+    padding-top: 10px;
+}
+
+.parallels-source-heading {
+    margin-top:0;
+    color: #959595;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.parallels-parallel-heading {
+    margin-top:0;
+    color: #959595;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.parallels-parallel {
+    direction:rtl;
+    padding:5px;
+    margin: 0 0 10px;
+    border-radius: 5px;
+    border:#BBB 1px solid
+}

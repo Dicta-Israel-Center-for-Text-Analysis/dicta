@@ -1,6 +1,6 @@
 ﻿//https://github.com/cornflourblue/angu-fixed-header-table
 //https://www.pointblankdevelopment.com.au/blog/angularjs-fixed-header-scrollable-table-directive
-var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.bootstrap.tabs', 'ui.indeterminate']);
+var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.bootstrap.tabs', 'ui.indeterminate', 'ngSanitize']);
 // set default values for all dialogs
 jTextMinerApp.config(['ngDialogProvider', function (ngDialogProvider) {
     ngDialogProvider.setDefaults({

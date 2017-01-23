@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Parallels - Results</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            <input name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAll()"> All ({{$ctrl.totalParallels()}})
+        </div>
+        <div ng-repeat="group in $ctrl.experiment.groups">
+            <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetail(group)"> {{group.name}} ({{group.parallels.length}})
+        </div>
+    </div>
+</div>
+<div>
+    <parallels-details experiment="$ctrl.experiment" filter-group="$ctrl.filterGroup"></parallels-details>
+</div>

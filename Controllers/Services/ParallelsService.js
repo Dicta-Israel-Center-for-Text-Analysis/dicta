@@ -1,5 +1,7 @@
 
 jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassService, SaveClassInterface, InProgressService) {
+    return {
+        newInstance() {
     var root = {
         smallUnits: [],
         sourceForSmallUnits: [],
@@ -36,6 +38,7 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
             .then(data => APIService.callParallels(data))
             .then(function (response3) {
                 var results = response3.data;
+                //root.parallels = results;
                 var groupNameDict = {};
                 var groups = [];
                 var numOfParallelsInGroups = [];
@@ -146,4 +149,6 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
         };
 
     return root;
+        }
+    }
 });

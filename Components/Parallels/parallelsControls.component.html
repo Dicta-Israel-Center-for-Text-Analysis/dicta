@@ -1,0 +1,53 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Parallels Settings</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li id="parallelsControls" class="{{$ctrl.advancedSettings == 0 ? 'active' : ''}}">
+                <a ng-click="$ctrl.advancedSettings = 0">Basic Settings</a>
+            </li>
+            <li id="parallelsAdvancedControls" class="{{$ctrl.advancedSettings == 1 ? 'active' : ''}}">
+                <a ng-click="$ctrl.advancedSettings = 1">Advanced Settings</a>
+            </li>
+        </ul>
+        <div class="col-xs-12">
+            <div ng-show="$ctrl.advancedSettings == 0" class="tab-content">
+                <p>Find Parallels in:
+                    <button class="btn btn-primary disabled">Library...</button>
+                </p>
+
+                <p>Look for:</p>
+
+                <p>
+                    <label><input type="radio" name="matchLength" checked
+                                  ng-click="$ctrl.experiment.minParallelLength=12;$ctrl.experiment.maxParallelSkip=6"/>
+                        Longer Matches Only
+                    </label>
+                </p>
+                <p>
+                    <label><input type="radio" name="matchLength"
+                                  ng-click="$ctrl.experiment.minParallelLength=6;$ctrl.experiment.maxParallelSkip=2"/>
+                        Include Shorter Matches
+                    </label>
+                </p>
+            </div>
+            <div ng-show="$ctrl.advancedSettings == 1" class="tab-content">
+                <p>
+                <div class="col-xs-8" width="80%">Minimum length of parallel:</div>
+                <input class="col-xs-3" width="10%" type="number" ng-model="$ctrl.experiment.minParallelLength"/>
+                </p>
+
+                <p>
+                <div class="col-xs-8" width="80%">Maximum words to skip:</div>
+                <input class="col-xs-3" width="10%" type="number" ng-model="$ctrl.experiment.maxParallelSkip"/>
+                </p>
+            </div>
+
+            <p>
+            <div class="col-xs-12"><a class="btn btn-primary" ng-click="$ctrl.runParallels()">Find
+                Parallels</a></div>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,42 @@
-﻿// loads the tree of the Dicta corpus
+// loads the tree of the Dicta corpus
 // also provides a utility function 'treeSort' which sorts a list according to an in-order traversal of the tree
-jTextMinerApp.factory('TreeService', function ($http) {
+jTextMinerApp.factory('TreeService', function ($http, $q) {
     var service = {
         corpusTree: [],
-        readyPromise: $http.get('corpusTree.json').then(function (response) {
+        readyPromise: $http.get('corpusData/corpusTree.json').then(function (response) {
             service.corpusTree = response.data;
+            service.loaded = false;
+            service.loadNode(null);
         }),
-        // map of key to tree node, FIXME: this is maintained in SelectOnlineCorpus instead of here.
+        loadNode(node){
+            if (node == null) {
+                if (service.loaded)
+                    return $q.resolve(null);
+            }
+            else if (node.loaded)
+                return $q.resolve(node);
+            var children = node ? node.children : service.corpusTree;
+            var requests = [];
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                // add links back to the parent, so we can find the parent to update selections
+                child['parent'] = node;
+                service.keyToNode[child['key']] = child;
+                if (typeof(child.children)=='string') {
+                    requests.push($http.get('corpusData/' + child.children).
+                        then(function (response) {
+                            this.children = response.data;
+                        }.bind(child)));
+                }
+            }
+            return $q.all(requests).then(function() {
+                if (node)
+                    node.loaded = true;
+                else
+                    service.loaded = true;
+                return node;
+                });
+        },
         keyToNode: {},
         // list - the list to be sorted
         // getKeyFunc - a function that takes a list item and returns its key

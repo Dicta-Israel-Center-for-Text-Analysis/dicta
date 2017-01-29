@@ -11,7 +11,6 @@ jTextMinerApp.component('selectOnlineCorpus', {
             TreeService.readyPromise.then(function() {
                 ctrl.corpusTree = TreeService.corpusTree;
                 ctrl.treeNode = ctrl.corpusTree;
-                initCurrentLevel(null);
             });
 
             // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
@@ -22,23 +21,18 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 ctrl.selectedNodes = [];
             recalculatePartials();
 
-            function initCurrentLevel(parentNode) {
-                for (var i = 0; i < ctrl.treeNode.length; i++) {
-                    // add links back to the parent, so we can update selections
-                    ctrl.treeNode[i]['parent'] = parentNode;
-                    TreeService.keyToNode[ctrl.treeNode[i]['key']] = ctrl.treeNode[i];
-                }
-            }
-
             // end of tree setup; helper functions come next
 
             ctrl.expandNode = function (itemTitle) {
                 var currentNode = ctrl.treeNode;
                 for (var i=0; i < currentNode.length; i++) {
                     if (currentNode[i]['title'] == itemTitle) {
-                        ctrl.treeNode = currentNode[i]['children'];
-                        initCurrentLevel(currentNode[i]);
-                        ctrl.breadCrumbs.push(itemTitle);
+                        var node = currentNode[i];
+                        TreeService.loadNode(node)
+                            .then(function() {
+                                ctrl.treeNode = currentNode[i]['children'];
+                                ctrl.breadCrumbs.push(itemTitle);
+                            });
                         break;
                     }
                 }

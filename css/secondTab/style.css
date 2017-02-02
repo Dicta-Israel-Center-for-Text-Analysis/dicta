@@ -390,6 +390,7 @@ span.right-edit {
     border-radius: 5px;
     box-shadow: -3px 4px 4px 0px #bdccd4;
     padding-left: 30px;
+    margin: 0;
 }
 
 .box-in h2 span {
@@ -622,7 +623,6 @@ span.right-edit {
     padding: 20px 15px 22px;
     margin: 5px 5px 0;
     background: #FFFEA4;
-    b
 }
 
 .yellow {

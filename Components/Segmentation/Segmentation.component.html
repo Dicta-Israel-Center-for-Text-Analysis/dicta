@@ -83,7 +83,7 @@ $(document).ready(function () {
                  {{$ctrl.experiment.resultData.segments.length}} segments
             </div>
 
-            <div ng-click="scrollTo($index)"  ng-repeat="hSegment in $ctrl.experiment.resultData.segments" class="sid-bar" style="background-color:{{hSegment[0].classColor}};">
+            <div ng-click="$ctrl.scrollTo($index)"  ng-repeat="hSegment in $ctrl.experiment.resultData.segments" class="sid-bar" style="background-color:{{hSegment[0].classColor}};">
                 <p style="direction:rtl;" class="line-h">
                     <span ng-repeat="segment in hSegment" ng-bind-html="$ctrl.createThumbnail(segment.text)"></span>
                 </p>
@@ -95,6 +95,6 @@ $(document).ready(function () {
     </div>
     <div ng-show="$ctrl.tab =='2'">
         <div class="col-md-8">
-            <feature-table is-select-disabled="true" features="$ctrl.experiment.featuresData.features[0]"></feature-table>
+            <feature-table is-select-disabled="true" classes="$ctrl.experiment.featuresData.classes" features="$ctrl.experiment.featuresData.features[0]"></feature-table>
         </div>
     </div>

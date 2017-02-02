@@ -70,7 +70,7 @@
 
             segmentationExperiment.RunExperiment = function () {
                 SelectClassService.testText.keys.forEach(function (key) {
-                    if (!key.startsWith('/Dicta Corpus/Bible/')) {
+                    if (!(key.startsWith('/Dicta Corpus/Bible/') || key.startsWith('/Dicta Corpus/Tanakh/'))) {
                         segmentationExperiment.isAllBibleSegmentation = false;
                     }
                 });

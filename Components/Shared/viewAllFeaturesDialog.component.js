@@ -1,11 +1,10 @@
-﻿jTextMinerApp.directive('viewAllFeaturesDialog',function () {
-    return {
-    restrict: 'E',
-    scope: {
-        features: '=',
+﻿jTextMinerApp.component('viewAllFeaturesDialog',{
+    bindings: {
+        features: '<',
+        classes: '<',
         onConfirm: '&'
     },
     templateUrl: 'Components/Shared/viewAllFeaturesDialog.component.html',
     controller: function () {
     }
-}});
+});

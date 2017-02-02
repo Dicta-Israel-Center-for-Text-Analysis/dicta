@@ -9,10 +9,11 @@ jTextMinerApp.factory('ClassService', function ($rootScope) {
             return index >= realColors.length ? "#1111" + (index << 4).toString(16) : realColors[index];
         },
 
+        // accepts either a ClassService object or an array of strings for "classes"
         classNameToColor(name, classes) {
             var index = -1;
             for (var i = 0; i < classes.length; i++) {
-                if (classes[i].title == name) {
+                if (classes[i] == name || (typeof(classes[i])!="String" && classes[i].title == name))     {
                     index = i;
                     break;
                 }

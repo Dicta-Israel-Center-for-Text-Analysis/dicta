@@ -329,9 +329,13 @@ jTextMinerApp.component('classification', {
             ctrl.experiment.prepareClassification().then(
                 function(){
                     ngDialog.openConfirm({
-                        template: '<view-all-features-dialog features="ngDialogData.features" on-confirm="confirm()"></view-all-features-dialog>',
+                        template: '<view-all-features-dialog ' +
+                        'classes="ngDialogData.classes" ' +
+                        'features="ngDialogData.features" ' +
+                        'on-confirm="confirm()"></view-all-features-dialog>',
                         plain: true,
                         data: {
+                            classes: ctrl.experiment.classes.Corpus_classes,
                             features: ctrl.experiment.featureCollection.featuresData.features
                                 .reduce((a, b) => a.concat(b), [])
                         },

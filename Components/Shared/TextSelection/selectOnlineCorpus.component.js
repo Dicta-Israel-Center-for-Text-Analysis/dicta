@@ -4,7 +4,10 @@ jTextMinerApp.component('selectOnlineCorpus', {
         controller: ['TreeService', 'SelectClassService', function (TreeService, SelectClassService) {
             var ctrl = this;
             function initBreadCrumbs() {
-                ctrl.breadCrumbs = ['All Collections'];
+                ctrl.breadCrumbs = [{
+                    title: 'All Collections',
+                    children: TreeService.corpusTree
+                }];
             }
             initBreadCrumbs();
 
@@ -28,12 +31,14 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 for (var i=0; i < currentNode.length; i++) {
                     if (currentNode[i]['title'] == itemTitle) {
                         var node = currentNode[i];
-                        TreeService.loadNode(node)
-                            .then(function() {
-                                ctrl.treeNode = currentNode[i]['children'];
-                                ctrl.breadCrumbs.push(itemTitle);
+                        return TreeService.loadNode(node)
+                            .then(function(loadedNode) {
+                                ctrl.treeNode = loadedNode.children;
+                                ctrl.breadCrumbs.push({
+                                    title: itemTitle,
+                                    children: loadedNode.children
+                                });
                             });
-                        break;
                     }
                 }
             };
@@ -125,13 +130,8 @@ jTextMinerApp.component('selectOnlineCorpus', {
             };
 
             ctrl.selectCrumb = function (crumbNumber) {
-                var oldCrumbs = ctrl.breadCrumbs;
-                initBreadCrumbs();
-                ctrl.treeNode = ctrl.corpusTree;
-                for (var i=1; i <= crumbNumber; i++) {
-                    ctrl.expandNode(oldCrumbs[i]);
-                }
-
+                ctrl.breadCrumbs = ctrl.breadCrumbs.slice(0, crumbNumber+1);
+                ctrl.treeNode = ctrl.breadCrumbs[crumbNumber].children;
             };
             
         }]

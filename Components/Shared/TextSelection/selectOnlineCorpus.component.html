@@ -8,7 +8,7 @@
     <br />
     <div style="height: 400px; overflow-y: scroll;">
         <ol class="breadcrumb">
-            <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb}}</a></li>
+            <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb.title}}</a></li>
         </ol>
         <table class="table table-striped">
             <tr ng-repeat="item in $ctrl.treeNode">

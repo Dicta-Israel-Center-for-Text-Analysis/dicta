@@ -76,11 +76,9 @@
                 });
                 InProgressService.updateIsReady(0);
 
-                return APIService.call('JTextMinerAPI/ExtractFeaturesSegmentation', segmentationExperiment.createDataForExtract())
-                    .then(function () {
-                        InProgressService.updateIsReady(0);
-                        return APIService.call('JTextMinerAPI/RunSegmentation', segmentationExperiment.createDataForRun())
-                    })
+                var tmp = segmentationExperiment.createDataForRun();
+                tmp.extractData = segmentationExperiment.createDataForExtract();
+                return APIService.call('JTextMinerAPI/RunSegmentation', tmp)
                     .then( function (response) {
                         InProgressService.updateIsReady(1);
                         var results = response.data;

@@ -12,6 +12,7 @@ module.exports = function(config) {
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       'node_modules/angular-ui-indeterminate/dist/indeterminate.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+      'node_modules/angular-sanitize/angular-sanitize.min.js',
       'node_modules/ng-dialog/js/ngDialog.min.js',
       'node_modules/hopscotch/dist/js/hopscotch.min.js',
 	  'Controllers/*.js',

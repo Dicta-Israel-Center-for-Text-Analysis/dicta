@@ -99,9 +99,11 @@ jTextMinerApp.component('classification', {
 
             InProgressService.updateIsReady(0);
 
-            $scope.data = {};
-            $scope.data.userLogin = UserService.user;
-            $scope.data.index = item.index;
+            var apiData = {
+                userLogin: UserService.user,
+                index: item.index,
+                resultClassification: ctrl.experiment.tsResultData
+            };
 
             var featureTypeMap = {
                 "Word":"WORDS",
@@ -161,7 +163,7 @@ jTextMinerApp.component('classification', {
                 "chunkType": "LARGE"
             };
             var featuresList;
-            APIService.call('JTextMinerAPI/TestFileData', $scope.data)
+            APIService.call('JTextMinerAPI/TestFileData', apiData)
                 .then(function (response)
             {
                 InProgressService.updateIsReady(1);

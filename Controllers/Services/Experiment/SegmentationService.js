@@ -31,7 +31,7 @@
                 return angular.extend(data, {
                     userLogin: UserService.user,
                     expType: 'Segmentation',
-                    expName: 'name',
+                    expName: 'Untitled',
                     featureSets: this.featureCollection.Feature_sets,
                     segmentationActionMode: this.Segmentation_ActionMode,
                     segmentationChunkBy: this.Segmentation_ChunkBy

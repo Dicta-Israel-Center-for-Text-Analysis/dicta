@@ -43,7 +43,7 @@ jTextMinerApp.component('classification', {
 
         $scope.saveClass = function (selectionData) {
             ctrl.experiment.saveClass(selectionData);
-        }
+        };
 
         $scope.classes = this.experiment.classes.Corpus_classes;
 
@@ -105,6 +105,41 @@ jTextMinerApp.component('classification', {
                 resultClassification: ctrl.experiment.tsResultData
             };
 
+            APIService.call('JTextMinerAPI/TestFileData', apiData)
+                .then(function (response)
+            {
+                InProgressService.updateIsReady(1);
+                var results = response.data;
+                //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
+                item.featureList = results.features;
+                item.title = cleanTitle(item.name);
+                $scope.testSetChunks[index] = item;
+
+                if ($scope.testSetChunks.length == $scope.testSetResults.length)
+                {
+                    var classCounts = {};
+                    $scope.countFilesPerClass = [];
+                    for (currentClass in $scope.classes) {
+                        var l = 0;
+                        for (testFile in $scope.testSetChunks) {
+                            if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
+                                l = l + 1;
+                        }
+                        $scope.countFilesPerClass.push(l);
+                    }
+                }
+                if (item.name.startsWith('_Dicta Corpus_')) {
+                    generateHighlightedText(item);
+                }
+                else {
+                    // uploaded text, so the text service used by generateHighlightedText doesn't support it yet
+                    item.htmlText = results.htmlText;
+                }
+            });
+
+        }
+
+        function generateHighlightedText(item) {
             var featureTypeMap = {
                 "Word":"WORDS",
                 "Letter":"LETTERS",
@@ -141,10 +176,10 @@ jTextMinerApp.component('classification', {
             }();
             var featuresRequest = {
                 "key":
-                {
-                    "keyType": "DICTA_CORPUS",
-                    "key": item.name.replace(/.rtf$/,'').replace(/_/g,'/')
-                }
+                    {
+                        "keyType": "DICTA_CORPUS",
+                        "key": item.name.replace(/.rtf$/,'').replace(/_/g,'/')
+                    }
                 ,
                 "chunkType": "LARGE",
                 "featureSettings": {
@@ -163,74 +198,49 @@ jTextMinerApp.component('classification', {
                 "chunkType": "LARGE"
             };
             var featuresList;
-            APIService.call('JTextMinerAPI/TestFileData', apiData)
-                .then(function (response)
-            {
-                InProgressService.updateIsReady(1);
-                var results = response.data;
-                //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
-                item.featureList = results.features;
-                item.title = cleanTitle(item.name);
-                $scope.testSetChunks[index] = item;
-                $scope.legend = $sce.trustAsHtml(results.legend);
+            APIService.call("TextFeatures/ListFeatures", featuresRequest)
+                .then(function (response) {
+                    featuresList = response.data[0].features;
+                })
+                .then(() =>
+                    APIService.call("TextFeatures/GetText", textRequest)
+                        .then(function (response) {
+                            var words = response.data[0].text.split(' ');
+                            var currentOffset = 0;
+                            var pieces = [];
 
-                if ($scope.testSetChunks.length == $scope.testSetResults.length)
-                {
-                    var classCounts = {};
-                    $scope.countFilesPerClass = [];
-                    for (currentClass in $scope.classes) {
-                        var l = 0;
-                        for (testFile in $scope.testSetChunks) {
-                            if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
-                                l = l + 1;
-                        }
-                        $scope.countFilesPerClass.push(l);
-                    }
-                }
-            }).then(
-                () =>
-                    APIService.call("TextFeatures/ListFeatures", featuresRequest)
-                        .then(function(response) {
-                            featuresList = response.data[0].features;
-                        })
-                        .then(() =>
-                            APIService.call("TextFeatures/GetText", textRequest)
-                                .then(function(response) {
-                                    var words = response.data[0].text.split(' ');
-                                    var currentOffset = 0;
-                                    var pieces = [];
-                                    function hack(name) {
-                                        if (ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxPhrase"
-                                            || ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxClause")
-                                            return prettyPrintMorphology(name);
-                                        else
-                                            return name;
-                                    }
-                                    for (var word of words){
-                                        var wordFeatures = featuresList
-                                            .filter(feature => feature.textStart < currentOffset + word.length
-                                            && currentOffset <= feature.textStart + feature.textLength );
-                                        var hoverText =
-                                            wordFeatures.map(feature => feature.name)
-                                                .join(' ');
-                                        if (hoverText.length > 0) {
-                                            var blah = false;
-                                            var colors = item.featureList
-                                                .filter(feature => wordFeatures
-                                                    .some(wordFeature => hack(wordFeature.name) == feature.name))
-                                                .map(feature => ClassService.classIndexToColor(feature.maxClassIndex));
-                                            if (colors.length > 0) blah = true;
-                                            pieces.push("<span " + ( blah ? "style='font-weight: bold; color: "+ colors[0] +"'" :"")+"title='"+ prettyPrintMorphology(hoverText) +"'>" + word +"</span>")
-                                        }
-                                        else
-                                            pieces.push(word);
-                                        currentOffset += word.length + 1;
-                                    }
-                                    var html = pieces.join(' ');
-                                    item.htmlText = html;
-                                })));
+                            function hack(name) {
+                                if (ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxPhrase"
+                                    || ctrl.experiment.featureCollection.Feature_sets[0].tokenizerType == "SyntaxClause")
+                                    return prettyPrintMorphology(name);
+                                else
+                                    return name;
+                            }
 
-        };
+                            for (var word of words) {
+                                var wordFeatures = featuresList
+                                    .filter(feature => feature.textStart < currentOffset + word.length
+                                    && currentOffset <= feature.textStart + feature.textLength);
+                                var hoverText =
+                                    wordFeatures.map(feature => feature.name)
+                                        .join(' ');
+                                if (hoverText.length > 0) {
+                                    var blah = false;
+                                    var colors = item.featureList
+                                        .filter(feature => wordFeatures
+                                            .some(wordFeature => hack(wordFeature.name) == feature.name))
+                                        .map(feature => ClassService.classIndexToColor(feature.maxClassIndex));
+                                    if (colors.length > 0) blah = true;
+                                    pieces.push("<span " + ( blah ? "style='font-weight: bold; color: " + colors[0] + "'" : "") + "title='" + prettyPrintMorphology(hoverText) + "'>" + word + "</span>")
+                                }
+                                else
+                                    pieces.push(word);
+                                currentOffset += word.length + 1;
+                            }
+                            var html = pieces.join(' ');
+                            item.htmlText = html;
+                        }))
+        }
         $scope.tab = '1';
 
         $scope.updateAlgorithm = function (algorithmSettings) {

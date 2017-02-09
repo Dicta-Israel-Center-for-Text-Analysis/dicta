@@ -75,11 +75,11 @@ jTextMinerApp.component('editFeatureSetDialog', {
     }
 
     var corpusList = Object.keys(corpusSets);
-    $scope.isAllBible = corpusList.length == 1 && corpusList[0] == 'Bible';
+    $scope.isAllBible = corpusList.length == 1 && (corpusList[0] == 'Bible' || corpusList[0] == 'Tanakh');
 
     var onlyBibleMishnaOrTosefta = true;
     for (var i = 0; i < corpusList.length; i++) {
-        if (['Bible', 'Mishnah', 'Tosefta'].indexOf(corpusList[i]) == -1)
+        if (['Bible', 'Tanakh', 'Mishnah', 'Tosefta'].indexOf(corpusList[i]) == -1)
             onlyBibleMishnaOrTosefta = false;
     }
 

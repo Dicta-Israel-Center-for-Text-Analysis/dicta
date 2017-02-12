@@ -11,6 +11,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 tsResultData: [],
                 base: ExperimentService.newExperiment(),
                 classes: ClassService.newInstance(),
+                trainSet: {},
 
                 //Classification update functions
                 updateClassification_CrossValidationFoldsValue(value) {
@@ -33,11 +34,13 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         id: currentClass.id,
                         userLogin: UserService.user,
                         expType: 'Classification',
-                        expName: this.base.experimentName
+                        expName: this.base.experimentName,
+                        trainSet: this.trainSet
                     };
                     InProgressService.updateIsReady(0);
 
-                    return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function () {
+                    return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function (results) {
+                        this.trainSet = results.trainSet;
                         this.classes.Corpus_classes.splice(index, 1);
                         this.featureCollection.updateFeaturesData({});
                         //this.classes.updateIsAllBibleValue(true);
@@ -66,7 +69,8 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             expName: this.base.experimentName,
                             featureSets: this.featureCollection.Feature_sets,
                             corpusClasses: this.classes.Corpus_classes,
-                            featuresData: this.featureCollection.featuresData
+                            featuresData: this.featureCollection.featuresData,
+                            trainSet: this.trainSet
                         };
 
                         return APIService.apiRun(
@@ -254,13 +258,15 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         var classData = SaveClassInterface.getInstance({
                             text: selectionData,
                             className: selectionData.className,
-                            experimentName: experiment.base.experimentName
+                            experimentName: experiment.base.experimentName,
+                            trainSet: experiment.trainSet
                         });
                         InProgressService.updateIsReady(0);
                         return APIService.call('JTextMinerAPI/TrainClass', classData)
                             .then( function (response) {
                                 InProgressService.updateIsReady(1);
                                 var results = response.data;
+                                experiment.trainSet = results.trainSet;
                                 addClass({
                                     title: results.browse_ClassName,
                                     selectedText: results.selectedText,
@@ -277,12 +283,14 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         var classData = SaveClassInterface.getInstance({
                             text: selectionData,
                             className: selectionData.className,
-                            experimentName: experiment.base.experimentName
+                            experimentName: experiment.base.experimentName,
+                            trainSet: experiment.trainSet
                         });
                         return APIService.call('JTextMinerAPI/TrainClass', classData)
                             .then(function (response) {
                                 InProgressService.updateIsReady(1);
                                 var results = response.data;
+                                experiment.trainSet = results.trainSet;
                                 addClass({
                                     title: results.select_ClassName,
                                     selectedText: results.selectedText,

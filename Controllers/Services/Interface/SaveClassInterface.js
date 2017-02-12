@@ -21,7 +21,8 @@ jTextMinerApp.factory('SaveClassInterface', function (UserService) {
                 activeKey: '',
                 userLogin: UserService.user,
                 expType: settings.expType ? settings.expType : 'Classification',
-                expName: settings.experimentName
+                expName: settings.experimentName,
+                trainSet: settings.trainSet ? settings.trainSet : {}
             }
         }
     };

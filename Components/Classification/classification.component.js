@@ -59,7 +59,7 @@ jTextMinerApp.component('classification', {
                 .then(function (response2) {
                     $scope.testSetResults = response2;
                     $scope.testSetChunks = [];
-                    for (var testFileIndex in $scope.testSetResults) {
+                    for (var testFileIndex=0; testFileIndex < $scope.testSetResults.length; testFileIndex++) {
                         setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
                     }
                 });

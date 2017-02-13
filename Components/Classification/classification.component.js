@@ -156,6 +156,8 @@ jTextMinerApp.component('classification', {
             var filter = function() {
                 var featureSet = ctrl.experiment.featureCollection.Feature_sets[0];
                 if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
+                    if (featureSet.vocalized)
+                        return "VOWELIZED";
                     return "TEXT_ONLY";
                 }
                 if (featureSet.tokenizerType == "Morphology") {

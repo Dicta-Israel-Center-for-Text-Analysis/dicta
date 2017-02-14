@@ -38,7 +38,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="cross-verification">
-            <p ng-show="$ctrl.experiment.cvResultData.classes.length>1"> Cross validation {{$ctrl.experiment.cvResultData.accuracy[0] | number: 1}}% <span
+            <p ng-show="$ctrl.experiment.cvResultData.accuracy.length>0"> Cross validation {{$ctrl.experiment.cvResultData.accuracy[0] | number: 1}}% <span
                     ng-click="showCrossvalidation()"><i class="fa fa-eye"></i></span></p>
             <a ng-show="classes.length < 2">Classify (still need classes)</a>
             <a ng-show="classes.length >=2" ng-click="runClassification();">Classify My Text</a>

@@ -68,15 +68,15 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             expType: 'Classification',
                             expName: this.base.experimentName,
                             featureSets: this.featureCollection.Feature_sets,
-                            corpusClasses: this.classes.Corpus_classes,
-                            featuresData: this.featureCollection.featuresData,
                             trainSet: this.trainSet
                         };
 
-                        return APIService.apiRun(
-                            {crud: 'ExtractFeaturesClassification'},
-                            apiCallData,
-                            function (results) {
+                        return APIService.call(
+                            'JTextMinerAPI/ExtractFeaturesClassification',
+                            apiCallData)
+                            .then(
+                            function (response) {
+                                var results = { features: response.data };
                                 // build a string of all the names of the features in the set
                                 function nameString(featureSet) {
                                     return featureSet.map(function (feature) {
@@ -110,13 +110,13 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                 // we need the toJSON because we later pass this data back to the server,
                                 // and we don't want the extra values that a resource has.
                                 // It simply creates an object, not a JSON string.
-                                this.featureCollection.updateFeaturesData(results.toJSON());
+                                this.featureCollection.updateFeaturesData(results);
                                 InProgressService.updateIsReady(1);
                             }.bind(this),
                             function (errorResponse) {
                                 InProgressService.setError(errorResponse.statusText);
                             }
-                        ).$promise;
+                        );
                     }
                     else
                         return $q.when(null);
@@ -133,12 +133,12 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         //classificationCrossValidationType: this.base.Classification_CrossValidationType,
                         classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
                         //classificationSplitRatioCrossValidation: this.base.Classification_Split_ratio_cross_validation,
-                        corpusMaxId: this.classes.Corpus_maxId,
 
                         featureSets: this.featureCollection.Feature_sets,
-                        corpusClasses: this.classes.Corpus_classes,
 
-                        featuresData: this.featureCollection.featuresData
+                        features: this.featureCollection.featuresData.features,
+                        trainSet: this.trainSet,
+                        selectedTestTextKeys: SelectClassService.testText.keys
                     };
                 },
 

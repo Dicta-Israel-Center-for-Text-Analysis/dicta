@@ -99,19 +99,8 @@ jTextMinerApp.component('classification', {
 
             InProgressService.updateIsReady(0);
 
-            var apiData = {
-                userLogin: UserService.user,
-                index: item.index,
-                resultClassification: ctrl.experiment.tsResultData
-            };
-
-            APIService.call('JTextMinerAPI/TestFileData', apiData)
-                .then(function (response)
-            {
                 InProgressService.updateIsReady(1);
-                var results = response.data;
                 //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
-                item.featureList = results.features;
                 item.title = cleanTitle(item.name);
                 $scope.testSetChunks[index] = item;
 
@@ -135,8 +124,6 @@ jTextMinerApp.component('classification', {
                     // uploaded text, so the text service used by generateHighlightedText doesn't support it yet
                     item.htmlText = results.htmlText;
                 }
-            });
-
         }
 
         function generateHighlightedText(item) {

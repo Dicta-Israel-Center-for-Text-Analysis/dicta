@@ -67,7 +67,7 @@ $(document).ready(function () {
                 <div class="border-box">
                     <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
                     <p class="line-h">
-                        <div id="section{{$index}}" ng-repeat="hSegment in $ctrl.experiment.resultData.segments" >
+                        <div id="segmentationSection{{$index}}" ng-repeat="hSegment in $ctrl.experiment.resultData.segments" >
                             <div ng-repeat="segment in hSegment">
                                 <div dir="rtl" class="A{{segment.classIndex}}">
                                 <span style="font-size:8px;" ng-show="$ctrl.experiment.isAllBibleSegmentation">({{segment.prefix}})</span> {{$ctrl.createSegment(segment.text)}}

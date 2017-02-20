@@ -23,6 +23,10 @@ jTextMinerApp.component('browseThisComputer', {
                 InProgressService.updateIsReady(0);
 
                 ctrl.browseData = SelectClassService.newTextFromUpload(ctrl.zipFile.name, 'DoNotChunk', 250);
+                fileUpload.upload(ctrl.zipFile)
+                    .then (function (fileId){
+                        ctrl.browseData.fileId = fileId;
+                    });
                 fileUpload.uploadFileToUrl(ctrl.zipFile, 'zipFile', UserService.user)
                     .then(function (wordCounts) {
                         InProgressService.updateIsReady(1);

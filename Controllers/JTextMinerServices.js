@@ -1,4 +1,4 @@
-﻿//http://stackoverflow.com/questions/14833326/how-to-set-focus-on-input-field
+//http://stackoverflow.com/questions/14833326/how-to-set-focus-on-input-field
 jTextMinerApp.factory('focus', function ($rootScope, $timeout) {
     return function (name) {
         $timeout(function () {
@@ -7,7 +7,18 @@ jTextMinerApp.factory('focus', function ($rootScope, $timeout) {
     }
 });
 
-jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', function (APIService, InProgressService) {
+jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserService', function (APIService, InProgressService, UserService) {
+    this.upload = function(file) {
+        var fd = new FormData();
+        fd.append('uploadFile', file);
+        fd.append('userToken', UserService.userToken);
+        return APIService.call("UserService/UploadFile", fd, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        })
+            .then (response => response.data.data);
+    };
+    
     this.uploadFileToUrl = function (file, argument_name, userLoginName) {
         var fd = new FormData();
         fd.append(argument_name, file);

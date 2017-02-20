@@ -1,7 +1,7 @@
 jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService, SaveClassInterface, ExperimentService) {
     var root = {
         newExperiment() {
-            return {
+            var experiment = {
                 featureCollection: FeatureCollectionFactory.newCollection(),
                 Classification_CrossValidationFolds: 10,
                 Classification_ExperimentType: 'CV',
@@ -302,8 +302,87 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                 });
                             });
                     }
+                },
+
+                getTextsWithFeatures(){
+                    var featureTypeMap = {
+                        "Word":"WORDS",
+                        "Letter":"LETTERS",
+                        "Morphology":"MORPHOLOGY",
+                        "SyntaxClause":"SYNTAX_CLAUSE_TYPES",
+                        "SyntaxPhrase":"SYNTAX_PHRASE_SEQUENCES"
+                    };
+                    var nGramMap = {
+                        "Unigram": 1,
+                        "Bigram": 2,
+                        "Trigram": 3
+                    };
+                    var featuresList;
+                    experiment.testTexts = [];
+                    experiment.testTextsFeatures = [];
+                    var textPromises = [];
+                    for(let textKey of SelectClassService.testText.keys) {
+                        var featurePromises = [];
+                        for (let featureSet of experiment.featureCollection.Feature_sets) {
+                            var filter = function () {
+                                if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
+                                    if (featureSet.vocalized)
+                                        return "VOWELIZED";
+                                    return "TEXT_ONLY";
+                                }
+                                if (featureSet.tokenizerType == "Morphology") {
+                                    return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
+                                }
+                                if (featureSet.tokenizerType == "SyntaxPhrase" && featureSet.spoOnly) {
+                                    return "SUBJECT_PREDICATE_OBJECT";
+                                }
+                                return "";
+                                // filter = featureSet.
+                                //     includeLexeme: false,
+                                //     spoOnly: false,
+                                //     vocalized: true,
+                                //     sinDot: false,
+                                //     tokenized: false,
+                                //     includeNumber: false,
+                                //     includePunctuation: false
+                            }();
+                            var featuresRequest = {
+                                "key": {
+                                    "keyType": textKey.startsWith('/Dicta_Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
+                                    "key": textKey
+                                }
+                                ,
+                                "chunkType": "LARGE",
+                                "featureSettings": {
+                                    "type": featureTypeMap[featureSet.tokenizerType],
+                                    "filter": filter,
+                                    "nGram": nGramMap[featureSet.featureType]
+                                }
+                            };
+                            featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest)
+                                .then(function (response) {
+                                    featuresList = response.data[0].features;
+                                    experiment.testTextsFeatures = experiment.testTextsFeatures.concat(response.data);
+                                }));
+                        }
+                        var textRequest = {
+                            "keys": [
+                                {
+                                    "keyType": textKey.startsWith('/Dicta_Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
+                                    "key": textKey
+                                }
+                            ],
+                            "chunkType": "LARGE"
+                        };
+                        textPromises.push(APIService.call("TextFeatures/GetText", textRequest)
+                            .then(function (response) {
+                                experiment.testTexts = experiment.testTexts.concat(response.data);
+                            }));
+                    }
+                    return $q.all(featurePromises.concat(textPromises));
                 }
             }
+            return experiment;
         }
     };
 

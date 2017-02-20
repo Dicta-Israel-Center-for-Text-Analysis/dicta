@@ -12,6 +12,14 @@ angular.module('JTextMinerApp')
     var Service = {
         $user: null,
         tryLogin (username) {
+            APIService.call('UserService/Login', {
+                username
+            })
+                .then(response => {
+                    if (response.data.success) {
+                        Service.$userToken = response.data.data;
+                    }
+                });
             var triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
                 .then(handleLoginAPIResponse);
             triedLogin.catch(handleLoginAPIError);
@@ -26,6 +34,9 @@ angular.module('JTextMinerApp')
         },
         get user() {
             return this.$user;
+        },
+        get userToken() {
+            return this.$userToken;
         }
     };
 

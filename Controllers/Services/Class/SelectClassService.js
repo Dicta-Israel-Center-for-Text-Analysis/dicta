@@ -1,9 +1,10 @@
-﻿jTextMinerApp.factory('SelectClassService', function () {
+﻿jTextMinerApp.factory('SelectClassService', function (UserService) {
     var service = {
-        newTextFromCorpus(keys){
+        newTextFromCorpus(keys, ids){
             return {
                 mode: 'SelectOnlineCorpus',
                 keys,
+                ids,
                 textInfo: {}
             }
         },
@@ -13,7 +14,14 @@
                 filename,
                 chunkMode,
                 chunkSize,
-                keys: [],
+                get keys() {
+                    return this.fileId
+                        ? ["/UserUpload/" +
+                            UserService.userToken + "/"
+                            + this.fileId + "/chunkMode:" + this.chunkMode + "/maxChunk:" + this.chunkSize]
+                        : [];
+                },
+                ids: [],
                 textInfo: {}
             }
         },

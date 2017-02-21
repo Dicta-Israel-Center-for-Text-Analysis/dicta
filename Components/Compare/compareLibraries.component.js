@@ -8,7 +8,9 @@ jTextMinerApp.component('compareLibraries', {
                 ctrl.showInProcess = InProgressService.isReady != 1;
             });
             ctrl.experiment = ClassificationService.newExperiment();
-            var selectionData = angular.extend({ className: 'First Text'}, SelectClassService.testText);
+            ctrl.experiment.base.experimentName = 'CompareLibraries';
+            ctrl.experiment.base.resetServer();
+            var selectionData = angular.extend({ className: 'Selected Text'}, SelectClassService.testText);
 
             ctrl.firstRun = true;
             ctrl.chooseText = function () {

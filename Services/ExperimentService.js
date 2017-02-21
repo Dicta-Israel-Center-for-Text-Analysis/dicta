@@ -24,7 +24,22 @@ angular.module('JTextMinerApp')
         { id: 12, name: 'SVM_Light', attributes: '' }
     ];
 
-    var service = {
+        function resetServerInternal(experimentName) {
+            var data = {
+                userLogin: UserService.user,
+                expType: 'Classification',
+                expName: experimentName
+            };
+
+            return APIService.call('JTextMinerAPI/NewExperiment', data)
+                .then(function (response) {
+                    if (response.data.userLogin.length == 0) {
+                        throw "Reset server failed.";
+                    }
+                });
+        }
+
+        var service = {
         ALGORITHMS: algorithms,
         newExperiment() {
             // ClassificationService.featureCollection.updateFeaturesData({});
@@ -46,23 +61,14 @@ angular.module('JTextMinerApp')
                     this.selectedAlgorithmTypeId = id;
                     this.selectedAlgorithmTypeName = name;
                     this.selectedAlgorithmTypeAttributes = attributes;
+                },
+                resetServer() {
+                    resetServerInternal(this.experimentName);
                 }
             }
         },
         resetServer () {
-            var data = {
-                userLogin: UserService.user,
-                expType: 'Classification',
-                expName: 'Untitled'
-            };
-
-            return APIService.call('JTextMinerAPI/NewExperiment', data)
-                .then(function (response) {
-                    if (response.data.userLogin.length == 0) {
-                        throw "Reset server failed.";
-                    }
-                });
-
+            return resetServerInternal('Untitled');
         }
     };
 

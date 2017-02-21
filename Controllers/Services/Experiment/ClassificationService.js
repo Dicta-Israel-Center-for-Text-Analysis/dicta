@@ -321,8 +321,8 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     experiment.testTexts = [];
                     experiment.testTextsFeatures = [];
                     var textPromises = [];
+                    var featurePromises = [];
                     for(let textKey of SelectClassService.testText.keys) {
-                        var featurePromises = [];
                         for (let featureSet of experiment.featureCollection.Feature_sets) {
                             var filter = function () {
                                 if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {

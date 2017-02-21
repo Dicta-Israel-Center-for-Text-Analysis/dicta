@@ -37,8 +37,8 @@ describe('Service: JTextMinerApp.APIService', function () {
     });
 
     it('should make an HTTP POST to the parallels server when the callParallels method is used', function () {
-        httpBackend.expectPOST("http://www.dictaparallelsserver.com/api/parallels").respond({testData: 'test'});
-        APIService.callParallels({ text: 'testText' })
+        httpBackend.expectPOST("http://www.dictaparallelsserver.com/api/Parallels").respond({testData: 'test'});
+        APIService.callParallels('Parallels', { text: 'testText' })
             .then(function(response) {
             expect(response.data).toEqual({testData: 'test'});
         });

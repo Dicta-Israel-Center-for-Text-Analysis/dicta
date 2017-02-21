@@ -125,7 +125,8 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 recalculatePartials();
 
                 ctrl.selectionText = SelectClassService.newTextFromCorpus(
-                    ctrl.selectedNodes.map(function(key){return "/Dicta Corpus/" + key;})
+                    ctrl.selectedNodes.map(key => "/Dicta Corpus/" + key),
+                    ctrl.selectedNodes.map(key => TreeService.keyToNode[key].id)
                 );
             };
 

@@ -348,7 +348,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             }();
                             var featuresRequest = {
                                 "key": {
-                                    "keyType": textKey.startsWith('/Dicta_Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
+                                    "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
                                     "key": textKey
                                 }
                                 ,
@@ -368,7 +368,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         var textRequest = {
                             "keys": [
                                 {
-                                    "keyType": textKey.startsWith('/Dicta_Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
+                                    "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
                                     "key": textKey
                                 }
                             ],

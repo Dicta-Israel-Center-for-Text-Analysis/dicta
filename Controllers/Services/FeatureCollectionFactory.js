@@ -15,6 +15,8 @@
             spoOnly: false,
             vocalized: false,
             sinDot: false,
+            removeParentheses: true,
+            removePunctuation: true,
             tokenized: false,
             includeNumber: false,
             includePunctuation: false

@@ -1,5 +1,5 @@
 
-jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassService, SaveClassInterface, InProgressService) {
+jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassService, SaveClassInterface, TreeService) {
     return {
         newInstance() {
     var root = {
@@ -10,12 +10,71 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
         numOfParallelsInGroups: [],
         numOfParallels: 0,
         parallelsPerChunk: [],
-        haveResults: false
+        stats: {
+            haveResults: false,
+            running: false
+        },
+        parallels: {
+            haveResults: false,
+            running: false
+        }
     };
 
-    root.runParallels = function (minThreshold, maxDistance) {
-        InProgressService.updateIsReady(0);
+    root.runStatistics = function(minThreshold, maxDistance, filterList) {
+        root.stats.running = true;
+        root.minThreshold = minThreshold;
+        root.maxDistance = maxDistance;
+        var data = {
+            chunkIds: SelectClassService.testText.ids,
+            minthreshold: minThreshold,
+            maxdistance: maxDistance,
+        };
+        if (filterList)
+            data.filterIds = filterList;
+        return APIService.callParallels('Parallels/StatisticsLarge', data)
+            .then(function(response) {
+                root.stats = response.data;
+                //FIXME: adds titles that the server will add in the future
+                for (var i = 0; i < root.stats.length; i++) {
+                    var chunk = root.stats[i];
+                    chunk.title = chunk.chunkDispName.replace(/: /g,'/');
+                    for (var j = 0; j < chunk.parallels.length; j++) {
+                        var parallel = chunk.parallels[j];
+                        try {
+                            parallel.title = parallel.bookName.replace(/: /g,'/');
+                        }
+                        catch (ex) {
+                            parallel.title = parallel.xmlId.replace('.','/');
+                        }
+                    }
+                }
+                root.stats.running = false;
+                root.stats.haveResults = true;
+            });
+    };
+
+    root.runParallels = function (minThreshold, maxDistance, sourceList, filterList) {
+        root.parallels.running = true;
+        var data = {
+            chunkIds: sourceList ? sourceList : SelectClassService.testText.ids,
+            minthreshold: minThreshold,
+            maxdistance: maxDistance
+        };
+        if (filterList)
+            data.filterIds = filterList;
+        //debugger;
+        return APIService.callParallels('Parallels', data)
+            .then(response =>
+            {
+                root.parallels = response.data;
+                root.parallels.running = false;
+                root.parallels.haveResults = true;
+            });
+    };
+
+    root.runOldParallels = function (minThreshold, maxDistance, sourceList, filterList) {
         root.haveResults = false;
+        root.running = true;
 
         var source;
         return APIService.call('JTextMinerAPI/UnknownTestClassAsSmallUnits', SaveClassInterface.getInstance({
@@ -35,7 +94,7 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
 
                 return data;
             })
-            .then(data => APIService.callParallels(data))
+            .then(data => APIService.callParallels('Parallels', data))
             .then(function (response3) {
                 var results = response3.data;
                 //root.parallels = results;
@@ -140,11 +199,10 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                 root.numOfParallels = numOfParallels;
                 root.parallelsPerChunk = parallelsPerChunk;
                 root.haveResults = true;
-
-                InProgressService.updateIsReady(1);
+                root.running = false;
             })
             .catch(function (errorResponse) {
-                InProgressService.setError(errorResponse.statusText);
+                root.error(errorResponse.statusText);
             });
         };
 

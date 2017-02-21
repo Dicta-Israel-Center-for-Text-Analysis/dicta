@@ -1,16 +1,41 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Parallels - Results</h3>
-    </div>
-    <div class="panel-body">
-        <div>
-            <input name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAll()"> All ({{$ctrl.totalParallels()}})
-        </div>
-        <div ng-repeat="group in $ctrl.experiment.groups">
-            <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetail(group)"> {{group.name}} ({{group.parallels.length}})
-        </div>
-    </div>
+<div style="text-align:center;" ng-if="$ctrl.experiment.stats.running">
+    <img src="images/loader.gif"/>
+    <h5>This may take a while...</h5>
 </div>
-<div>
-    <parallels-details experiment="$ctrl.experiment" filter-group="$ctrl.filterGroup"></parallels-details>
+
+<div ng-if="$ctrl.experiment.stats.haveResults">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Parallels - Results</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-6">
+                <h4>Source</h4>
+                <div>
+                    <input name="sourceGroup" type="radio" checked ng-click="$ctrl.setDetailAllSources()"> All
+                    ({{$ctrl.countParallels(null, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel"> of {{$ctrl.totalParallels()}}</span>)
+                </div>
+                <div ng-if="$ctrl.filterParallel">(filtered by {{$ctrl.filterParallel}})</div>
+                <div ng-repeat="section in $ctrl.getSections()">
+                    <input name="sourceGroup" type="radio" ng-click="$ctrl.setDetailSource(section.name)"> {{section.name}}
+                    ({{$ctrl.countParallels(section.name, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel"> of {{section.parallels}}</span>)
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <h4>Parallels</h4>
+                <div>
+                    <input name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAllParallels()"> All
+                    ({{$ctrl.countParallels($ctrl.filterSource, null)}}<span style="color: #aaa" ng-if="$ctrl.filterSource"> of {{$ctrl.totalParallels()}}</span>)
+                </div>
+                <div ng-if="$ctrl.filterSource">(filtered by {{$ctrl.filterSource}})</div>
+                <div ng-repeat="group in $ctrl.getParallels()">
+                    <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetailParallel(group.name)"> {{group.name}}
+                    ({{$ctrl.countParallels($ctrl.filterSource, group.name)}}<span style="color: #aaa" ng-if="$ctrl.filterSource"> of {{group.parallels}}</span>)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <parallels-details experiment="$ctrl.experiment" filter-source="$ctrl.filterSource" filter-parallel="$ctrl.filterParallel"></parallels-details>
+    </div>
 </div>

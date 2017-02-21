@@ -14,7 +14,7 @@
         <div class="col-xs-12">
             <div ng-show="$ctrl.advancedSettings == 0" class="tab-content">
                 <p>Find Parallels in:
-                    <button class="btn btn-primary disabled">Library...</button>
+                    <button class="btn btn-primary" ng-click="$ctrl.chooseTexts()">Library...</button>
                 </p>
 
                 <p>Look for:</p>
@@ -45,7 +45,8 @@
             </div>
 
             <p>
-            <div class="col-xs-12"><a class="btn btn-primary" ng-click="$ctrl.runParallels()">Find
+            <div class="col-xs-12"><a class="btn btn-primary disabled" ng-show="$ctrl.libraryIds == null">Select from Library first...</a></div>
+            <div class="col-xs-12"><a class="btn btn-primary" ng-show="$ctrl.libraryIds != null" ng-click="$ctrl.runParallels()">Find
                 Parallels</a></div>
             </p>
         </div>

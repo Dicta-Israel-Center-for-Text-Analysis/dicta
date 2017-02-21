@@ -22,9 +22,9 @@ angular.module('JTextMinerApp')
     );
     APIService.call = function (endpoint, data, config) {
         return $http.post(baseUrl + "/" + endpoint, data, config);
-    }
-    APIService.callParallels = function (data) {
-        return $http.post("http://www.dictaparallelsserver.com/api/parallels", data);
-    }
+    };
+    APIService.callParallels = function (endpoint, data) {
+        return $http.post("http://www.dictaparallelsserver.com/api/" + endpoint, data);
+    };
     return APIService;
 });

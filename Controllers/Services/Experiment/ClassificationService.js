@@ -199,6 +199,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     InProgressService.updateIsReady(0);
 
                     classData.expType = 'Classification';
+                    classData.featureSets = this.featureCollection.Feature_sets;
                     return this.callUnknownTestClass(classData)
                         .then(this.callRunClassificationFirstTime.bind(this))
                         .then(this.classifyTestSet.bind(this));

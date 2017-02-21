@@ -43,8 +43,7 @@ jTextMinerApp.component('editFeatureSetDialog', {
             spoOnly: false,
             vocalized: false,
             sinDot: false,
-            removeParentheses: true,
-            removePunctuation: true,
+            includeParenthesizedText: false,
             tokenized: false,
             includeNumber: false,
             includePunctuation: false

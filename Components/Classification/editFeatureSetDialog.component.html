@@ -26,8 +26,8 @@
                     <div class="col-sm-1"></div>
                     <div ng-show="featureSet.tokenizerType == 'Word'" class="col-sm-3">
                             <label ng-show="!isAllBible"  class="checkbox">
-                                <input type="checkbox" ng-model="featureSet.removePunctuation" />
-                                <span>remove punctuation</span>
+                                <input type="checkbox" ng-model="featureSet.includePunctuation" />
+                                <span>include Punctuation</span>
                             </label>
 
                             <label ng-show="isAllBible" ng-disabled="!featureEnabled('vocalized')" class="checkbox">
@@ -37,8 +37,8 @@
                     </div>
                     <div class="col-sm-3" ng-show="featureSet.tokenizerType == 'Word'">
                         <label ng-show="!isAllBible" class="checkbox">
-                            <input type="checkbox" ng-model="featureSet.removeParentheses" />
-                            <span>remove parentheses</span>
+                            <input type="checkbox" ng-model="featureSet.includeParenthesizedText" />
+                            <span>include parenthesized text</span>
                         </label>
                         <label ng-show="isAllBible" class="checkbox">
                             <input disabled type="checkbox" ng-model="featureSet.sinDot" />

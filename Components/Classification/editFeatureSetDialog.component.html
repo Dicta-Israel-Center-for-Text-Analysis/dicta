@@ -27,7 +27,7 @@
                     <div ng-show="featureSet.tokenizerType == 'Word'" class="col-sm-3">
                             <label ng-show="!isAllBible"  class="checkbox">
                                 <input type="checkbox" ng-model="featureSet.includePunctuation" />
-                                <span>include Punctuation</span>
+                                <span>include punctuation</span>
                             </label>
 
                             <label ng-show="isAllBible" ng-disabled="!featureEnabled('vocalized')" class="checkbox">
@@ -67,6 +67,13 @@
             </div>
             <hr>
             <div class="row">
+                <div class="col-xs-12" style="padding-bottom: 10px">
+                    <button class="btn btn-default"
+                            ng-click="showAdvanced = !showAdvanced">
+                        <i class="fa fa-plus"></i>&nbsp; {{showAdvanced ? "Hide" : "Show"}} Advanced Options</button>
+                </div>
+            </div>
+            <div class="row" ng-show="showAdvanced">
                 <div id="featureSetChooseNumber" class="col-sm-5 form-inline">
                     <select class="form-control" name="FilterTypeGroup" ng-model="featureSet.filterType">
                         <option value="Common"> Use most common</option>
@@ -96,8 +103,8 @@
                         </select>
                     </div>
                 </div>
-
-
+            </div>
+            <div class="row">
                 <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">
                     <hr>
                     <div id="featureSetFeatureTable" class="feature" style="height: 500px;overflow-y: auto">

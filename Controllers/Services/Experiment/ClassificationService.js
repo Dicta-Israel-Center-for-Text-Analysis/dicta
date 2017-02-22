@@ -375,8 +375,14 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                 var offset = 0;
                                 for (var i = 0; i < response.data.length; i++) {
                                     var chunk = response.data[i];
-                                    chunk.offset = offset;
-                                    offset += chunk.text.length;
+                                    // FIXME: the server should really send the offsets, since a new "text" has offset 0,
+                                    // and we don't have a way to identify when it's a new text or a new chunk in a large text
+                                    if (chunk.chunkKey.startsWith('/Dicta Corpus/')) {
+                                        chunk.offset = offset;
+                                        offset += chunk.text.length;
+                                    }
+                                    else
+                                        chunk.offset = 0; 
                                 }
                                 return response;
                             }

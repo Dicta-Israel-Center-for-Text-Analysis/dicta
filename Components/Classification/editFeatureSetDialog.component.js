@@ -30,24 +30,7 @@ jTextMinerApp.component('editFeatureSetDialog', {
     }
     else {
         $scope.newFeatureSet = true;
-        $scope.featureSet = {
-            tokenizerType: 'Word',
-            featureType: 'Unigram',
-            normalizerType: 'Frequency',
-            filterType: 'Common',
-            filterCount: 250,
-            takeFromFile: false,
-            descending: true,
-            fromEachClass: false,
-            includeLexeme: false,
-            spoOnly: false,
-            vocalized: false,
-            sinDot: false,
-            includeParenthesizedText: false,
-            tokenized: false,
-            includeNumber: false,
-            includePunctuation: false
-        };
+        $scope.featureSet = featureCollection.getNewFeatureSet();
     }
 
     var corpusSets = {};

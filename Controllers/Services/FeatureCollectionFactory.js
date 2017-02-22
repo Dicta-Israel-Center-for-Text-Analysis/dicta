@@ -1,8 +1,6 @@
 ﻿jTextMinerApp.factory('FeatureCollectionFactory', function ($rootScope) {
     return { newCollection: function () {
         var DEFAULT_FEATURE_SET = {
-            id: 0,
-            featureSetName: 'Default name',
             tokenizerType: 'Word',
             featureType: 'Unigram',
             normalizerType: 'Frequency',
@@ -21,11 +19,20 @@
             includePunctuation: false
         };
 
+        function getNewFeatureSet() {
+            return angular.copy(DEFAULT_FEATURE_SET);
+        }
+
+        var INITIAL_FEATURE_SET = getNewFeatureSet();
+        INITIAL_FEATURE_SET.id = 0;
+        INITIAL_FEATURE_SET.featureSetName = 'Default name';
+
         var collection = {
             totalNumberOfFeatures: 0,
             featuresData: {},
             FeatureSet_maxId: 1,
-            Feature_sets: [DEFAULT_FEATURE_SET]
+            Feature_sets: [INITIAL_FEATURE_SET],
+            getNewFeatureSet: getNewFeatureSet
         };
 
         // does this code work?

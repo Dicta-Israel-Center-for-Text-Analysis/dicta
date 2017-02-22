@@ -318,7 +318,6 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         "Bigram": 2,
                         "Trigram": 3
                     };
-                    var featuresList;
                     experiment.testTexts = [];
                     experiment.testTextsFeatures = [];
                     var textPromises = [];
@@ -360,11 +359,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                     "nGram": nGramMap[featureSet.featureType]
                                 }
                             };
-                            featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest)
-                                .then(function (response) {
-                                    featuresList = response.data[0].features;
-                                    experiment.testTextsFeatures = experiment.testTextsFeatures.concat(response.data);
-                                }));
+                            featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest));
                         }
                         var textRequest = {
                             "keys": [
@@ -375,12 +370,29 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             ],
                             "chunkType": "LARGE"
                         };
-                        textPromises.push(APIService.call("TextFeatures/GetText", textRequest)
-                            .then(function (response) {
-                                experiment.testTexts = experiment.testTexts.concat(response.data);
-                            }));
+                        textPromises.push(APIService.call("TextFeatures/GetText", textRequest).then(
+                            function(response) {
+                                var offset = 0;
+                                for (var i = 0; i < response.data.length; i++) {
+                                    var chunk = response.data[i];
+                                    chunk.offset = offset;
+                                    offset += chunk.text.length;
+                                }
+                                return response;
+                            }
+                        ));
                     }
-                    return $q.all(featurePromises.concat(textPromises));
+                    var textCompletePromise = $q.all(textPromises).then(function (responses) {
+                        experiment.testTexts = responses.map(response => response.data)
+                            // flatten the array of arrays to one array
+                            .reduce( ( acc, cur ) => acc.concat(cur), [] );
+                    });
+                    var featuresCompletePromise = $q.all(featurePromises).then(function (responses) {
+                        experiment.testTextsFeatures = responses.map(response => response.data)
+                        // flatten the array of arrays to one array
+                            .reduce( ( acc, cur ) => acc.concat(cur), [] );
+                    });
+                    return $q.all([textCompletePromise, featuresCompletePromise]);
                 }
             }
             return experiment;

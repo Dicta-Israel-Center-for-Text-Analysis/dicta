@@ -127,7 +127,7 @@ jTextMinerApp.component('classification', {
             var text = ctrl.experiment.testTexts[index];
             var featuresList = ctrl.experiment.testTextsFeatures[index].features;
             var words = text.text.split(' ');
-            var currentOffset = 0;
+            var currentOffset = text.offset;
             var pieces = [];
 
             function hack(name) {

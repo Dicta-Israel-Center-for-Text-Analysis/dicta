@@ -93,7 +93,7 @@ jTextMinerApp.component('afterLoginPage',
                 template: '<choose-text-dialog ' +
                 'on-confirm="saveClass(selectionData);confirm()" ' +
                 'on-cancel="cancelClass();confirm()" ' +
-                'save-message="\'Select as text text\'"' +
+                'save-message="\'Select as test text\'"' +
                 'starting-mode="\'' + mode + '\'">' +
                 '</choose-text-dialog>'
             });

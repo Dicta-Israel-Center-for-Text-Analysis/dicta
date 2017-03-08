@@ -4,7 +4,7 @@ jTextMinerApp.factory('SaveClassInterface', function (UserService) {
             return {
                 // most of these are unused, but are needed for API calls
                 testSetActionMode: settings['testSet'] ? settings.text.mode : 'SelectOnlineCorpus',
-                actionMode: settings.text.mode,
+                actionMode: settings.text ? settings.text.mode : null,
                 browse_ClassName: settings.className,
                 select_ClassName: settings.className,
                 browse_ChunkMode: settings.text.mode == 'BrowseThisComputer' ? settings.text.chunkMode : 'DoNotChunk',

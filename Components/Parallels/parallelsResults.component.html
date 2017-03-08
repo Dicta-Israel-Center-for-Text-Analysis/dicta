@@ -13,29 +13,45 @@
                 <h4>Source</h4>
                 <div>
                     <input name="sourceGroup" type="radio" checked ng-click="$ctrl.setDetailAllSources()"> All
-                    ({{$ctrl.countParallels(null, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel"> of {{$ctrl.totalParallels()}}</span>)
+                    ({{$ctrl.countParallels(null, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel">
+                        filtered from {{$ctrl.totalParallels()}} total</span>)
                 </div>
                 <div ng-if="$ctrl.filterParallel">(filtered by {{$ctrl.filterParallel}})</div>
                 <div ng-repeat="section in $ctrl.getSections()">
-                    <input name="sourceGroup" type="radio" ng-click="$ctrl.setDetailSource(section.name)"> {{section.name}}
-                    ({{$ctrl.countParallels(section.name, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel"> of {{section.parallels}}</span>)
+                    <input name="sourceGroup" type="radio" ng-click="$ctrl.setDetailSource(section)">
+                    {{section.name}}
+                    ({{$ctrl.countParallels(section, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel">
+                        filtered from {{section.count}}</span>)
                 </div>
             </div>
             <div class="col-xs-6">
                 <h4>Parallels</h4>
                 <div>
                     <input name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAllParallels()"> All
-                    ({{$ctrl.countParallels($ctrl.filterSource, null)}}<span style="color: #aaa" ng-if="$ctrl.filterSource"> of {{$ctrl.totalParallels()}}</span>)
+                    ({{$ctrl.countParallels($ctrl.filterSource, null)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
+                        filtered from {{$ctrl.totalParallels()}}</span>)
                 </div>
-                <div ng-if="$ctrl.filterSource">(filtered by {{$ctrl.filterSource}})</div>
-                <div ng-repeat="group in $ctrl.getParallels()">
-                    <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetailParallel(group.name)"> {{group.name}}
-                    ({{$ctrl.countParallels($ctrl.filterSource, group.name)}}<span style="color: #aaa" ng-if="$ctrl.filterSource"> of {{group.parallels}}</span>)
+                <div ng-if="$ctrl.filterSource">(filtered by {{$ctrl.filterSource.name}})</div>
+                <div ng-repeat="group in $ctrl.groupList($ctrl.getParallels(), 0)">
+                    <h5 ng-hide="group.heading ==''"><i ng-click="$ctrl.parallelExpand[group.heading] = !$ctrl.parallelExpand[group.heading]"
+                           class="fa {{$ctrl.parallelExpand[group.heading] ? 'fa-chevron-down' : 'fa-chevron-right'}}"
+                    ></i> {{group.heading}}
+                    ({{$ctrl.countParallels($ctrl.filterSource, group.heading)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
+                        filtered from {{group.count}}</span>)
+                    </h5>
+                    <div ng-show="group.heading == '' || $ctrl.parallelExpand[group.heading]" ng-repeat="item in group.sublist">
+                    <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetailParallel(item.title)">
+                    {{item.title}}
+                    ({{$ctrl.countParallels($ctrl.filterSource, item.title)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
+                        filtered from {{item.count}}</span>)
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <parallels-details experiment="$ctrl.experiment" filter-source="$ctrl.filterSource" filter-parallel="$ctrl.filterParallel"></parallels-details>
+        <parallels-details experiment="$ctrl.experiment"
+                           filter-source="$ctrl.filterSource"
+                           filter-parallel="$ctrl.filterParallel"></parallels-details>
     </div>
 </div>

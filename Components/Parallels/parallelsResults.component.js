@@ -10,21 +10,35 @@ jTextMinerApp.component('parallelsResults',
             ctrl.filterSource = null;
             ctrl.filterParallel = null;
 
-            Array.prototype.sum = function sum() {
-                var t = this.reduce((count, item) => (+item) + count, 0);
-                return t;
-            }
+            Object.defineProperties(Array.prototype, {
+                sum: {
+                    value: function sum() {
+                        return this.reduce((count, item) => (+item) + count, 0);
+                    }
+                }
+            });
 
             ctrl.run = function() {
-                if (ctrl.filterSource == null) return;
-                var sourceObjects = ctrl.experiment.stats.filter(x => x.title.endsWith(ctrl.filterSource));
-                ctrl.experiment.runParallels(
-                    ctrl.experiment.minThreshold,
-                    ctrl.experiment.maxDistance,
-                    ctrl.filterSource ? sourceObjects.map(x => x.chunk_name) : null,
-                    ctrl.filterParallel ? ctrl.filterParallel : sourceObjects[0].parallels.map(obj => obj.xmlId)
-                );
-                return true;
+                if (ctrl.filterSource || ctrl.totalParallels() < 50)
+                    ctrl.experiment.runParallels(
+                        ctrl.experiment.minThreshold,
+                        ctrl.experiment.maxDistance,
+                        // if a particular source is selected, call with that, otherwise use null
+                        // and it will default to using the whole selected text
+                        ctrl.filterSource ? [ctrl.filterSource.chunk_name] : null,
+                        ctrl.filterParallel
+                            // if the parallels are filtered to a particular book, call with that book
+                            ? [ctrl.filterParallel.xmlId]
+                            : ctrl.filterSource
+                                // if not, then if we have a particular source, call only with the parallels to that
+                                // source, so that the server doesn't have to search everything again
+                                ? ctrl.filterSource.parallels.map(obj => obj.xmlId)
+                                // if we don't even have a particular source, call with all the xmlIds in all the
+                                // parallels that were found
+                                : ctrl.experiment.stats
+                                    .reduce((acc, cur) => acc.concat(cur.parallels),[])
+                                    .map(obj => obj.xmlId)
+                    );
             };
 
             ctrl.setDetailSource = function(group) {
@@ -46,11 +60,12 @@ jTextMinerApp.component('parallelsResults',
             };
 
             ctrl.countParallels = function(source, parallelFilter) {
-                return ctrl.experiment.stats
-                    .filter(chunk => source == null ? true : SelectClassService.testSetTitlesCommonPrefix + "/" + source == "/Dicta Corpus/" + chunk.title)
+                return (source == null ? ctrl.experiment.stats : [source])
                     .map(
                     group => group.parallels
-                        .filter(parallel => parallelFilter == null ? true : parallel.title == parallelFilter)
+                        .filter(parallel => parallelFilter == null
+                            ? true
+                            : parallel.title == parallelFilter || parallel.title.startsWith(parallelFilter + '/'))
                         .map(parallel => parallel.count)
                         .sum()
                 ).sum();
@@ -59,32 +74,40 @@ jTextMinerApp.component('parallelsResults',
             ctrl.totalParallels = function() {
                 return ctrl.experiment.stats.map(group => group.parallels.map(parallel => parallel.count).sum()).sum();
             };
+
             function getSectionTitleBase(source) {
+                if (source.startsWith('/User'))
+                    return source.substring(source.lastIndexOf('/') + 1);
                 var baseTitle = source.substring(SelectClassService.testSetTitlesCommonPrefix.length + 1);
                 return baseTitle;
             }
+
             ctrl.lastStats = null;
-            ctrl.lastSections = null;
+            // this function returns a one to one mapping, so that the index in this array is the same as
+            // the index in the stats array
             ctrl.getSections = function () {
                 if (ctrl.experiment.stats == ctrl.lastStats)
-                    return ctrl.lastSections;
-                var baseSections = ctrl.experiment.stats.map(
-                    source => ({
-                        name: getSectionTitleBase("/Dicta Corpus/" + source.title),
-                        parallels: source.parallels.map(text => text.count).sum()
-                    }));
+                    return ctrl.experiment.stats;
+                ctrl.experiment.stats.forEach(
+                    function(source, index) {
+                        source.name = getSectionTitleBase(ctrl.experiment.chunks
+                            ? ctrl.experiment.chunks[index].chunkKey
+                            : "/Dicta Corpus/" + source.title)
+                        source.count = source.numParallels;
+                    });
                 ctrl.lastStats = ctrl.experiment.stats;
-                ctrl.lastSections = baseSections;
-                return baseSections;
+                return ctrl.experiment.stats;
             };
 
+            // angular requires a function used for binding to return the same object when nothing changed,
+            // not just the same values
             ctrl.lastParallelsStats = null;
             ctrl.lastParallels = null;
             ctrl.getParallels = function () {
                 if (ctrl.experiment.stats == ctrl.lastParallelsStats)
                     return ctrl.lastParallels;
                 ctrl.lastParallelsStats = ctrl.experiment.stats;
-                var baseParallels = ctrl.experiment.stats
+                var summarizedParallels = ctrl.experiment.stats
                     // collect and flatten the parallels into an array
                     .map(text => text.parallels)
                     .reduce((a, b) => a.concat(b), [])
@@ -92,6 +115,7 @@ jTextMinerApp.component('parallelsResults',
                     .reduce((obj, parallel) => {
                         if (!(parallel.title in obj)) {
                             obj[parallel.title] = {
+                                title: parallel.title,
                                 count: +parallel.count,
                                 sortOrder: parallel.sortOrder,
                                 xmlId: parallel.xmlId
@@ -101,32 +125,47 @@ jTextMinerApp.component('parallelsResults',
                             obj[parallel.title].count += +parallel.count;
                         return obj;
                     }, {});
-                var parallelsList = Object.keys(baseParallels)
-                    .map(key => ({name: key, parallels: baseParallels[key].count, sortOrder: baseParallels[key].sortOrder}))
+                var sortedParallelsList = Object.keys(summarizedParallels)
+                    .map(key => summarizedParallels[key])
                     .sort((a, b) => a.sortOrder - b.sortOrder);
-                ctrl.lastParallels = parallelsList;
-                return parallelsList;
+                ctrl.lastParallels = sortedParallelsList;
+                return sortedParallelsList;
             };
-            // ctrl.oldSections = [];
-            // ctrl.oldParallels = [];
-            // ctrl.getSections = function() {
-            //     if (ctrl.experiment.parallelsPerChunk == ctrl.oldParallels)
-            //         return ctrl.oldSections;
-            //     ctrl.oldParallels = ctrl.experiment.parallelsPerChunk;
-            //     var sections = [];
-            //     var lastName = null;
-            //     for (var i = 0; i < ctrl.experiment.sourceForSmallUnits.length; i++) {
-            //         var name = getSectionTitleBase(ctrl.experiment.sourceForSmallUnits[i]);
-            //         if (name != lastName) {
-            //             sections.push({name: name, parallels: ctrl.experiment.parallelsPerChunk[i].parallels.length});
-            //             lastName = name;
-            //         }
-            //         else {
-            //             sections[sections.length - 1].parallels += ctrl.experiment.parallelsPerChunk[i].parallels.length;
-            //         }
-            //     }
-            //     ctrl.oldSections = sections;
-            //     return sections;
-            // }
+
+            let cacheInputs = [];
+            let cacheOutputs = [];
+            ctrl.parallelExpand = [];
+            ctrl.groupList = function (list, cacheNum) {
+                if (cacheInputs[cacheNum] === list)
+                    return cacheOutputs[cacheNum];
+                let groups = [];
+                if (list.length < 10) {
+                    groups = [{
+                        heading: '',
+                        sublist: list
+                    }]
+                }
+                else {
+                list.forEach(function(item) {
+                    var parts = item.title.split(/(\/[^\/]*)\//, 2);
+                    var heading = parts[0] + parts[1];
+                    if (groups.length > 0 && groups[groups.length - 1].heading === heading) {
+                        groups[groups.length - 1].sublist.push(item);
+                        groups[groups.length - 1].count += item.count;
+                    }
+                    else {
+                        groups.push({
+                            heading,
+                            count: item.count,
+                            sublist: [item]
+                        })
+                        ctrl.parallelExpand[heading] = false;
+                    }
+                });
+                }
+                cacheInputs[cacheNum] = list;
+                cacheOutputs[cacheNum] = groups;
+                return groups;
+            }
         }
 }); 

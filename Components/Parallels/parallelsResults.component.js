@@ -148,7 +148,9 @@ jTextMinerApp.component('parallelsResults',
                 else {
                 list.forEach(function(item) {
                     var parts = item.title.split(/(\/[^\/]*)\//, 2);
-                    var heading = parts[0] + parts[1];
+                    var heading = parts[0];
+                    if (parts[1])
+                        heading += parts[1];
                     if (groups.length > 0 && groups[groups.length - 1].heading === heading) {
                         groups[groups.length - 1].sublist.push(item);
                         groups[groups.length - 1].count += item.count;

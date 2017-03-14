@@ -16,7 +16,7 @@
         <div ng-repeat="largeUnit in $ctrl.text track by $index"
              ng-init="parentIndex = $index"
              class="col-xs-10 col-xs-offset-1">
-            <div style="float:left" class="col-xs-6" ng-if="$ctrl.getSectionTitle($index)">
+            <div style="float:left" class="col-xs-8" ng-if="$ctrl.getSectionTitle($index)">
                 <h5 class="parallels-source-heading">
                     {{$ctrl.getSectionTitle($index)}}</h5>
             </div>

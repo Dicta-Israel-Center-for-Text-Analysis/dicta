@@ -163,3 +163,7 @@ table.feature-set-table tbody tr td {
     border-radius: 5px;
     border:#BBB 1px solid
 }
+
+*[ng-click] {
+    cursor: pointer;
+}

@@ -6,7 +6,7 @@
  *
  * */
 angular.module('JTextMinerApp')
-    .factory('ExperimentService', function($rootScope, APIService, UserService) {
+    .factory('ExperimentService', function($rootScope, APIService, UserService, $q) {
 
     var algorithms = [
         { id: 0, name: 'Weka_SMO', attributes: '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"' },
@@ -25,18 +25,20 @@ angular.module('JTextMinerApp')
     ];
 
         function resetServerInternal(experimentName) {
-            var data = {
-                userLogin: UserService.user,
-                expType: 'Classification',
-                expName: experimentName
-            };
-
-            return APIService.call('JTextMinerAPI/NewExperiment', data)
-                .then(function (response) {
-                    if (response.data.userLogin.length == 0) {
-                        throw "Reset server failed.";
-                    }
-                });
+            // Removing the API from the server
+            // var data = {
+            //     userLogin: UserService.user,
+            //     expType: 'Classification',
+            //     expName: experimentName
+            // };
+            //
+            // return APIService.call('JTextMinerAPI/NewExperiment', data)
+            //     .then(function (response) {
+            //         if (response.data.userLogin.length == 0) {
+            //             throw "Reset server failed.";
+            //         }
+            //     });
+            return $q.resolve();
         }
 
         var service = {

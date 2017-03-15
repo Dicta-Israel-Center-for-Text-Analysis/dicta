@@ -18,9 +18,18 @@ jTextMinerApp.component('viewSelectedText', {
                 experimentName: 'Untitled'
             });
 
-            APIService.apiRun({crud: 'UnknownTestClassAsChunks'}, classData, function (response) {
-                ctrl.chunks = response.chunks;
-                ctrl.source = response.source;
+            APIService.call('TextFeatures/GetText',{
+                    "keys": SelectClassService.testText.keys.map(textKey =>
+                        ({
+                            "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
+                            "key": textKey
+                        })
+                    ),
+                    "chunkType": "LARGE"
+                })
+                .then(function (response) {
+                ctrl.chunks = response.data.map(chunk => chunk.text);
+                ctrl.source = response.data.map(chunk => chunk.chunkKey);
 
                 InProgressService.updateIsReady(1);
 

@@ -36,9 +36,10 @@ jTextMinerApp.component('afterLoginPage',
             expType: "Classification"
         };
 
-        APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, requestData, function (response) {
-            $scope.fileNameList = response;
-        });
+        // API removed
+        // APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, requestData, function (response) {
+        //     $scope.fileNameList = response;
+        // });
 
         $scope.UpdateData = function (data) {
             // ExperimentService.updateExperimentName(data.expName);

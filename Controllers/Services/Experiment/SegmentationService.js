@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollectionFactory, ClassService, ExperimentService, UserService, SelectClassService, InProgressService, APIService) {
+jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollectionFactory, ClassService, ExperimentService, UserService, SelectClassService, InProgressService, APIService) {
     var root = {
         newExperiment () {
             var segmentationExperiment = {
@@ -21,7 +21,9 @@
 
             segmentationExperiment.updateSegmentation_ActionModeValue = function () {
                 segmentationExperiment.Segmentation_ActionMode = 'SelectOnlineCorpus'; // used to use ClassService.ExperimentTestSetActionMode, but it never changed;
-                if (angular.equals(segmentationExperiment.Segmentation_ActionMode, 'SelectOnlineCorpus'))
+                if (SelectClassService.testText.keys.every(
+                    key => /^\/Dicta Corpus\/Tanakh\/(Torah|Prophets|Writings)/.test(key)
+                ))
                     segmentationExperiment.Segmentation_ChunkBy = 'BibleChapter';
                 else
                     segmentationExperiment.Segmentation_ChunkBy = 'NumberOfSentence';
@@ -29,9 +31,9 @@
 
             segmentationExperiment.createRequest = function (data) {
                 return angular.extend(data, {
-                    userLogin: UserService.user,
-                    expType: 'Segmentation',
-                    expName: 'Untitled',
+                    // userLogin: UserService.user,
+                    // expType: 'Segmentation',
+                    // expName: 'Untitled',
                     featureSets: this.featureCollection.Feature_sets,
                     segmentationActionMode: this.Segmentation_ActionMode,
                     segmentationChunkBy: this.Segmentation_ChunkBy
@@ -39,7 +41,6 @@
             }
 
             segmentationExperiment.createDataForExtract = function () {
-                segmentationExperiment.updateSegmentation_ActionModeValue();
                 var dataExtract = segmentationExperiment.createRequest({
                     corpusClasses: [],
                     featuresData: {},
@@ -54,7 +55,7 @@
                     selectedAlgorithmTypeId: this.base.selectedAlgorithmTypeId,
                     selectedAlgorithmTypeName: this.base.selectedAlgorithmTypeName,
                     selectedAlgorithmTypeAttributes: this.base.selectedAlgorithmTypeAttributes,
-                    featuresData: this.featureCollection.featuresData,
+                    featuresData: {},
                     segmentationSplitString: this.Segmentation_SplitString,
                     segmentationNumberOfSentencePerChunk: this.Segmentation_NumberOfSentencePerChunk,
                     segmentationSimilarityType: this.Segmentation_SimilarityType,
@@ -75,7 +76,9 @@
                     }
                 });
                 InProgressService.updateIsReady(0);
-
+                
+                segmentationExperiment.updateSegmentation_ActionModeValue();
+                
                 var tmp = segmentationExperiment.createDataForRun();
                 tmp.extractData = segmentationExperiment.createDataForExtract();
                 return APIService.call('JTextMinerAPI/RunSegmentation', tmp)

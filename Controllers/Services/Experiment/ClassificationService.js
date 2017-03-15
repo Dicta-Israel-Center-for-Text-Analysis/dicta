@@ -4,7 +4,6 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
             var experiment = {
                 featureCollection: FeatureCollectionFactory.newCollection(),
                 Classification_CrossValidationFolds: 10,
-                Classification_ExperimentType: 'CV',
                 Classification_isKeepingChunksFromSameFileTogether: false,
                 Classification_TestSetExperimentType: 'Unknown',
                 cvResultData: [],
@@ -28,29 +27,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 },
 
                 DeleteClass(index) {
-                    var currentClass = this.classes.Corpus_classes[index];
-                    var deleteData = {
-                        title: currentClass.title,
-                        id: currentClass.id,
-                        userLogin: UserService.user,
-                        expType: 'Classification',
-                        expName: this.base.experimentName,
-                        trainSet: this.trainSet
-                    };
-                    InProgressService.updateIsReady(0);
-
-                    return APIService.apiRun({crud: 'DeleteClass'}, deleteData, function (results) {
-                        this.trainSet = results.trainSet;
-                        this.classes.Corpus_classes.splice(index, 1);
-                        this.featureCollection.updateFeaturesData({});
-                        //this.classes.updateIsAllBibleValue(true);
-                        for (var i = 0; i < this.classes.Corpus_classes.length; i++) {
-                            var corpusClass = this.classes.Corpus_classes[i];
-                            //this.classes.updateIsAllBibleValue(this.classes.isAllBible && corpusClass.bible);
-                        }
-                        InProgressService.updateIsReady(1);
-                    }.bind(this)
-                    ).$promise;
+                    var deletedClass = this.classes.Corpus_classes.splice(index, 1)[0];
+                    delete this.trainSet[deletedClass.title];
+                    this.featureCollection.updateFeaturesData({});
                 },
 
                 runClassification() {
@@ -64,9 +43,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         InProgressService.updateIsReady(0);
 
                         var apiCallData = {
-                            userLogin: UserService.user,
-                            expType: 'Classification',
-                            expName: this.base.experimentName,
+                            //userLogin: UserService.user,
+                            //expType: 'Classification',
+                            //expName: this.base.experimentName,
                             featureSets: this.featureCollection.Feature_sets,
                             trainSet: this.trainSet
                         };
@@ -121,7 +100,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     else
                         return $q.when(null);
                 },
-                createRequestForRunClassification() {
+                createRequestForRunClassification(type) {
                     return {
                         userLogin: UserService.user,
                         expType: 'Classification',
@@ -129,7 +108,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         selectedAlgorithmTypeId: this.base.selectedAlgorithmTypeId,
                         selectedAlgorithmTypeName: this.base.selectedAlgorithmTypeName,
                         selectedAlgorithmTypeAttributes: this.base.selectedAlgorithmTypeAttributes,
-                        classificationExperimentMode: this.Classification_ExperimentType,
+                        classificationExperimentMode: type,
                         //classificationCrossValidationType: this.base.Classification_CrossValidationType,
                         classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
                         //classificationSplitRatioCrossValidation: this.base.Classification_Split_ratio_cross_validation,
@@ -156,26 +135,31 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                     chunkSize: results.browse_MinimumChunkSize,
                                     numberOfChunks: results.numberOfChunks
                                 }];
-                            this.Classification_ExperimentType = 'CV';
-
                             InProgressService.updateIsReady(0);
                         }.bind(this)
                     ).$promise;
                 },
 
                 callRunClassificationFirstTime() {
-                    return APIService.call('JTextMinerAPI/RunClassification',
-                        this.createRequestForRunClassification())
+                    return APIService.call('JTextMinerAPI/RunCrossValidation',
+                        this.createRequestForRunClassification('CV'))
                         .then(
                             function (response) {
-                                this.Classification_ExperimentType = 'TestSet';
                                 this.cvResultData = response.data;
                             }.bind(this)
                         );
                 },
 
                 classifyTestSet() {
-                    return APIService.call('JTextMinerAPI/RunClassification', this.createRequestForRunClassification())
+                    var testClassData = SaveClassInterface.getInstance({
+                        experimentName: this.base.experimentName,
+                        testSet: true,
+                        text: SelectClassService.testText
+                    });
+                    testClassData.featureSets = this.featureCollection.Feature_sets;
+                    var request = this.createRequestForRunClassification('TestSet');
+                    request.unknownTestSetData = testClassData;
+                    return APIService.call('JTextMinerAPI/RunTestSet', request)
                         .then(
                         function (response2) {
                             InProgressService.updateIsReady(1);
@@ -191,17 +175,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 },
 
                 runClassificationInternal() {
-                    var classData = SaveClassInterface.getInstance({
-                        experimentName: this.base.experimentName,
-                        testSet: true,
-                        text: SelectClassService.testText
-                    });
                     InProgressService.updateIsReady(0);
 
-                    classData.expType = 'Classification';
-                    classData.featureSets = this.featureCollection.Feature_sets;
-                    return this.callUnknownTestClass(classData)
-                        .then(this.callRunClassificationFirstTime.bind(this))
+                    return this.callRunClassificationFirstTime()
                         .then(this.classifyTestSet.bind(this));
                 },
 
@@ -215,7 +191,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         selectedAlgorithmTypeId: ExperimentService.selectedAlgorithmTypeId,
                         selectedAlgorithmTypeName: ExperimentService.selectedAlgorithmTypeName,
                         selectedAlgorithmTypeAttributes: ExperimentService.selectedAlgorithmTypeAttributes,
-                        classificationExperimentMode: this.Classification_ExperimentType,
+                        classificationExperimentMode: 'CV',
                         classificationCrossValidationFolds: this.Classification_CrossValidationFolds,
                         corpusMaxId: ClassService.Corpus_maxId,
                         featureSets: this.featureCollection.Feature_sets,

@@ -17,6 +17,13 @@
             });
         };
 
+        this.guestLogin = function () {
+            UserService.tryLogin("testuser")
+                .then(function () {
+                    $location.path('AfterLogin');
+                })
+        }
+
         var cookieUsername = $.cookie('userLogin');
         if (cookieUsername != null) {
             UserService.tryLogin(cookieUsername)

@@ -8,7 +8,7 @@ jTextMinerApp.component('afterLoginPage',
             $location.path('Login');
 
         $scope.isShow = false;
-        $scope.currentUser = UserService.user;
+        ctrl.currentUser = UserService.user == "testuser" ? "Guest User" : UserService.user;
 
         $scope.LoadExperiment = function (fileName) {
             ExperimentService.updateExperimentName(fileName);

@@ -26,9 +26,9 @@ jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserSer
         var uploadUrl;
         switch(argument_name) {
             case 'zipFile':
-                uploadUrl = "JTextMinerAPI/uploadZipFile"; break;
+                uploadUrl = "UserService/UploadZipFile"; break;
             case 'txtFile':
-                uploadUrl = "JTextMinerAPI/uploadTxtFile"; break;
+                uploadUrl = "UserService/UploadTxtFile"; break;
             default:
                 throw "Unknown upload type.";
         }
@@ -38,7 +38,7 @@ jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserSer
         })
         .then(function (response) {
             // this is an array of word counts
-            return response.data;
+            return response.data.data;
         })
         .catch(function () {
             InProgressService.updateIsReady(-1);

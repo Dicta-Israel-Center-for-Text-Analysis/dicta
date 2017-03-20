@@ -8,12 +8,21 @@
  * */
 angular.module('JTextMinerApp')
         .factory("APIService", function ($resource, $http, $location) {
-    var baseUrl = $location.protocol() + "://localhost:8080/NewWebSite/api";
-    //baseUrl = $location.protocol() + "://dev.dicta.org.il/WebServiceJTextMinerDev/api";
-    baseUrl = $location.protocol() + "://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/WebServiceJTextMinerNewRoot8/api";
-    var url = baseUrl + "/JTextMinerAPI";
 
-    var APIService = $resource(url + "/:crud/:secondParam",
+    function getAPIUrl(endpoint) {
+        const baseUrl = $location.protocol()
+            // + "://localhost:8080/"
+            // + "://dev.dicta.org.il/"
+            + "://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/"
+            + (endpoint.startsWith("JTextMinerAPI")
+                // ? "NewWebSite" : "DictaDatabaseServer"
+                // ? "WebServiceJTextMinerDev" : "DictaDatabaseServer"
+                ? "WebServiceJTextMiner" : "DictaDatabaseServer"
+            ) + "/api/";
+        return baseUrl + endpoint;
+    }
+
+    var APIService = $resource(getAPIUrl("JTextMinerAPI") + "/:crud/:secondParam",
         { crud: "@crud", secondParam: "@secondParam" },
         {
             "apiRun": { method: 'POST', isArray: false },
@@ -21,7 +30,7 @@ angular.module('JTextMinerApp')
         }
     );
     APIService.call = function (endpoint, data, config) {
-        return $http.post(baseUrl + "/" + endpoint, data, config);
+        return $http.post(getAPIUrl(endpoint), data, config);
     };
     APIService.callParallels = function (endpoint, data) {
         return $http.post("http://www.dictaparallelsserver.com/api/" + endpoint, data);

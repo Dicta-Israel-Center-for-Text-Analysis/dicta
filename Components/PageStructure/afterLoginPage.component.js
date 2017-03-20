@@ -8,7 +8,7 @@ jTextMinerApp.component('afterLoginPage',
             $location.path('Login');
 
         $scope.isShow = false;
-        $scope.currentUser = UserService.user;
+        ctrl.currentUser = UserService.user == "testuser" ? "Guest User" : UserService.user;
 
         $scope.LoadExperiment = function (fileName) {
             ExperimentService.updateExperimentName(fileName);
@@ -36,9 +36,10 @@ jTextMinerApp.component('afterLoginPage',
             expType: "Classification"
         };
 
-        APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, requestData, function (response) {
-            $scope.fileNameList = response;
-        });
+        // API removed
+        // APIService.apiGetArray({crud: 'GetUploadStoredExperiments'}, requestData, function (response) {
+        //     $scope.fileNameList = response;
+        // });
 
         $scope.UpdateData = function (data) {
             // ExperimentService.updateExperimentName(data.expName);

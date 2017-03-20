@@ -37,10 +37,8 @@ jTextMinerApp.component('compareLibraries', {
             ctrl.fixmeCounter = 1;
             ctrl.saveClass = function (selectionData) {
                 if (ctrl.experiment.classes.Corpus_classes.length > 1)
-                    ctrl.experiment.DeleteClass(1)
-                    .then(() => ctrl.experiment.saveClass(selectionData));
-                else
-                    ctrl.experiment.saveClass(selectionData);
+                    ctrl.experiment.DeleteClass(1);
+                ctrl.experiment.saveClass(selectionData);
             };
             ctrl.showCrossvalidation = function () {
                 ngDialog.openConfirm({

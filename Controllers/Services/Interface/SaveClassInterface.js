@@ -17,11 +17,11 @@ jTextMinerApp.factory('SaveClassInterface', function (UserService) {
                 select_ChunkMode: 'DoNotChunk',
                 select_MinimumChunkSize: 250,
                 select_ChunkSize: 0,
-                select_RootKeys: settings.text.mode == 'SelectOnlineCorpus' ? settings.text.keys : [],
+                select_RootKeys: settings.text.keys,
                 activeKey: '',
-                userLogin: UserService.user,
-                expType: settings.expType ? settings.expType : 'Classification',
-                expName: settings.experimentName,
+                //userLogin: UserService.user,
+                //expType: settings.expType ? settings.expType : 'Classification',
+                //expName: settings.experimentName,
                 trainSet: settings.trainSet ? settings.trainSet : {}
             }
         }

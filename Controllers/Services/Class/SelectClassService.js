@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('SelectClassService', function (UserService) {
+﻿jTextMinerApp.factory('SelectClassService', function (UserService, APIService) {
     var service = {
         newTextFromCorpus(keys, ids){
             return {
@@ -14,15 +14,28 @@
                 filename,
                 chunkMode,
                 chunkSize,
-                get keys() {
+                get constructedkeys() {
                     return this.fileId
                         ? ["/UserUpload/" +
                             UserService.userToken + "/"
                             + this.fileId + "/chunkMode:" + this.chunkMode + "/maxChunk:" + this.chunkSize]
                         : [];
                 },
+                keys: [],
                 ids: [],
-                textInfo: {}
+                textInfo: {},
+                runChunking() {
+                    return APIService.call('UserService/ChunkUploadedFolder', {
+                        browse_ChunkMode: this.chunkMode,
+                        browse_MinimumChunkSize: this.chunkSize,
+                        browse_ClassName: "unused",
+                        browse_FileName: this.filename,
+                        userLogin: UserService.user
+                    })
+                        .then(function (response) {
+                            this.keys.push(response.data);
+                        }.bind(this))
+                }
             }
         },
         testText: null,

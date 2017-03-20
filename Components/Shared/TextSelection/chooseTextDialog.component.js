@@ -57,9 +57,12 @@ jTextMinerApp.component('chooseTextDialog', {
             }
             if (ctrl.className)
                 result.className = ctrl.className;
-            ctrl.onConfirm({
-                selectionData: result
-            });
+            if (result.hasOwnProperty("runChunking"))
+                result.runChunking().then(function() {
+                    ctrl.onConfirm({selectionData: result});
+                });
+            else
+                ctrl.onConfirm({selectionData: result});
         }
     }
 });

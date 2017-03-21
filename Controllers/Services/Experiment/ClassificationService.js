@@ -121,25 +121,6 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     };
                 },
 
-                callUnknownTestClass(classData) {
-                    return APIService.apiRun(
-                        {crud: 'UnknownTestClass'},
-                        classData,
-                        function (results) {
-                            InProgressService.updateIsReady(1);
-                            this.classes.TestSet_unknown_class = [{
-                                    id: 1,
-                                    title: results.browse_ClassName,
-                                    selectedText: results.selectedText,
-                                    chunkMode: results.browse_ChunkMode,
-                                    chunkSize: results.browse_MinimumChunkSize,
-                                    numberOfChunks: results.numberOfChunks
-                                }];
-                            InProgressService.updateIsReady(0);
-                        }.bind(this)
-                    ).$promise;
-                },
-
                 callRunClassificationFirstTime() {
                     return APIService.call('JTextMinerAPI/RunCrossValidation',
                         this.createRequestForRunClassification('CV'))

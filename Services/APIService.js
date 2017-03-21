@@ -8,16 +8,22 @@
  * */
 angular.module('JTextMinerApp')
         .factory("APIService", function ($resource, $http, $location) {
+    function hostToUrlPrefix(host) {
+        if (host.startsWith("localhost")) return "://localhost:8080/";
+        if (host.startsWith("dev.dicta")) return "://dev.dicta.org.il/";
+        return "://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/";
+    }
 
+    function hostToEndpoint(host) {
+        if (host.startsWith("localhost")) return "NewWebSite";
+        if (host.startsWith("dev.dicta")) return "WebServiceJTextMinerDev";
+        return "WebServiceJTextMiner";
+    }
     function getAPIUrl(endpoint) {
         const baseUrl = $location.protocol()
-            // + "://localhost:8080/"
-            // + "://dev.dicta.org.il/"
-            + "://ec2-35-156-213-159.eu-central-1.compute.amazonaws.com/"
+            + hostToUrlPrefix($location.host())
             + (endpoint.startsWith("JTextMinerAPI")
-                // ? "NewWebSite" : "DictaDatabaseServer"
-                // ? "WebServiceJTextMinerDev" : "DictaDatabaseServer"
-                ? "WebServiceJTextMiner" : "DictaDatabaseServer"
+                ? hostToEndpoint($location.host()) : "DictaDatabaseServer"
             ) + "/api/";
         return baseUrl + endpoint;
     }

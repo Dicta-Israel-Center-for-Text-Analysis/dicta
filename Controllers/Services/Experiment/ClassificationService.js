@@ -224,12 +224,12 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             .then( function (response) {
                                 InProgressService.updateIsReady(1);
                                 var results = response.data;
-                                experiment.trainSet = results.trainSet;
+                                experiment.trainSet[selectionData.className] = selectionData.keys;
                                 addClass({
-                                    title: results.browse_ClassName,
+                                    title: selectionData.className,
                                     selectedText: results.selectedText,
-                                    chunkMode: results.browse_ChunkMode,
-                                    chunkSize: results.browse_MinimumChunkSize,
+                                    chunkMode: selectionData.browse_ChunkMode,
+                                    chunkSize: selectionData.browse_MinimumChunkSize,
                                     numberOfChunks: results.numberOfChunks,
                                     totalNumberOfWords: results.totalNumberOfWords,
                                     bible: false
@@ -248,9 +248,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             .then(function (response) {
                                 InProgressService.updateIsReady(1);
                                 var results = response.data;
-                                experiment.trainSet = results.trainSet;
+                                experiment.trainSet[selectionData.className] = selectionData.keys;
                                 addClass({
-                                    title: results.select_ClassName,
+                                    title: selectionData.className,
                                     selectedText: results.selectedText,
                                     chunkMode: 'By chapter',
                                     chunkSize: '',

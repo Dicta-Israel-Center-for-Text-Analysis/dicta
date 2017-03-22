@@ -12,12 +12,6 @@ jTextMinerApp.component('viewSelectedText', {
                 return $sce.trustAsHtml(chunk);
             };
 
-            //UnknownTestClass
-            var classData = SaveClassInterface.getInstance({
-                text: SelectClassService.testText,
-                experimentName: 'Untitled'
-            });
-
             APIService.call('TextFeatures/GetText',{
                     "keys": SelectClassService.testText.keys.map(textKey =>
                         ({

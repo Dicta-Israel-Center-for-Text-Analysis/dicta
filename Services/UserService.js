@@ -7,16 +7,19 @@
  *
  * */
 angular.module('JTextMinerApp')
-    .factory('UserService', ['APIService', function(APIService){
+    .factory('UserService', ['APIService', '$q', function(APIService, $q){
 
     var Service = {
         $user: null,
-        tryLogin (username) {
+        $loginDeferral: $q.defer(),
+        tryLogin (username, isBibleUser) {
+            this.$isBibleUser = true == isBibleUser;
             APIService.call('UserService/Login', {
                 username
             })
                 .then(response => {
                     if (response.data.success) {
+                        Service.$loginDeferral.resolve();
                         Service.$userToken = response.data.data;
                     }
                 });
@@ -37,6 +40,12 @@ angular.module('JTextMinerApp')
         },
         get userToken() {
             return this.$userToken;
+        },
+        get isBibleUser() {
+            return this.$isBibleUser;
+        },
+        get loginPromise() {
+            return this.$loginDeferral.promise;
         }
     };
 
@@ -44,7 +53,8 @@ angular.module('JTextMinerApp')
         var login = response.data.userLogin;
         if (login != "") {
             Service.$user = login;
-            $.cookie('userLogin', login);
+            if (login != 'testuser')
+                $.cookie('userLogin', login);
         }
         else
             throw "Login error.";

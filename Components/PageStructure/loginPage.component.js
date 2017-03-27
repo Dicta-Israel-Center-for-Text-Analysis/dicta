@@ -24,6 +24,13 @@
                 })
         }
 
+        this.guestBibleLogin = function () {
+            UserService.tryLogin("testuser", true)
+                .then(function () {
+                    $location.path('AfterLogin');
+                })
+        }
+
         var cookieUsername = $.cookie('userLogin');
         if (cookieUsername != null) {
             UserService.tryLogin(cookieUsername)

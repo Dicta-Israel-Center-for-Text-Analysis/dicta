@@ -16,8 +16,12 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
             };
             // the default feature set for segmentation is different than for other experiments
             segmentationExperiment.featureCollection = FeatureCollectionFactory.newCollection();
-            segmentationExperiment.featureCollection.Feature_sets[0].vocalized = true;
-            segmentationExperiment.featureCollection.Feature_sets[0].tokenized = true;
+            angular.extend(segmentationExperiment.featureCollection.Feature_sets[0],
+                {
+                    tokenized: true,
+                    filterCount: 500,
+                    normalizerType: "Binary"
+                });
 
             segmentationExperiment.updateSegmentation_ActionModeValue = function () {
                 segmentationExperiment.Segmentation_ActionMode = 'SelectOnlineCorpus'; // used to use ClassService.ExperimentTestSetActionMode, but it never changed;

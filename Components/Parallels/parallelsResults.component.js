@@ -9,6 +9,8 @@ jTextMinerApp.component('parallelsResults',
             var ctrl = this;
             ctrl.filterSource = null;
             ctrl.filterParallel = null;
+            ctrl.showAll = false;
+            ctrl.resultsLimit = 5;
 
             Object.defineProperties(Array.prototype, {
                 sum: {
@@ -19,13 +21,13 @@ jTextMinerApp.component('parallelsResults',
             });
 
             ctrl.run = function() {
-                if (ctrl.filterSource || ctrl.totalParallels() < 50)
+                if (ctrl.filterSources)
                     ctrl.experiment.runParallels(
                         ctrl.experiment.minThreshold,
                         ctrl.experiment.maxDistance,
                         // if a particular source is selected, call with that, otherwise use null
                         // and it will default to using the whole selected text
-                        ctrl.filterSource ? [ctrl.filterSource.chunk_name] : null,
+                        ctrl.filterSources.map(source => source.chunk_name),
                         ctrl.filterParallel
                             // if the parallels are filtered to a particular book, call with that book
                             ? [ctrl.filterParallel.xmlId]
@@ -35,18 +37,21 @@ jTextMinerApp.component('parallelsResults',
                                 ? ctrl.filterSource.parallels.map(obj => obj.xmlId)
                                 // if we don't even have a particular source, call with all the xmlIds in all the
                                 // parallels that were found
-                                : ctrl.experiment.stats
+                                // ... Set is way to keep only unique values
+                                : [...new Set(ctrl.experiment.stats
                                     .reduce((acc, cur) => acc.concat(cur.parallels),[])
-                                    .map(obj => obj.xmlId)
+                                    .map(obj => obj.xmlId))]
                     );
             };
 
             ctrl.setDetailSource = function(group) {
                 ctrl.filterSource = group;
+                ctrl.filterSources = [group];
                 ctrl.run();
             };
             ctrl.setDetailParallel = function(group) {
                 ctrl.filterParallel = group;
+                ctrl.filterParallels = [group];
                 ctrl.run();
             };
 
@@ -95,6 +100,24 @@ jTextMinerApp.component('parallelsResults',
                             : "/Dicta Corpus/" + source.title)
                         source.count = source.numParallels;
                     });
+                // run details on the first results
+                ctrl.filterSourcesSplit = ctrl.experiment.stats.reduce((acc, cur) => {
+                    const lastSegment = acc[acc.length - 1];
+                    const parallelsSoFar = lastSegment.map(source => source.count).sum();
+                    if (parallelsSoFar > 50 && parallelsSoFar + cur.count >= 100)
+                        acc.push([cur]);
+                    else
+                        acc[acc.length - 1].push(cur);
+                    return acc;
+                }, [[]])
+                ctrl.filterSourcesSplitIndex = -1;
+                ctrl.moreResults = function() {
+                    ctrl.filterSourcesSplitIndex ++;
+                    ctrl.filterSources = ctrl.filterSourcesSplit[ctrl.filterSourcesSplitIndex];
+                    ctrl.moreResultsAvailable = ctrl.filterSourcesSplit.length > ctrl.filterSourcesSplitIndex + 1;
+                    ctrl.run();
+                };
+                ctrl.moreResults();
                 ctrl.lastStats = ctrl.experiment.stats;
                 return ctrl.experiment.stats;
             };
@@ -132,8 +155,18 @@ jTextMinerApp.component('parallelsResults',
                 return sortedParallelsList;
             };
 
+            ctrl.toggleShowAll = function () {
+                ctrl.showAll = !ctrl.showAll;
+                ctrl.resultsLimit = ctrl.showAll ? 1000000 : 5;
+            };
+
             let cacheInputs = [];
             let cacheOutputs = [];
+
+            ctrl.overflowResults = function () {
+                return cacheOutputs.some(output => output.length > 5)
+            };
+
             ctrl.parallelExpand = [];
             ctrl.groupList = function (list, cacheNum) {
                 if (cacheInputs[cacheNum] === list)

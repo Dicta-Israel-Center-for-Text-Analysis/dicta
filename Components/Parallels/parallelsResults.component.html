@@ -17,12 +17,13 @@
                         filtered from {{$ctrl.totalParallels()}} total</span>)
                 </div>
                 <div ng-if="$ctrl.filterParallel">(filtered by {{$ctrl.filterParallel}})</div>
-                <div ng-repeat="section in $ctrl.getSections()">
+                <div ng-repeat="section in $ctrl.getSections() | limitTo:$ctrl.resultsLimit">
                     <input name="sourceGroup" type="radio" ng-click="$ctrl.setDetailSource(section)">
                     {{section.name}}
                     ({{$ctrl.countParallels(section, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel">
                         filtered from {{section.count}}</span>)
                 </div>
+                <div ng-if="$ctrl.getSections().length > $ctrl.resultsLimit">...</div>
             </div>
             <div class="col-xs-6">
                 <h4>Parallels</h4>
@@ -32,7 +33,7 @@
                         filtered from {{$ctrl.totalParallels()}}</span>)
                 </div>
                 <div ng-if="$ctrl.filterSource">(filtered by {{$ctrl.filterSource.name}})</div>
-                <div ng-repeat="group in $ctrl.groupList($ctrl.getParallels(), 0)">
+                <div ng-repeat="group in $ctrl.groupList($ctrl.getParallels(), 0)| limitTo:$ctrl.resultsLimit">
                     <h5 ng-hide="group.heading ==''"><i ng-click="$ctrl.parallelExpand[group.heading] = !$ctrl.parallelExpand[group.heading]"
                            class="fa {{$ctrl.parallelExpand[group.heading] ? 'fa-chevron-down' : 'fa-chevron-right'}}"
                     ></i> {{group.heading}}
@@ -46,12 +47,18 @@
                         filtered from {{item.count}}</span>)
                     </div>
                 </div>
+                <div ng-if="$ctrl.groupList($ctrl.getParallels(), 0).length > $ctrl.resultsLimit">...</div>
             </div>
+            <div class="text-center" ng-if="$ctrl.overflowResults()"><button class="btn btn-default" ng-click="$ctrl.toggleShowAll()">
+                {{$ctrl.showAll ? "Hide" : "Show All"}}
+            </button></div>
         </div>
     </div>
     <div>
         <parallels-details experiment="$ctrl.experiment"
-                           filter-source="$ctrl.filterSource"
-                           filter-parallel="$ctrl.filterParallel"></parallels-details>
+                           filter-sources="$ctrl.filterSources"
+                           filter-parallels="$ctrl.filterParallels"
+                           more-results="$ctrl.moreResults()"
+                           more-results-available="$ctrl.moreResultsAvailable"></parallels-details>
     </div>
 </div>

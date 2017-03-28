@@ -78,7 +78,10 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
             }
 
             root.runParallels = function (minThreshold, maxDistance, sourceList, filterList) {
-                root.parallels.running = true;
+                root.parallels = {
+                    haveResults: false,
+                    running: true
+                }
                 createRequest(sourceList, minThreshold, maxDistance)
                     .then(data => {
                         if (filterList)

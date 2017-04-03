@@ -1,0 +1,22 @@
+<form>
+    <input ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">
+</form>
+<p></p>
+<div style="text-align:center" ng-show="$ctrl.searching">
+    <img src="images/loader.gif"/>
+</div>
+<div ng-hide="$ctrl.searching || !$ctrl.searchResponse.hasOwnProperty('hits')">
+    <p>{{$ctrl.searchResponse.hits.total}} results, showing results {{$ctrl.offset + 1}} - {{$ctrl.offset + $ctrl.searchResults.length}}.</p>
+    <div ng-repeat="result in $ctrl.searchResults">
+        <div class="clearfix"></div>
+        <h5 class="col-xs-1" style="width: 1%">{{$ctrl.offset + $index + 1}}.</h5>
+        <div class="col-xs-10">
+            <h5>{{result._source.english_path || result._source.displayname_eng}}</h5>
+            <h5 class="text-left" dir="rtl">{{result._source.hebrew_path || result._source.displayname_heb}}</h5>
+            <p class="col-xs-10" dir="rtl"><span ng-bind-html="$ctrl.highlight(result._source.parsed_text)"></span></p>
+        </div>
+    </div>
+    <div class="col-xs-10 text-center">
+        <button class="btn btn-default" ng-show="$ctrl.searchResponse.hits.total > $ctrl.offset + $ctrl.RESULTS_AT_A_TIME" ng-click="$ctrl.nextResults()">More Results</button>
+    </div>
+</div>

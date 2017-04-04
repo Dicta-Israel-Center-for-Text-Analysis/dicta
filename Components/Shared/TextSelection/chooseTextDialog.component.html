@@ -29,7 +29,7 @@
                 ng-click="$ctrl.confirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>
         <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"
-                ng-click="$ctrl.onCancel()">Cancel
+                ng-hide="$ctrl.hideCancel" ng-click="$ctrl.onCancel()">Cancel
         </button>
     </div>
 </div>

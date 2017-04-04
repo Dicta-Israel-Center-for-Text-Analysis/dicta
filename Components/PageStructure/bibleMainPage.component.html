@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-2" style="position:sticky;top:0">
+            <h1>Dicta</h1>
+            <ul class="nav nav-tabs tabs-left">
+                <li class="{{$ctrl.active('search')}}" ng-click="$ctrl.tab='search'"><a>Search</a></li>
+                <li class="{{$ctrl.active('select')}}" ng-click="$ctrl.tab='select'"><a>Choose Text</a></li>
+                <li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>
+                <li class="{{$ctrl.active('classify')}}" ng-click="$ctrl.tab='classify'"><a>Classify a Text</a></li>
+                <li class="{{$ctrl.active('segmentation')}}" ng-click="$ctrl.tab='segmentation'"><a>Source Criticism</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-2"><h1>&nbsp;</h1></div>
+        <div class="col-xs-10">
+            <search ng-if="$ctrl.tab=='search'" ></search>
+            <div ng-if="$ctrl.tab=='select'">
+                <div ng-if="$ctrl.textChosen">
+                    <h4>Selected Text</h4>
+                    <ul>
+                        <!-- FIXME: list-style-type is only set because style.css is a mess -->
+                        <li style="list-style-type: disc" ng-repeat="key in $ctrl.selectedText.keys">{{key}}</li>
+                    </ul>
+                    <div ng-hide="$ctrl.showChooseText">
+                        <button class="btn btn-default"
+                                ng-click="$ctrl.showChooseText = true">Change Selection</button>
+                    </div>
+                </div>
+                <choose-text-dialog
+                    ng-if="$ctrl.showChooseText"
+                    on-confirm="$ctrl.saveText(selectionData)"
+                    hide-cancel="true"
+                ></choose-text-dialog>
+            </div>
+            <parallels ng-if="$ctrl.textChosen && $ctrl.tab=='parallels'"></parallels>
+            <classification ng-if="$ctrl.textChosen && $ctrl.tab=='classify'"></classification>
+            <segmentation ng-if="$ctrl.textChosen && $ctrl.tab=='segmentation'"></segmentation>
+            <div ng-if="!$ctrl.textChosen && ['parallels','classify','segmentation'].includes($ctrl.tab)">Please <a ng-click="$ctrl.tab='select'">choose a text</a> first.</div>
+        </div>
+    </div>
+</div>

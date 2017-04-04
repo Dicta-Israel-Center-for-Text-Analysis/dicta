@@ -27,7 +27,7 @@
         this.guestBibleLogin = function () {
             UserService.tryLogin("testuser", true)
                 .then(function () {
-                    $location.path('AfterLogin');
+                    $location.path('AfterBibleLogin');
                 })
         }
 

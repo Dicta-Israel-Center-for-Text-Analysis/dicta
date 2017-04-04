@@ -26,6 +26,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/AfterLogin',
         template: '<after-login-page></after-login-page>'
     })
+    .state('AfterBibleLogin', {
+        url: '/AfterBibleLogin',
+        template: '<bible-main-page></bible-main-page>'
+    })
     .state('Unmasking', {
         url: '/Unmasking',
         controller: 'UnmaskingController',

@@ -1,5 +1,6 @@
-<form>
-    <input ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">
+<form class="form-inline">
+    <input class="form-control" style="width:300px" ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">
+    <button class="btn btn-default form-control" ng-click="$ctrl.search()"><i class="fa fa-search"></i></button>
 </form>
 <p></p>
 <div style="text-align:center" ng-show="$ctrl.searching">

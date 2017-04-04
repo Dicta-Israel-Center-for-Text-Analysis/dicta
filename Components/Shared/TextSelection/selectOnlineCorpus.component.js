@@ -1,4 +1,4 @@
-jTextMinerApp.component('selectOnlineCorpus', {
+﻿jTextMinerApp.component('selectOnlineCorpus', {
         bindings: { selectionText: '=' },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
         controller: ['TreeService', 'SelectClassService', function (TreeService, SelectClassService) {
@@ -9,11 +9,11 @@ jTextMinerApp.component('selectOnlineCorpus', {
                     children: TreeService.corpusTree
                 }];
             }
-            initBreadCrumbs();
 
             TreeService.readyPromise.then(function() {
                 ctrl.corpusTree = TreeService.corpusTree;
                 ctrl.treeNode = ctrl.corpusTree;
+                initBreadCrumbs();
             });
 
             // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs

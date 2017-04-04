@@ -12,8 +12,8 @@
         </div>
         <div class="col-xs-2"><h1>&nbsp;</h1></div>
         <div class="col-xs-10">
-            <search ng-if="$ctrl.tab=='search'" ></search>
-            <div ng-if="$ctrl.tab=='select'">
+            <search ng-show="$ctrl.tab=='search'" ></search>
+            <div ng-show="$ctrl.tab=='select'">
                 <div ng-if="$ctrl.textChosen">
                     <h4>Selected Text</h4>
                     <ul>
@@ -26,14 +26,16 @@
                     </div>
                 </div>
                 <choose-text-dialog
-                    ng-if="$ctrl.showChooseText"
+                    ng-show="$ctrl.showChooseText"
                     on-confirm="$ctrl.saveText(selectionData)"
                     hide-cancel="true"
                 ></choose-text-dialog>
             </div>
-            <parallels ng-if="$ctrl.textChosen && $ctrl.tab=='parallels'"></parallels>
-            <classification ng-if="$ctrl.textChosen && $ctrl.tab=='classify'"></classification>
-            <segmentation ng-if="$ctrl.textChosen && $ctrl.tab=='segmentation'"></segmentation>
+            <div ng-if="$ctrl.textChosen">
+                <parallels ng-show="$ctrl.tab=='parallels'"></parallels>
+                <classification ng-show="$ctrl.tab=='classify'"></classification>
+                <segmentation ng-show="$ctrl.tab=='segmentation'"></segmentation>
+            </div>
             <div ng-if="!$ctrl.textChosen && ['parallels','classify','segmentation'].includes($ctrl.tab)">Please <a ng-click="$ctrl.tab='select'">choose a text</a> first.</div>
         </div>
     </div>

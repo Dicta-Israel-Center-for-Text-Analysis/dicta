@@ -12,13 +12,9 @@ jTextMinerApp.component('parallelsResults',
             ctrl.showAll = false;
             ctrl.resultsLimit = 5;
 
-            Object.defineProperties(Array.prototype, {
-                sum: {
-                    value: function sum() {
-                        return this.reduce((count, item) => (+item) + count, 0);
-                    }
-                }
-            });
+            function sum(list) {
+                return list.reduce((count, item) => (+item) + count, 0);
+            }
 
             ctrl.run = function() {
                 if (ctrl.filterSources)
@@ -65,19 +61,19 @@ jTextMinerApp.component('parallelsResults',
             };
 
             ctrl.countParallels = function(source, parallelFilter) {
-                return (source == null ? ctrl.experiment.stats : [source])
+                return sum((source == null ? ctrl.experiment.stats : [source])
                     .map(
-                    group => group.parallels
+                    group => sum(group.parallels
                         .filter(parallel => parallelFilter == null
                             ? true
                             : parallel.title == parallelFilter || parallel.title.startsWith(parallelFilter + '/'))
                         .map(parallel => parallel.count)
-                        .sum()
-                ).sum();
+                        )
+                ));
             };
 
             ctrl.totalParallels = function() {
-                return ctrl.experiment.stats.map(group => group.parallels.map(parallel => parallel.count).sum()).sum();
+                return sum(ctrl.experiment.stats.map(group => sum(group.parallels.map(parallel => parallel.count))));
             };
 
             function getSectionTitleBase(source) {
@@ -103,7 +99,7 @@ jTextMinerApp.component('parallelsResults',
                 // run details on the first results
                 ctrl.filterSourcesSplit = ctrl.experiment.stats.reduce((acc, cur) => {
                     const lastSegment = acc[acc.length - 1];
-                    const parallelsSoFar = lastSegment.map(source => source.count).sum();
+                    const parallelsSoFar = sum(lastSegment.map(source => source.count));
                     if (parallelsSoFar > 50 && parallelsSoFar + cur.count >= 100)
                         acc.push([cur]);
                     else

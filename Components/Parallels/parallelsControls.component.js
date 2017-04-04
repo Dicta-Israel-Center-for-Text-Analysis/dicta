@@ -4,13 +4,16 @@ jTextMinerApp.component('parallelsControls',
         experiment: '<'
     },
     templateUrl: 'Components/Parallels/parallelsControls.component.html',
-    controller: ['ngDialog',
-        function(ngDialog) {
+    controller: ['ngDialog','TreeService', 'UserService',
+        function(ngDialog, TreeService, UserService) {
             var ctrl = this;
             // start on basic tab
             ctrl.advancedSettings = 0;
             ctrl.experiment.minParallelLength=12;
             ctrl.experiment.maxParallelSkip=6;
+            if (UserService.isBibleUser)
+                ctrl.libraryIds = TreeService.corpusTree.map(node => node.xmlId);
+
             ctrl.runParallels = function () {
                 ctrl.experiment.runStatistics(ctrl.experiment.minParallelLength, ctrl.experiment.maxParallelSkip, ctrl.libraryIds);
             }

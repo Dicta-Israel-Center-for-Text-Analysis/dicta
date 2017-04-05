@@ -17,8 +17,9 @@ jTextMinerApp.component('search',
                     offset = 0;
                 $http.post("http://dev.dicta.org.il/essearch/",{
                     "query": {
-                        "match": {
-                            "_all": ctrl.searchTerm
+                        "multi_match": {
+                            "fields": ["_all", "parsed_text.x", "parsed_text.y"],
+                            "query": ctrl.searchTerm
                         }
                     },
                     "from": offset,

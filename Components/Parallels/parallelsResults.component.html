@@ -12,51 +12,49 @@
             <div class="col-xs-6">
                 <h4>Source</h4>
                 <div>
-                    <input name="sourceGroup" type="radio" checked ng-click="$ctrl.setDetailAllSources()"> All
-                    ({{$ctrl.countParallels(null, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel">
+                    <input style="margin-left: 20px"
+                           name="sourceGroup" type="radio"
+                           checked
+                           ng-click="$ctrl.setDetailAllSources()">
+                    All
+                    ({{$ctrl.countParallels(null, $ctrl.filterParallels)}}<span style="color: #aaa"
+                                                                               ng-if="$ctrl.filterParallels.length > 0">
                         filtered from {{$ctrl.totalParallels()}} total</span>)
                 </div>
-                <div ng-if="$ctrl.filterParallel">(filtered by {{$ctrl.filterParallel}})</div>
-                <div ng-repeat="section in $ctrl.getSections() | limitTo:$ctrl.resultsLimit">
-                    <input name="sourceGroup" type="radio" ng-click="$ctrl.setDetailSource(section)">
-                    {{section.name}}
-                    ({{$ctrl.countParallels(section, $ctrl.filterParallel)}}<span style="color: #aaa" ng-if="$ctrl.filterParallel">
-                        filtered from {{section.count}}</span>)
-                </div>
-                <div ng-if="$ctrl.getSections().length > $ctrl.resultsLimit">...</div>
+                <div ng-if="$ctrl.filterParallels.length > 0">(filtered by {{$ctrl.filterParallelsHeading}})</div>
+                <group-list list="$ctrl.getSections()"
+                            on-items-selected="$ctrl.setDetailSources(items, heading)"
+                            selected="$ctrl.selectedFilterSources"
+                            on-length-change="$ctrl.onLengthChange('sections', length, actualLength)"
+                            limit-shown="$ctrl.max($ctrl.resultsLimit, $ctrl.cacheActualLengths['parallels'])"
+                            radio-group="sourceGroup"></group-list>
             </div>
             <div class="col-xs-6">
                 <h4>Parallels</h4>
                 <div>
-                    <input name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAllParallels()"> All
-                    ({{$ctrl.countParallels($ctrl.filterSource, null)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
+                    <input style="margin-left: 20px" name="parallelsGroup" type="radio" checked ng-click="$ctrl.setDetailAllParallels()"> All
+                    ({{$ctrl.countParallels($ctrl.selectedFilterSources, null)}}<span style="color: #aaa"
+                                                                             ng-if="$ctrl.selectedFilterSources.length > 0">
                         filtered from {{$ctrl.totalParallels()}}</span>)
                 </div>
-                <div ng-if="$ctrl.filterSource">(filtered by {{$ctrl.filterSource.name}})</div>
-                <div ng-repeat="group in $ctrl.groupList($ctrl.getParallels(), 0)| limitTo:$ctrl.resultsLimit">
-                    <h5 ng-hide="group.heading ==''"><i ng-click="$ctrl.parallelExpand[group.heading] = !$ctrl.parallelExpand[group.heading]"
-                           class="fa {{$ctrl.parallelExpand[group.heading] ? 'fa-chevron-down' : 'fa-chevron-right'}}"
-                    ></i> {{group.heading}}
-                    ({{$ctrl.countParallels($ctrl.filterSource, group.heading)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
-                        filtered from {{group.count}}</span>)
-                    </h5>
-                    <div ng-show="group.heading == '' || $ctrl.parallelExpand[group.heading]" ng-repeat="item in group.sublist">
-                    <input name="parallelsGroup" type="radio" ng-click="$ctrl.setDetailParallel(item.title)">
-                    {{item.title}}
-                    ({{$ctrl.countParallels($ctrl.filterSource, item.title)}}<span style="color: #aaa" ng-if="$ctrl.filterSource">
-                        filtered from {{item.count}}</span>)
-                    </div>
-                </div>
-                <div ng-if="$ctrl.groupList($ctrl.getParallels(), 0).length > $ctrl.resultsLimit">...</div>
+                <div ng-if="$ctrl.selectedFilterSources.length > 0">(filtered by {{$ctrl.filterSourcesHeading}})</div>
+                <group-list list="$ctrl.getParallels()"
+                            selected="$ctrl.filterParallels"
+                            on-items-selected="$ctrl.setDetailParallels(items, heading)"
+                            on-length-change="$ctrl.onLengthChange('parallels', length, actualLength)"
+                            limit-shown="$ctrl.max($ctrl.resultsLimit, $ctrl.cacheActualLengths['sections'])"
+                            radio-group="parallelsGroup"></group-list>
             </div>
-            <div class="text-center" ng-if="$ctrl.overflowResults()"><button class="btn btn-default" ng-click="$ctrl.toggleShowAll()">
-                {{$ctrl.showAll ? "Hide" : "Show All"}}
-            </button></div>
+            <div class="col-xs-10 text-center" ng-if="$ctrl.overflowResults()">
+                <button class="btn btn-default" ng-click="$ctrl.toggleShowAll()">
+                    {{$ctrl.showAll ? "Hide" : "Show All"}}
+                </button>
+            </div>
         </div>
     </div>
     <div>
         <parallels-details experiment="$ctrl.experiment"
-                           filter-sources="$ctrl.filterSources"
+                           filter-sources="$ctrl.actualFilterSources"
                            filter-parallels="$ctrl.filterParallels"
                            more-results="$ctrl.moreResults()"
                            more-results-available="$ctrl.moreResultsAvailable"></parallels-details>

@@ -6,113 +6,130 @@ jTextMinerApp.component('parallelsResults',
     templateUrl: 'Components/Parallels/parallelsResults.component.html',
     controller:
         function(SelectClassService) {
-            var ctrl = this;
-            ctrl.filterSource = null;
-            ctrl.filterParallel = null;
+            const ctrl = this;
+            ctrl.selectedFilterSources = [];
+            ctrl.actualFilterSources = [];
+            ctrl.filterParallels = [];
             ctrl.showAll = false;
             ctrl.resultsLimit = 5;
 
-            function sum(list) {
-                return list.reduce((count, item) => (+item) + count, 0);
+            ctrl.runDetails = function() {
+                function getParallelsByXmlId(sources) {
+                    return _.uniq(
+                        _.flatMap(sources, text => text.parallels)
+                            .map(parallel => parallel.xmlId));
+                }
+
+                if (_.isEmpty(ctrl.filterSources) && _.isEmpty(ctrl.filterParallels))
+                    ctrl.actualFilterSources = ctrl.filterSourcesSplit[ctrl.filterSourcesSplitIndex];
+
+                ctrl.experiment.runParallels(
+                    ctrl.experiment.minThreshold,
+                    ctrl.experiment.maxDistance,
+                    // if a particular source is selected, call with that, otherwise use null
+                    // and it will default to using the whole selected text
+                    ctrl.actualFilterSources.map(source => source.chunk_name),
+                    ctrl.filterParallels
+                        // if the parallels are filtered to a particular book, call with that book
+                        ? ctrl.filterParallels.map(parallel => parallel.xmlId)
+                        : _.isEmpty(ctrl.filterSources)
+                            // if we don't even have a particular source, call with all the xmlIds in all the
+                            // parallels that were found
+                            ? getParallelsByXmlId(ctrl.experiment.stats)
+                            // if not, then if we have a particular source, call only with the parallels to that
+                            // source, so that the server doesn't have to search everything again
+                            : getParallelsByXmlId(ctrl.filterSources)
+
+                );
+            };
+
+            ctrl.countParallels = function(sources, parallelFilters) {
+                let actualSources = _.isEmpty(sources) ? ctrl.experiment.stats : sources;
+                let parallels = _.flatMap(actualSources, source => source.parallels);
+                return _.sum(parallels
+                            .filter(parallel => (_.isEmpty(parallelFilters) ? true : parallelFilters.some(
+                                filter => parallel.title === filter.title || parallel.title.startsWith(filter.title + '/'))
+                            ))
+                            .map(parallel => parallel.count)
+                         
+                );
+            };
+
+            function updateFilteredCount() {
+                ctrl.experiment.stats.forEach(
+                    item => {
+                        item.filteredCount = ctrl.countParallels([item], ctrl.filterParallels);
+                    });
             }
 
-            ctrl.run = function() {
-                if (ctrl.filterSources)
-                    ctrl.experiment.runParallels(
-                        ctrl.experiment.minThreshold,
-                        ctrl.experiment.maxDistance,
-                        // if a particular source is selected, call with that, otherwise use null
-                        // and it will default to using the whole selected text
-                        ctrl.filterSources.map(source => source.chunk_name),
-                        ctrl.filterParallel
-                            // if the parallels are filtered to a particular book, call with that book
-                            ? [ctrl.filterParallel.xmlId]
-                            : ctrl.filterSource
-                                // if not, then if we have a particular source, call only with the parallels to that
-                                // source, so that the server doesn't have to search everything again
-                                ? ctrl.filterSource.parallels.map(obj => obj.xmlId)
-                                // if we don't even have a particular source, call with all the xmlIds in all the
-                                // parallels that were found
-                                // ... Set is way to keep only unique values
-                                : [...new Set(ctrl.experiment.stats
-                                    .reduce((acc, cur) => acc.concat(cur.parallels),[])
-                                    .map(obj => obj.xmlId))]
-                    );
+            ctrl.setDetailSources = function(items, heading) {
+                ctrl.filterSourcesHeading = heading;
+                ctrl.actualFilterSources = ctrl.selectedFilterSources = items;
+                updateFilteredCount();
+                ctrl.runDetails();
             };
-
-            ctrl.setDetailSource = function(group) {
-                ctrl.filterSource = group;
-                ctrl.filterSources = [group];
-                ctrl.run();
-            };
-            ctrl.setDetailParallel = function(group) {
-                ctrl.filterParallel = group;
-                ctrl.filterParallels = [group];
-                ctrl.run();
-            };
-
             ctrl.setDetailAllSources = function() {
-                ctrl.filterSource = null;
-                ctrl.run();
+                ctrl.actualFilterSources = ctrl.selectedFilterSources = [];
+                updateFilteredCount();
+                ctrl.runDetails();
+            };
+
+            ctrl.setDetailParallels = function(items, heading) {
+                ctrl.filterParallels = items;
+                ctrl.filterParallelsHeading = heading;
+                updateFilteredCount();
+                ctrl.runDetails();
             };
             ctrl.setDetailAllParallels = function() {
-                ctrl.filterParallel = null;
-                ctrl.run();
-            };
-
-            ctrl.countParallels = function(source, parallelFilter) {
-                return sum((source == null ? ctrl.experiment.stats : [source])
-                    .map(
-                    group => sum(group.parallels
-                        .filter(parallel => parallelFilter == null
-                            ? true
-                            : parallel.title == parallelFilter || parallel.title.startsWith(parallelFilter + '/'))
-                        .map(parallel => parallel.count)
-                        )
-                ));
+                ctrl.filterParallels = [];
+                updateFilteredCount();
+                ctrl.runDetails();
             };
 
             ctrl.totalParallels = function() {
-                return sum(ctrl.experiment.stats.map(group => sum(group.parallels.map(parallel => parallel.count))));
+                return _.sum(ctrl.experiment.stats.map(group => _.sum(group.parallels.map(parallel => parallel.count))));
             };
 
             function getSectionTitleBase(source) {
                 if (source.startsWith('/User'))
                     return source.substring(source.lastIndexOf('/') + 1);
-                var baseTitle = source.substring(SelectClassService.testSetTitlesCommonPrefix.length + 1);
-                return baseTitle;
+                return source.substring(SelectClassService.testSetTitlesCommonPrefix.length + 1);
             }
 
             ctrl.lastStats = null;
-            // this function returns a one to one mapping, so that the index in this array is the same as
-            // the index in the stats array
+            // this function returns the stats array, but annotates it with name, count, and filteredCount
             ctrl.getSections = function () {
-                if (ctrl.experiment.stats == ctrl.lastStats)
+                if (ctrl.experiment.stats === ctrl.lastStats && ctrl.filterParallels === ctrl.lastFilterParallels)
                     return ctrl.experiment.stats;
+                ctrl.lastFilterParallels = ctrl.filterParallels;
                 ctrl.experiment.stats.forEach(
                     function(source, index) {
                         source.name = getSectionTitleBase(ctrl.experiment.chunks
                             ? ctrl.experiment.chunks[index].chunkKey
-                            : "/Dicta Corpus/" + source.title)
+                            : "/Dicta Corpus/" + source.title);
                         source.count = source.numParallels;
                     });
+                updateFilteredCount();
                 // run details on the first results
+                // first split into pages of results
                 ctrl.filterSourcesSplit = ctrl.experiment.stats.reduce((acc, cur) => {
                     const lastSegment = acc[acc.length - 1];
-                    const parallelsSoFar = sum(lastSegment.map(source => source.count));
+                    const parallelsSoFar = _.sum(lastSegment.map(source => source.count));
                     if (parallelsSoFar > 50 && parallelsSoFar + cur.count >= 100)
                         acc.push([cur]);
                     else
                         acc[acc.length - 1].push(cur);
                     return acc;
-                }, [[]])
+                }, [[]]);
                 ctrl.filterSourcesSplitIndex = -1;
+                // function to return next page of results
                 ctrl.moreResults = function() {
                     ctrl.filterSourcesSplitIndex ++;
-                    ctrl.filterSources = ctrl.filterSourcesSplit[ctrl.filterSourcesSplitIndex];
+                    ctrl.actualFilterSources = ctrl.filterSourcesSplit[ctrl.filterSourcesSplitIndex];
                     ctrl.moreResultsAvailable = ctrl.filterSourcesSplit.length > ctrl.filterSourcesSplitIndex + 1;
-                    ctrl.run();
+                    ctrl.runDetails();
                 };
+                // run for the first time to retrieve the first page of results
                 ctrl.moreResults();
                 ctrl.lastStats = ctrl.experiment.stats;
                 return ctrl.experiment.stats;
@@ -121,11 +138,13 @@ jTextMinerApp.component('parallelsResults',
             // angular requires a function used for binding to return the same object when nothing changed,
             // not just the same values
             ctrl.lastParallelsStats = null;
+            ctrl.lastFilterSources = null;
             ctrl.lastParallels = null;
             ctrl.getParallels = function () {
-                if (ctrl.experiment.stats == ctrl.lastParallelsStats)
+                if (ctrl.experiment.stats == ctrl.lastParallelsStats && ctrl.selectedFilterSources === ctrl.lastFilterSources)
                     return ctrl.lastParallels;
                 ctrl.lastParallelsStats = ctrl.experiment.stats;
+                ctrl.lastFilterSources = ctrl.selectedFilterSources;
                 var summarizedParallels = ctrl.experiment.stats
                     // collect and flatten the parallels into an array
                     .map(text => text.parallels)
@@ -144,59 +163,49 @@ jTextMinerApp.component('parallelsResults',
                             obj[parallel.title].count += +parallel.count;
                         return obj;
                     }, {});
-                var sortedParallelsList = Object.keys(summarizedParallels)
+                let sortedParallelsList = Object.keys(summarizedParallels)
                     .map(key => summarizedParallels[key])
                     .sort((a, b) => a.sortOrder - b.sortOrder);
+                const filteredParallels = _.flatMap(
+                    _.isEmpty(ctrl.selectedFilterSources)
+                        ? ctrl.experiment.stats
+                        : ctrl.selectedFilterSources,
+                    item => item.parallels);
+                const groups = _.groupBy(filteredParallels, parallel => parallel.xmlId);
+                sortedParallelsList.forEach(
+                    parallel => parallel.filteredCount = _.sumBy(groups[parallel.xmlId], group => group.count)
+                );
                 ctrl.lastParallels = sortedParallelsList;
                 return sortedParallelsList;
             };
 
+            let cacheLengths = {};
+            ctrl.cacheActualLengths = {};
+
+            function calcLimitForResults() {
+                return ctrl.showAll ? 1000000 : 5;
+            }
+
+            ctrl.max = function (a, b) {
+                return a > b ? a : b;
+            };
+
             ctrl.toggleShowAll = function () {
                 ctrl.showAll = !ctrl.showAll;
-                ctrl.resultsLimit = ctrl.showAll ? 1000000 : 5;
+                ctrl.resultsLimit = calcLimitForResults();
             };
 
-            let cacheInputs = [];
-            let cacheOutputs = [];
-
+            ctrl.onLengthChange = function(name, length, actualLength) {
+                cacheLengths[name] = length;
+                ctrl.cacheActualLengths[name] = actualLength;
+            };
+            
             ctrl.overflowResults = function () {
-                return cacheOutputs.some(output => output.length > 5)
+                return Object.keys(cacheLengths).some(name => cacheLengths[name] > 5)
             };
 
-            ctrl.parallelExpand = [];
-            ctrl.groupList = function (list, cacheNum) {
-                if (cacheInputs[cacheNum] === list)
-                    return cacheOutputs[cacheNum];
-                let groups = [];
-                if (list.length < 10) {
-                    groups = [{
-                        heading: '',
-                        sublist: list
-                    }]
-                }
-                else {
-                list.forEach(function(item) {
-                    var parts = item.title.split(/(\/[^\/]*)\//, 2);
-                    var heading = parts[0];
-                    if (parts[1])
-                        heading += parts[1];
-                    if (groups.length > 0 && groups[groups.length - 1].heading === heading) {
-                        groups[groups.length - 1].sublist.push(item);
-                        groups[groups.length - 1].count += item.count;
-                    }
-                    else {
-                        groups.push({
-                            heading,
-                            count: item.count,
-                            sublist: [item]
-                        })
-                        ctrl.parallelExpand[heading] = false;
-                    }
-                });
-                }
-                cacheInputs[cacheNum] = list;
-                cacheOutputs[cacheNum] = groups;
-                return groups;
+            ctrl.toTitles = function (list) {
+                return list.map(item => item.title).join(', ');
             }
         }
 }); 

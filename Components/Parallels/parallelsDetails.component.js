@@ -73,6 +73,8 @@ jTextMinerApp.component('parallelsDetails',
             // words and set a flag to use full justification - justify: true
             function updateText() {
                 if (ctrl.filterSources == null) return;
+                if (_.isEqual(ctrl.filterSources, ctrl.lastRequest)) return;
+                ctrl.lastRequest = ctrl.filterSources;
                 ctrl.gettingText = true;
 
                 // uploaded text is retrieved before the stats run, so just use it
@@ -131,13 +133,15 @@ jTextMinerApp.component('parallelsDetails',
             ctrl.getParallels = function (largeIndex, smallIndex) {
                 if (largeIndex == null) return null;
                 // if there are no parallels yet, return
-                if (!ctrl.experiment.parallels.hasOwnProperty('length'))
+                if (_.isEmpty(ctrl.experiment.parallels) || !ctrl.experiment.parallels.haveResults)
                     return null;
-                const parallels = ctrl.experiment.parallels[largeIndex].data;
+                const parallelsResult = ctrl.experiment.parallels[largeIndex];
+                if (_.isNil(parallelsResult)) return [];
+                const parallels = parallelsResult.data;
                 const smallUnit = ctrl.text[largeIndex].units[smallIndex];
                 return parallels.filter(parallel =>
-                    (ctrl.filterParallels == null
-                        || ctrl.filterParallels.some(filterParallel => parallel.parallelTitle.indexOf(filterParallel) == 0))
+                    (_.isEmpty(ctrl.filterParallels)
+                        || ctrl.filterParallels.some(filterParallel => parallel.compName.replace(/: /g, '/').startsWith(filterParallel.title)))
                     && smallUnit.offset <= parallel.baseStartChar
                     && smallUnit.offset + smallUnit.text.length > parallel.baseStartChar
                 );

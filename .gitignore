@@ -14,3 +14,6 @@ node_modules/jquery/src
 node_modules/ng-dialog/tests
 node_modules/ng-dialog/example
 node_modules/hopscotch/src
+node_modules/angucomplete-alt/test/
+node_modules/angucomplete-alt/example/
+node_modules/lodash/

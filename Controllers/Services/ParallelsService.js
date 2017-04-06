@@ -84,12 +84,16 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                 }
                 createRequest(sourceList, minThreshold, maxDistance)
                     .then(data => {
-                        if (filterList)
+                        if (!_.isEmpty(filterList))
                             data.filterIds = filterList;
                         //debugger;
                         return APIService.callParallels('Parallels/Large', data)
                             .then(response => {
-                                root.parallels = response.data;
+                                let parallels = [];
+                                response.data.forEach(
+                                    result => parallels[sourceList.indexOf(result.chunk_name)] = result
+                                );
+                                root.parallels = parallels;
                                 root.parallels.running = false;
                                 root.parallels.haveResults = true;
                             });

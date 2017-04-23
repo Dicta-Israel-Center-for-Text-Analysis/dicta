@@ -190,3 +190,7 @@ table.feature-set-table tbody tr td {
     margin-right: 0;
     display:block;
 }
+
+.autocomplete-highlight {
+    color: #ff0000;
+}

@@ -7,7 +7,7 @@
  *
  * */
 angular.module('JTextMinerApp')
-        .factory("APIService", function ($resource, $http, $location) {
+        .factory("APIService", function ($resource, $http, $location, $q) {
     function hostToUrlPrefix(host) {
         if (host.startsWith("localhost")) return "://localhost:8080/";
         if (host.startsWith("dev.dicta")) return "://dev.dicta.org.il/";
@@ -39,7 +39,12 @@ angular.module('JTextMinerApp')
         return $http.post(getAPIUrl(endpoint), data, config);
     };
     APIService.callParallels = function (endpoint, data) {
-        return $http.post("http://www.dictaparallelsserver.com/api/" + endpoint, data);
+        const storageKey = endpoint + ":" + JSON.stringify(data);
+        const cache = window.sessionStorage.getItem(storageKey);
+        if (cache)
+            return $q.resolve(JSON.parse(cache));
+        return $http.post("http://www.dictaparallelsserver.com/api/" + endpoint, data)
+                    .then(result => {window.sessionStorage.setItem(storageKey, JSON.stringify(result)); return result; });
     };
     return APIService;
 });

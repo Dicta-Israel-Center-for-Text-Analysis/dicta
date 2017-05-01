@@ -44,7 +44,14 @@ angular.module('JTextMinerApp')
         if (cache)
             return $q.resolve(JSON.parse(cache));
         return $http.post("http://www.dictaparallelsserver.com/api/" + endpoint, data)
-                    .then(result => {window.sessionStorage.setItem(storageKey, JSON.stringify(result)); return result; });
+                    .then(function(result) {
+                        try {
+                            window.sessionStorage.setItem(storageKey, JSON.stringify(result));
+                        }
+                        // there might not be sufficient storage space
+                        catch (e) {}
+                        return result;
+                    });
     };
     return APIService;
 });

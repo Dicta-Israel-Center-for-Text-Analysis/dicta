@@ -11,9 +11,10 @@ jTextMinerApp.component('parallelsDetails',
     },
     templateUrl: 'Components/Parallels/parallelsDetails.component.html',
     controller:
-        function($scope, SelectClassService, APIService) {
+        function($scope, SelectClassService, APIService, $timeout, $sce) {
             var ctrl = this;
             ctrl.gettingText = false;
+            ctrl.offsetToAlignSource = 0;
 
             function convertChunksToTextObj() {
                 return ctrl.experiment.chunks.filter(chunk =>
@@ -162,7 +163,17 @@ jTextMinerApp.component('parallelsDetails',
                 var start = smallUnit.text.substr(0, correctedStart);
                 var highlight = smallUnit.text.substr(correctedStart, ctrl.parallelToHighlight.baseTextLength);
                 var end = smallUnit.text.substr(correctedStart + ctrl.parallelToHighlight.baseTextLength);
-                return start + "<mark>" + highlight + "</mark>" + end;
+                $timeout(function () {
+                    const source = document.getElementById('highlightedSource');
+                    const parallel = document.getElementById('highlightedParallel');
+                    if (_.isNil(source) || _.isNil(parallel)) return;
+                    const proposed = _.floor(_.max([0, parallel.getBoundingClientRect().top
+                                                     - source.getBoundingClientRect().top
+                                                     + ctrl.offsetToAlignSource]));
+                    if (Math.abs(ctrl.offsetToAlignSource - proposed) > 10)
+                        ctrl.offsetToAlignSource = proposed;
+                });
+                return $sce.trustAsHtml(start + "<mark id='highlightedSource'>" + highlight + "</mark>" + end);
             }
             ctrl.doHighlightingParallel = function(parallel) {
                 const TRIMLENGTH = 300;
@@ -174,7 +185,9 @@ jTextMinerApp.component('parallelsDetails',
                 var end = text.substr(+parallel.compStartChar + parallel.compTextLength);
                 if (end.length > TRIMLENGTH)
                         end = end.substr(0, end.indexOf(' ', TRIMLENGTH)) + "...";
-                return start + "<mark>" + highlight + "</mark>" + end;
+                return $sce.trustAsHtml(start + "<mark"
+                        + (ctrl.parallelToHighlight === parallel ?" id='highlightedParallel'" : '')
+                        + ">" + highlight + "</mark>" + end);
             }
         }
 }); 

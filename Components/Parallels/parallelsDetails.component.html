@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div style="float:left" class="col-xs-6">
-                    <div style="text-align: right">
+                    <div style="text-align: right; {{($ctrl.sourceToHighlightLarge == parentIndex && $ctrl.sourceToHighlightSmall == smallIndex) ? 'border-top: solid 1px #aaa; padding-top: ' + $ctrl.offsetToAlignSource + 'px' : ''}}">
                         <div>
                             <strong style="float: left">{{$ctrl.trimSourceName(smallUnit.name)}}</strong>
                         </div>

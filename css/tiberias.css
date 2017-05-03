@@ -194,3 +194,7 @@ table.feature-set-table tbody tr td {
 .autocomplete-highlight {
     color: #ff0000;
 }
+
+input.form-control.search-control-class {
+    width: 600px;
+}

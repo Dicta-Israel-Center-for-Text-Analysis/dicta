@@ -196,5 +196,13 @@ table.feature-set-table tbody tr td {
 }
 
 input.form-control.search-control-class {
-    width: 600px;
+    width: 630px;
+    direction: rtl;
+}
+
+.angucomplete-dropdown {
+    width: 624px;
+    direction: rtl;
+    margin-left: 3px;
+    margin-top: -2px;
 }

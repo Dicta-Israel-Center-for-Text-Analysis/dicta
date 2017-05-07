@@ -1,7 +1,7 @@
 jTextMinerApp.component('viewSelectedText', {
         templateUrl: 'Components/ViewSelectedText/viewSelectedText.component.html',
-        controller: ['$scope', 'InProgressService', 'SelectClassService', '$sce', 'APIService', 'SaveClassInterface',
-            function ($scope, InProgressService, SelectClassService, $sce, APIService, SaveClassInterface) {
+        controller: ['$scope', 'InProgressService', 'SelectClassService', '$sce', 'APIService',
+            function ($scope, InProgressService, SelectClassService, $sce, APIService) {
             var ctrl = this;
             ctrl.showInProcess = InProgressService.isReady != 1;
             $scope.$on('isReady_Updated', function () {

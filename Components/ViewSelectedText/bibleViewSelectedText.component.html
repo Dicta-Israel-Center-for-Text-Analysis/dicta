@@ -1,0 +1,28 @@
+<div class="col-md-12">
+    <div style="text-align:center;" ng-if="$ctrl.running">
+        <img src="images/loader.gif"/>
+    </div>
+
+    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks" class="box-right-side">
+        <div class="bible-viewtext-box">
+
+            <h2 style="background-color:#cfcfcf;">{{chunk.chunkKey}}</h2>
+            <div class="col-xs-4">
+                <p>Features that are characteristic of this text:</p>
+                <div style="text-align:center;" ng-hide="chunk.features">
+                    <img src="images/loader.gif"/>
+                </div>
+                <p ng-repeat="feature in chunk.features">
+                    {{$index + 1}}. <span dir="rtl">{{feature.name}}</span> ({{feature.maxTTest}})
+                </p>
+            </div>
+            <div class="col-xs-8">
+            <p style="direction:rtl;" ng-repeat="line in chunk.contents" ng-if="line.hasOwnProperty('smallUnit')">
+                {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' ') + 1)}}: <span ng-repeat="word in $ctrl.processText(line.smallUnit.text) track by $index" context-menu="$ctrl.menuOptions" context-menu-on="click">{{word}} </span>
+            </p>
+            </div>
+            <div class="clearfix"/>
+        </div>
+    </div>
+
+</div>

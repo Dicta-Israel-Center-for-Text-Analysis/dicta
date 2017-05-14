@@ -2,53 +2,36 @@ jTextMinerApp.component('search',
 {
     templateUrl: 'Components/Search/search.component.html',
     controller: [
-        '$http',
-        function($http) {
+        '$http', 'search', '$scope',
+        function($http, search, $scope) {
             const ctrl = this;
 
-            ctrl.searchTerm = "";
-            ctrl.searchResults = [];
-            ctrl.searchResponse = {};
-            ctrl.RESULTS_AT_A_TIME = 20;
-
-            ctrl.search = function (offset) {
-                ctrl.searching = true;
-                if (!offset)
-                    offset = 0;
-                $http.post("http://dev.dicta.org.il/essearch/",{
-                    "query": {
-                        "multi_match": {
-                            "fields": ["parsed_text*"],
-                            "query": ctrl.searchTerm,
-                            "tie_breaker": 0.001,
-                            "minimum_should_match": "3<90%"
-                        }
-                    },
-                    "highlight": {
-                        "pre_tags" : ["<mark>"],
-                        "post_tags" : ["</mark>"],
-                        "fields": {"parsed_text.y": {
-                            fragment_size: 10000
-                        }}
-                    },
-                    "from": offset,
-                    "size": ctrl.RESULTS_AT_A_TIME
-                })
-                    .then(function(response) {
-                        ctrl.searching = false;
-                        ctrl.searchResults = response.data.hits.hits;
-                        ctrl.searchResponse = response.data;
-                        ctrl.offset = offset;
-                    })
-            };
+            ctrl.search = search;
+            ctrl.currentPage = 1;
+            ctrl.previousQuery = '';
 
             ctrl.setSearchTerm = function (selected) {
-                ctrl.searchTerm = selected.title;
-                ctrl.search();
+                ctrl.previousQuery = selected.title;
+                search.query = selected.title;
+                ctrl.runSearch();
+            };
+
+            $scope.$watch('$ctrl.search.query',
+                function() {
+                    if (ctrl.previousQuery != search.query) {
+                        ctrl.previousQuery = search.query;
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query)
+                    }
+            });
+
+            ctrl.runSearch = function () {
+                ctrl.currentPage = 1;
+                search.search();
             };
 
             ctrl.inputChanged = function (searchTerm) {
-                ctrl.searchTerm = searchTerm;
+                ctrl.previousQuery = searchTerm;
+                search.query = searchTerm;
             };
 
             ctrl.highlight = function (text) {
@@ -58,9 +41,9 @@ jTextMinerApp.component('search',
                 return text._source.parsed_text.replace(re, "<mark>$1</mark>")
             };
 
-            ctrl.nextResults = function () {
-                ctrl.search(ctrl.offset + ctrl.RESULTS_AT_A_TIME)
-            }
+            ctrl.updateResults = function () {
+                search.loadResults(ctrl.currentPage);
+            };
 
             ctrl.runSuggest = function(userInputString, timeoutPromise) {
                 return $http.post("http://dev.dicta.org.il/essearch/",

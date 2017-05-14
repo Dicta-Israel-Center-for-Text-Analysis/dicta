@@ -5,7 +5,7 @@
             <ul class="nav nav-tabs tabs-left">
                 <li class="{{$ctrl.active('search')}}" ng-click="$ctrl.tab='search'"><a>Search</a></li>
                 <li class="{{$ctrl.active('select')}}" ng-click="$ctrl.tab='select'"><a>Choose Text</a></li>
-                <li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>
+                <!--<li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>-->
                 <li class="{{$ctrl.active('classify')}}" ng-click="$ctrl.tab='classify'"><a>Classify a Text</a></li>
                 <li class="{{$ctrl.active('segmentation')}}" ng-click="$ctrl.tab='segmentation'"><a>Source Criticism</a></li>
             </ul>
@@ -22,9 +22,10 @@
                     </ul>
                     <div ng-hide="$ctrl.showChooseText">
                         <button class="btn btn-default"
-                                ng-click="$ctrl.showChooseText = true">Change Selection</button>
+                                ng-click="$ctrl.showChooseText = true; $ctrl.textChosen = false">Change Selection</button>
                     </div>
                 </div>
+                <bible-view-selected-text on-search="$ctrl.runSearch(query)" ng-if="$ctrl.textChosen"></bible-view-selected-text>
                 <choose-text-dialog
                     ng-show="$ctrl.showChooseText"
                     on-confirm="$ctrl.saveText(selectionData)"

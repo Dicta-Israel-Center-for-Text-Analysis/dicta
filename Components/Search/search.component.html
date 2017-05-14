@@ -11,24 +11,24 @@
                       input-class="form-control search-control-class"
                       text-no-results="false"
                       match-class="autocomplete-highlight"></angucomplete-alt>
-    <button class="btn btn-default form-control" ng-click="$ctrl.search()"><i class="fa fa-search"></i></button>
+    <button class="btn btn-default form-control" ng-click="$ctrl.runSearch()"><i class="fa fa-search"></i></button>
 </form>
 <p></p>
-<div style="text-align:center" ng-show="$ctrl.searching">
+<div style="text-align:center" ng-show="$ctrl.search.searching">
     <img src="images/loader.gif"/>
 </div>
-<div ng-hide="$ctrl.searching || !$ctrl.searchResponse.hasOwnProperty('hits')">
-    <p>{{$ctrl.searchResponse.hits.total}} results, showing results {{$ctrl.offset + 1}} - {{$ctrl.offset + $ctrl.searchResults.length}}.</p>
-    <div ng-repeat="result in $ctrl.searchResults">
+<div ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
+    <p>{{$ctrl.search.searchResponse.hits.total}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+    <div ng-repeat="result in $ctrl.search.searchResults">
         <div class="clearfix"></div>
-        <h5 class="col-xs-1" style="width: 1%">{{$ctrl.offset + $index + 1}}.</h5>
+        <h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>
         <div class="col-xs-10">
             <h5>{{result._source.english_path || result._source.displayname_eng}}</h5>
             <h5 class="text-left" dir="rtl">{{result._source.hebrew_path || result._source.displayname_heb}}</h5>
             <p class="col-xs-10" dir="rtl"><span ng-bind-html="$ctrl.highlight(result)"></span></p>
         </div>
     </div>
-    <div class="col-xs-10 text-center">
-        <button class="btn btn-default" ng-show="$ctrl.searchResponse.hits.total > $ctrl.offset + $ctrl.RESULTS_AT_A_TIME" ng-click="$ctrl.nextResults()">More Results</button>
+    <div class="col-xs-10 text-center" ng-show="$ctrl.search.searchResponse.hits.total > $ctrl.search.RESULTS_AT_A_TIME">
+        <ul uib-pagination total-items="$ctrl.search.searchResponse.hits.total" items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage" ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm" boundary-link-numbers="true"></ul>
     </div>
 </div>

@@ -1,8 +1,8 @@
 jTextMinerApp.component('bibleMainPage',
 {
     templateUrl: 'Components/PageStructure/bibleMainPage.component.html',
-    controller: ['UserService', '$location', 'SelectClassService',
-        function(UserService, $location, SelectClassService) {
+    controller: ['UserService', '$location', 'SelectClassService', 'search',
+        function(UserService, $location, SelectClassService, search) {
             if (!UserService.isLoggedIn()) {
                 $location.path('Login');
             }
@@ -20,5 +20,10 @@ jTextMinerApp.component('bibleMainPage',
                 ctrl.selectedText = SelectClassService.testText;
                 ctrl.showChooseText = false;
             };
+            ctrl.runSearch= function (query) {
+                ctrl.tab = 'search';
+                search.query = query;
+                search.search();
+            }
         }]
 }); 

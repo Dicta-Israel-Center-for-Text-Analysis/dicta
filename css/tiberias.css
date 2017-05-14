@@ -206,3 +206,20 @@ input.form-control.search-control-class {
     margin-left: 3px;
     margin-top: -2px;
 }
+
+.bible-viewtext-box {
+    border: 1px solid #bdccd4;
+    border-radius: 5px;
+}
+
+.bible-viewtext-box h2 {
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 8px 18px 8px 18px;
+    border-radius: 5px;
+}
+
+.clickable {
+    cursor: pointer;
+}

@@ -1,7 +1,7 @@
 ﻿jTextMinerApp.component('loginPage',
 {
     templateUrl:'Components/PageStructure/loginPage.component.html',
-    controller: function (ngDialog, UserService, $location) {
+    controller: function (ngDialog, UserService, $state) {
         this.showSignUp = false;
 
         this.LoginDlg = function () {
@@ -13,21 +13,21 @@
                 closeByDocument: true
             }).then(function (value) {
                 // successful login
-                $location.path('AfterLogin');
+                $state.go('AfterLogin');
             });
         };
 
         this.guestLogin = function () {
             UserService.tryLogin("testuser")
                 .then(function () {
-                    $location.path('AfterLogin');
+                    $state.go('AfterLogin');
                 })
         }
 
         this.guestBibleLogin = function () {
             UserService.tryLogin("testuser", true)
                 .then(function () {
-                    $location.path('AfterBibleLogin');
+                    $state.go('bibleInterface');
                 })
         }
 
@@ -35,7 +35,7 @@
         if (cookieUsername != null) {
             UserService.tryLogin(cookieUsername)
                 .then(function () {
-                    $location.path('AfterLogin');
+                    $state.go('AfterLogin');
                 });
         }
     }

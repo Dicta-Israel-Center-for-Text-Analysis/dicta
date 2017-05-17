@@ -11,6 +11,7 @@ jTextMinerApp.component('search',
             ctrl.previousQuery = '';
 
             ctrl.setSearchTerm = function (selected) {
+                if (selected == null) return;
                 ctrl.previousQuery = selected.title;
                 search.query = selected.title;
                 ctrl.runSearch();

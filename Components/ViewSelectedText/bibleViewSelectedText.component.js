@@ -10,6 +10,7 @@ jTextMinerApp.component('bibleViewSelectedText',
             ctrl.running = true;
             ctrl.selectClassService = SelectClassService;
             ctrl. featureCollection = FeatureCollectionFactory.newCollection();
+            ctrl.featureCollection.Feature_sets[0].fromEachClass = true;
             
             $scope.$watchCollection("$ctrl.selectClassService.testText", updateText);
             function updateText() {

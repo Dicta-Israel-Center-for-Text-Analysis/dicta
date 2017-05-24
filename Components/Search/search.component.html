@@ -25,7 +25,10 @@
         <div class="col-xs-10">
             <h5>{{result._source.english_path || result._source.displayname_eng}}</h5>
             <h5 class="text-left" dir="rtl">{{result._source.hebrew_path || result._source.displayname_heb}}</h5>
-            <p class="col-xs-10" dir="rtl"><span ng-bind-html="$ctrl.highlight(result)"></span></p>
+            <p class="col-xs-10" dir="rtl">
+                <span ng-repeat="word in $ctrl.highlight(result) track by $index" context-menu="$ctrl.menuOptions" context-menu-on="click"
+                ng-bind-html="word + ' '"> </span>
+            </p>
         </div>
     </div>
     <div class="col-xs-10 text-center" ng-show="$ctrl.search.searchResponse.hits.total > $ctrl.search.RESULTS_AT_A_TIME">

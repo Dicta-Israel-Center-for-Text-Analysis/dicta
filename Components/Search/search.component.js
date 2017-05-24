@@ -2,8 +2,8 @@ jTextMinerApp.component('search',
 {
     templateUrl: 'Components/Search/search.component.html',
     controller: [
-        '$http', 'search', '$scope',
-        function($http, search, $scope) {
+        '$http', 'search', '$scope', 'bibleContextMenu',
+        function($http, search, $scope, bibleContextMenu) {
             const ctrl = this;
 
             ctrl.search = search;
@@ -35,11 +35,22 @@ jTextMinerApp.component('search',
                 search.query = searchTerm;
             };
 
+            function splitWords(text) {
+                return text.split(' ');
+            }
+
+            ctrl.onSearch = function (params) {
+                search.query = params.query;
+                ctrl.runSearch();
+            };
+            
+            ctrl.menuOptions = bibleContextMenu.menu(ctrl.onSearch);
+
             ctrl.highlight = function (text) {
                 if (text.highlight && text.highlight['parsed_text.y'])
-                    return text.highlight['parsed_text.y'].join('...');
+                    return splitWords(text.highlight['parsed_text.y'].join('...'));
                 const re = new RegExp("(" + ctrl.searchTerm.replace(/ /g,'|') + ")", "g");
-                return text._source.parsed_text.replace(re, "<mark>$1</mark>")
+                return splitWords(text._source.parsed_text.replace(re, "<mark>$1</mark>"));
             };
 
             ctrl.updateResults = function () {

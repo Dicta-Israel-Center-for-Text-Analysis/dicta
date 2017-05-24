@@ -13,7 +13,7 @@ angular.module('JTextMinerApp')
                     onSearch({query: $itemScope.word});
                 }],
                 null, // Divider
-                [scope => "Search for " + scope.line.smallUnit.text, function ($itemScope, $event, modelValue, text, $li) {
+                [scope => "Search for " /*+ scope.line.smallUnit.text*/, function ($itemScope, $event, modelValue, text, $li) {
                     onSearch({query: $itemScope.word});
                 }],
                 [scope => "Search for similar clauses", function ($itemScope, $event, modelValue, text, $li) {

@@ -11,13 +11,24 @@ angular.module('JTextMinerApp')
                 if (!offset)
                     offset = 0;
                 service.searching = true;
+                const baseQuery = {
+                    "multi_match": {
+                        "fields": ["parsed_text*"],
+                        "query": service.query,
+                        "tie_breaker": 0.001,
+                        "minimum_should_match": "3<80%"
+                    }
+                };
                 return $http.post("http://dev.dicta.org.il/essearch/", {
                     "query": {
-                        "multi_match": {
-                            "fields": ["parsed_text*"],
-                            "query": service.query,
-                            "tie_breaker": 0.001,
-                            "minimum_should_match": "3<80%"
+                        "bool": {
+                            "should": baseQuery,
+                            "must_not": {
+                                "has_child": {
+                                    "type": "small",
+                                    "query": baseQuery
+                                }
+                            }
                         }
                     },
                     "highlight": {
@@ -30,7 +41,8 @@ angular.module('JTextMinerApp')
                         }
                     },
                     "from": offset,
-                    "size": service.RESULTS_AT_A_TIME
+                    "size": service.RESULTS_AT_A_TIME,
+                    "sort": { "corpus_order_path": { "order": "asc" }}
                 })
                     .then(function (response) {
                         service.searchResults = response.data.hits.hits;

@@ -124,6 +124,8 @@
 
                 recalculatePartials();
 
+                ctrl.selectedNodes = TreeService.treeSort(ctrl.selectedNodes, key => key);
+
                 ctrl.selectionText = SelectClassService.newTextFromCorpus(
                     ctrl.selectedNodes.map(key => "/Dicta Corpus/" + key),
                     ctrl.selectedNodes.map(key => TreeService.keyToNode[key].id)

@@ -13,12 +13,7 @@ jTextMinerApp.component('viewSelectedText', {
             };
 
             APIService.call('TextFeatures/GetText',{
-                    "keys": SelectClassService.testText.keys.map(textKey =>
-                        ({
-                            "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
-                            "key": textKey
-                        })
-                    ),
+                    "keys": SelectClassService.testText.keys,
                     "chunkType": "LARGE"
                 })
                 .then(function (response) {

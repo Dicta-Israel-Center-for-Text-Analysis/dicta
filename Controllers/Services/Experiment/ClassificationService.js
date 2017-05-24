@@ -277,85 +277,56 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     };
                     experiment.testTexts = [];
                     experiment.testTextsFeatures = [];
-                    var textPromises = [];
+                    var textPromise;
                     var featurePromises = [];
-                    for(let textKey of SelectClassService.testText.keys) {
-                        for (let featureSet of experiment.featureCollection.Feature_sets) {
-                            var filter = function () {
-                                if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
-                                    if (featureSet.vocalized)
-                                        return "VOWELIZED";
-                                    return "TEXT_ONLY";
-                                }
-                                if (featureSet.tokenizerType == "Morphology") {
-                                    return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
-                                }
-                                if (featureSet.tokenizerType == "SyntaxPhrase" && featureSet.spoOnly) {
-                                    return "SUBJECT_PREDICATE_OBJECT";
-                                }
-                                return "";
-                                // filter = featureSet.
-                                //     includeLexeme: false,
-                                //     spoOnly: false,
-                                //     vocalized: true,
-                                //     sinDot: false,
-                                //     tokenized: false,
-                                //     includeNumber: false,
-                                //     includePunctuation: false
-                            }();
-                            var featuresRequest = {
-                                "key": {
-                                    "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
-                                    "key": textKey
-                                }
-                                ,
-                                "chunkType": "LARGE",
-                                "featureSettings": {
-                                    "type": featureTypeMap[featureSet.tokenizerType],
-                                    "filter": filter,
-                                    "nGram": nGramMap[featureSet.featureType]
-                                }
-                            };
-                            featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest));
-                        }
-                        var textRequest = {
-                            "keys": [
-                                {
-                                    "keyType": textKey.startsWith('/Dicta Corpus/') ? "DICTA_CORPUS" : "USER_UPLOAD",
-                                    "key": textKey
-                                }
-                            ],
-                            "chunkType": "LARGE"
-                        };
-                        textPromises.push(APIService.call("TextFeatures/GetText", textRequest).then(
-                            function(response) {
-                                var offset = 0;
-                                for (var i = 0; i < response.data.length; i++) {
-                                    var chunk = response.data[i];
-                                    // FIXME: the server should really send the offsets, since a new "text" has offset 0,
-                                    // and we don't have a way to identify when it's a new text or a new chunk in a large text
-                                    if (chunk.chunkKey.startsWith('/Dicta Corpus/')) {
-                                        chunk.offset = offset;
-                                        offset += chunk.text.length;
-                                    }
-                                    else
-                                        chunk.offset = 0; 
-                                }
-                                return response;
+                    for (let featureSet of experiment.featureCollection.Feature_sets) {
+                        var filter = function () {
+                            if (featureSet.tokenizerType == "Word" || featureSet.tokenizerType == "Letter") {
+                                if (featureSet.vocalized)
+                                    return "VOWELIZED";
+                                return "TEXT_ONLY";
                             }
-                        ));
+                            if (featureSet.tokenizerType == "Morphology") {
+                                return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
+                            }
+                            if (featureSet.tokenizerType == "SyntaxPhrase" && featureSet.spoOnly) {
+                                return "SUBJECT_PREDICATE_OBJECT";
+                            }
+                            return "";
+                            // filter = featureSet.
+                            //     includeLexeme: false,
+                            //     spoOnly: false,
+                            //     vocalized: true,
+                            //     sinDot: false,
+                            //     tokenized: false,
+                            //     includeNumber: false,
+                            //     includePunctuation: false
+                        }();
+                        var featuresRequest = {
+                            "keys":  SelectClassService.testText.keys,
+                            "chunkType": "LARGE",
+                            "featureSettings": {
+                                "type": featureTypeMap[featureSet.tokenizerType],
+                                "filter": filter,
+                                "nGram": nGramMap[featureSet.featureType]
+                            }
+                        };
+                        featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest));
                     }
-                    var textCompletePromise = $q.all(textPromises).then(function (responses) {
-                        experiment.testTexts = responses.map(response => response.data)
-                            // flatten the array of arrays to one array
-                            .reduce( ( acc, cur ) => acc.concat(cur), [] );
-                    });
+                    var textRequest = {
+                        "keys": SelectClassService.testText.keys,
+                        "chunkType": "LARGE"
+                    };
+                    textPromise = APIService.call("TextFeatures/GetText", textRequest).then(
+                        function(response) {
+                            experiment.testTexts = response.data;
+                            return response.data;
+                        }
+                    );
                     var featuresCompletePromise = $q.all(featurePromises).then(function (responses) {
-                        experiment.testTextsFeatures = responses.map(response => response.data)
-                        // flatten the array of arrays to one array
-                            .reduce( ( acc, cur ) => acc.concat(cur), [] );
+                        experiment.testTextsFeatures = _.flatMap(responses, response => response.data);
                     });
-                    return $q.all([textCompletePromise, featuresCompletePromise]);
+                    return $q.all([textPromise, featuresCompletePromise]);
                 }
             }
             return experiment;

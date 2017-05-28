@@ -49,7 +49,7 @@ jTextMinerApp.component('search',
             ctrl.highlight = function (text) {
                 if (text.highlight && text.highlight['parsed_text.y'])
                     return splitWords(text.highlight['parsed_text.y'].join('...'));
-                const re = new RegExp("(" + ctrl.searchTerm.replace(/ /g,'|') + ")", "g");
+                const re = new RegExp("(" + search.query.replace(/ /g,'|') + ")", "g");
                 return splitWords(text._source.parsed_text.replace(re, "<mark>$1</mark>"));
             };
 

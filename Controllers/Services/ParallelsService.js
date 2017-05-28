@@ -53,12 +53,7 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                 if (nonDictaKeys.length > 0) {
 
                     var textRequest = {
-                        "keys": nonDictaKeys.map( textKey =>(
-                                {
-                                    "keyType": "USER_UPLOAD",
-                                    "key": textKey
-                                })
-                        ),
+                        "keys": nonDictaKeys,
                         "chunkType": "LARGE"
                     };
                     if (root.chunks) {

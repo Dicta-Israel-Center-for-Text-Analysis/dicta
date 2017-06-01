@@ -16,9 +16,13 @@ jTextMinerApp.component('parallelsDetails',
             ctrl.gettingText = false;
             ctrl.offsetToAlignSource = 0;
 
+            // experiment.chunks is set only for uploaded texts
+            // this function crudely splits the text into "small units",
+            // and also constructs the results object that the details UI uses
             function convertChunksToTextObj() {
-                return ctrl.experiment.chunks.filter(chunk =>
-                    ctrl.filterSources.some(source => chunk.chunkKey.endsWith(source.name)).map(
+                const filteredChunks = ctrl.experiment.chunks.filter(chunk =>
+                    ctrl.filterSources.some(source => chunk.chunkKey.endsWith(source.name)));
+                return filteredChunks.map(
                         function (chunk) {
                             let units = [];
                             // split by periods
@@ -57,7 +61,7 @@ jTextMinerApp.component('parallelsDetails',
                                 name: chunk.chunkKey,
                                 units: units
                             }
-                        }));
+                        });
             }
 
             function calculateOffsets(units) {
@@ -117,6 +121,7 @@ jTextMinerApp.component('parallelsDetails',
                 return ctrl.text[index].name;
             };
             ctrl.trimSourceName = function (name) {
+                if (_.isNil(name)) return;
                 if (name.indexOf('/') > -1)
                     return name.substring(name.lastIndexOf('/')+1);
                 if (name.indexOf(': ') > -1)

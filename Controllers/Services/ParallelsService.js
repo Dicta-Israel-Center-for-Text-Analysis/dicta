@@ -43,21 +43,31 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                     });
             };
 
+            // creates the basic request for both StatisticsLarge and Parallels/Large; if the source is an uploaded file,
+            // get it from the server first
             function createRequest(sourceList, minThreshold, maxDistance) {
                 var data = {
-                    chunkIds: sourceList ? sourceList : SelectClassService.testText.ids,
                     minthreshold: minThreshold,
                     maxdistance: maxDistance
                 };
-                var nonDictaKeys = SelectClassService.testText.keys.filter(key => !key.startsWith('/Dicta Corpus/'));
-                if (nonDictaKeys.length > 0) {
+                var keys = _.isEmpty(sourceList) ? SelectClassService.testText.ids : sourceList;
 
+                var [nonDictaKeys, dictaKeys] = _.partition(keys, key => key.startsWith('User/'));
+                if (!_.isEmpty(dictaKeys))
+                    data.chunkIds = dictaKeys;
+
+                if (nonDictaKeys.length > 0) {
                     var textRequest = {
                         "keys": nonDictaKeys,
                         "chunkType": "LARGE"
                     };
+                    // check if there is a cached result
                     if (root.chunks) {
-                        data.chunks = root.chunks.map(chunk => chunk.text);
+                        data.chunks =
+                            (_.isEmpty(sourceList)
+                             ? root.chunks
+                             : root.chunks.filter(chunk => _.includes(sourceList, chunk.key)).map(chunk => chunk.text)
+                            ).map(chunk => chunk.text);
                     }
                     else return APIService.call("TextFeatures/GetText", textRequest)
                         .then(response => {

@@ -30,9 +30,13 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                         return APIService.callParallels('Parallels/StatisticsLarge', data)
                             .then(function (response) {
                                 root.stats = response.data;
-                                root.stats.forEach(chunk => {
+                                root.stats.forEach((chunk, index) => {
                                     if (chunk.hasOwnProperty('chunkDispName'))
                                         chunk.title = chunk.chunkDispName.replace(/: /g, '/');
+                                    else {
+                                        chunk.title = _.last(root.chunks[index].chunkKey.split('/'));
+                                        chunk.chunk_name = root.chunkNames[index];
+                                    }
                                     chunk.parallels.forEach(parallel => {
                                         parallel.title = parallel.bookName.replace(/: /g, '/');
                                     });
@@ -66,12 +70,13 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                         data.chunks =
                             (_.isEmpty(sourceList)
                              ? root.chunks
-                             : root.chunks.filter(chunk => _.includes(sourceList, chunk.key)).map(chunk => chunk.text)
+                             : root.chunks.filter(chunk => _.includes(sourceList, chunk.chunkKey))
                             ).map(chunk => chunk.text);
                     }
                     else return APIService.call("TextFeatures/GetText", textRequest)
                         .then(response => {
                             root.chunks = response.data;
+                            root.chunkNames = response.data.map(chunk => chunk.chunkKey);
                             return response.data.map(chunk => chunk.text)
                         })
                         .then(chunks => {
@@ -96,7 +101,7 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                             .then(response => {
                                 let parallels = [];
                                 response.data.forEach(
-                                    result => parallels[sourceList.indexOf(result.chunk_name)] = result
+                                    (result, index) => parallels[index] = result
                                 );
                                 root.parallels = parallels;
                                 root.parallels.running = false;

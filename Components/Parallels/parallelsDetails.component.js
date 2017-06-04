@@ -118,7 +118,10 @@ jTextMinerApp.component('parallelsDetails',
             $scope.$watch("$ctrl.filterSources", updateText);
             
             ctrl.getSectionTitle = function (index) {
-                return ctrl.text[index].name;
+                const name = ctrl.text[index].name;
+                if (name.startsWith("User"))
+                    return _.last(name.split('/'));
+                return name;
             };
             ctrl.trimSourceName = function (name) {
                 if (_.isNil(name)) return;

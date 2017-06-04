@@ -6,7 +6,8 @@
                 style="width:16px"
                 class="fa {{$ctrl.groupExpand[$index] ? 'fa-chevron-down' : 'fa-chevron-right'}}"
         ></i>
-            <input name="{{$ctrl.radioGroup}}" type="radio" ng-click="$ctrl.onItemsSelected({items: group.sublist, heading: group.heading})" ng-checked="$ctrl.runIsEqual(group.sublist, $ctrl.selected)">
+            <input name="{{$ctrl.radioGroup}}" type="radio" ng-click="$ctrl.onItemsSelected({items: group.sublist, heading: group.heading})">
+            <!--ng-checked="$ctrl.runIsEqual(group.sublist, $ctrl.selected)">-->
             {{group.heading}}
             ({{group.filteredCount}}<span style="color: #aaa"
                                   ng-if="group.count != group.filteredCount">
@@ -15,7 +16,8 @@
         <div ng-show="group.heading == '' || group.sublist.length == 1 || $ctrl.groupExpand[parentIndex]"
              ng-repeat="item in group.sublist | limitTo:(group.heading == '' ? $ctrl.limitShown : 100000)"
              style="{{item.filteredCount === 0 ? 'color: #aaa' : ''}}">
-            <input style="margin-left: 20px" name="{{$ctrl.radioGroup}}" type="radio" ng-click="$ctrl.onItemsSelected({items: [item], heading: item.title})" ng-checked="$ctrl.runIsEqual([item], $ctrl.selected)">
+            <input style="margin-left: 20px" name="{{$ctrl.radioGroup}}" type="radio" ng-click="$ctrl.onItemsSelected({items: [item], heading: item.title})">
+            <!--ng-checked="$ctrl.runIsEqual([item], $ctrl.selected)">-->
             {{item.title}}
             ({{item.filteredCount}}<span style="color: #aaa"
                                          ng-if="item.filteredCount != item.count">

@@ -39,7 +39,7 @@ jTextMinerApp.component('parallelsResults',
                     // if a particular source is selected, call with that, otherwise use null
                     // and it will default to using the whole selected text
                     ctrl.actualFilterSources.map(source => source.chunk_name),
-                    ctrl.filterParallels
+                    !_.isEmpty(ctrl.filterParallels)
                         // if the parallels are filtered to a particular book, call with that book
                         ? ctrl.filterParallels.map(parallel => parallel.xmlId)
                         : _.isEmpty(ctrl.filterSources)

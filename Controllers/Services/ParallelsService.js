@@ -110,6 +110,10 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                     });
             };
 
+            root.resetParallels = function () {
+                root.parallels = [];
+            };
+
             return root;
         }
     }

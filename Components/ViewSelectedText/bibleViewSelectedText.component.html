@@ -3,7 +3,7 @@
         <img src="images/loader.gif"/>
     </div>
 
-    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks" class="box-right-side">
+    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks.slice(($ctrl.currentPage - 1) * $ctrl.RESULTS_AT_A_TIME, $ctrl.currentPage * $ctrl.RESULTS_AT_A_TIME) " class="box-right-side">
         <div class="bible-viewtext-box">
 
             <h2 style="background-color:#cfcfcf;">{{chunk.chunkKey}}</h2>
@@ -18,11 +18,14 @@
             </div>
             <div class="col-xs-8">
             <p style="direction:rtl;" ng-repeat="line in chunk.contents" ng-if="line.hasOwnProperty('smallUnit')">
-                {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' ') + 1)}}: <span ng-repeat="word in $ctrl.processText(line.smallUnit.text) track by $index" context-menu="$ctrl.menuOptions" context-menu-on="click">{{word}} </span>
+                {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' ') + 1)}}: <span ng-bind-html="$ctrl.processText(line.smallUnit.text)" context-menu="$ctrl.menuOptions" context-menu-on="click"></span>
             </p>
             </div>
             <div class="clearfix"/>
         </div>
+    </div>
+    <div ng-if="$ctrl.chunks.length > $ctrl.RESULTS_AT_A_TIME">
+       <ul uib-pagination total-items="$ctrl.chunks.length" items-per-page="$ctrl.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage" ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm" boundary-link-numbers="true"></ul>
     </div>
 
 </div>

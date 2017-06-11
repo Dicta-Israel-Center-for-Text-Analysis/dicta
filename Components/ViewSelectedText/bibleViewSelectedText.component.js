@@ -7,6 +7,8 @@ jTextMinerApp.component('bibleViewSelectedText',
     controller: ['$scope', 'SelectClassService', 'APIService', 'FeatureCollectionFactory', 'bibleContextMenu',
         function ($scope, SelectClassService, APIService, FeatureCollectionFactory, bibleContextMenu) {
             var ctrl = this;
+            ctrl.RESULTS_AT_A_TIME = 10;
+            ctrl.currentPage = 1;
             ctrl.running = true;
             ctrl.selectClassService = SelectClassService;
             ctrl. featureCollection = FeatureCollectionFactory.newCollection();
@@ -73,12 +75,13 @@ jTextMinerApp.component('bibleViewSelectedText',
             };
 
             ctrl.processText = function (text) {
-                return text.split(' ');
-            };
-            ctrl.click = function (word) {
-                alert(word);
+                return text.split(' ').map(word => '<span>' + word + '</span>').join(' ');
             };
 
             ctrl.menuOptions = bibleContextMenu.menu(ctrl.onSearch);
+
+            ctrl.updateResults = function () {
+
+            }
         }]
 }); 

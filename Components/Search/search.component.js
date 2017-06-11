@@ -40,7 +40,7 @@ jTextMinerApp.component('search',
             }
 
             ctrl.onSearch = function (params) {
-                search.query = params.query;
+                search.query = params.query.replace(/<\/?mark>/g,'');
                 ctrl.runSearch();
             };
             

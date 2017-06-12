@@ -20,6 +20,13 @@
                 <p ng-repeat="feature in chunk.features">
                     {{$index + 1}}. <span dir="rtl">{{feature.name}}</span> ({{feature.maxTTest}})
                 </p>
+                <p></p>
+                <div ng-if="!(_.isEmpty(chunk.similar))">
+                    <p>Similar to:</p>
+                    <ul>
+                        <li ng-repeat="similar in chunk.similar"><a href="{{$ctrl.getLink(similar)}}" target="_blank">{{similar}}</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="col-xs-8">
             <p style="direction:rtl;" ng-repeat="line in chunk.contents" ng-if="line.hasOwnProperty('smallUnit')">

@@ -3,6 +3,11 @@
         <img src="images/loader.gif"/>
     </div>
 
+    <div class="row text-center" ng-if="!_.isEmpty($ctrl.chunks)">
+        <div class="col-xs-6"><button class="btn btn-default" ng-click="$ctrl.onClassify()">Classify These Texts</button></div>
+        <div class="col-xs-6"><button class="btn btn-default" ng-click="$ctrl.onSegment()">Source Criticism</button></div>
+    </div>
+
     <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks.slice(($ctrl.currentPage - 1) * $ctrl.RESULTS_AT_A_TIME, $ctrl.currentPage * $ctrl.RESULTS_AT_A_TIME) " class="box-right-side">
         <div class="bible-viewtext-box">
 

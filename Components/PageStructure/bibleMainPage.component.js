@@ -20,10 +20,16 @@ jTextMinerApp.component('bibleMainPage',
                 ctrl.selectedText = SelectClassService.testText;
                 ctrl.showChooseText = false;
             };
-            ctrl.runSearch= function (query) {
+            ctrl.runSearch = function (query) {
                 ctrl.tab = 'search';
                 search.query = query;
                 search.search();
+            }
+            ctrl.classify = function () {
+                ctrl.tab = 'classify';
+            }
+            ctrl.segment = function () {
+                ctrl.tab = 'segment';
             }
         }]
 }); 

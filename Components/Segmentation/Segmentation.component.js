@@ -1,4 +1,4 @@
-﻿jTextMinerApp.component('segmentation',
+jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
         controller: ['$scope', 'SegmentationService', 'InProgressService', '$sce',
@@ -35,6 +35,14 @@
                     .then(function() {
                         ctrl.htmlSegmentation = $sce.trustAsHtml(ctrl.experiment.resultData.htmlSegmentation);
                     });
+            }
+
+            ctrl.getTopFeatures = function (classData) {
+                return _.take(
+                    ctrl.experiment.featuresData.features[0]
+                        .filter(feature => feature.className === classData)
+                        .sort((featureA, featureB) => featureB.maxTTest - featureA.maxTTest)
+                    , 5)
             }
         }]
     }

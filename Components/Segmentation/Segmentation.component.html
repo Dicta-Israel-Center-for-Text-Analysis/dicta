@@ -50,6 +50,14 @@ $(document).ready(function () {
     <div class="col-md-8">
         <div class="box-right-side">
             <div class="view-text" ng-show="$ctrl.experiment.resultData.segments">
+                <div class="row">
+                    <div class="col-xs-4" ng-repeat="classData in $ctrl.experiment.featuresData.classes">
+                        Some of the features defining <span class="A{{$index}}">this class</span>:
+                        <ul>
+                            <li ng-repeat="feature in $ctrl.getTopFeatures(classData)">{{feature.name}}</li>
+                        </ul>
+                    </div>
+                </div>
                 <ul class="list-inline">
                     <li ng-class=" $ctrl.tab == '1' ? 'active' : ''"><a ng-click="$ctrl.tab = 1">View text</a></li>
                     <li><a>|</a></li>

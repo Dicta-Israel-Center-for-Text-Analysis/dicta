@@ -7,7 +7,7 @@ angular.module('JTextMinerApp')
                     onSearch({query: $event.target.innerText});
                 }],
                 [(scope, event) => "Search for " + event.target.innerText + " used in the same sense", function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $event.target.innerText});
+                    onSearch({query: $event.target.innerText, item: $itemScope});
                 }],
                 [(scope, event) => "Search for words with the same morphology as " + scope.word, function ($itemScope, $event, modelValue, text, $li) {
                     onSearch({query: $event.target.innerText});

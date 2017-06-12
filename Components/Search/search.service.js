@@ -35,7 +35,7 @@ angular.module('JTextMinerApp')
                 const fullQuery = {
                     "query": {
                         "bool": {
-                            "should": baseQuery,
+                            "must": baseQuery,
                             "must_not": {
                                 "has_child": {
                                     "type": "small",
@@ -60,7 +60,7 @@ angular.module('JTextMinerApp')
                 if (!queryParams['sortByScore'])
                     fullQuery["sort"] = { "corpus_order_path": { "order": "asc" }};
                 if (queryParams['lexeme'])
-                    fullQuery.query.bool["filter"] = { "match": { "lemmas*": queryParams['lexeme'] }};
+                    fullQuery.query.bool["filter"] = { "match": { "lemmas": queryParams['lexeme'] }};
                 return $http.post("http://dev.dicta.org.il/essearch/", fullQuery)
                     .then(function (response) {
                         service.searchResults = response.data.hits.hits;

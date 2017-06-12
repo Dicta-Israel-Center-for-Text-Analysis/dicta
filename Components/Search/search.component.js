@@ -41,6 +41,9 @@ jTextMinerApp.component('search',
 
             ctrl.onSearch = function (params) {
                 search.query = params.query.replace(/<\/?mark>/g,'');
+                if (params.item) {
+                    search.query += " lexeme:" + params.item.$parent.result._source.lemmas[params.item.$index];
+                }
                 ctrl.runSearch();
             };
             

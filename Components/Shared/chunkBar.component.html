@@ -1,0 +1,15 @@
+<div class="chunk-bar">
+    <!--<div class="sid-bar0" style="font-size:10px;">-->
+        <!--{{chunks.length}} chunks-->
+    <!--</div>-->
+
+    <div ng-repeat="chunk in $ctrl.chunks"
+         class="chunk-bar-chunk {{chunk.color}}" style="height: {{$ctrl.calculateChunkHeight(chunk)}}vh" title="{{chunk.title}}">
+        <p ng-click="$ctrl.scrollTo($index)" style="direction:rtl;" class="line-h">
+           {{$ctrl.createThumbnail(chunk)}}
+        </p>
+    </div>
+
+    <div style="border:1px solid #BDCBD4;">
+    </div>
+</div>

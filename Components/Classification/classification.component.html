@@ -88,21 +88,7 @@
 
         </div>
 
-        <div ng-show="!showInProcess" class="col-md-1">
-            <div class="sid-bar0" style="font-size:10px;">
-                {{testSetChunks.length}} chunks
-            </div>
-
-            <div ng-repeat="testFile in testSetChunks track by $index"
-                 class="classify-sid-bar {{indexOfColor(testFile.classifiedAs)}}">
-                <p ng-click="scrollTo($index)" style="direction:rtl;" class="line-h"
-                   ng-bind-html="createThumbnail(testFile.htmlText)">
-                </p>
-            </div>
-
-            <div style="border:1px solid #BDCBD4;">
-            </div>
-        </div>
+        <chunk-bar ng-show="!showInProcess" chunks="$ctrl.chunkBarData"></chunk-bar>
     </div>
     <div ng-show="tab == '2'">
 

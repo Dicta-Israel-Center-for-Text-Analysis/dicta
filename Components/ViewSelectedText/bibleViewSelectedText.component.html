@@ -21,17 +21,22 @@
                     {{$index + 1}}. <span dir="rtl">{{feature.name}}</span> ({{feature.maxTTest}})
                 </p>
                 <p></p>
-                <div ng-if="!(_.isEmpty(chunk.similar))">
+                <div ng-if="$ctrl.isNotEmpty(chunk.similar)">
                     <p>Similar to:</p>
                     <ul>
-                        <li ng-repeat="similar in chunk.similar"><a href="{{$ctrl.getLink(similar)}}" target="_blank">{{similar}}</a></li>
+                        <li ng-repeat="similar in chunk.similar"><a href="{{$ctrl.getLink(similar)}}" target="_blank">{{$ctrl.shortName(similar)}}</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-xs-8">
-            <p style="direction:rtl;" ng-repeat="line in chunk.contents" ng-if="line.hasOwnProperty('smallUnit')">
-                {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' ') + 1)}}: <span ng-bind-html="$ctrl.processText(line.smallUnit.text)" context-menu="$ctrl.menuOptions" context-menu-on="click"></span>
-            </p>
+            <div style="direction:rtl;" ng-repeat="line in chunk.contents" ng-if="line.hasOwnProperty('smallUnit')">
+                {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' ') + 1)}}:
+                <span ng-bind-html="$ctrl.processText(line.smallUnit.text)"
+                      context-menu="$ctrl.menuOptions" context-menu-on="click"></span>
+                <div ng-if="$ctrl.isNotEmpty(line.similar)">
+                    See also: <span ng-repeat="similar in line.similar"><a href="{{$ctrl.getLink(similar)}}" target="_blank">{{$ctrl.shortName(similar)}}</a> </span>
+                </div>
+            </div>
             </div>
             <div class="clearfix"/>
         </div>

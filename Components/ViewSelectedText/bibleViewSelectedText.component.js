@@ -23,7 +23,9 @@ jTextMinerApp.component('bibleViewSelectedText',
                         ctrl.chunks = response.data;
                         ctrl.chunks.forEach(chapter => {
                             ctrl.getFeatures(chapter);
-                            ctrl.findSimilar(chapter);
+                            findSimilarChapter(chapter);
+                            chapter.contents.filter(unit => unit.hasOwnProperty('smallUnit'))
+                                .forEach(unit => findSimilarVerse(unit));
                         });
                         ctrl.running = false;
                     });
@@ -104,11 +106,24 @@ jTextMinerApp.component('bibleViewSelectedText',
 
             }
 
-            ctrl.findSimilar = function(chunk) {
+            function findSimilarChapter(chunk) {
+                findSimilar(chunk,
+                            chunk.contents.map(unit => unit.hasOwnProperty('smallUnit') ? unit.smallUnit.text : '').join(' '),
+                            200,
+                            'large',
+                            chunk.chunkKey
+                );
+            }
+
+            function findSimilarVerse(unit) {
+                findSimilar(unit, unit.smallUnit.text, 30, 'small', unit.smallUnit.chunkKey);
+            }
+
+            function findSimilar(unit, text, threshold, chunkType, key) {
                 const baseQuery = {
                     "multi_match": {
                         "fields": ["parsed_text*"],
-                        "query": chunk.contents.map(unit => unit.hasOwnProperty('smallUnit') ? unit.smallUnit.text : '').join(' '),
+                        "query": text,
                         "tie_breaker": 0.001,
                     }
                 };
@@ -117,20 +132,38 @@ jTextMinerApp.component('bibleViewSelectedText',
                     "query": {
                         "bool": {
                             must: baseQuery,
-                            filter: {"term": {"_type": "large"}}
+                            filter: {"term": {"_type": chunkType}}
                         }
                     }
                 };
                 return $http.post("http://dev.dicta.org.il/essearch/", fullQuery)
                     .then(function (response) {
                         var searchResults = response.data.hits.hits;
-                        chunk.similar = searchResults.filter(hit => hit._score > 200).map(hit => hit._source.english_path);
+                        unit.similar = searchResults
+                            .filter(hit => hit._score > threshold && !key.endsWith(hit._source.english_path))
+                            .map(hit => hit._source.english_path);
                     })
             }
 
-            ctrl.getLink = function(chapter) {
-                let [dummy, book, chapterNum] = /\/[^/]*\/([^/]*)\/Chapter (.*)/.exec(chapter);
-                return "http://www.sefaria.org/" + book.replace(' ', '_') +'.' + chapterNum + "?lang=he"
+            function bookChapterAndVerse(key) {
+                let matches = /\/[^/]*\/([^/]*)\/Chapter ([^/]*)(?:\/Pasuk (.*))?/.exec(key);
+                matches.shift();
+                return _.compact(matches);
+            }
+
+            ctrl.getLink = function(key) {
+                let bookChapterAndVerseNums = bookChapterAndVerse(key);
+                bookChapterAndVerseNums[0] = bookChapterAndVerseNums[0].replace(' ', '_');
+                return "http://www.sefaria.org/" + bookChapterAndVerseNums.join('.') + "?lang=he"
+            };
+
+            ctrl.isNotEmpty = function (collection) {
+                return !_.isEmpty(collection);
+            };
+
+            ctrl.shortName = function (key) {
+                let [book, ...ChapterAndVerseNums] = bookChapterAndVerse(key);
+                return book + " " + ChapterAndVerseNums.join(':');
             }
         }]
 }); 

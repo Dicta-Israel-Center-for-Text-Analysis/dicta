@@ -52,6 +52,18 @@ jTextMinerApp.component('search',
             ctrl.highlight = function (text) {
                 if (text.highlight && text.highlight['parsed_text.y'])
                     return splitWords(text.highlight['parsed_text.y'].join('...'));
+                if (text.highlight && text.highlight['parsed_text_rep']) {
+                    const highlights = text.highlight['parsed_text_rep'][0].split(' ');
+                    const words = text._source.parsed_text.split(' ');
+                    let highlightedWords = [];
+                    highlights.forEach((highlight, index) =>
+                        highlightedWords.push(
+                            highlight.startsWith('<mark')
+                            ? '<mark>' + words[index] + '</mark>'
+                            : words[index]
+                        ));
+                    return highlightedWords;
+                }
                 const re = new RegExp("(" + search.query.replace(/ /g,'|') + ")", "g");
                 return splitWords(text._source.parsed_text.replace(re, "<mark>$1</mark>"));
             };

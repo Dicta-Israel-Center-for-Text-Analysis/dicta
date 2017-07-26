@@ -25,6 +25,8 @@ angular.module('JTextMinerApp')
                 }
                 const baseQuery = {
                     "multi_match": {
+                        "type": "phrase",
+                        "slop": 1000,
                         "fields": ["parsed_text*"],
                         "query": baseQueryString,
                         "tie_breaker": 0.001,
@@ -48,7 +50,7 @@ angular.module('JTextMinerApp')
                         "pre_tags": ["<mark>"],
                         "post_tags": ["</mark>"],
                         "fields": {
-                            "parsed_text.y": {
+                            "parsed_text*": {
                                 fragment_size: 10000
                             }
                         }

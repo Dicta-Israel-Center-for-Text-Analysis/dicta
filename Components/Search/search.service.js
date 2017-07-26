@@ -38,12 +38,12 @@ angular.module('JTextMinerApp')
                     "query": {
                         "bool": {
                             "must": baseQuery,
-                            "must_not": {
-                                "has_child": {
-                                    "type": "small",
-                                    "query": baseQuery
-                                }
-                            }
+                            // "must_not": {
+                            //     "has_child": {
+                            //         "type": "small",
+                            //         "query": baseQuery
+                            //     }
+                            // }
                         }
                     },
                     "highlight": {

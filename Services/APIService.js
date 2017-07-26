@@ -15,8 +15,8 @@ angular.module('JTextMinerApp')
     }
 
     function hostToEndpoint(host) {
-        if (host.startsWith("localhost")) return "NewWebSite";
-        if (host.startsWith("dev.dicta")) return "WebServiceJTextMinerDev";
+        if (host.startsWith("localhost")) return "DictaComputeServer";
+        if (host.startsWith("dev.dicta")) return "DictaComputeServer";
         return "WebServiceJTextMiner";
     }
     function getAPIUrl(endpoint) {

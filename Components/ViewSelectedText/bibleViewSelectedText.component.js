@@ -21,13 +21,15 @@ jTextMinerApp.component('bibleViewSelectedText',
                 APIService.call('TextFeatures/GetTextLargeAndSmall', SelectClassService.testText.keys)
                     .then(function (response) {
                         ctrl.chunks = response.data;
-                        // run the chapter requests sequentially, since it jams up other requests to the server
+                        // run all requests sequentially, since it jams up other requests to the server
                         let lastPromise = $q.resolve();
                         ctrl.chunks.forEach(chapter => {
                             lastPromise = lastPromise.then(() => ctrl.getFeatures(chapter));
-                            findSimilarChapter(chapter);
+                            lastPromise = lastPromise.then(() => findSimilarChapter(chapter));
                             chapter.contents.filter(unit => unit.hasOwnProperty('smallUnit'))
-                                .forEach(unit => findSimilarVerse(unit));
+                                .forEach(unit =>
+                                    lastPromise = lastPromise.then(() => findSimilarVerse(unit))
+                                );
                         });
                         ctrl.running = false;
                     });
@@ -109,7 +111,7 @@ jTextMinerApp.component('bibleViewSelectedText',
             }
 
             function findSimilarChapter(chunk) {
-                findSimilar(chunk,
+                return findSimilar(chunk,
                             chunk.contents.map(unit => unit.hasOwnProperty('smallUnit') ? unit.smallUnit.text : '').join(' '),
                             200,
                             'large',
@@ -118,7 +120,7 @@ jTextMinerApp.component('bibleViewSelectedText',
             }
 
             function findSimilarVerse(unit) {
-                findSimilar(unit, unit.smallUnit.text, 30, 'small', unit.smallUnit.chunkKey);
+                return findSimilar(unit, unit.smallUnit.text, 30, 'small', unit.smallUnit.chunkKey);
             }
 
             function findSimilar(unit, text, threshold, chunkType, key) {

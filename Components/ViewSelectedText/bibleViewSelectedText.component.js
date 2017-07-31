@@ -21,8 +21,10 @@ jTextMinerApp.component('bibleViewSelectedText',
                 APIService.call('TextFeatures/GetTextLargeAndSmall', SelectClassService.testText.keys)
                     .then(function (response) {
                         ctrl.chunks = response.data;
+                        // run the chapter requests sequentially, since it jams up other requests to the server
+                        let lastPromise = $q.resolve();
                         ctrl.chunks.forEach(chapter => {
-                            ctrl.getFeatures(chapter);
+                            lastPromise = lastPromise.then(() => ctrl.getFeatures(chapter));
                             findSimilarChapter(chapter);
                             chapter.contents.filter(unit => unit.hasOwnProperty('smallUnit'))
                                 .forEach(unit => findSimilarVerse(unit));

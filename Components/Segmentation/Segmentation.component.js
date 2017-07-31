@@ -1,8 +1,8 @@
 jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'SegmentationService', 'InProgressService', '$sce',
-                function ($scope, SegmentationService, InProgressService, $sce) {
+        controller: ['$scope', 'SegmentationService', 'InProgressService', '$sce', '$timeout',
+                function ($scope, SegmentationService, InProgressService, $sce, $timeout) {
             var ctrl = this;
             ctrl.tab = 1;
             ctrl.showInProcess = InProgressService.isReady != 1;
@@ -44,6 +44,21 @@ jTextMinerApp.component('segmentation',
                         .sort((featureA, featureB) => featureB.maxTTest - featureA.maxTTest)
                     , 5)
             }
+
+            $timeout(() => {
+                // http://seiyria.com/bootstrap-slider/
+                var slider;
+                slider = new Slider('#NumberOfSentencesLockedInId', {
+                    min: 10,
+                    max: 90,
+                    scale: 'logarithmic',
+                    value: 25,
+                    step: 1
+                });
+                $("#NumberOfSentencesLockedInId").on("slide", function (slideEvt) {
+                    ctrl.experiment.Segmentation_NumberOfSentencesLockedIn = slideEvt.value;
+                });
+            });
         }]
     }
 );

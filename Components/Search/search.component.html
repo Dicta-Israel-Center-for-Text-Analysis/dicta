@@ -18,7 +18,8 @@
     <img src="images/loader.gif"/>
 </div>
 <div ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
-    <p>{{$ctrl.search.searchResponse.hits.total}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+    <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
+    <p ng-show="$ctrl.search.completeResults.length > 0">{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
     <div ng-repeat="result in $ctrl.search.searchResults">
         <div class="clearfix"></div>
         <h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>
@@ -31,7 +32,7 @@
             </p>
         </div>
     </div>
-    <div class="col-xs-10 text-center" ng-show="$ctrl.search.searchResponse.hits.total > $ctrl.search.RESULTS_AT_A_TIME">
-        <ul uib-pagination total-items="$ctrl.search.searchResponse.hits.total" items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage" ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm" boundary-link-numbers="true"></ul>
+    <div class="col-xs-10 text-center" ng-show="$ctrl.search.completeResults.length > $ctrl.search.RESULTS_AT_A_TIME">
+        <ul uib-pagination total-items="$ctrl.search.completeResults.length" items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage" ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm" boundary-link-numbers="true"></ul>
     </div>
 </div>

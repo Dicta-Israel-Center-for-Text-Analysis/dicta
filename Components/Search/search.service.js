@@ -8,8 +8,17 @@ angular.module('JTextMinerApp')
             searchResponse: {},
             searching: false,
             search(offset) {
-                if (!offset)
+                if (!offset && this.lastQuery !== this.query) {
                     offset = 0;
+                    this.lastQuery = this.query;
+                    this.submitSearch();
+                }
+                else {
+                    service.searchResults = service.completeResults.slice(offset, offset + service.RESULTS_AT_A_TIME);
+                    service.offset = offset;
+                }
+            },
+            submitSearch () {
                 service.searching = true;
                 const queryParamRegex = /(\S+:\S+)/g;
                 const baseQueryString = service.query.replace(queryParamRegex, '');
@@ -55,8 +64,11 @@ angular.module('JTextMinerApp')
                             }
                         }
                     },
-                    "from": offset,
-                    "size": service.RESULTS_AT_A_TIME,
+                    //"from": offset,
+                    // paging on client side so we can filter out large units, 10000 is the default elasticsearch limit
+                    // via this API
+                    size: 10000,
+                    //"size": service.RESULTS_AT_A_TIME,
                     "track_scores": true
                 };
                 if (!queryParams['sortByScore'])
@@ -65,9 +77,22 @@ angular.module('JTextMinerApp')
                     fullQuery.query.bool["filter"] = { "match": { "lemmas": queryParams['lexeme'] }};
                 return $http.post("http://dev.dicta.org.il/essearch/", fullQuery)
                     .then(function (response) {
-                        service.searchResults = response.data.hits.hits;
+                        let smallUnitScores = {};
+                        const hits = response.data.hits.hits;
+                        hits.forEach(hit =>
+                        {
+                            const path = hit._source.corpus_order_path;
+                            const parentPath = path.substring(0, path.lastIndexOf('/'));
+                            smallUnitScores[parentPath] = smallUnitScores.hasOwnProperty(parentPath)
+                                                ? _.max([smallUnitScores[parentPath], hit._score])
+                                                : hit._score;
+                        });
+                        service.completeResults = hits.filter(hit =>
+                            !smallUnitScores.hasOwnProperty(hit._source.corpus_order_path)
+                            || smallUnitScores[hit._source.corpus_order_path] < hit._score);
+                        service.searchResults = service.completeResults.slice(0, service.RESULTS_AT_A_TIME);
                         service.searchResponse = response.data;
-                        service.offset = offset;
+                        service.offset = 0;
                         service.searching = false;
                     })
             },

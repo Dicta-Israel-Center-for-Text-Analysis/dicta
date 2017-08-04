@@ -30,9 +30,13 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                         return APIService.callParallels('Parallels/StatisticsLarge', data)
                             .then(function (response) {
                                 root.stats = response.data;
-                                root.stats.forEach(chunk => {
+                                root.stats.forEach((chunk, index) => {
                                     if (chunk.hasOwnProperty('chunkDispName'))
                                         chunk.title = chunk.chunkDispName.replace(/: /g, '/');
+                                    else {
+                                        chunk.title = _.last(root.chunks[index].chunkKey.split('/'));
+                                        chunk.chunk_name = root.chunkNames[index];
+                                    }
                                     chunk.parallels.forEach(parallel => {
                                         parallel.title = parallel.bookName.replace(/: /g, '/');
                                     });
@@ -43,25 +47,36 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                     });
             };
 
+            // creates the basic request for both StatisticsLarge and Parallels/Large; if the source is an uploaded file,
+            // get it from the server first
             function createRequest(sourceList, minThreshold, maxDistance) {
                 var data = {
-                    chunkIds: sourceList ? sourceList : SelectClassService.testText.ids,
                     minthreshold: minThreshold,
                     maxdistance: maxDistance
                 };
-                var nonDictaKeys = SelectClassService.testText.keys.filter(key => !key.startsWith('/Dicta Corpus/'));
-                if (nonDictaKeys.length > 0) {
+                var keys = _.isEmpty(sourceList) ? SelectClassService.testText.ids : sourceList;
 
+                var [nonDictaKeys, dictaKeys] = _.partition(keys, key => key.startsWith('User/'));
+                if (!_.isEmpty(dictaKeys))
+                    data.chunkIds = dictaKeys;
+
+                if (nonDictaKeys.length > 0) {
                     var textRequest = {
                         "keys": nonDictaKeys,
                         "chunkType": "LARGE"
                     };
+                    // check if there is a cached result
                     if (root.chunks) {
-                        data.chunks = root.chunks.map(chunk => chunk.text);
+                        data.chunks =
+                            (_.isEmpty(sourceList)
+                             ? root.chunks
+                             : root.chunks.filter(chunk => _.includes(sourceList, chunk.chunkKey))
+                            ).map(chunk => chunk.text);
                     }
                     else return APIService.call("TextFeatures/GetText", textRequest)
                         .then(response => {
                             root.chunks = response.data;
+                            root.chunkNames = response.data.map(chunk => chunk.chunkKey);
                             return response.data.map(chunk => chunk.text)
                         })
                         .then(chunks => {
@@ -86,13 +101,17 @@ jTextMinerApp.factory('ParallelsService', function (APIService, SelectClassServi
                             .then(response => {
                                 let parallels = [];
                                 response.data.forEach(
-                                    result => parallels[sourceList.indexOf(result.chunk_name)] = result
+                                    (result, index) => parallels[index] = result
                                 );
                                 root.parallels = parallels;
                                 root.parallels.running = false;
                                 root.parallels.haveResults = true;
                             });
                     });
+            };
+
+            root.resetParallels = function () {
+                root.parallels = [];
             };
 
             return root;

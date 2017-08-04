@@ -65,6 +65,11 @@ jTextMinerApp.component('classification', {
                     for (var testFileIndex=0; testFileIndex < $scope.testSetResults.length; testFileIndex++) {
                         setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
                     }
+                    ctrl.chunkBarData = $scope.testSetChunks.map(chunk => ({
+                        color: $scope.indexOfColor(chunk.classifiedAs),
+                        text: chunk.htmlText,
+                        title: chunk.title
+                    }))
                 });
         };
 
@@ -216,20 +221,6 @@ jTextMinerApp.component('classification', {
             }, function (reason) {
                 tiberias_tour_pause();
             });
-        };
-
-        $scope.createThumbnail = function (chunk) {
-            if (chunk == null)
-                return "";
-            var dotsNail = "";
-            for (i = 0; i < chunk.length / 200; i = i + 1) {
-                dotsNail += ". ";
-            }
-            return $sce.trustAsHtml(dotsNail);
-        };
-
-        $scope.scrollTo = function (index) {
-            window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);
         };
 
         $scope.convertFeatureName = function (featureName) {

@@ -34,6 +34,7 @@
                     })
                         .then(function (response) {
                             this.keys.push(response.data);
+                            this.ids.push(response.data);
                         }.bind(this))
                 }
             }

@@ -7,40 +7,53 @@ jTextMinerApp.component('parallelsResults',
     controller:
         function(SelectClassService) {
             const ctrl = this;
+            // when the user clicks a specific "source"
             ctrl.selectedFilterSources = [];
+            // if no source is selected, we automatically show some texts
             ctrl.actualFilterSources = [];
+            // when the user selected a specific parallels text or group of texts
             ctrl.filterParallels = [];
+
             ctrl.showAll = false;
             ctrl.resultsLimit = 5;
 
+            // when any change is made in the parallelsResults controls, update the details display
             ctrl.runDetails = function() {
+                // given the existing selected sources, calculate the xmlIds to filter by, for use when calling
+                // ParallelsLarge on the server
                 function getParallelsByXmlId(sources) {
                     return _.uniq(
                         _.flatMap(sources, text => text.parallels)
                             .map(parallel => parallel.xmlId));
                 }
 
-                if (_.isEmpty(ctrl.filterSources) && _.isEmpty(ctrl.filterParallels))
+                // always select something to show
+                // if ctrl.selectedFilterSources is set, ctrl.actualFilterSources is already set to the same value
+                if (_.isEmpty(ctrl.selectedFilterSources) && _.isEmpty(ctrl.filterParallels))
                     ctrl.actualFilterSources = ctrl.filterSourcesSplit[ctrl.filterSourcesSplitIndex];
 
-                ctrl.experiment.runParallels(
-                    ctrl.experiment.minThreshold,
-                    ctrl.experiment.maxDistance,
-                    // if a particular source is selected, call with that, otherwise use null
-                    // and it will default to using the whole selected text
-                    ctrl.actualFilterSources.map(source => source.chunk_name),
-                    ctrl.filterParallels
-                        // if the parallels are filtered to a particular book, call with that book
-                        ? ctrl.filterParallels.map(parallel => parallel.xmlId)
-                        : _.isEmpty(ctrl.filterSources)
-                            // if we don't even have a particular source, call with all the xmlIds in all the
-                            // parallels that were found
-                            ? getParallelsByXmlId(ctrl.experiment.stats)
-                            // if not, then if we have a particular source, call only with the parallels to that
-                            // source, so that the server doesn't have to search everything again
-                            : getParallelsByXmlId(ctrl.filterSources)
-
-                );
+                // only run parallels if there *are* any, otherwise set parallels to empty
+                const parallelsList = _.isEmpty(ctrl.actualFilterSources)
+                    // if we don't even have a particular source, call with all the xmlIds in all the
+                    // parallels that were found
+                    ? getParallelsByXmlId(ctrl.experiment.stats)
+                    // if not, then if we have a particular source, call only with the parallels to that
+                    // source, so that the server doesn't have to search everything again
+                    : getParallelsByXmlId(ctrl.actualFilterSources);
+                if (_.isEmpty(parallelsList))
+                    ctrl.experiment.resetParallels();
+                else
+                    ctrl.experiment.runParallels(
+                        ctrl.experiment.minThreshold,
+                        ctrl.experiment.maxDistance,
+                        // if a particular source is selected, call with that, otherwise use null
+                        // and it will default to using the whole selected text
+                        ctrl.actualFilterSources.map(source => source.chunk_name),
+                        !_.isEmpty(ctrl.filterParallels)
+                            // if the parallels are filtered to a particular book, call with that book
+                            ? ctrl.filterParallels.map(parallel => parallel.xmlId)
+                            : parallelsList
+                    );
             };
 
             ctrl.countParallels = function(sources, parallelFilters) {
@@ -91,7 +104,7 @@ jTextMinerApp.component('parallelsResults',
             };
 
             function getSectionTitleBase(source) {
-                if (source.startsWith('/User'))
+                if (source.startsWith('User'))
                     return source.substring(source.lastIndexOf('/') + 1);
                 return source.substring(SelectClassService.testSetTitlesCommonPrefix.length + 1);
             }

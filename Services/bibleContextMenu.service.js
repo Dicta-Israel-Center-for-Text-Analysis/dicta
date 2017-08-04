@@ -3,24 +3,24 @@ angular.module('JTextMinerApp')
         return {
             menu(onSearch) {
                 return [
-                [scope => "Search for " + scope.word, function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for " + event.target.innerText, function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText});
                 }],
-                [scope => "Search for " + scope.word + " used in the same sense", function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for " + event.target.innerText + " used in the same sense", function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText, item: $itemScope});
                 }],
-                [scope => "Search for words with the same morphology as " + scope.word, function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for words with the same morphology as " + scope.word, function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText});
                 }],
                 null, // Divider
-                [scope => "Search for " /*+ scope.line.smallUnit.text*/, function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for " /*+ scope.line.smallUnit.text*/, function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText});
                 }],
-                [scope => "Search for similar clauses", function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for similar clauses", function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText});
                 }],
-                [scope => "Search for similar verses", function ($itemScope, $event, modelValue, text, $li) {
-                    onSearch({query: $itemScope.word});
+                [(scope, event) => "Search for similar verses", function ($itemScope, $event, modelValue, text, $li) {
+                    onSearch({query: $event.target.innerText});
                 }]
             ]}
         };

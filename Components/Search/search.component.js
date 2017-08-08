@@ -50,8 +50,9 @@ jTextMinerApp.component('search',
             ctrl.menuOptions = bibleContextMenu.menu(ctrl.onSearch);
 
             ctrl.highlight = function (text) {
-                if (text.highlight && text.highlight['parsed_text.y'])
-                    return splitWords(text.highlight['parsed_text.y'].join('...'));
+                // parsed_text_rep should cover all cases
+                //if (text.highlight && text.highlight['parsed_text.y'])
+                //    return splitWords(text.highlight['parsed_text.y'].join('...'));
                 if (text.highlight && text.highlight['parsed_text_rep']) {
                     const highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
                     const words = text._source.parsed_text.split(/\s/);

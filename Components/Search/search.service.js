@@ -81,7 +81,7 @@ angular.module('JTextMinerApp')
                             "must": baseQuery
                         }
                     },
-                    "_source": ["corpus_order_path"],
+                    "_source": ["corpus_order_path", "children_path"],
                     size: 10000,
                     track_scores: true
                 };
@@ -100,19 +100,26 @@ angular.module('JTextMinerApp')
                 }
                 return $http.post("http://dev.dicta.org.il/essearch/", preQuery)
                     .then((response) => {
+                        let childUnitScores = {};
                         let smallUnitScores = {};
                         const hits = response.data.hits.hits;
                         hits.forEach(hit =>
                         {
                             const path = hit._source.corpus_order_path;
+                            smallUnitScores[path] = hit._score;
                             const parentPath = path.substring(0, path.lastIndexOf('/'));
-                            smallUnitScores[parentPath] = smallUnitScores.hasOwnProperty(parentPath)
-                                ? _.max([smallUnitScores[parentPath], hit._score])
+                            childUnitScores[parentPath] = childUnitScores.hasOwnProperty(parentPath)
+                                ? _.max([childUnitScores[parentPath], hit._score])
                                 : hit._score;
                         });
                         service.completeResults = hits.filter(hit =>
-                            !smallUnitScores.hasOwnProperty(hit._source.corpus_order_path)
-                            || smallUnitScores[hit._source.corpus_order_path] < hit._score)
+                            {
+                                if (hit._type === "cross") {
+                                    return hit._source.children_path.every(path => smallUnitScores[path] < hit._score)
+                                }
+                                return !childUnitScores.hasOwnProperty(hit._source.corpus_order_path)
+                                || childUnitScores[hit._source.corpus_order_path] < hit._score
+                            })
                             .map(hit => hit._id);
                         this.fullQuery.query.bool.filter.push({
                                 ids: {

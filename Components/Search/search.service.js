@@ -8,10 +8,12 @@ angular.module('JTextMinerApp')
             searchResponse: {},
             searching: false,
             search(offset) {
-                if (!offset && this.lastQuery !== this.query) {
-                    offset = 0;
-                    this.lastQuery = this.query;
-                    this.submitSearch();
+                if (!offset) {
+                    this.offset = 0;
+                    if (this.lastQuery !== this.query) {
+                        this.lastQuery = this.query;
+                        this.submitSearch();
+                    }
                 }
                 else {
                     service.searchResults = service.completeResults.slice(offset, offset + service.RESULTS_AT_A_TIME);

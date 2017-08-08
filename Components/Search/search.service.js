@@ -4,6 +4,7 @@ angular.module('JTextMinerApp')
             RESULTS_AT_A_TIME: 20,
             query: "",
             offset: 0,
+            sortByCorpusOrder: true,
             searchResults: [],
             searchResponse: {},
             searching: false,
@@ -73,7 +74,7 @@ angular.module('JTextMinerApp')
                     //"size": service.RESULTS_AT_A_TIME,
                     "track_scores": true
                 };
-                if (!queryParams['sortByScore'])
+                if (!queryParams['sortByScore'] && this.sortByCorpusOrder)
                     fullQuery["sort"] = { "corpus_order_path": { "order": "asc" }};
                 if (queryParams['lexeme'])
                     fullQuery.query.bool["filter"] = { "match": { "lemmas": queryParams['lexeme'] }};
@@ -97,6 +98,11 @@ angular.module('JTextMinerApp')
                         service.offset = 0;
                         service.searching = false;
                     })
+            },
+            toggleSortOrder(){
+                this.sortByCorpusOrder = !this.sortByCorpusOrder;
+                this.offset = 0;
+                this.submitSearch();
             },
             loadResults(pageNum) {
                 return service.search((pageNum - 1) * service.RESULTS_AT_A_TIME);

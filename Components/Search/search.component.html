@@ -19,7 +19,16 @@
 </div>
 <div ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
     <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
-    <p ng-show="$ctrl.search.completeResults.length > 0">{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+    <div ng-show="$ctrl.search.completeResults.length > 0">
+        <p>
+            <a ng-show="!$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by Tanakh Order</a>
+            <span ng-show="$ctrl.search.sortByCorpusOrder">Sort by Tanakh Order</span>
+            |
+            <a ng-show="$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by Relevance</a>
+            <span ng-show="!$ctrl.search.sortByCorpusOrder">Sort by Relevance</span>
+        </p>
+        <p>{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+    </div>
     <div ng-repeat="result in $ctrl.search.searchResults">
         <div class="clearfix"></div>
         <h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>

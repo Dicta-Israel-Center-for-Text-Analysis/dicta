@@ -17,11 +17,21 @@ angular.module('JTextMinerApp')
                     }
                 }
                 else {
-                    service.searchResults = service.completeResults.slice(offset, offset + service.RESULTS_AT_A_TIME);
                     service.offset = offset;
+                    this.updateSearch();
                 }
             },
-            submitSearch () {
+            updateSearch() {
+                service.searching = true;
+                this.fullQuery.query.bool.filter[this.fullQuery.query.bool.filter.length - 1].ids.values
+                    = service.completeResults.slice(this.offset, this.offset + service.RESULTS_AT_A_TIME);
+                return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
+                    .then(function (response) {
+                        service.searchResults = response.data.hits.hits;
+                        service.searching = false;
+                    })
+            },
+            submitSearch() {
                 service.searching = true;
                 const queryParamRegex = /(\S+:\S+)/g;
                 const baseQueryString = service.query.replace(queryParamRegex, '');
@@ -46,16 +56,10 @@ angular.module('JTextMinerApp')
                     }
                 };
 
-                const fullQuery = {
+                this.fullQuery = {
                     "query": {
                         "bool": {
-                            "must": baseQuery,
-                            // "must_not": {
-                            //     "has_child": {
-                            //         "type": "small",
-                            //         "query": baseQuery
-                            //     }
-                            // }
+                            "must": baseQuery
                         }
                     },
                     "highlight": {
@@ -67,19 +71,34 @@ angular.module('JTextMinerApp')
                             }
                         }
                     },
-                    //"from": offset,
-                    // paging on client side so we can filter out large units, 10000 is the default elasticsearch limit
-                    // via this API
-                    size: 10000,
-                    //"size": service.RESULTS_AT_A_TIME,
+                    "size": this.RESULTS_AT_A_TIME,
                     "track_scores": true
                 };
-                if (!queryParams['sortByScore'] && this.sortByCorpusOrder)
-                    fullQuery["sort"] = { "corpus_order_path": { "order": "asc" }};
-                if (queryParams['lexeme'])
-                    fullQuery.query.bool["filter"] = { "match": { "lemmas": queryParams['lexeme'] }};
-                return $http.post("http://dev.dicta.org.il/essearch/", fullQuery)
-                    .then(function (response) {
+
+                const preQuery = {
+                    query: {
+                        "bool": {
+                            "must": baseQuery
+                        }
+                    },
+                    "_source": ["corpus_order_path"],
+                    size: 10000
+                };
+                if (!queryParams['sortByScore'] && this.sortByCorpusOrder) {
+                    preQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
+                    this.fullQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
+                }
+                if (queryParams['lexeme']) {
+                    preQuery.query.bool["filter"] = [{"match": {"lemmas": queryParams['lexeme']}}];
+                    this.fullQuery.query.bool["filter"] = [{"match": {"lemmas": queryParams['lexeme']}}];
+                }
+                if (!this.fullQuery.query.bool.hasOwnProperty("filter")) {
+                    //preQuery.query.bool["filter"] = [];{"term": {"_type": "small"}}];
+                    this.fullQuery.query.bool["filter"] = [];
+                    //{"term": {"_type": "small"}}];
+                }
+                return $http.post("http://dev.dicta.org.il/essearch/", preQuery)
+                    .then((response) => {
                         let smallUnitScores = {};
                         const hits = response.data.hits.hits;
                         hits.forEach(hit =>
@@ -87,13 +106,23 @@ angular.module('JTextMinerApp')
                             const path = hit._source.corpus_order_path;
                             const parentPath = path.substring(0, path.lastIndexOf('/'));
                             smallUnitScores[parentPath] = smallUnitScores.hasOwnProperty(parentPath)
-                                                ? _.max([smallUnitScores[parentPath], hit._score])
-                                                : hit._score;
+                                ? _.max([smallUnitScores[parentPath], hit._score])
+                                : hit._score;
                         });
                         service.completeResults = hits.filter(hit =>
                             !smallUnitScores.hasOwnProperty(hit._source.corpus_order_path)
-                            || smallUnitScores[hit._source.corpus_order_path] < hit._score);
-                        service.searchResults = service.completeResults.slice(0, service.RESULTS_AT_A_TIME);
+                            || smallUnitScores[hit._source.corpus_order_path] < hit._score)
+                            .map(hit => hit._id);
+
+                       this.fullQuery.query.bool.filter.push({
+                                ids: {
+                                    "values": service.completeResults.slice(0, service.RESULTS_AT_A_TIME)
+                                }
+                            });
+                        return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
+                    })
+                    .then(function (response) {
+                        service.searchResults = response.data.hits.hits;
                         service.searchResponse = response.data;
                         service.offset = 0;
                         service.searching = false;

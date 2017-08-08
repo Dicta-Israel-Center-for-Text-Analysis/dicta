@@ -82,7 +82,8 @@ angular.module('JTextMinerApp')
                         }
                     },
                     "_source": ["corpus_order_path"],
-                    size: 10000
+                    size: 10000,
+                    track_scores: true
                 };
                 if (!queryParams['sortByScore'] && this.sortByCorpusOrder) {
                     preQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
@@ -113,8 +114,7 @@ angular.module('JTextMinerApp')
                             !smallUnitScores.hasOwnProperty(hit._source.corpus_order_path)
                             || smallUnitScores[hit._source.corpus_order_path] < hit._score)
                             .map(hit => hit._id);
-
-                       this.fullQuery.query.bool.filter.push({
+                        this.fullQuery.query.bool.filter.push({
                                 ids: {
                                     "values": service.completeResults.slice(0, service.RESULTS_AT_A_TIME)
                                 }

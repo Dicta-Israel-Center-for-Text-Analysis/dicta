@@ -1,0 +1,60 @@
+.form-inline input.search-control-class.form-control {
+    width: 350px;
+    margin-left: -50px;
+}
+
+.rounded-btn {
+    height: 44px;
+    border-radius: 100px;
+    color: white;
+    padding: 10px 0px;
+    width: 215px;
+}
+
+.btn-blue {
+    background-color: #0C8BFF;
+}
+
+.btn-green {
+
+}
+
+.side-space {
+    padding: 0 27px;
+}
+
+.jumbo {
+    background-color: #F6F8F9;
+    padding-bottom: 125px;
+    color: #222B37
+}
+.jumbo-start {
+    padding-top: 125px;
+}
+.jumbo-text-selection {
+    padding-top: 53px;
+}
+.jumbo-subtext {
+    padding-top: 20px
+}
+.jumbo-subtext a {
+    text-decoration: underline;
+    color: #222B37
+}
+.header-link {
+    color: darkgrey;
+}
+
+.main-logo {
+    padding-left: 60px;
+    font-size:70px;
+    font-family: Martel, serif;
+    color: #222B37;
+}
+
+.main-logo sup {
+    font-size: 20px;
+    top: -60px;
+    left: -40px;
+    font-weight: 600;
+}

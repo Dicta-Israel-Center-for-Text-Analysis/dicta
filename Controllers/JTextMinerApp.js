@@ -28,7 +28,8 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     })
     .state('bibleInterface', {
         url: '/BibleInterface',
-        template: '<bible-main-page></bible-main-page>'
+        //template: '<bible-main-page></bible-main-page>'
+        template: '<bible-front-page></bible-front-page>'
     })
     // these states aren't in use yet, because switching states would lose the state of the controls that aren't shown
     // the sticky-states plugin to ui-router can resolve this, although it's not clear whether it is stable yet

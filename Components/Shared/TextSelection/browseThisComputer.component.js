@@ -37,8 +37,6 @@ jTextMinerApp.component('browseThisComputer', {
 
                         ctrl.browseData.textInfo.doNotChunk_ChunkSize = ctrl.browseData.textInfo.numberOfFiles;
                         ctrl.calculateChunks();
-
-                        focus('Browse_focusClassName');
                     });
             };
 

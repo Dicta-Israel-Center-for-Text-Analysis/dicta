@@ -15,7 +15,7 @@
                 <td>
                     <div class="name-class">
                         <label>{{$ctrl.namingMessage}}: </label>
-                        <input class="name-class form-control" focus-on="focusClassName" ng-model="$ctrl.className"
+                        <input class="name-class form-control" autofocus ng-model="$ctrl.className"
                                ng-change="$ctrl.userChangedName()"
                                ng-style="$ctrl.calculateName ? { 'font-style': 'italic' } : null"
                                type="text"/>

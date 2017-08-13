@@ -1,4 +1,0 @@
-jTextMinerApp.controller('JTextMinerController', function () {
-});
-
-

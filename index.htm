@@ -71,7 +71,7 @@
 </script>
 	
 </head>
-<body ng-app="JTextMinerApp" ng-controller="JTextMinerController">
+<body ng-app="JTextMinerApp">
 
     <!-- links
     https://scotch.io/tutorials/angular-routing-using-ui-router
@@ -84,11 +84,10 @@
       
 
 
-    <script src="Controllers/JTextMinerApp.js" type="text/javascript"></script>
-    <script src="Controllers/JTextMinerController.js" type="text/javascript"></script>
-    <script src="Controllers/JTextMinerDirectives.js" type="text/javascript"></script>
-    <script src="Controllers/JTextMinerServices.js" type="text/javascript"></script>
-    <script src="Controllers/JTextMinerFilter.js" type="text/javascript"></script>
+    <script src="App/JTextMinerApp.js" type="text/javascript"></script>
+    <script src="App/JTextMinerDirectives.js" type="text/javascript"></script>
+    <script src="Services/FileUploadService.js" type="text/javascript"></script>
+    <script src="App/JTextMinerFilter.js" type="text/javascript"></script>
 
     <script src="Components/Classification/trainingClasses.component.js" type="text/javascript"></script>
     <script src="Components/Shared/featureTable.component.js" type="text/javascript"></script>
@@ -118,16 +117,16 @@
     <script src="Components/PageStructure/bibleFrontPage.component.js" type="application/javascript"></script>
     <script src="Components/PageStructure/savedDataTable.component.js" type="application/javascript"></script>
 
-    <script src="Controllers/Services/Class/ClassService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/Class/SelectClassService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/Experiment/ClassificationService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/Experiment/SegmentationService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/Experiment/UnmaskingService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/FeatureCollectionFactory.js" type="text/javascript"></script>
-    <script src="Controllers/Services/TreeService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/InProgressService.js" type="text/javascript"></script>
-    <script src="Controllers/Services/Interface/SaveClassInterface.js" type="text/javascript"></script>
-    <script src="Controllers/Services/ParallelsService.js" type="text/javascript"></script>
+    <script src="Services/Class/ClassService.js" type="text/javascript"></script>
+    <script src="Services/Class/SelectClassService.js" type="text/javascript"></script>
+    <script src="Services/Experiment/ClassificationService.js" type="text/javascript"></script>
+    <script src="Services/Experiment/SegmentationService.js" type="text/javascript"></script>
+    <script src="Services/Experiment/UnmaskingService.js" type="text/javascript"></script>
+    <script src="Services/FeatureCollectionFactory.js" type="text/javascript"></script>
+    <script src="Services/TreeService.js" type="text/javascript"></script>
+    <script src="Services/InProgressService.js" type="text/javascript"></script>
+    <script src="Services/Interface/SaveClassInterface.js" type="text/javascript"></script>
+    <script src="Services/ParallelsService.js" type="text/javascript"></script>
 
 
     <script src="Components/PageStructure/loginPage.component.js" type="text/javascript"></script>

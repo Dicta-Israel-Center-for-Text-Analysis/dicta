@@ -1,12 +1,3 @@
-//http://stackoverflow.com/questions/14833326/how-to-set-focus-on-input-field
-jTextMinerApp.factory('focus', function ($rootScope, $timeout) {
-    return function (name) {
-        $timeout(function () {
-            $rootScope.$broadcast('focusOn', name);
-        });
-    }
-});
-
 jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserService', function (APIService, InProgressService, UserService) {
     this.upload = function(file) {
         var fd = new FormData();

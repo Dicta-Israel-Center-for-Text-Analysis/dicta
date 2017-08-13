@@ -1,7 +1,7 @@
 ﻿<fieldset>
     <legend>Browse this computer</legend>
     <div>
-        Select a zip file :<input type="file" focus-on="Browse_focusZipFile" file-model="$ctrl.zipFile" accept=".zip"
+        Select a zip file :<input type="file" autofocus file-model="$ctrl.zipFile" accept=".zip"
                                   custom-on-change="$ctrl.file_changed"/>
     </div>
     <div ng-show="$ctrl.Browse_fileUploaded">

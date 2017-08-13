@@ -1,0 +1,1 @@
+This directory should not have any new files added to it. New components go in the 'Components' directory.

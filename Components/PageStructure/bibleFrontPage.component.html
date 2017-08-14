@@ -18,10 +18,10 @@
         <div class="col-xs-offset-1 col-xs-10">
             <h1 class="text-center main-logo"><b>Dicta</b><sup>BIBLE</sup></h1>
             <form class="form-inline text-center jumbo-text-selection">
-                <button type="button" class="form-control "><i class="glyphicon glyphicon-search"></i></button>
-                <input class="form-control search-control-class" name="bob">
+                <button type="button" class="form-control" ng-click="$ctrl.runSearch()"><i class="glyphicon glyphicon-search"></i></button>
+                <input class="form-control search-control-class" ng-model="$ctrl.searchQuery" ng-enter="$ctrl.runSearch()">
                 <span class="side-space">OR</span>
-                <button class="rounded-btn btn btn-blue"><i class="glyphicon glyphicon-cloud"></i> Select From Library</button>
+                <button class="rounded-btn btn btn-blue" ng-click="$ctrl.showLibrary()"><i class="glyphicon glyphicon-cloud"></i> Select From Library</button>
 
             </form>
         </div>

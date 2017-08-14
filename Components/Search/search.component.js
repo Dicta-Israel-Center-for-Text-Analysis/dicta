@@ -9,7 +9,6 @@ jTextMinerApp.component('search',
             ctrl.search = search;
             ctrl.currentPage = 1;
             ctrl.previousQuery = '';
-
             ctrl.setSearchTerm = function (selected) {
                 if (selected == null) return;
                 ctrl.previousQuery = selected.title;
@@ -29,6 +28,11 @@ jTextMinerApp.component('search',
                 ctrl.currentPage = 1;
                 search.search();
             };
+
+            if (!_.isEmpty(search.query)) {
+                ctrl.previousQuery = search.query;
+                ctrl.runSearch();
+            }
 
             ctrl.inputChanged = function (searchTerm) {
                 ctrl.previousQuery = searchTerm;

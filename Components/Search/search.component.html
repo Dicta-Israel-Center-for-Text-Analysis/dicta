@@ -1,47 +1,80 @@
-<form class="form-inline">
-    <!--<input class="form-control" style="width:300px" ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">-->
-    <angucomplete-alt id="search"
-                      placeholder="Enter search terms"
-                      pause="300"
-                      selected-object="$ctrl.setSearchTerm"
-                      remote-api-handler="$ctrl.runSuggest"
-                      title-field="text"
-                      style="display: inline-block"
-                      input-changed="$ctrl.inputChanged"
-                      input-class="form-control search-control-class"
-                      text-no-results="false"
-                      match-class="autocomplete-highlight"></angucomplete-alt>
-    <button class="btn btn-default form-control" ng-click="$ctrl.runSearch()"><i class="fa fa-search"></i></button>
-</form>
-<p></p>
-<div style="text-align:center" ng-show="$ctrl.search.searching">
-    <img src="images/loader.gif"/>
-</div>
-<div ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
-    <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
-    <div ng-show="$ctrl.search.completeResults.length > 0">
-        <p>
-            <a ng-show="!$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by Tanakh Order</a>
-            <span ng-show="$ctrl.search.sortByCorpusOrder">Sort by Tanakh Order</span>
-            |
-            <a ng-show="$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by Relevance</a>
-            <span ng-show="!$ctrl.search.sortByCorpusOrder">Sort by Relevance</span>
-        </p>
-        <p>{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} - {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+<div class="search-control">
+    <div class="search-top-bar">
+        <div class="search-top-left">
+            <span class="top-back-arrow"><i class="material-icons">keyboard_arrow_left</i></span>
+            <span class="small-logo">Dicta<sup>Bible</sup></span>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <form class="form-inline search-top-bar-form">
+                        <!--<input class="form-control" style="width:300px" ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">-->
+                        <angucomplete-alt id="search"
+                                          placeholder="Enter search terms"
+                                          pause="300"
+                                          selected-object="$ctrl.setSearchTerm"
+                                          remote-api-handler="$ctrl.runSuggest"
+                                          title-field="text"
+                                          class="search-autocomplete-container"
+                                          input-changed="$ctrl.inputChanged"
+                                          input-class="search-top-bar-form-control search-top-bar-input search-control-class"
+                                          text-no-results="false"
+                                          match-class="autocomplete-highlight"></angucomplete-alt>
+                        <button class="search-top-bar-button search-top-bar-form-control" ng-click="$ctrl.runSearch()"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div ng-repeat="result in $ctrl.search.searchResults">
-        <div class="clearfix"></div>
-        <h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>
-        <div class="col-xs-10">
-            <h5>{{result._source.english_path || result._source.displayname_eng}}</h5>
-            <h5 class="text-left" dir="rtl">{{result._source.hebrew_path || result._source.displayname_heb}}</h5>
-            <p class="col-xs-10" dir="rtl">
-                <span ng-repeat="word in $ctrl.highlight(result) track by $index" context-menu="$ctrl.menuOptions" context-menu-on="click"
-                ng-bind-html="word + ' '"> </span>
+    <div class="search-control-bar">
+        <div class="col-xs-8">
+
+        </div>
+        <div class="col-xs-4" ng-show="$ctrl.search.completeResults.length > 0">
+            <p>
+                <a ng-show="!$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by
+                    Tanakh Order</a>
+                <span ng-show="$ctrl.search.sortByCorpusOrder">Sort by Tanakh Order</span>
+                |
+                <a ng-show="$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by
+                    Relevance</a>
+                <span ng-show="!$ctrl.search.sortByCorpusOrder">Sort by Relevance</span>
             </p>
         </div>
     </div>
-    <div class="col-xs-10 text-center" ng-show="$ctrl.search.completeResults.length > $ctrl.search.RESULTS_AT_A_TIME">
-        <ul uib-pagination total-items="$ctrl.search.completeResults.length" items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage" ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm" boundary-link-numbers="true"></ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="search-result-summary" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
+                    <p>{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} -
+                        {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+                    <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center" ng-show="$ctrl.search.searching">
+            <img src="images/loader.gif"/>
+        </div>
+        <div class="row" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
+            <div class="col-xs-8 search-result" ng-repeat="result in $ctrl.search.searchResults">
+                <!--<h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>-->
+                    <h5 class="search-result-heading">{{result._source.english_path || result._source.displayname_eng}}</h5>
+                    <!--<h5 class="text-left" dir="rtl">{{result._source.hebrew_path ||-->
+                        <!--result._source.displayname_heb}}</h5>-->
+                    <!--<h5>Score: {{result._score}}</h5>-->
+                    <p class="search-result-text" dir="rtl">
+                        <span ng-repeat="word in $ctrl.highlight(result) track by $index" context-menu="$ctrl.menuOptions"
+                              context-menu-on="click"
+                              ng-bind-html="word + ' '"></span>
+                    </p>
+            </div>
+            <div class="col-xs-8 text-center"
+                 ng-show="$ctrl.search.completeResults.length > $ctrl.search.RESULTS_AT_A_TIME">
+                <ul uib-pagination total-items="$ctrl.search.completeResults.length"
+                    items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage"
+                    ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm"
+                    boundary-link-numbers="true"></ul>
+            </div>
+        </div>
     </div>
 </div>

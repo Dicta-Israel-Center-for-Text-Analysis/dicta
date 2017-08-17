@@ -64,13 +64,13 @@ jTextMinerApp.component('search',
                     highlights.forEach((highlight, index) =>
                         highlightedWords.push(
                             highlight.startsWith('<mark')
-                            ? '<mark>' + words[index] + '</mark>'
+                            ? '<b>' + words[index] + '</b>'
                             : words[index]
                         ));
                     return highlightedWords;
                 }
                 const re = new RegExp("(" + search.query.replace(/ /g,'|') + ")", "g");
-                return splitWords(text._source.parsed_text.replace(re, "<mark>$1</mark>"));
+                return splitWords(text._source.parsed_text.replace(re, "<b>$1</b>"));
             };
 
             ctrl.updateResults = function () {

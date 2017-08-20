@@ -1,11 +1,9 @@
 jTextMinerApp.component('browseThisComputer', {
     bindings: { browseData: '=' },
     templateUrl: 'Components/Shared/TextSelection/browseThisComputer.component.html',
-    controller: ['$scope', 'focus', 'fileUpload', 'ngDialog', 'InProgressService', 'UserService', 'SelectClassService',
-        function ($scope, focus, fileUpload, ngDialog, InProgressService, UserService, SelectClassService) {
+    controller: ['$scope', 'fileUpload', 'ngDialog', 'InProgressService', 'UserService', 'SelectClassService',
+        function ($scope, fileUpload, ngDialog, InProgressService, UserService, SelectClassService) {
             var ctrl = this;
-
-            focus('Browse_focusZipFile');
 
             //input
             ctrl.browseData = {

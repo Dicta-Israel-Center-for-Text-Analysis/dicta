@@ -6,11 +6,13 @@
         )
     </div>-->
     <br />
-    <div style="height: 400px; overflow-y: scroll;">
+    <div>
         <ol class="breadcrumb">
             <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb.title}}</a></li>
         </ol>
-        <table class="table table-striped">
+        <div class="row">
+            <div class="col-xs-3">
+        <table class="text-selection-rows">
             <tr ng-repeat="item in $ctrl.treeNode">
                 <td width="30px"><input
                         type="checkbox"
@@ -29,6 +31,17 @@
                 </td>
             </tr>
         </table>
+            </div>
+            <div class="col-xs-9 preview-text">
+                <div ng-repeat="chapter in $ctrl.previewText">
+                    <div ng-repeat="line in chapter.contents">
+                        {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' '))}}: {{line.smallUnit.text}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
     </div>
 

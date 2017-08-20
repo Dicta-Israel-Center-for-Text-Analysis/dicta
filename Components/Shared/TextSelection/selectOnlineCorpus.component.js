@@ -1,11 +1,11 @@
 ﻿jTextMinerApp.component('selectOnlineCorpus', {
         bindings: { selectionText: '=' },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
-        controller: ['TreeService', 'SelectClassService', function (TreeService, SelectClassService) {
+        controller: ['TreeService', 'SelectClassService', 'APIService', function (TreeService, SelectClassService, APIService) {
             var ctrl = this;
             function initBreadCrumbs() {
                 ctrl.breadCrumbs = [{
-                    title: 'All Collections',
+                    title: 'Collection',
                     children: TreeService.corpusTree
                 }];
             }
@@ -125,12 +125,20 @@
                 recalculatePartials();
 
                 ctrl.selectedNodes = TreeService.treeSort(ctrl.selectedNodes, key => key);
-
                 ctrl.selectionText = SelectClassService.newTextFromCorpus(
                     ctrl.selectedNodes.map(key => "/Dicta Corpus/" + key),
                     ctrl.selectedNodes.map(key => TreeService.keyToNode[key].id)
                 );
+
+                updatePreview(ctrl.selectionText);
             };
+
+            function updatePreview(selectedText) {
+                APIService.call('TextFeatures/GetTextLargeAndSmall', selectedText.keys)
+                    .then(function (response) {
+                        ctrl.previewText = response.data;
+                    });
+            }
 
             ctrl.selectCrumb = function (crumbNumber) {
                 ctrl.breadCrumbs = ctrl.breadCrumbs.slice(0, crumbNumber+1);

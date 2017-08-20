@@ -196,3 +196,35 @@
     color: #222B37;
     width: 100%;
 }
+
+.preview-text {
+    direction: rtl;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    background-color: white;
+}
+.breadcrumb {
+    text-transform: uppercase;
+    background-color: #fff;
+    border-bottom: solid 1px grey;
+    border-radius: 0;
+}
+.breadcrumb>li+li:before {
+    content: '>\00a0';
+}
+.text-selection-rows, .preview-text {
+    max-height: 400px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+}
+.text-selection-rows td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+
+::placeholder {
+    opacity: 0.7;
+    font-style: italic;
+}

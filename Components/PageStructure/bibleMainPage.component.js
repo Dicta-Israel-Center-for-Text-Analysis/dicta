@@ -1,12 +1,15 @@
 jTextMinerApp.component('bibleMainPage',
 {
     templateUrl: 'Components/PageStructure/bibleMainPage.component.html',
-    controller: ['UserService', '$location', 'SelectClassService', 'search',
-        function(UserService, $location, SelectClassService, search) {
+    controller: ['UserService', '$location', 'SelectClassService', 'search', '$state',
+        function(UserService, $location, SelectClassService, search, $state) {
             if (!UserService.isLoggedIn()) {
-                $location.path('Login');
+                // $location.path('Login');
             }
+            if (!SelectClassService.testText)
+                $state.go('bibleFrontpage');
             const ctrl = this;
+            ctrl.$state = $state;
             ctrl.tab = 'search';
             ctrl.textChosen = false;
             ctrl.showChooseText = true;
@@ -30,6 +33,9 @@ jTextMinerApp.component('bibleMainPage',
             }
             ctrl.segment = function () {
                 ctrl.tab = 'segment';
+            }
+            ctrl.getSelection = function () {
+                return SelectClassService.summarizeText(SelectClassService.testText);
             }
         }]
 }); 

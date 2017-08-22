@@ -34,7 +34,12 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
 
                 runClassification() {
                     return this.prepareClassification()
-                        .then(this.runClassificationInternal.bind(this));
+                        .then(this.runClassificationInternal.bind(this))
+                        .then(response => {
+                            if (experiment.listener)
+                                experiment.listener(response);
+                            return response;
+                        });
                 },
 
                 prepareClassification() {
@@ -327,6 +332,9 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         experiment.testTextsFeatures = _.flatMap(responses, response => response.data);
                     });
                     return $q.all([textPromise, featuresCompletePromise]);
+                },
+                registerListener(listener) {
+                    experiment.listener = listener;
                 }
             }
             return experiment;

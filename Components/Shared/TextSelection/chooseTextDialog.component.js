@@ -9,7 +9,7 @@ jTextMinerApp.component('chooseTextDialog', {
         hideCancel: '<'
     },
     templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
-    controller: function ($scope, InProgressService) {
+    controller: function ($scope, InProgressService, SelectClassService) {
         var ctrl = this;
         //ctrl.selectedKeys = [];
 
@@ -24,6 +24,10 @@ jTextMinerApp.component('chooseTextDialog', {
         }
 
         ctrl.calculateName = true;
+
+        ctrl.getProposedName = function () {
+            return SelectClassService.summarizeText(ctrl.selectionText);
+        };
 
         if (ctrl.className != null) {
             $scope.$watch('$ctrl.selectionText.keys', function (keys) {

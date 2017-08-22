@@ -27,7 +27,7 @@
         this.guestBibleLogin = function () {
             UserService.tryLogin("testuser", true)
                 .then(function () {
-                    $state.go('bibleInterface');
+                    $state.go('bibleFrontpage');
                 })
         }
 

@@ -1,0 +1,10 @@
+<div class="classification-controls">
+    <training-classes classification-experiment="$ctrl.experiment" show-delete-button="true"></training-classes>
+    <button class="rounded-btn btn btn-green" ng-show="$ctrl.experiment.classes.Corpus_classes.length < 2" ng-click="$ctrl.defineClass()">Define a Class</button>
+    <div ng-show="$ctrl.experiment.classes.Corpus_classes.length >= 2">
+        <div>
+            <a ng-click="$ctrl.defineClass()">Add a Class</a>
+        </div>
+        <button class="rounded-btn btn btn-green" ng-click="$ctrl.runExperiment()">Classify</button>
+    </div>
+</div>

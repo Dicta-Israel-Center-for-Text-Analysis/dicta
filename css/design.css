@@ -70,6 +70,8 @@
     border-radius: 100px;
     padding: 10px 0;
     width: 215px;
+    outline: none;
+    border: none;
 }
 
 .btn-blue {
@@ -202,21 +204,55 @@
 }
 
 .ngdialog.ngdialog-theme-default .ngdialog-content {
-    background-color: white;
+    background-color: transparent;
 }
+.ngdialog .ngdialog-message {
+    background-color: #fff;
+}
+.dialog-button-area {
+    height: 68px;
+    border-radius: 0 0 3px 3px;
+    background-color: #222B37;
+    border: solid 1px #fff;
+    padding: 10px;
+}
+.dialog-close {
+    background-color: transparent;
+    color: white;
+    height: 3em;
+    width: 100%;
+    text-align: right;
+}
+
 .breadcrumb {
     text-transform: uppercase;
     background-color: #fff;
-    border-bottom: solid 1px grey;
+    border-bottom: 1px solid #D5DCE0;
     border-radius: 0;
+    padding: 23px 15px;
+    color: #848F99;
+}
+.breadcrumb>li:last-child {
+    color: #222B37;
 }
 .breadcrumb>li+li:before {
-    content: '>\00a0';
+    content: '\00a0>\00a0';
+    padding: 0 5px;
+}
+.breadcrumb li a {
+    color: inherit;
 }
 .text-selection-rows, .preview-text {
-    max-height: 400px;
-    overflow-y: scroll;
+    height: 400px;
+    overflow-y: auto;
     box-sizing: border-box;
+    padding: 0 25px;
+    line-height: 32px;
+    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+}
+.preview-text-message {
+    text-align: center;
+    padding-top: 150px;
 }
 .text-selection-rows td {
     padding: 8px;
@@ -227,4 +263,47 @@
 ::placeholder {
     opacity: 0.7;
     font-style: italic;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-message.choose-text-dialog {
+    /* margin: -1em; */
+    margin-bottom: 0 !important;
+    height: 550px;
+}
+
+.preview-name {
+    padding-left: 20px;
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+    width: 900px;
+    height: 2em;
+    line-height: 1.15em;
+}
+.your-selection {
+    font-weight: normal;
+    color: #F6F8F9;
+    font-size: 13px;
+    line-height: 15px;
+    margin: 0;
+}
+.main-page-selection-summary {
+    padding: 5px;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.right-content, .right-content h2 {
+    display: inline;
+    /*color: #634C9F;*/
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 24px;
+}
+.left-icons {
+    display: inline;
+}
+.classification-controls {
+    padding: 5px;
 }

@@ -1,8 +1,8 @@
 jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', '$q', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, $q) {
+    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', '$q', 'StateService', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, $q, StateService) {
         var ctrl = this;
-        ctrl.experiment = ClassificationService.newExperiment();
+        ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
         $scope.showInProcess = InProgressService.isReady != 1;
         $scope.$on('isReady_Updated', function () {
             $scope.showInProcess = InProgressService.isReady != 1;
@@ -59,19 +59,28 @@ jTextMinerApp.component('classification', {
             var getTexts = ctrl.experiment.getTextsWithFeatures();
 
             return $q.all([classification, getTexts])
-                .then(function (response2) {
-                    $scope.testSetResults = response2[0];
-                    $scope.testSetChunks = [];
-                    for (var testFileIndex=0; testFileIndex < $scope.testSetResults.length; testFileIndex++) {
-                        setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
-                    }
-                    ctrl.chunkBarData = $scope.testSetChunks.map(chunk => ({
-                        color: $scope.indexOfColor(chunk.classifiedAs),
-                        text: chunk.htmlText,
-                        title: chunk.title
-                    }))
-                });
+                .then(afterClassification);
         };
+
+        function afterClassification(response2) {
+            $scope.testSetResults = response2;
+            $scope.testSetChunks = [];
+            for (var testFileIndex=0; testFileIndex < $scope.testSetResults.length; testFileIndex++) {
+                setSelectedTestFile($scope.testSetResults[testFileIndex], testFileIndex);
+            }
+            ctrl.chunkBarData = $scope.testSetChunks.map(chunk => ({
+                color: $scope.indexOfColor(chunk.classifiedAs),
+                text: chunk.htmlText,
+                title: chunk.title
+            }))
+        }
+        // HACK!!!
+        function workaround (response) {
+            return ctrl.experiment.getTextsWithFeatures()
+                .then(() => afterClassification(response));
+        }
+        ctrl.experiment.registerListener(workaround);
+
 
         $scope.testSetResults = ctrl.experiment.tsResultData.testSetResults;
         $scope.testSetChunks = $scope.testSetResults;

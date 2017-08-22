@@ -1,8 +1,11 @@
 <div>
-    <div class="ngdialog-message">
+    <div class="dialog-close">
+        <span ng-click="$ctrl.onCancel()"><i class="material-icons">close</i></span>
+    </div>
+    <div class="ngdialog-message choose-text-dialog">
         <action-mode on-action-mode-changed="$ctrl.changeActionMode(mode)"></action-mode>
         <in-progress></in-progress>
-        <br/>
+        <!--<br/>-->
         <div ng-show="$ctrl.actionMode == 'BrowseThisComputer' && !$ctrl.showInProcess">
             <browse-this-computer browse-data="$ctrl.browseData"></browse-this-computer>
         </div>
@@ -10,26 +13,30 @@
             <select-online-corpus selection-text="$ctrl.selectionText"></select-online-corpus>
         </div>
         <br/>
-        <table ng-if="$ctrl.namingMessage" style="width:100%;">
-            <tr>
-                <td>
-                    <div class="name-class">
-                        <label>{{$ctrl.namingMessage}}: </label>
-                        <input class="name-class form-control" autofocus ng-model="$ctrl.className"
-                               ng-change="$ctrl.userChangedName()"
-                               ng-style="$ctrl.calculateName ? { 'font-style': 'italic' } : null"
-                               type="text"/>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <!--<table ng-if="$ctrl.namingMessage" style="width:100%;">-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<div class="name-class">-->
+                        <!--<label>{{$ctrl.namingMessage}}: </label>-->
+                        <!--<input class="name-class form-control" autofocus ng-model="$ctrl.className"-->
+                               <!--ng-change="$ctrl.userChangedName()"-->
+                               <!--ng-style="$ctrl.calculateName ? { 'font-style': 'italic' } : null"-->
+                               <!--type="text"/>-->
+                    <!--</div>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
     </div>
-    <div class="ngdialog-buttons" ng-show="!showInProcess">
-        <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-primary"
+    <div class="dialog-button-area">
+        <button type="button" class="rounded-btn btn-green"
                 ng-click="$ctrl.confirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>
-        <button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"
-                ng-hide="$ctrl.hideCancel" ng-click="$ctrl.onCancel()">Cancel
-        </button>
+        <div class="preview-name">
+            <p class="your-selection">YOUR SELECTION:</p>
+            <p>{{$ctrl.getProposedName()}}</p>
+        </div>
+        <!--<button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"-->
+                <!--ng-hide="$ctrl.hideCancel" ng-click="$ctrl.onCancel()">Cancel-->
+        <!--</button>-->
     </div>
 </div>

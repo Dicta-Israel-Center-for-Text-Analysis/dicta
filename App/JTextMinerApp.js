@@ -20,40 +20,46 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('Login', {
         url: '/Login',
-        template: '<login-page></login-page>'
+        component: 'loginPage'
     })
     .state('AfterLogin', {
         url: '/AfterLogin',
-        template: '<after-login-page></after-login-page>'
+        component: 'afterLoginPage'
     })
-    .state('bibleInterface', {
-        url: '/BibleInterface',
-        //template: '<bible-main-page></bible-main-page>'
-        template: '<bible-front-page></bible-front-page>'
+    .state('bibleFrontpage', {
+        url: '/BibleFrontpage',
+        component: 'bibleFrontPage'
     })
     .state('search', {
         url: '/search',
-        //template: '<bible-main-page></bible-main-page>'
-        template: '<search></search>'
+        component: 'search'
     })
-    // these states aren't in use yet, because switching states would lose the state of the controls that aren't shown
-    // the sticky-states plugin to ui-router can resolve this, although it's not clear whether it is stable yet
-    // .state('bibleInterface.search', {
-    //     url: '/BibleInterface/Search/*query',
-    //     template: '<bible-main-page></bible-main-page>'
-    // })
-    // .state('bibleInterface.select', {
-    //     url: '/BibleInterface/Select',
-    //     template: '<bible-main-page></bible-main-page>'
-    // })
-    // .state('bibleInterface.classify', {
-    //         url: '/BibleInterface/Classify',
-    //         template: '<bible-main-page></bible-main-page>'
-    // })
-    // .state('bibleInterface.segment', {
-    //     url: '/BibleInterface/Segment',
-    //     template: '<bible-main-page></bible-main-page>'
-    // })
+    .state('bibleInterface', {
+        url: '/BibleInterface',
+        component: 'bibleMainPage'
+    })
+    .state('bibleInterface.information', {
+        url: '/Information',
+        views: {
+            selectControls: { component: 'bibleViewSelectedText' },
+            main: { component: 'bibleViewSelectedText' }
+
+        }
+    })
+    .state('bibleInterface.classify', {
+            url: '/Classify',
+            views: {
+                classifyControls: { component: 'classificationControls' },
+                main: {component: 'classification'}
+            }
+    })
+    .state('bibleInterface.segment', {
+        url: '/Segment',
+        views: {
+            segmentControls: { component: 'bibleViewSelectedText' },
+            main: {component: 'segmentation'}
+        }
+    })
     .state('Unmasking', {
         url: '/Unmasking',
         controller: 'UnmaskingController',

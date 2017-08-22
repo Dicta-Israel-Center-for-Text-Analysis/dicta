@@ -5,44 +5,51 @@
         <a href="http://dx.doi.org/10.17026%2Fdans-2z3-arxf">LINK</a>
         )
     </div>-->
-    <br />
+    <!--<br />-->
     <div>
         <ol class="breadcrumb">
             <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb.title}}</a></li>
         </ol>
         <div class="row">
-            <div class="col-xs-3">
-        <table class="text-selection-rows">
-            <tr ng-repeat="item in $ctrl.treeNode">
-                <td width="30px"><input
-                        type="checkbox"
-                        name="selectedNodes[]"
-                        value="{{item.key}}"
-                        id="{{item.key}}"
-                        ng-checked="$ctrl.isNodeSelected(item.key)"
-                        ng-click="$ctrl.toggleSelection(item.key)"
-                        ui-indeterminate="$ctrl.isNodePartial(item.key)"
-                >
-                </td>
-                <td ng-switch="item.children != null && item.children.length > 0">
-                    <a ng-switch-default ng-click="$ctrl.expandNode(item.title)">{{item.title}}
-                        <span class="glyphicon glyphicon-menu-right"></span></a>
-                    <span ng-switch-when="false">{{item.title}}</span>
-                </td>
-            </tr>
-        </table>
+            <div class="col-xs-3 text-selection-rows">
+                <table>
+                    <tr ng-repeat="item in $ctrl.treeNode">
+                        <td width="30px"><input
+                                type="checkbox"
+                                name="selectedNodes[]"
+                                value="{{item.key}}"
+                                id="{{item.key}}"
+                                ng-checked="$ctrl.isNodeSelected(item.key)"
+                                ng-click="$ctrl.toggleSelection(item.key)"
+                                ui-indeterminate="$ctrl.isNodePartial(item.key)"
+                        >
+                        </td>
+                        <td ng-switch="item.children != null && item.children.length > 0">
+                            <a ng-switch-default ng-click="$ctrl.expandNode(item.title)">{{item.title}}
+                                <span class="glyphicon glyphicon-menu-right"></span></a>
+                            <span ng-switch-when="false">{{item.title}}</span>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="col-xs-9 preview-text">
-                <div ng-repeat="chapter in $ctrl.previewText">
-                    <div ng-repeat="line in chapter.contents">
-                        {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' '))}}: {{line.smallUnit.text}}
+            <div class="col-xs-9">
+                <div ng-hide="$ctrl.previewText" class="preview-text-message">
+                    <h3>You can select several texts!</h3>
+                    <p> Select a desired text and navigate using the top navigation bar to select additional text. When
+                        done, click “Analyze.”</p>
+                </div>
+                <div class="preview-text">
+                    <div ng-repeat="chapter in $ctrl.previewText | limitTo:10 ">
+                        <div ng-repeat="line in chapter.contents">
+                            {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' '))}}:
+                            {{line.smallUnit.text}}
+                        </div>
                     </div>
-
+                    <div ng-show="$ctrl.previewText.length > 10">
+                        ...
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-
 </div>

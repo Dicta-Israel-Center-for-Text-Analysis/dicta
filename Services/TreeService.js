@@ -1,4 +1,4 @@
-﻿// loads the tree of the Dicta corpus
+// loads the tree of the Dicta corpus
 // also provides a utility function 'treeSort' which sorts a list according to an in-order traversal of the tree
 jTextMinerApp.factory('TreeService', function ($http, $q, UserService) {
     var service = {
@@ -46,7 +46,8 @@ jTextMinerApp.factory('TreeService', function ($http, $q, UserService) {
         keyToNode: {},
         // list - the list to be sorted
         // getKeyFunc - a function that takes a list item and returns its key
-        treeSort (list, getKeyFunc) {
+        treeSort (list, getKeyFuncParam) {
+            const getKeyFunc = getKeyFuncParam || (x => x);
             var nextItems = service.corpusTree.slice(); // copies the array
             var sortedItems = [];
             while (nextItems.length > 0) {

@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('SelectClassService', function (UserService, APIService) {
+jTextMinerApp.factory('SelectClassService', function (UserService, APIService, TreeService) {
     var service = {
         newTextFromCorpus(keys, ids){
             return {
@@ -40,7 +40,58 @@
             }
         },
         testText: null,
-        testSetTitlesCommonPrefix: ""
+        testSetTitlesCommonPrefix: "",
+        summarizeText(text) {
+            function bookChapterAndVerse(key) {
+                let matches = /\/Tanakh\/[^/]*\/([^/]*)?(?:\/Chapter ([^/]*))?(?:\/Pasuk (.*))?/.exec(key);
+                if (!matches) return _.drop(/Tanakh\/([^/]*)/.exec(key));
+                matches.shift();
+                return _.compact(matches);
+            }
+
+            if (!text) return;
+            if (text.mode === 'BrowseThisComputer') return 'Uploaded Text';
+            const sortedKeys = TreeService.treeSort(text.keys);
+            let summaries = [];
+            let lastSummary;
+            let lastRangeStart;
+            let lastParts = [];
+            sortedKeys.forEach(key => {
+                const parts = bookChapterAndVerse(key);
+                let match = false;
+                let range = false;
+                if (parts.length === lastParts.length) {
+                    match = true;
+                    for(let i = 0; i < parts.length - 1; i++) {
+                        if (parts[i] !== lastParts[i])
+                            match = false;
+                    }
+                    if (+parts[parts.length - 1] === (+lastParts[parts.length -1]+1))
+                        range = true;
+                }
+                lastParts = parts;
+                if (match && parts.length > 1) {
+                    if (range) {
+                        lastSummary = parts[0];
+                        if (parts[1]) lastSummary += ' ' + (parts.length === 2 ? lastRangeStart + '-' : '') + parts[1];
+                        if (parts[2]) lastSummary += ':' + lastRangeStart + '-' + parts[2];
+                        summaries[summaries.length - 1] = lastSummary;
+                    }
+                    else {
+                        lastRangeStart = parts[parts.length - 1];
+                        summaries.push(parts[parts.length -1]);
+                    }
+                }
+                else {
+                    lastSummary = parts[0];
+                    if (parts[1]) lastSummary += ' ' + parts[1];
+                    if (parts[2]) lastSummary += ':' + parts[2];
+                    lastRangeStart = parts[parts.length - 1];
+                    summaries.push(lastSummary);
+                }
+            });
+            return summaries.join(', ');
+        }
     };
 
     service.setTestText = function(text) {

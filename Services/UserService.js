@@ -8,12 +8,11 @@
  * */
 angular.module('JTextMinerApp')
     .factory('UserService', ['APIService', '$q', function(APIService, $q){
-
-    var Service = {
+    const Service = {
         $user: null,
         $loginDeferral: $q.defer(),
         tryLogin (username, isBibleUser) {
-            this.$isBibleUser = true == isBibleUser;
+            this.$isBibleUser = !!isBibleUser;
             APIService.call('UserService/Login', {
                 username
             })
@@ -23,7 +22,7 @@ angular.module('JTextMinerApp')
                         Service.$userToken = response.data.data;
                     }
                 });
-            var triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
+            const triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
                 .then(handleLoginAPIResponse);
             triedLogin.catch(handleLoginAPIError);
             return triedLogin;
@@ -33,7 +32,7 @@ angular.module('JTextMinerApp')
             $.removeCookie('userLogin');
         },
         isLoggedIn() {
-            return this.$user != null;
+            return !_.isNil(this.$user);
         },
         get user() {
             return this.$user;
@@ -50,11 +49,16 @@ angular.module('JTextMinerApp')
     };
 
     function handleLoginAPIResponse(response){
-        var login = response.data.userLogin;
-        if (login != "") {
+        const login = response.data.userLogin;
+        if (login !== "") {
             Service.$user = login;
-            if (login != 'testuser')
+            if (login !== 'testuser')
                 $.cookie('userLogin', login);
+            window.sessionStorage.setItem('userLoginData', JSON.stringify({
+                $user: Service.$user,
+                $userToken: Service.$userToken,
+                $isBibleUser: Service.$isBibleUser
+            }));
         }
         else
             throw "Login error.";
@@ -62,6 +66,15 @@ angular.module('JTextMinerApp')
 
     function handleLoginAPIError(response) {
         Service.$user = null;
+    }
+
+    const storedLoginData = window.sessionStorage.getItem('userLoginData');
+    if (storedLoginData) {
+        const parsedData = JSON.parse(storedLoginData);
+        Service.$user = parsedData.$user;
+        Service.$userToken = parsedData.$userToken;
+        Service.$isBibleUser = parsedData.$isBibleUser;
+        Service.$loginDeferral.resolve();
     }
 
     return Service;

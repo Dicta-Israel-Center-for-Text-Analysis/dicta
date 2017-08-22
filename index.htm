@@ -18,13 +18,15 @@
     <link rel="stylesheet" href="node_modules/ng-dialog/css/ngDialog.min.css" />
     <link rel="stylesheet" href="node_modules/ng-dialog/css/ngDialog-theme-default.min.css" />
     <link rel="stylesheet" href="node_modules/angucomplete-alt/angucomplete-alt.css"/>
-    <link href="css/listBox.css" rel="stylesheet" type="text/css" />
-    <link href="css/responsive.css" rel="stylesheet" />
 
-    <link href="css/StyleSheet.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="css/secondTab/style.css" media="all"/>
-    <link rel="stylesheet" type="text/css" href="css/secondTabFeaturesView/style.css" media="all"/>
-    <link rel="stylesheet" type="text/css" href="css/thirdTab/style.css" media="all" />
+    <!-- previous design css, to be deleted -->
+    <!--<link href="css/listBox.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="css/responsive.css" rel="stylesheet" />-->
+
+    <!--<link href="css/StyleSheet.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/secondTab/style.css" media="all"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="css/secondTabFeaturesView/style.css" media="all"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="css/thirdTab/style.css" media="all" />-->
 
     <link rel="stylesheet" type="text/css" href="css/tiberias.css" media="all" />
     <link rel="stylesheet" type="text/css" href="css/design.css" media="all" />
@@ -58,32 +60,6 @@
     <script src="js/angu-fixed-header-table.js"></script>
 
     <script src="node_modules/angular-bootstrap-contextmenu/contextMenu.js"></script>
-
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-103843509-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-	
-</head>
-<body ng-app="JTextMinerApp">
-
-    <!-- links
-    https://scotch.io/tutorials/angular-routing-using-ui-router
-    https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views
-    -->
-
-    
-            <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-            <div ui-view></div>
-      
-
-
     <script src="App/JTextMinerApp.js" type="text/javascript"></script>
     <script src="App/JTextMinerDirectives.js" type="text/javascript"></script>
     <script src="Services/FileUploadService.js" type="text/javascript"></script>
@@ -148,8 +124,28 @@
     <script type="text/javascript" src="Services/APIService.js"></script>
     <script type="text/javascript" src="Services/UserService.js"></script>
     <script type="text/javascript" src="Services/ExperimentService.js"></script>
+    <script src="Services/StateService.component.js"></script>
     <script type="text/javascript" src="js/tiberias_tour.js"></script>
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-103843509-1', 'auto');
+  ga('send', 'pageview');
 
+</script>
+    <script src="Components/Classification/classificationControls.component.js"></script>
+
+</head>
+<body ng-app="JTextMinerApp">
+
+    <!-- links
+    https://scotch.io/tutorials/angular-routing-using-ui-router
+    https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views
+    -->
+            <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+            <div ui-view></div>
 </body>
 </html>

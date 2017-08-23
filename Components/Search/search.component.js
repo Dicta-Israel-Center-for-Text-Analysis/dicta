@@ -2,8 +2,8 @@ jTextMinerApp.component('search',
 {
     templateUrl: 'Components/Search/search.component.html',
     controller: [
-        '$http', 'search', '$scope', 'bibleContextMenu',
-        function($http, search, $scope, bibleContextMenu) {
+        '$http', 'search', '$scope', 'bibleContextMenu', '$timeout',
+        function($http, search, $scope, bibleContextMenu, $timeout) {
             const ctrl = this;
 
             ctrl.search = search;
@@ -16,13 +16,17 @@ jTextMinerApp.component('search',
                 ctrl.runSearch();
             };
 
-            $scope.$watch('$ctrl.search.query',
-                function() {
-                    if (ctrl.previousQuery != search.query) {
-                        ctrl.previousQuery = search.query;
-                        $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query)
-                    }
-            });
+            $scope.$watch('$ctrl.search.query', getQueryFromService);
+            // getQueryFromService();
+
+            function getQueryFromService() {
+                //if (ctrl.previousQuery != search.query) {
+                    ctrl.previousQuery = search.query;
+                    $timeout(() =>
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query), 2000
+                    );
+                //}
+            }
 
             ctrl.runSearch = function () {
                 ctrl.currentPage = 1;

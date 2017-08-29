@@ -9,7 +9,7 @@
 angular.module('JTextMinerApp')
     .factory('UserService', ['APIService', '$q', function(APIService, $q)
 {
-    const Service = {
+    const service = {
         $user: null,
         $loginDeferral: $q.defer(),
         tryLogin,
@@ -33,19 +33,49 @@ angular.module('JTextMinerApp')
             return this.$loginDeferral.promise;
         },
         get savedSelections() {
-            return
+            return getSelectionList(SAVED_SELECTIONS);
         },
         get recentSelections() {
-
+            return getSelectionList(RECENT_SELECTIONS);
         },
         saveSelection,
-        addRecentSelection
+        addRecentSelection,
     };
+    const SAVED_SELECTIONS = '$savedSelections';
+    const RECENT_SELECTIONS = '$recentSelections';
+    
     function saveSelection(selection) {
-
+        addToSelectionList(selection, SAVED_SELECTIONS);
     }
-    function addRecentSelection(selection) {
 
+    function addRecentSelection(selection) {
+        addToSelectionList(selection, RECENT_SELECTIONS, 10);
+    }
+
+    function addToSelectionList(selection, listName, limit) {
+        if (!service.hasOwnProperty(listName))
+            service[listName] = get(listName, []);
+        service[listName].unshift(selection);
+        if (limit && service[listName].length > limit)
+            service[listName].pop();
+        store(listName, service[listName]);
+    }
+
+    function getSelectionList(listName) {
+        if (!service.hasOwnProperty(listName))
+            service[listName] = get(listName, []);
+        return service[listName];
+    }
+
+    function store(name, object) {
+        window.sessionStorage.setItem(name, JSON.stringify(object));
+    }
+
+    function get(name, defaultVal) {
+        const stored = window.sessionStorage.getItem(name);
+        if (stored === null)
+            return defaultVal;
+        return JSON.parse(stored);
     }
 
     function tryLogin (username, isBibleUser) {
@@ -55,8 +85,8 @@ angular.module('JTextMinerApp')
         })
             .then(response => {
                 if (response.data.success) {
-                    Service.$loginDeferral.resolve();
-                    Service.$userToken = response.data.data;
+                    service.$loginDeferral.resolve();
+                    service.$userToken = response.data.data;
                 }
             });
         const triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
@@ -68,13 +98,13 @@ angular.module('JTextMinerApp')
     function handleLoginAPIResponse(response){
         const login = response.data.userLogin;
         if (login !== "") {
-            Service.$user = login;
+            service.$user = login;
             if (login !== 'testuser')
                 $.cookie('userLogin', login);
             window.sessionStorage.setItem('userLoginData', JSON.stringify({
-                $user: Service.$user,
-                $userToken: Service.$userToken,
-                $isBibleUser: Service.$isBibleUser
+                $user: service.$user,
+                $userToken: service.$userToken,
+                $isBibleUser: service.$isBibleUser
             }));
         }
         else
@@ -82,17 +112,17 @@ angular.module('JTextMinerApp')
     }
 
     function handleLoginAPIError(response) {
-        Service.$user = null;
+        service.$user = null;
     }
 
     const storedLoginData = window.sessionStorage.getItem('userLoginData');
     if (storedLoginData) {
         const parsedData = JSON.parse(storedLoginData);
-        Service.$user = parsedData.$user;
-        Service.$userToken = parsedData.$userToken;
-        Service.$isBibleUser = parsedData.$isBibleUser;
-        Service.$loginDeferral.resolve();
+        service.$user = parsedData.$user;
+        service.$userToken = parsedData.$userToken;
+        service.$isBibleUser = parsedData.$isBibleUser;
+        service.$loginDeferral.resolve();
     }
 
-    return Service;
+    return service;
 }]);

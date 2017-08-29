@@ -307,3 +307,7 @@
 .classification-controls {
     padding: 5px;
 }
+.saved-data-table-row:hover {
+    background-color: #222B37;
+    color: #fff;
+}

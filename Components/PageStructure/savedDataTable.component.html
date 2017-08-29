@@ -1,4 +1,4 @@
-<div>
+    <div>
     <div class="row">
         <div class="col-xs-12">
             <h5 ng-click="$ctrl.expanded = !$ctrl.expanded">
@@ -11,15 +11,15 @@
             <table class="table">
                 <colgroup>
                     <col class="col-xs-7">
-                    <col>
-                    <col>
+                    <col class="col-xs-2">
+                    <col class="col-xs-2">
                 </colgroup>
                 <tbody>
                 <tr><th>Name</th><th>Type</th><th>Date Created</th></tr>
-                <tr ng-repeat="saveData in $ctrl.savedSelections">
+                <tr class="saved-data-table-row" ng-click="$ctrl.onSavedDataSelected({text: saveData.text})" ng-repeat="saveData in $ctrl.savedSelections track by $index">
                     <td>{{saveData.title}}</td>
                     <td><span class="badge">{{saveData.type}}</span></td>
-                    <td>{{saveData.date}}</td>
+                    <td>{{$ctrl.formatDate(saveData.time)}}</td>
                 </tr>
                 </tbody>
             </table>

@@ -9,7 +9,7 @@ jTextMinerApp.component('chooseTextDialog', {
         hideCancel: '<'
     },
     templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
-    controller: function ($scope, InProgressService, SelectClassService) {
+    controller: function ($scope, InProgressService, SelectClassService, UserService) {
         var ctrl = this;
         //ctrl.selectedKeys = [];
 
@@ -55,7 +55,7 @@ jTextMinerApp.component('chooseTextDialog', {
         }
 
         ctrl.confirm = function() {
-            var result;
+            let result;
             switch(ctrl.actionMode) {
                 case 'SelectOnlineCorpus': result = ctrl.selectionText; break;
                 case 'BrowseThisComputer': result = ctrl.browseData; break;
@@ -68,6 +68,12 @@ jTextMinerApp.component('chooseTextDialog', {
                 });
             else
                 ctrl.onConfirm({selectionData: result});
+            UserService.addRecentSelection({
+                title: SelectClassService.summarizeText(result),
+                type: 'Class',
+                time: Date.now(),
+                text: result
+            });
         }
     }
 });

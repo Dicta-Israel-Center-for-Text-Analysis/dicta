@@ -1,14 +1,14 @@
 jTextMinerApp.component('bibleFrontPage',
 {
     templateUrl: 'Components/PageStructure/bibleFrontPage.component.html',
-    controller: [ '$state', 'search', 'ngDialog', '$scope', 'SelectClassService',
-        function($state, search, ngDialog, $scope, SelectClassService) {
+    controller: [ '$state', 'search', 'ngDialog', '$scope', 'SelectClassService', 'UserService',
+        function($state, search, ngDialog, $scope, SelectClassService, UserService) {
             const ctrl = this;
-            //$state.go('bible-main');
+
             ctrl.runSearch = function () {
                 search.query = ctrl.searchQuery;
                 $state.go('search');
-            }
+            };
 
             ctrl.showLibrary = function () {
                 ngDialog.openConfirm({
@@ -20,11 +20,14 @@ jTextMinerApp.component('bibleFrontPage',
                     'save-message="\'Select as test text\'"' + '>' +
                     '</choose-text-dialog>'
                 });
-            }
+            };
 
-            ctrl.saveClass = function (stuff) {
-                SelectClassService.testText = stuff;
+            ctrl.saveClass = function (selectClass) {
+                SelectClassService.testText = selectClass;
                 $state.go('bibleInterface');
-            }
+            };
+
+            ctrl.savedSelections = UserService.savedSelections;
+            ctrl.recentSelections = UserService.recentSelections;
         }]
 }); 

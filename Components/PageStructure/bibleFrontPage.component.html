@@ -33,6 +33,8 @@
     </div>
 </div>
 <div class="container">
-    <saved-data-table heading="'SAVED SEARCHES AND SELECTIONS'" expanded="true" saved-selections="$ctrl.savedSelections"></saved-data-table>
-    <saved-data-table heading="'RECENT SELECTIONS'" expanded="false" saved-selections="$ctrl.recentSelections"></saved-data-table>
+    <saved-data-table heading="'SAVED SEARCHES AND SELECTIONS'" expanded="true"
+                      saved-selections="$ctrl.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
+    <saved-data-table heading="'RECENT SELECTIONS'" expanded="false"
+                      saved-selections="$ctrl.recentSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
 </div>

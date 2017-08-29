@@ -7,26 +7,12 @@
  *
  * */
 angular.module('JTextMinerApp')
-    .factory('UserService', ['APIService', '$q', function(APIService, $q){
+    .factory('UserService', ['APIService', '$q', function(APIService, $q)
+{
     const Service = {
         $user: null,
         $loginDeferral: $q.defer(),
-        tryLogin (username, isBibleUser) {
-            this.$isBibleUser = !!isBibleUser;
-            APIService.call('UserService/Login', {
-                username
-            })
-                .then(response => {
-                    if (response.data.success) {
-                        Service.$loginDeferral.resolve();
-                        Service.$userToken = response.data.data;
-                    }
-                });
-            const triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
-                .then(handleLoginAPIResponse);
-            triedLogin.catch(handleLoginAPIError);
-            return triedLogin;
-        },
+        tryLogin,
         logout() {
             this.$user = null;
             $.removeCookie('userLogin');
@@ -45,8 +31,39 @@ angular.module('JTextMinerApp')
         },
         get loginPromise() {
             return this.$loginDeferral.promise;
-        }
+        },
+        get savedSelections() {
+            return
+        },
+        get recentSelections() {
+
+        },
+        saveSelection,
+        addRecentSelection
     };
+    function saveSelection(selection) {
+
+    }
+    function addRecentSelection(selection) {
+
+    }
+
+    function tryLogin (username, isBibleUser) {
+        this.$isBibleUser = !!isBibleUser;
+        APIService.call('UserService/Login', {
+            username
+        })
+            .then(response => {
+                if (response.data.success) {
+                    Service.$loginDeferral.resolve();
+                    Service.$userToken = response.data.data;
+                }
+            });
+        const triedLogin = APIService.call('JTextMinerAPI/CheckUserLogin', { userLogin: username })
+            .then(handleLoginAPIResponse);
+        triedLogin.catch(handleLoginAPIError);
+        return triedLogin;
+    }
 
     function handleLoginAPIResponse(response){
         const login = response.data.userLogin;

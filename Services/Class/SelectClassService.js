@@ -1,100 +1,106 @@
 jTextMinerApp.factory('SelectClassService', function (UserService, APIService, TreeService) {
-    var service = {
-        newTextFromCorpus(keys, ids){
-            return {
-                mode: 'SelectOnlineCorpus',
-                keys,
-                ids,
-                textInfo: {}
-            }
-        },
-        newTextFromUpload(filename, chunkMode, chunkSize){
-            return {
-                mode: 'BrowseThisComputer',
-                filename,
-                chunkMode,
-                chunkSize,
-                get constructedkeys() {
-                    return this.fileId
-                        ? ["/UserUpload/" +
-                            UserService.userToken + "/"
-                            + this.fileId + "/chunkMode:" + this.chunkMode + "/maxChunk:" + this.chunkSize]
-                        : [];
-                },
-                keys: [],
-                ids: [],
-                textInfo: {},
-                runChunking() {
-                    return APIService.call('UserService/ChunkUploadedFolder', {
-                        browse_ChunkMode: this.chunkMode,
-                        browse_MinimumChunkSize: this.chunkSize,
-                        browse_ClassName: "unused",
-                        browse_FileName: this.filename,
-                        userLogin: UserService.user
-                    })
-                        .then(function (response) {
-                            this.keys.push(response.data);
-                            this.ids.push(response.data);
-                        }.bind(this))
-                }
-            }
-        },
+    const service = {
         testText: null,
         testSetTitlesCommonPrefix: "",
-        summarizeText(text) {
-            function bookChapterAndVerse(key) {
-                let matches = /\/Tanakh\/[^/]*\/([^/]*)?(?:\/Chapter ([^/]*))?(?:\/Pasuk (.*))?/.exec(key);
-                if (!matches) return _.drop(/Tanakh\/([^/]*)/.exec(key));
-                matches.shift();
-                return _.compact(matches);
-            }
-
-            if (!text) return;
-            if (text.mode === 'BrowseThisComputer') return 'Uploaded Text';
-            const sortedKeys = TreeService.treeSort(text.keys);
-            let summaries = [];
-            let lastSummary;
-            let lastRangeStart;
-            let lastParts = [];
-            sortedKeys.forEach(key => {
-                const parts = bookChapterAndVerse(key);
-                let match = false;
-                let range = false;
-                if (parts.length === lastParts.length) {
-                    match = true;
-                    for(let i = 0; i < parts.length - 1; i++) {
-                        if (parts[i] !== lastParts[i])
-                            match = false;
-                    }
-                    if (+parts[parts.length - 1] === (+lastParts[parts.length -1]+1))
-                        range = true;
-                }
-                lastParts = parts;
-                if (match && parts.length > 1) {
-                    if (range) {
-                        lastSummary = parts[0];
-                        if (parts[1]) lastSummary += ' ' + (parts.length === 2 ? lastRangeStart + '-' : '') + parts[1];
-                        if (parts[2]) lastSummary += ':' + lastRangeStart + '-' + parts[2];
-                        summaries[summaries.length - 1] = lastSummary;
-                    }
-                    else {
-                        lastRangeStart = parts[parts.length - 1];
-                        summaries.push(parts[parts.length -1]);
-                    }
-                }
-                else {
-                    lastSummary = parts[0];
-                    if (parts[1]) lastSummary += ' ' + parts[1];
-                    if (parts[2]) lastSummary += ':' + parts[2];
-                    lastRangeStart = parts[parts.length - 1];
-                    summaries.push(lastSummary);
-                }
-            });
-            return summaries.join(', ');
-        }
+        newTextFromCorpus,
+        newTextFromUpload,
+        summarizeText,
+        setTestText
     };
 
-    service.setTestText = function(text) {
+    function newTextFromUpload(filename, chunkMode, chunkSize){
+        return {
+            mode: 'BrowseThisComputer',
+            filename,
+            chunkMode,
+            chunkSize,
+            get constructedkeys() {
+                return this.fileId
+                    ? ["/UserUpload/" +
+                    UserService.userToken + "/"
+                    + this.fileId + "/chunkMode:" + this.chunkMode + "/maxChunk:" + this.chunkSize]
+                    : [];
+            },
+            keys: [],
+            ids: [],
+            textInfo: {},
+            runChunking() {
+                return APIService.call('UserService/ChunkUploadedFolder', {
+                    browse_ChunkMode: this.chunkMode,
+                    browse_MinimumChunkSize: this.chunkSize,
+                    browse_ClassName: "unused",
+                    browse_FileName: this.filename,
+                    userLogin: UserService.user
+                })
+                    .then(function (response) {
+                        this.keys.push(response.data);
+                        this.ids.push(response.data);
+                    }.bind(this))
+            }
+        }
+    }
+    function summarizeText(text) {
+        function bookChapterAndVerse(key) {
+            let matches = /\/Tanakh\/[^/]*\/([^/]*)?(?:\/Chapter ([^/]*))?(?:\/Pasuk (.*))?/.exec(key);
+            if (!matches) return _.drop(/Tanakh\/([^/]*)/.exec(key));
+            matches.shift();
+            return _.compact(matches);
+        }
+
+        if (!text) return;
+        if (text.mode === 'BrowseThisComputer') return 'Uploaded Text';
+        const sortedKeys = TreeService.treeSort(text.keys);
+        let summaries = [];
+        let lastSummary;
+        let lastRangeStart;
+        let lastParts = [];
+        sortedKeys.forEach(key => {
+            const parts = bookChapterAndVerse(key);
+            let match = false;
+            let range = false;
+            if (parts.length === lastParts.length) {
+                match = true;
+                for(let i = 0; i < parts.length - 1; i++) {
+                    if (parts[i] !== lastParts[i])
+                        match = false;
+                }
+                if (+parts[parts.length - 1] === (+lastParts[parts.length -1]+1))
+                    range = true;
+            }
+            lastParts = parts;
+            if (match && parts.length > 1) {
+                if (range) {
+                    lastSummary = parts[0];
+                    if (parts[1]) lastSummary += ' ' + (parts.length === 2 ? lastRangeStart + '-' : '') + parts[1];
+                    if (parts[2]) lastSummary += ':' + lastRangeStart + '-' + parts[2];
+                    summaries[summaries.length - 1] = lastSummary;
+                }
+                else {
+                    lastRangeStart = parts[parts.length - 1];
+                    summaries.push(parts[parts.length -1]);
+                }
+            }
+            else {
+                lastSummary = parts[0];
+                if (parts[1]) lastSummary += ' ' + parts[1];
+                if (parts[2]) lastSummary += ':' + parts[2];
+                lastRangeStart = parts[parts.length - 1];
+                summaries.push(lastSummary);
+            }
+        });
+        return summaries.join(', ');
+    }
+
+    function newTextFromCorpus(keys, ids){
+        return {
+            mode: 'SelectOnlineCorpus',
+            keys,
+            ids,
+            textInfo: {}
+        }
+    }
+
+    function setTestText(text) {
         service.testText = text;
         if (text.mode != 'SelectOnlineCorpus') return;
         var rootKeys = text.keys;

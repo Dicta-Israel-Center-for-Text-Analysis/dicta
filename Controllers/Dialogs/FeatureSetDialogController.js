@@ -1,11 +1,5 @@
 ﻿// create the controller and inject Angular's $scope
-jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, ClassificationService, InProgressService, UserService) {
-    
-    $scope.showInProcess = ExperimentService.isReady != 1;
-    $scope.$on('isReady_Updated', function () {
-        $scope.showInProcess = ExperimentService.isReady != 1;
-    });
-    
+jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialog, ExperimentService, APIService, $filter, focus, ClassificationService, UserService) {
     
     $scope.Feature_sets = ClassificationService.featureCollection.Feature_sets;
     $scope.$on('featureSetDataUpdated', function () {
@@ -50,11 +44,9 @@ jTextMinerApp.controller('FeatureSetDialogController', function ($scope, ngDialo
         });
     }
     $scope.ExtractFeatures = function () {
-        InProgressService.updateIsReady(0);
         $scope.UpdateData();
 
         APIService.apiRun({ crud: 'Extract' }, $scope.data, function (response) {
-            InProgressService.updateIsReady(1);
             var results = response;
             $scope.featuresData = results;
             ClassificationService.featureCollection.updateFeaturesData(results);

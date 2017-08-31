@@ -9,14 +9,9 @@ jTextMinerApp.component('chooseTextDialog', {
         hideCancel: '<'
     },
     templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
-    controller: function ($scope, InProgressService, SelectClassService, UserService) {
+    controller: function ($scope, SelectClassService, UserService) {
         var ctrl = this;
         //ctrl.selectedKeys = [];
-
-        ctrl.showInProcess = InProgressService.isReady != 1;
-        $scope.$on('isReady_Updated', function () {
-            ctrl.showInProcess = InProgressService.isReady != 1;
-        });
 
         ctrl.actionMode = ctrl.startingMode || 'SelectOnlineCorpus';
         ctrl.changeActionMode = function (mode) {

@@ -10,7 +10,7 @@
             classcolors: '=?',
             classcolor: '@?'
         },
-        controller: ['$scope', 'ExperimentService', 'APIService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, ClassService, InProgressService) {
+        controller: ['$scope', 'ExperimentService', 'APIService', 'ClassService', function ($scope, ExperimentService, APIService, ClassService) {
             // setup
 
             var ctrl = this;

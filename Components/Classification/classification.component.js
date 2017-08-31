@@ -1,12 +1,9 @@
 jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'InProgressService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', '$q', 'StateService', function ($scope, ExperimentService, APIService, ClassificationService, InProgressService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, $q, StateService) {
+    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', '$q', 'StateService', function ($scope, ExperimentService, APIService, ClassificationService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, $q, StateService) {
         var ctrl = this;
         ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
-        $scope.showInProcess = InProgressService.isReady != 1;
-        $scope.$on('isReady_Updated', function () {
-            $scope.showInProcess = InProgressService.isReady != 1;
-        });
+        ctrl.showInProcess = false;
         $scope.countFilesPerClass = [];
 
         $scope.colors = ClassService.colors;
@@ -113,28 +110,24 @@ jTextMinerApp.component('classification', {
         }
 
         function setSelectedTestFile (item, index) {
+            //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
+            item.title = cleanTitle(ctrl.experiment.testTexts[index].chunkKey);//cleanTitle(item.name);
+            $scope.testSetChunks[index] = item;
 
-            InProgressService.updateIsReady(0);
-
-                InProgressService.updateIsReady(1);
-                //item.htmlText = prettyPrintMorphologyClassification(results.htmlText);
-                item.title = cleanTitle(ctrl.experiment.testTexts[index].chunkKey);//cleanTitle(item.name);
-                $scope.testSetChunks[index] = item;
-
-                if ($scope.testSetChunks.length == $scope.testSetResults.length)
-                {
-                    var classCounts = {};
-                    $scope.countFilesPerClass = [];
-                    for (currentClass in $scope.classes) {
-                        var l = 0;
-                        for (testFile in $scope.testSetChunks) {
-                            if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
-                                l = l + 1;
-                        }
-                        $scope.countFilesPerClass.push(l);
+            if ($scope.testSetChunks.length == $scope.testSetResults.length)
+            {
+                var classCounts = {};
+                $scope.countFilesPerClass = [];
+                for (currentClass in $scope.classes) {
+                    var l = 0;
+                    for (testFile in $scope.testSetChunks) {
+                        if (angular.equals($scope.testSetChunks[testFile].classifiedAs, $scope.classes[currentClass].title))
+                            l = l + 1;
                     }
+                    $scope.countFilesPerClass.push(l);
                 }
-                generateHighlightedText(item, index);
+            }
+            generateHighlightedText(item, index);
         }
 
         function generateHighlightedText(item, index) {

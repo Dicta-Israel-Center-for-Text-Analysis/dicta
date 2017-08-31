@@ -1,4 +1,4 @@
-jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollectionFactory, ClassService, ExperimentService, UserService, SelectClassService, InProgressService, APIService) {
+jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollectionFactory, ClassService, ExperimentService, UserService, SelectClassService, APIService) {
     var root = {
         newExperiment () {
             var segmentationExperiment = {
@@ -12,6 +12,7 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                 Segmentation_NumberOfWordsInFeatureSet: 5,
                 Segmentation_NumberOfSentencesLockedIn: 25,
                 resultData: [],
+                inProgress: false,
                 base: ExperimentService.newExperiment()
             };
             // the default feature set for segmentation is different than for other experiments
@@ -50,7 +51,7 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                     featuresData: {},
                     select_RootKeys: SelectClassService.testText.keys,
                 });
-                InProgressService.updateIsReady(0);
+                segmentationExperiment.inProgress = true;
                 return dataExtract;
             };
 
@@ -79,15 +80,15 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                         segmentationExperiment.isAllBibleSegmentation = false;
                     }
                 });
-                InProgressService.updateIsReady(0);
-                
+                segmentationExperiment.inProgress = true;
+
                 segmentationExperiment.updateSegmentation_ActionModeValue();
                 
                 var tmp = segmentationExperiment.createDataForRun();
                 tmp.extractData = segmentationExperiment.createDataForExtract();
                 return APIService.call('JTextMinerAPI/RunSegmentation', tmp)
                     .then( function (response) {
-                        InProgressService.updateIsReady(1);
+                        segmentationExperiment.inProgress = false;
                         var results = response.data;
                         segmentationExperiment.resultData = results;
                         segmentationExperiment.featuresData = results.featuresData;

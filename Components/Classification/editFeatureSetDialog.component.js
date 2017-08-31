@@ -8,17 +8,12 @@ jTextMinerApp.component('editFeatureSetDialog', {
         runExtract: '&'
     },
     templateUrl: "Components/Classification/editFeatureSetDialog.component.html",
-    controller: function ($scope, ngDialog, InProgressService, APIService, ClassificationService, $timeout, SelectClassService) {
+    controller: function ($scope, ngDialog, APIService, ClassificationService, $timeout, SelectClassService) {
     var ctrl = this;
     var featureCollection = ctrl.featureCollection;
     var featureIndex = ctrl.featureIndex;
     var featureSet = {};
     var featuresData = [];
-
-    $scope.showInProcess = InProgressService.isReady != 1;
-    $scope.$on('isReady_Updated', function () {
-        $scope.showInProcess = InProgressService.isReady != 1;
-    });
 
     if (featureIndex !== undefined) {
         if (featureCollection.featuresData.features !== undefined && featureCollection.featuresData.features.length > featureIndex)

@@ -1,12 +1,8 @@
 jTextMinerApp.component('compareLibraries', {
         templateUrl: 'Components/Compare/compareLibraries.component.html',
-        controller: ['$scope', 'InProgressService', 'SelectClassService', '$sce', 'ngDialog', 'ClassService', 'ClassificationService', 'APIService', 'SaveClassInterface', 'ExperimentService',
-            function ($scope, InProgressService, SelectClassService, $sce, ngDialog, ClassService, ClassificationService, APIService, SaveClassInterface, ExperimentService) {
+        controller: ['$scope', 'SelectClassService', '$sce', 'ngDialog', 'ClassService', 'ClassificationService', 'APIService', 'SaveClassInterface', 'ExperimentService',
+            function ($scope, SelectClassService, $sce, ngDialog, ClassService, ClassificationService, APIService, SaveClassInterface, ExperimentService) {
             var ctrl = this;
-            ctrl.showInProcess = InProgressService.isReady != 1;
-            $scope.$on('isReady_Updated', function () {
-                ctrl.showInProcess = InProgressService.isReady != 1;
-            });
             ctrl.experiment = ClassificationService.newExperiment();
             ctrl.experiment.base.experimentName = 'CompareLibraries';
             var selectionData = angular.extend({ className: 'Selected Text'}, SelectClassService.testText);

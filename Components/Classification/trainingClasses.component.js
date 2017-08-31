@@ -4,18 +4,11 @@ jTextMinerApp.component('trainingClasses', {
         showDeleteButton: '<',
         classificationExperiment: '<'
     },
-    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'ClassService', 'InProgressService', function ($scope, ExperimentService, APIService, ClassificationService, ClassService, InProgressService) {
-        var ctrl = this;
-        
-        $scope.colors = ['Red', 'Green', 'Blue'];
+    controller: function () {
+        const ctrl = this;
 
-        $scope.classes = ctrl.classificationExperiment.classes.Corpus_classes;
-        $scope.$on('Corpus_classesValueUpdated', function () {
-            $scope.classes = ctrl.classificationExperiment.classes.Corpus_classes;
-        });
-
-        $scope.DeleteClass = function (index) {
+        ctrl.deleteClass = function (index) {
             ctrl.classificationExperiment.DeleteClass(index);
         }
-    }]
+    }
 });

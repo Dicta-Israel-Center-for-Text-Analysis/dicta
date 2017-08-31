@@ -1,16 +1,12 @@
 jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'SegmentationService', 'InProgressService', '$sce', '$timeout',
-                function ($scope, SegmentationService, InProgressService, $sce, $timeout) {
+        controller: ['$scope', 'SegmentationService', '$sce', '$timeout',
+                function ($scope, SegmentationService, $sce, $timeout) {
             var ctrl = this;
             ctrl.tab = 1;
-            ctrl.showInProcess = InProgressService.isReady != 1;
+            ctrl.showInProcess = false;
             ctrl.experiment = SegmentationService.newExperiment();
-
-            $scope.$on('isReady_Updated', function () {
-                ctrl.showInProcess = InProgressService.isReady != 1;
-            });
 
             ctrl.createSegment = function (segment) {
                 return $sce.trustAsHtml(segment);
@@ -31,9 +27,11 @@ jTextMinerApp.component('segmentation',
             }
 
             ctrl.RunExperiment = function () {
+                ctrl.showInProcess = true;
                 ctrl.experiment.RunExperiment()
                     .then(function() {
                         ctrl.htmlSegmentation = $sce.trustAsHtml(ctrl.experiment.resultData.htmlSegmentation);
+                        ctrl.showInProcess = false;
                     });
             }
 

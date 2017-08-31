@@ -1,4 +1,4 @@
-jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, InProgressService, APIService, UserService, SaveClassInterface, ExperimentService) {
+jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, APIService, UserService, SaveClassInterface, ExperimentService) {
     var root = {
         newExperiment() {
             var experiment = {
@@ -11,6 +11,8 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 base: ExperimentService.newExperiment(),
                 classes: ClassService.newInstance(),
                 trainSet: {},
+                inProgress: false,
+                error: false,
 
                 //Classification update functions
                 updateClassification_CrossValidationFoldsValue(value) {
@@ -33,6 +35,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 },
 
                 runClassification() {
+                    experiment.error = false;
                     return this.prepareClassification()
                         .then(this.runClassificationInternal.bind(this))
                         .then(response => {
@@ -45,7 +48,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 prepareClassification() {
                     // in theory, if nothing has changed, this can be skipped, but we don't yet have code that can check
                     if (true) {
-                        InProgressService.updateIsReady(0);
+                        experiment.inProgress = true;
 
                         var apiCallData = {
                             //userLogin: UserService.user,
@@ -95,15 +98,19 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                                 // and we don't want the extra values that a resource has.
                                 // It simply creates an object, not a JSON string.
                                 this.featureCollection.updateFeaturesData(results);
-                                InProgressService.updateIsReady(1);
+                                experiment.inProgress = false;
                             }.bind(this),
                             function (errorResponse) {
-                                InProgressService.setError(errorResponse.statusText);
+                                experiment.setError(errorResponse.statusText);
                             }
                         );
                     }
                     else
                         return $q.when(null);
+                },
+                setError(message) {
+                    experiment.error = true;
+                    experiment.errorMsg = message;
                 },
                 createRequestForRunClassification(type) {
                     return {
@@ -148,7 +155,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     return APIService.call('JTextMinerAPI/RunTestSet', request)
                         .then(
                         function (response2) {
-                            InProgressService.updateIsReady(1);
+                            experiment.inProgress = false;
                             this.tsResultData = response2.data;
                             var sortedResults = TreeService.treeSort(response2.data.testSetResults,
                                 function (item) {
@@ -161,7 +168,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                 },
 
                 runClassificationInternal() {
-                    InProgressService.updateIsReady(0);
+                    experiment.inProgress = true;
 
                     return this.callRunClassificationFirstTime()
                         .then(this.classifyTestSet.bind(this));
@@ -195,10 +202,10 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                     return saveRequest;
                 },
                 SaveExperiment() {
-                    InProgressService.updateIsReady(0);
+                    experiment.inProgress = true;
                     APIService.call('JTextMinerAPI/SaveClassification', this.createSaveRequest())
                         .then(function () {
-                            InProgressService.updateIsReady(1);
+                            experiment.inProgress = false;
                         });
                 },
                 // end save and load exp
@@ -224,10 +231,10 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             experimentName: experiment.base.experimentName,
                             trainSet: experiment.trainSet
                         });
-                        InProgressService.updateIsReady(0);
+                        experiment.inProgress = true;
                         return APIService.call('JTextMinerAPI/TrainClass', classData)
                             .then( function (response) {
-                                InProgressService.updateIsReady(1);
+                                experiment.inProgress = false;
                                 var results = response.data;
                                 experiment.trainSet[selectionData.className] = selectionData.keys;
                                 addClass({
@@ -242,7 +249,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                             });
                     }
                     else if (angular.equals(selectionData.mode, 'SelectOnlineCorpus')) {
-                        InProgressService.updateIsReady(0);
+                        experiment.inProgress = true;
                         var classData = SaveClassInterface.getInstance({
                             text: selectionData,
                             className: selectionData.className,
@@ -251,7 +258,7 @@ jTextMinerApp.factory('ClassificationService', function ($rootScope, FeatureColl
                         });
                         return APIService.call('JTextMinerAPI/TrainClass', classData)
                             .then(function (response) {
-                                InProgressService.updateIsReady(1);
+                                experiment.inProgress = false;
                                 var results = response.data;
                                 experiment.trainSet[selectionData.className] = selectionData.keys;
                                 addClass({

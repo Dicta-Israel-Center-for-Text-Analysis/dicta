@@ -1,7 +1,7 @@
 jTextMinerApp.component('afterLoginPage',
 {
     templateUrl: 'Components/PageStructure/afterLoginPage.component.html',
-    controller: function ($scope, ExperimentService, $location, APIService, InProgressService, ClassificationService, ClassService, SelectClassService, UserService, ngDialog) {
+    controller: function ($scope, ExperimentService, $location, APIService, ClassificationService, ClassService, SelectClassService, UserService, ngDialog) {
         var ctrl = this;
 
         if (!UserService.isLoggedIn())
@@ -20,7 +20,6 @@ jTextMinerApp.component('afterLoginPage',
             };
             
             APIService.apiRun({crud: 'DownloadStoredExperiment'}, data, function (response) {
-                InProgressService.updateIsReady(1);
                 $scope.UpdateData(response);
                 $scope.GoToNextTab();
 
@@ -74,15 +73,8 @@ jTextMinerApp.component('afterLoginPage',
         };
 
         $scope.GoToNextTab = function () {
-
-            InProgressService.updateIsReady(0);
             $location.path('Tabs');
         };
-
-        $scope.showInProcess = InProgressService.isReady != 1;
-        $scope.$on('isReady_Updated', function () {
-            $scope.showInProcess = InProgressService.isReady != 1;
-        });
 
         ctrl.showTextSelection = function(mode) {
             ngDialog.openConfirm({

@@ -1,8 +1,8 @@
 jTextMinerApp.component('browseThisComputer', {
     bindings: { browseData: '=' },
     templateUrl: 'Components/Shared/TextSelection/browseThisComputer.component.html',
-    controller: ['$scope', 'fileUpload', 'ngDialog', 'InProgressService', 'UserService', 'SelectClassService',
-        function ($scope, fileUpload, ngDialog, InProgressService, UserService, SelectClassService) {
+    controller: ['$scope', 'fileUpload', 'ngDialog', 'UserService', 'SelectClassService',
+        function ($scope, fileUpload, ngDialog, UserService, SelectClassService) {
             var ctrl = this;
 
             //input
@@ -18,8 +18,6 @@ jTextMinerApp.component('browseThisComputer', {
             };
 
             ctrl.UploadZipFile = function () {
-                InProgressService.updateIsReady(0);
-
                 ctrl.browseData = SelectClassService.newTextFromUpload(ctrl.zipFile.name, 'DoNotChunk', 250);
                 fileUpload.upload(ctrl.zipFile)
                     .then (function (fileId){
@@ -27,7 +25,6 @@ jTextMinerApp.component('browseThisComputer', {
                     });
                 fileUpload.uploadFileToUrl(ctrl.zipFile, 'zipFile', UserService.user)
                     .then(function (wordCounts) {
-                        InProgressService.updateIsReady(1);
                         ctrl.browseData.textInfo.wordCounts = wordCounts;
                         // reduce is used to sum the array
                         ctrl.browseData.textInfo.totalWordCount = wordCounts.reduce((a, b) => a + b, 0);

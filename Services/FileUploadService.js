@@ -1,4 +1,4 @@
-jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserService', function (APIService, InProgressService, UserService) {
+jTextMinerApp.service('fileUpload', ['APIService', 'UserService', function (APIService, UserService) {
     this.upload = function(file) {
         var fd = new FormData();
         fd.append('uploadFile', file);
@@ -32,7 +32,7 @@ jTextMinerApp.service('fileUpload', ['APIService', 'InProgressService', 'UserSer
             return response.data.data;
         })
         .catch(function () {
-            InProgressService.updateIsReady(-1);
+            console.log("Upload error.")
         });
     }
 }]);

@@ -8,7 +8,7 @@
 angular.module('JTextMinerApp')
     .factory('ExperimentService', function($rootScope, APIService, UserService, $q) {
 
-    var algorithms = [
+    const algorithms = [
         { id: 0, name: 'Weka_SMO', attributes: '-C 1.0 -L 0.0010 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -C 250007 -E 3.0\"' },
         { id: 1, name: 'Weka_BayesianLogisticRegression', attributes: '-D -Tl 5.0E-5 -S 0.5 -H 1 -V 0.27 -R R:0.01-316,3.16 -P 2 -F 10 -I 200 -N' },
         { id: 2, name: 'Weka_NaiveBayesMultinomial', attributes: '' },
@@ -24,53 +24,23 @@ angular.module('JTextMinerApp')
         { id: 12, name: 'SVM_Light', attributes: '' }
     ];
 
-        function resetServerInternal(experimentName) {
-            // Removing the API from the server
-            // var data = {
-            //     userLogin: UserService.user,
-            //     expType: 'Classification',
-            //     expName: experimentName
-            // };
-            //
-            // return APIService.call('JTextMinerAPI/NewExperiment', data)
-            //     .then(function (response) {
-            //         if (response.data.userLogin.length == 0) {
-            //             throw "Reset server failed.";
-            //         }
-            //     });
-            return $q.resolve();
-        }
+    function updateSelectedAlgorithmTypeValue (id, name, attributes) {
+        this.selectedAlgorithmTypeId = id;
+        this.selectedAlgorithmTypeName = name;
+        this.selectedAlgorithmTypeAttributes = attributes;
+    }
 
-        var service = {
+    let service = {
         ALGORITHMS: algorithms,
         newExperiment() {
-            // ClassificationService.featureCollection.updateFeaturesData({});
-            // SegmentationService.SegmentationDefaultValues();
-            //
-            // ClassService.Corpus_classes = [];
-
             return {
                 experimentGUID: null,
                 experimentName: 'Untitled',
                 selectedAlgorithmTypeId: 0,
                 selectedAlgorithmTypeName: algorithms[0].name,
                 selectedAlgorithmTypeAttributes: algorithms[0].attributes,
-                updateExperimentName(value) {
-                    this.experimentName = value;
-                    $rootScope.$broadcast("valuesUpdated");
-                },
-                updateSelectedAlgorithmTypeValue (id, name, attributes) {
-                    this.selectedAlgorithmTypeId = id;
-                    this.selectedAlgorithmTypeName = name;
-                    this.selectedAlgorithmTypeAttributes = attributes;
-                },
-                resetServer() {
-                    resetServerInternal(this.experimentName);
-                }
+                updateSelectedAlgorithmTypeValue
             }
-        },
-        resetServer () {
-            return resetServerInternal('Untitled');
         }
     };
 

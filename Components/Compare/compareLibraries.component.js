@@ -9,7 +9,6 @@ jTextMinerApp.component('compareLibraries', {
             });
             ctrl.experiment = ClassificationService.newExperiment();
             ctrl.experiment.base.experimentName = 'CompareLibraries';
-            ctrl.experiment.base.resetServer();
             var selectionData = angular.extend({ className: 'Selected Text'}, SelectClassService.testText);
 
             ctrl.firstRun = true;

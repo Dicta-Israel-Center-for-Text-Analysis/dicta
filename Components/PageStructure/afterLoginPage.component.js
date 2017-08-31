@@ -11,7 +11,7 @@ jTextMinerApp.component('afterLoginPage',
         ctrl.currentUser = UserService.user == "testuser" ? "Guest User" : UserService.user;
 
         $scope.LoadExperiment = function (fileName) {
-            ExperimentService.updateExperimentName(fileName);
+            // ExperimentService.updateExperimentName(fileName);
 
             var data = {
                 userLogin: UserService.user,
@@ -70,10 +70,7 @@ jTextMinerApp.component('afterLoginPage',
         $scope.saveClass = function (selectionData) {
             SelectClassService.setTestText(selectionData);
 
-            ExperimentService.resetServer()
-                .then(
-                    () => $scope.GoToNextTab()
-                );
+            $scope.GoToNextTab();
         };
 
         $scope.GoToNextTab = function () {

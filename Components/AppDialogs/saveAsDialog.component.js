@@ -10,7 +10,7 @@ jTextMinerApp.component('saveAsDialog', {
         var ctrl = this;
         ctrl.expName = ctrl.experiment.experimentName;
         ctrl.Save = function () {
-            ctrl.experiment.updateExperimentName(ctrl.expName);
+            // ctrl.experiment.updateExperimentName(ctrl.expName);
             ctrl.experiment.SaveExperiment();
             ctrl.onConfirm();
         }

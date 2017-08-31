@@ -27,14 +27,4 @@ describe('Service: JTextMinerApp.ExperimentService', function () {
         expect(service.newExperiment().selectedAlgorithmTypeName).toBe('Weka_SMO');
     });
 
-    it('should have a function resetServer that calls the NewExperiment API and checks for userLogin', function () {
-        httpBackend.expectPOST(/JTextMinerAPI\/NewExperiment/).respond({userLogin: 'eden'});
-        var success = false;
-        service.resetServer()
-            .then(function() {success = true})
-            .catch(function() {success = false});
-        httpBackend.flush();
-        expect(success).toBe(true);
-    });
-
 });

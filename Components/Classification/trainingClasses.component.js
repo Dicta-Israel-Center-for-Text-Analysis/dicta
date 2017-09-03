@@ -8,7 +8,7 @@ jTextMinerApp.component('trainingClasses', {
         const ctrl = this;
 
         ctrl.deleteClass = function (index) {
-            ctrl.classificationExperiment.DeleteClass(index);
+            ctrl.classificationExperiment.deleteClass(index);
         }
     }
 });

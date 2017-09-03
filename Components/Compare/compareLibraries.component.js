@@ -32,7 +32,7 @@ jTextMinerApp.component('compareLibraries', {
             ctrl.fixmeCounter = 1;
             ctrl.saveClass = function (selectionData) {
                 if (ctrl.experiment.classes.Corpus_classes.length > 1)
-                    ctrl.experiment.DeleteClass(1);
+                    ctrl.experiment.deleteClass(1);
                 ctrl.experiment.saveClass(selectionData);
             };
             ctrl.showCrossvalidation = function () {

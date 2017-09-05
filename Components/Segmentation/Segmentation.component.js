@@ -1,25 +1,19 @@
 jTextMinerApp.component('segmentation',
     {
         templateUrl: 'Components/Segmentation/Segmentation.component.html',
-        controller: ['$scope', 'SegmentationService', '$sce', '$timeout',
-                function ($scope, SegmentationService, $sce, $timeout) {
+        controller: ['$scope', 'SegmentationService', '$sce', '$timeout', 'StateService',
+                function ($scope, SegmentationService, $sce, $timeout, StateService) {
             var ctrl = this;
             ctrl.tab = 1;
             ctrl.showInProcess = false;
-            ctrl.experiment = SegmentationService.newExperiment();
+            ctrl.experiment = StateService.getOrCreate('segmentation', SegmentationService.newExperiment);
+            ctrl.experiment.addListener(afterSegmentation);
 
             ctrl.createSegment = function (segment) {
                 return $sce.trustAsHtml(segment);
             }
 
-            ctrl.createThumbnail = function (chunk) {
-                if (chunk == null)
-                    return "";
-                var dotsNail = "";
-                for (i = 0; i < chunk.length / 40; i = i + 1) {
-                    dotsNail += ". ";
-                }
-                return $sce.trustAsHtml(dotsNail);
+            ctrl.getChunks = function () {
             }
 
             ctrl.scrollTo = function (index) {
@@ -29,10 +23,16 @@ jTextMinerApp.component('segmentation',
             ctrl.RunExperiment = function () {
                 ctrl.showInProcess = true;
                 ctrl.experiment.RunExperiment()
-                    .then(function() {
-                        ctrl.htmlSegmentation = $sce.trustAsHtml(ctrl.experiment.resultData.htmlSegmentation);
-                        ctrl.showInProcess = false;
-                    });
+                    .then(afterSegmentation);
+            };
+
+            function afterSegmentation() {
+                ctrl.showInProcess = false;
+                ctrl.chunkBarData = ctrl.experiment.resultData.segments.map(chunk => ({
+                    color: 'class-bg-color-' + chunk[0].classIndex,
+                    text: chunk.map(s => s.text).join(),
+                    title: chunk[0].prefix
+                }))
             }
 
             ctrl.getTopFeatures = function (classData) {

@@ -1,8 +1,6 @@
-    <div class="col-md-4 border-author">
+    <div class="col-xs-12">
         <div id="segmentationControls" class="button-slider author-text">
-            <h2>Decompose text by style</h2>
-            <p>Decompose the text into <input class="author-assumed" ng-model="$ctrl.experiment.Segmentation_NumberOfClusters" id="clusters" name="clusters" type="number" /> components. <img title="Choose the number of threads to which to decompose the text." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png"></p>
-
+            <h2>SOURCE CRITICISM</h2>
 
             <p class="refine-segmentation">Choose granularity:</p>
             <img title="How granular do you want the decomposition to be." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
@@ -25,7 +23,7 @@
 
     <in-progress></in-progress>
 
-    <div class="col-md-8">
+    <div class="col-xs-12">
         <div class="box-right-side">
             <div class="view-text" ng-show="$ctrl.experiment.resultData.segments">
                 <div class="row">
@@ -48,14 +46,14 @@
         </div>
     </div>
     <div ng-show="$ctrl.tab == '1'">
-        <div class="col-md-7">
+        <div class="col-xs-12">
             <div ng-show="$ctrl.experiment.resultData.segments" class="box-right-side">
                 <div class="border-box">
                     <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
                     <p class="line-h">
                         <div id="segmentationSection{{$index}}" ng-repeat="hSegment in $ctrl.experiment.resultData.segments" >
                             <div ng-repeat="segment in hSegment">
-                                <div dir="rtl" class="A{{segment.classIndex}}">
+                                <div dir="rtl" class="class-color-{{segment.classIndex}}">
                                 <span style="font-size:8px;" ng-show="$ctrl.experiment.isAllBibleSegmentation">({{segment.prefix}})</span> {{$ctrl.createSegment(segment.text)}}
                                 </div>
                             </div>
@@ -65,18 +63,7 @@
             </div>
         </div>
         <div ng-show="!$ctrl.showInProcess && $ctrl.experiment.resultData !== undefined && $ctrl.experiment.resultData.segments !== undefined" class="col-md-1">
-            <div class="sid-bar0" style="font-size:10px;">
-                 {{$ctrl.experiment.resultData.segments.length}} segments
-            </div>
-
-            <div ng-click="$ctrl.scrollTo($index)"  ng-repeat="hSegment in $ctrl.experiment.resultData.segments" class="sid-bar" style="background-color:{{hSegment[0].classColor}};">
-                <p style="direction:rtl;" class="line-h">
-                    <span ng-repeat="segment in hSegment" ng-bind-html="$ctrl.createThumbnail(segment.text)"></span>
-                </p>
-            </div>
-
-            <div style="border:1px solid #BDCBD4;">
-            </div>
+            <chunk-bar chunks="$ctrl.chunkBarData"></chunk-bar>
         </div>
     </div>
     <div ng-show="$ctrl.tab =='2'">

@@ -13,8 +13,12 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                 Segmentation_NumberOfSentencesLockedIn: 25,
                 resultData: [],
                 inProgress: false,
-                base: ExperimentService.newExperiment()
+                base: ExperimentService.newExperiment(),
+                listener: null,
+                addListener(callback) { segmentationExperiment.listener = callback }
             };
+
+
             // the default feature set for segmentation is different than for other experiments
             segmentationExperiment.featureCollection = FeatureCollectionFactory.newCollection();
             angular.extend(segmentationExperiment.featureCollection.Feature_sets[0],
@@ -93,6 +97,11 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                         segmentationExperiment.resultData = results;
                         segmentationExperiment.featuresData = results.featuresData;
                         segmentationExperiment.featureCollection.updateFeaturesData(results.featuresData);
+                    })
+                    .then(response => {
+                        if (segmentationExperiment.listener)
+                            segmentationExperiment.listener(response);
+                        return response;
                     });
             };
 

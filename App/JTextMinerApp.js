@@ -41,7 +41,7 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     .state('bibleInterface.information', {
         url: '/Information',
         views: {
-            selectControls: { component: 'bibleViewSelectedText' },
+            // selectControls: { component: 'bibleViewSelectedText' },
             main: { component: 'bibleViewSelectedText' }
 
         }
@@ -56,7 +56,7 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
     .state('bibleInterface.segment', {
         url: '/Segment',
         views: {
-            segmentControls: { component: 'bibleViewSelectedText' },
+            segmentControls: { component: 'segmentationControls' },
             main: {component: 'segmentation'}
         }
     })

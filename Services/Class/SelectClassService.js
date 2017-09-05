@@ -121,6 +121,13 @@ jTextMinerApp.factory('SelectClassService', function (UserService, APIService, T
             }
         }
         service.testSetTitlesCommonPrefix = commonKeySegments.join('/');
+        window.sessionStorage.setItem('selectedClass', JSON.stringify({ testText: service.testText, prefix: service.testSetTitlesCommonPrefix}));
+    }
+    const oldSelectedClassStr = window.sessionStorage.getItem('selectedClass');
+    if (oldSelectedClassStr) {
+        const oldSelectedClass = JSON.parse(oldSelectedClassStr);
+        service.testText = oldSelectedClass.testText;
+        service.testSetTitlesCommonPrefix = oldSelectedClass.prefix;
     }
     return service;
 });

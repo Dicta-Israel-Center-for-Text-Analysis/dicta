@@ -4,10 +4,7 @@
     <!--</div>-->
 
     <div ng-repeat="chunk in $ctrl.chunks"
-         class="chunk-bar-chunk {{chunk.color}}" style="height: {{$ctrl.calculateChunkHeight(chunk)}}vh" title="{{chunk.title}}">
-        <p ng-click="$ctrl.scrollTo($index)" style="direction:rtl;" class="line-h">
-           {{$ctrl.createThumbnail(chunk)}}
-        </p>
+         class="chunk-bar-chunk {{chunk.color}}" ng-click="$ctrl.scrollTo($index)" ng-style="{height: $ctrl.calculateChunkHeight(chunk)+ 'vh'}" title="{{chunk.title}}">
     </div>
 
     <div style="border:1px solid #BDCBD4;">

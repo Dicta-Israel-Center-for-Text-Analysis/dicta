@@ -23,7 +23,7 @@ jTextMinerApp.component('bibleFrontPage',
             };
 
             ctrl.saveClass = function (selectClass) {
-                SelectClassService.testText = selectClass;
+                SelectClassService.setTestText(selectClass);
                 $state.go('bibleInterface');
             };
 

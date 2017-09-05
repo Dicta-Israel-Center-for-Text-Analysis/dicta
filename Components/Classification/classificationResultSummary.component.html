@@ -1,0 +1,21 @@
+<div class="classification-summary">
+    <div class="classification-summary-features">
+        <h3 class="info-heading">Common words and features</h3>
+        <div ng-repeat="classData in $ctrl.getHighlightedFeatures()">
+            <div class="classification-summary-class-label class-color-{{$index}}">{{classData.title}}</div>
+            <div>
+            <span ng-repeat="feature in classData.features" class="badge">
+                <a ng-click="$ctrl.showFeatureExamples(feature)">{{feature.name}}</a>
+            </span>
+            </div>
+        </div>
+        <a class="info-link" ng-click="$ctrl.viewAdvanced()">View advanced information</a>
+    </div>
+    <div class="classification-summary-cv-box">
+        <div> <!-- needed for flex to have something to center -->
+            <div class="classification-summary-cv">{{$ctrl.experiment.cvResultData.accuracy[0] | number: 0}}%</div>
+            <div class="classification-summary-label">Cross validation</div>
+            <div class="classification-summary-cv-details">view</div>
+        </div>
+    </div>
+</div>

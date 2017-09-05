@@ -8,10 +8,10 @@ jTextMinerApp.component('classification', {
 
         $scope.colors = ClassService.colors;
         $scope.indexOfColor = function (val) {
-            var l = $scope.classes.length;
+            var l = ctrl.experiment.classes.Corpus_classes.length;
             for (k = 0; k < l; k = k + 1) {
-                if (angular.equals($scope.classes[k].title, val)) {
-                    return $scope.colors[k];
+                if (angular.equals(ctrl.experiment.classes.Corpus_classes[k].title, val)) {
+                    return "class-bg-color-" + k;
                 }
             }
             return "Grey";

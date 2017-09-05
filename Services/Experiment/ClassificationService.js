@@ -269,11 +269,14 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             var featuresCompletePromise = $q.all(featurePromises).then(function (responses) {
                 experiment.testTextsFeatures = _.flatMap(responses, response => response.data);
             });
-            return $q.all([textPromise, featuresCompletePromise]);
+            return $q.all([textPromise, featuresCompletePromise]).then(values => {experiment.save(); return values;});
         }
 
         function registerListener(listener) {
             experiment.listener = listener;
+            experiment.load();
+            if (experiment.tsResultData.testSetResults)
+                experiment.listener(experiment.tsResultData.testSetResults);
         }
 
         let experiment = {
@@ -295,6 +298,42 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             getTextsWithFeatures,
             registerListener,
             fixmeCounter: 1,
+            save() {
+                const saveData = {
+                    cvData: experiment.cvResultData,
+                    tsData: experiment.tsResultData,
+                    trainSet: experiment.trainSet,
+                    featureCollection: experiment.featureCollection,
+                    base: experiment.base,
+                    classes: experiment.classes,
+                    testTexts: experiment.testTexts,
+                    testTextsFeatures: experiment.testTextsFeatures
+                };
+                window.sessionStorage.setItem('lastClassification',JSON.stringify(saveData));
+            },
+            load() {
+                const savedDataStr = window.sessionStorage.getItem('lastClassification');
+                if (savedDataStr) {
+                    const savedData = JSON.parse(savedDataStr);
+                    experiment.cvResultData = savedData.cvData;
+                    experiment.tsResultData = savedData.tsData;
+                    experiment.trainSet = savedData.trainSet;
+                    experiment.featureCollection.totalNumberOfFeatures = savedData.featureCollection.totalNumberOfFeatures;
+                    experiment.featureCollection.featuresData = savedData.featureCollection.featuresData;
+                    experiment.featureCollection.FeatureSet_maxId = savedData.featureCollection.FeatureSet_maxId;
+                    experiment.featureCollection.Feature_sets = savedData.featureCollection.Feature_sets;
+                    experiment.classes.TestSet_unknown_class = savedData.classes.TestSet_unknown_class;
+                    experiment.classes.Corpus_classes = savedData.classes.Corpus_classes;
+                    experiment.classes.Corpus_maxId = savedData.classes.Corpus_maxId;
+                    experiment.classes.isAllBible = savedData.classes.isAllBible;
+                    experiment.base.experimentGUID = savedData.base.experimentGUID;
+                    experiment.base.experimentName = savedData.base.experimentName;
+                    experiment.base.selectedAlgorithmTypeId = savedData.base.selectedAlgorithmTypeId;
+                    experiment.base.selectedAlgorithmTypeName = savedData.base.selectedAlgorithmTypeName;
+                    experiment.testTexts = savedData.testTexts;
+                    experiment.testTextsFeatures = savedData.testTextsFeatures;
+                }
+            },
 
             // save and load exp (not working)
             createSaveRequest() {

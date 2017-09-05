@@ -228,19 +228,20 @@ input.form-control.search-control-class {
     position: fixed;
     top: 0;
     right: 0;
-    width: 50px;
+    width: 15px;
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 8px;
-    text-align: justify;
+    /*text-align: justify;*/
     min-height: 1px;
     /* padding: 1px 6px; */
-    border: solid #BDCBD4;
-    border-width: 1px 1px 0 1px;
+    /*border: solid #BDCBD4;*/
+    /*border-width: 1px 1px 0 1px;*/
 }
 
 .chunk-bar-chunk {
-    border-bottom: 1px solid #BDCBD4;
-    padding: 4px 6px;
+    /*border-bottom: 1px solid #BDCBD4;*/
+    /*padding: 4px 6px;*/
+    margin-bottom: 3px;
     /* border: 1px solid red; */
     overflow-y: hidden;
 }

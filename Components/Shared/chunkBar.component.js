@@ -16,9 +16,9 @@ jTextMinerApp.component('chunkBar',
                 return (extraHeight * (chunk.text.length / total) + 9)*100/viewHeight;
             };
 
-            ctrl.createThumbnail = function (chunk) {
-               return _.repeat('\u3030\u200b', chunk.text.length / 200);
-            };
+            // ctrl.createThumbnail = function (chunk) {
+            //    return _.repeat('\u3030\u200b', chunk.text.length / 200);
+            // };
 
             ctrl.scrollTo = function (index) {
                 window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);

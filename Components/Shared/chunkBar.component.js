@@ -21,7 +21,7 @@ jTextMinerApp.component('chunkBar',
             // };
 
             ctrl.scrollTo = function (index) {
-                window.scrollTo(0, $("#section" + index)[0].offsetTop - 100);
+                window.scrollTo(0, $("#section" + index).offset().top);
             };
 
         }]

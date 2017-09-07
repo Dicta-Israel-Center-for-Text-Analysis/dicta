@@ -419,28 +419,25 @@ text-with-features h2 {
   background-color: #B65A4E;
 }
 
-.class-segment-color-0 {
-  border-right: solid 4px #634C9F;
+.class-segment-color-0, .class-segment-color-1, .class-segment-color-2, .class-segment-color-3 {
   padding-right: 5px;
   margin-bottom: 30px;
+}
+
+.class-segment-color-0 {
+  border-right: solid 4px #634C9F;
 }
 
 .class-segment-color-1 {
   border-right: solid 4px #FFD933;
-  padding-right: 5px;
-  margin-bottom: 30px;
 }
 
 .class-segment-color-2 {
   border-right: solid 4px #4EB6A3;
-  padding-right: 5px;
-  margin-bottom: 30px;
 }
 
 .class-segment-color-3 {
   border-right: solid 4px #B65A4E;
-  padding-right: 5px;
-  margin-bottom: 30px;
 }
 
 .segment {

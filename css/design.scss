@@ -30,6 +30,17 @@ $sun-glow-2nd: #FFD933;
 $tradewind-3rd: #4EB6A3;
 $chestnut-4th: #B65A4E;
 
+$color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
+@mixin generate-colors() {
+    @for $i from 1 through length($color-list)
+    {
+        $current-color: nth($color-list, $i) !global;
+        $current-color-index: $i - 1 !global;
+        @content
+    }
+
+}
+
 /* front page */
 
 .form-inline input.search-control-class.form-control {
@@ -407,60 +418,27 @@ text-with-features h2 {
     letter-spacing: 0.05em;
 }
 
-.class-color-0 {
-    color: $butterfly-bush-1st;
+@include generate-colors {
+    .class-color-#{$current-color-index} {
+        color: $current-color;
+    }
+}
+@include generate-colors {
+    .class-bg-color-#{$current-color-index} {
+        background-color: $current-color;
+    }
 }
 
-.class-color-1 {
-    color: $sun-glow-2nd;
-}
-
-.class-color-2 {
-    color: $tradewind-3rd;
-}
-
-.class-color-3 {
-    color: $chestnut-4th;
-}
-
-.class-bg-color-0 {
-    background-color: $butterfly-bush-1st;
-}
-
-.class-bg-color-1 {
-    background-color: $sun-glow-2nd;
-}
-
-.class-bg-color-2 {
-    background-color: $tradewind-3rd;
-}
-
-.class-bg-color-3 {
-    background-color: $chestnut-4th;
-}
-
-.class-segment-color-0 {
-    border-right: solid 4px $butterfly-bush-1st;
+%class-segment-color {
     padding-right: 5px;
     margin-bottom: 30px;
 }
 
-.class-segment-color-1 {
-    border-right: solid 4px $sun-glow-2nd;
-    padding-right: 5px;
-    margin-bottom: 30px;
-}
-
-.class-segment-color-2 {
-    border-right: solid 4px $tradewind-3rd;
-    padding-right: 5px;
-    margin-bottom: 30px;
-}
-
-.class-segment-color-3 {
-    border-right: solid 4px $chestnut-4th;
-    padding-right: 5px;
-    margin-bottom: 30px;
+@include generate-colors {
+    .class-segment-color-#{$current-color-index} {
+        @extend %class-segment-color;
+        border-right: solid 4px $current-color;
+    }
 }
 
 .segment {

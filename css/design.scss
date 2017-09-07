@@ -1,0 +1,540 @@
+@font-face {
+    font-family: 'NachlieliCLM';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../fonts/NachlieliCLM-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NachlieliCLM';
+    font-weight: bold;
+    font-style: normal;
+    src: url('../fonts/NachlieliCLM-Bold.woff') format('woff');
+}
+
+/* colors */
+$ebony-clay: #222B37;
+$porcelain: #F6F8F9;
+$grey: #929292;
+$dodger-blue: #0C8BFF;
+$black-pearl: #1C222D;
+$bright-turquoise: #0CFFB8;
+$light-slate-grey: #848F99;
+$geyser: #D5DCE0;
+$butterfly-bush-1st: #634C9F;
+$sun-glow-2nd: #FFD933;
+$tradewind-3rd: #4EB6A3;
+$chestnut-4th: #B65A4E;
+
+/* front page */
+
+.form-inline input.search-control-class.form-control {
+    width: 350px;
+    margin-left: -50px;
+}
+
+.side-space {
+    padding: 0 27px;
+}
+
+.jumbo {
+    background-color: $porcelain;
+    padding-bottom: 125px;
+    color: $ebony-clay;
+}
+
+.jumbo-start {
+    padding-top: 125px;
+}
+
+.jumbo-text-selection {
+    padding-top: 53px;
+}
+
+.jumbo-subtext {
+    padding-top: 20px
+}
+
+.jumbo-subtext a {
+    text-decoration: underline;
+    color: $ebony-clay
+}
+
+.header-link {
+    color: darkgrey;
+}
+
+.main-logo {
+    padding-left: 60px;
+    font-size: 70px;
+    font-family: Martel, serif;
+    color: $ebony-clay;
+}
+
+.main-logo sup {
+    font-size: 20px;
+    top: -60px;
+    left: -40px;
+    font-weight: 600;
+}
+
+.search-control-class {
+    border: none;
+    box-shadow: none;
+    color: $grey;
+}
+
+/* common pages */
+
+.rounded-btn {
+    height: 44px;
+    border-radius: 100px;
+    padding: 10px 0;
+    width: 215px;
+    outline: none;
+    border: none;
+}
+
+.btn-blue {
+    color: white;
+    background-color: $dodger-blue;
+}
+
+.btn-green {
+    color: $black-pearl;
+    background-color: $bright-turquoise;
+}
+
+.small-logo {
+    display: inline-block;
+    padding: 0 40px;
+    font-size: 25px;
+    font-weight: 900;
+    font-family: Martel, serif;
+    color: #fff;
+}
+
+.small-logo sup {
+    font-size: 7px;
+    top: -18px;
+    left: -12px;
+    font-weight: 600;
+}
+
+.top-back-arrow {
+    color: $bright-turquoise;
+    font-size: 24px;
+    height: 67px;
+    width: 34px;
+    /*background-color: #646464;*/
+    padding: 22px 0 22px 0;
+    display: inline-block;
+}
+
+/* search page */
+.search-control {
+    color: $ebony-clay;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.search-top-bar {
+    height: 68px;
+    background-color: $ebony-clay;
+}
+
+.search-control-bar {
+    line-height: 52px;
+    min-height: 52px;
+    background-color: $porcelain;
+}
+
+.search-top-bar-form {
+    display: inline-block;
+    margin-left: -30px;
+    font-size: 21px;
+    line-height: 68px;
+    background-color: $ebony-clay;
+    width: 100%;
+}
+
+.search-top-bar-form-control {
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    width: auto;
+    display: inline;
+    color: #fff;
+    background: $ebony-clay none;
+    border: none;
+    border-radius: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: none;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    outline: none;
+}
+
+.search-top-bar-button {
+    color: $light-slate-grey;
+}
+
+.search-autocomplete-container {
+    display: inline-block;
+    margin: 0 15px 0;
+    width: calc(100% - 80px);
+    direction: rtl;
+    border-bottom: solid 1px $light-slate-grey;
+}
+
+.search-result-summary {
+    line-height: 24px;
+    font-weight: bold;
+    border-bottom: 1px solid $geyser;
+    padding: 24px 0;
+    margin-right: -30px;
+}
+
+.search-result {
+    box-sizing: border-box;
+    border-bottom: 1px solid $geyser;
+    margin-left: 15px;
+}
+
+.search-result-heading {
+    color: $light-slate-grey;
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    line-height: 24px;
+}
+
+.search-result-text {
+    line-height: 27px;
+    font-size: 16px;
+    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+    letter-spacing: 0.05em;
+}
+
+.search-top-left {
+    float: left;
+}
+
+.search-top-bar-input {
+    background-color: #fff;
+    color: $ebony-clay;
+    width: 100%;
+}
+
+.preview-text {
+    direction: rtl;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    background-color: transparent;
+}
+
+.ngdialog .ngdialog-message {
+    background-color: #fff;
+}
+
+.dialog-button-area {
+    height: 68px;
+    border-radius: 0 0 3px 3px;
+    background-color: $ebony-clay;
+    border: solid 1px #fff;
+    padding: 10px;
+}
+
+.dialog-close {
+    background-color: transparent;
+    color: white;
+    height: 3em;
+    width: 100%;
+    text-align: right;
+}
+
+.breadcrumb {
+    text-transform: uppercase;
+    background-color: #fff;
+    border-bottom: 1px solid $geyser;
+    border-radius: 0;
+    padding: 23px 15px;
+    color: $light-slate-grey;
+}
+
+.breadcrumb > li:last-child {
+    color: $ebony-clay;
+}
+
+.breadcrumb > li + li:before {
+    content: '\00a0>\00a0';
+    padding: 0 5px;
+}
+
+.breadcrumb li a {
+    color: inherit;
+}
+
+.text-selection-rows, .preview-text {
+    height: 400px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 0 25px;
+    line-height: 32px;
+    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+}
+
+.preview-text-message {
+    text-align: center;
+    padding-top: 150px;
+}
+
+.text-selection-rows td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+
+::placeholder {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-message.choose-text-dialog {
+    /* margin: -1em; */
+    margin-bottom: 0 !important;
+    height: 550px;
+}
+
+.preview-name {
+    padding-left: 20px;
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+    width: 900px;
+    height: 2em;
+    line-height: 1.15em;
+}
+
+.your-selection {
+    font-weight: normal;
+    color: $porcelain;
+    font-size: 13px;
+    line-height: 15px;
+    margin: 0;
+}
+
+.main-page-selection-summary {
+    padding: 20px;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.right-content, .right-content h2 {
+    display: inline;
+    /*color: #634C9F;*/
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+.left-icons {
+    display: inline;
+}
+
+.classification-controls {
+    padding: 5px;
+}
+
+.saved-data-table-row:hover {
+    background-color: $ebony-clay;
+    color: #fff;
+}
+
+.classification-summary {
+    background-color: $porcelain;
+    border-radius: 3px;
+    padding: 24px 38px;
+}
+
+.info-heading {
+    color: $black-pearl;
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+.detail-icon {
+    color: $bright-turquoise;
+    font-size: 15px;
+    line-height: 16px;
+}
+
+.adjustment-text {
+    color: $black-pearl;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 42px 0;
+}
+
+text-with-features h2 {
+    font-size: 10px;
+}
+
+.main-heading {
+    text-transform: uppercase;
+    color: $black-pearl;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 27px;
+}
+
+.text-with-features {
+    max-height: 350px;
+    overflow-y: auto;
+    text-align: right;
+    line-height: 27px;
+    font-size: 16px;
+    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+    letter-spacing: 0.05em;
+}
+
+.class-color-0 {
+    color: $butterfly-bush-1st;
+}
+
+.class-color-1 {
+    color: $sun-glow-2nd;
+}
+
+.class-color-2 {
+    color: $tradewind-3rd;
+}
+
+.class-color-3 {
+    color: $chestnut-4th;
+}
+
+.class-bg-color-0 {
+    background-color: $butterfly-bush-1st;
+}
+
+.class-bg-color-1 {
+    background-color: $sun-glow-2nd;
+}
+
+.class-bg-color-2 {
+    background-color: $tradewind-3rd;
+}
+
+.class-bg-color-3 {
+    background-color: $chestnut-4th;
+}
+
+.class-segment-color-0 {
+    border-right: solid 4px $butterfly-bush-1st;
+    padding-right: 5px;
+    margin-bottom: 30px;
+}
+
+.class-segment-color-1 {
+    border-right: solid 4px $sun-glow-2nd;
+    padding-right: 5px;
+    margin-bottom: 30px;
+}
+
+.class-segment-color-2 {
+    border-right: solid 4px $tradewind-3rd;
+    padding-right: 5px;
+    margin-bottom: 30px;
+}
+
+.class-segment-color-3 {
+    border-right: solid 4px $chestnut-4th;
+    padding-right: 5px;
+    margin-bottom: 30px;
+}
+
+.segment {
+    margin-bottom: 10px;
+}
+.class-number {
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 12px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+.class-label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 24px;
+    display: inline-block;
+    padding: 10px;
+}
+.classification-summary-cv-box {
+    text-align: center;
+    border-left: 1px solid $geyser;
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.classification-summary-cv {
+    color: $ebony-clay;
+    font-family: "Open Sans", sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2em;
+}
+.classification-summary-label {
+    color: $ebony-clay;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    line-height: 24px;
+}
+.classification-summary-cv-details {
+    color: $ebony-clay;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    line-height: 24px;
+    text-decoration: underline;
+}
+.classification-summary-features {
+    grid-column: 1;
+}
+.classification-summary {
+    display: grid;
+    grid-template-columns: 66% 34%;
+}
+.badge {
+    color: #fff;
+    font-weight: normal;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 5px 10px 5px 0;
+    background-color: $light-slate-grey;
+}
+.badge a {
+    color: #fff;
+    font-family: "Open Sans", "NachlieliCLM", sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+.classification-summary-class-label{
+    font-weight: bold;
+    padding-top: 10px;
+}
+.classification-main {
+    margin: 0 110px;
+}

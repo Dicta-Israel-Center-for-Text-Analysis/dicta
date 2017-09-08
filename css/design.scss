@@ -1,103 +1,6 @@
-@font-face {
-    font-family: 'NachlieliCLM';
-    font-weight: normal;
-    font-style: normal;
-    src: url('../fonts/NachlieliCLM-Light.woff') format('woff');
-}
-
-@font-face {
-    font-family: 'NachlieliCLM';
-    font-weight: bold;
-    font-style: normal;
-    src: url('../fonts/NachlieliCLM-Bold.woff') format('woff');
-}
-
-// colors
-$black-pearl: #1C222D;
-$ebony-clay: #222B37;
-$light-slate-grey: #848F99;
-$grey: #929292;
-$geyser: #D5DCE0;
-$porcelain: #F6F8F9;
-
-// colors for buttons
-$dodger-blue: #0C8BFF;
-$bright-turquoise: #0CFFB8;
-
-// colors for classes
-$butterfly-bush-1st: #634C9F;
-$sun-glow-2nd: #FFD933;
-$tradewind-3rd: #4EB6A3;
-$chestnut-4th: #B65A4E;
-
-$color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
-@mixin generate-colors() {
-    @for $i from 1 through length($color-list)
-    {
-        $current-color: nth($color-list, $i) !global;
-        $current-color-index: $i - 1 !global;
-        @content
-    }
-
-}
-
-/* front page */
-
-.form-inline input.search-control-class.form-control {
-    width: 350px;
-    margin-left: -50px;
-}
-
-.side-space {
-    padding: 0 27px;
-}
-
-.jumbo {
-    background-color: $porcelain;
-    padding-bottom: 125px;
-    color: $ebony-clay;
-}
-
-.jumbo-start {
-    padding-top: 125px;
-}
-
-.jumbo-text-selection {
-    padding-top: 53px;
-}
-
-.jumbo-subtext {
-    padding-top: 20px
-}
-
-.jumbo-subtext a {
-    text-decoration: underline;
-    color: $ebony-clay
-}
-
-.header-link {
-    color: darkgrey;
-}
-
-.main-logo {
-    padding-left: 60px;
-    font-size: 70px;
-    font-family: Martel, serif;
-    color: $ebony-clay;
-}
-
-.main-logo sup {
-    font-size: 20px;
-    top: -60px;
-    left: -40px;
-    font-weight: 600;
-}
-
-.search-control-class {
-    border: none;
-    box-shadow: none;
-    color: $grey;
-}
+@import "base-design";
+@import "front-page";
+@import "search";
 
 /* common pages */
 
@@ -144,100 +47,6 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
     /*background-color: #646464;*/
     padding: 22px 0 22px 0;
     display: inline-block;
-}
-
-/* search page */
-.search-control {
-    color: $ebony-clay;
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-}
-
-.search-top-bar {
-    height: 68px;
-    background-color: $ebony-clay;
-}
-
-.search-control-bar {
-    line-height: 52px;
-    min-height: 52px;
-    background-color: $porcelain;
-}
-
-.search-top-bar-form {
-    display: inline-block;
-    margin-left: -30px;
-    font-size: 21px;
-    line-height: 68px;
-    background-color: $ebony-clay;
-    width: 100%;
-}
-
-.search-top-bar-form-control {
-    height: 34px;
-    padding: 6px 12px;
-    line-height: 1.42857143;
-    width: auto;
-    display: inline;
-    color: #fff;
-    background: $ebony-clay none;
-    border: none;
-    border-radius: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: none;
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    outline: none;
-}
-
-.search-top-bar-button {
-    color: $light-slate-grey;
-}
-
-.search-autocomplete-container {
-    display: inline-block;
-    margin: 0 15px 0;
-    width: calc(100% - 80px);
-    direction: rtl;
-    border-bottom: solid 1px $light-slate-grey;
-}
-
-.search-result-summary {
-    line-height: 24px;
-    font-weight: bold;
-    border-bottom: 1px solid $geyser;
-    padding: 24px 0;
-    margin-right: -30px;
-}
-
-.search-result {
-    box-sizing: border-box;
-    border-bottom: 1px solid $geyser;
-    margin-left: 15px;
-}
-
-.search-result-heading {
-    color: $light-slate-grey;
-    font-family: "Open Sans", sans-serif;
-    font-size: 13px;
-    line-height: 24px;
-}
-
-.search-result-text {
-    line-height: 27px;
-    font-size: 16px;
-    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
-    letter-spacing: 0.05em;
-}
-
-.search-top-left {
-    float: left;
-}
-
-.search-top-bar-input {
-    background-color: #fff;
-    color: $ebony-clay;
-    width: 100%;
 }
 
 .preview-text {
@@ -296,7 +105,7 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
     box-sizing: border-box;
     padding: 0 25px;
     line-height: 32px;
-    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+    @extend %fonts;
 }
 
 .preview-text-message {
@@ -348,7 +157,7 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
 .right-content, .right-content h2 {
     display: inline;
     /*color: #634C9F;*/
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 15px;
     font-weight: bold;
     line-height: 24px;
@@ -375,7 +184,7 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
 
 .info-heading {
     color: $black-pearl;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 13px;
     font-weight: bold;
     line-height: 24px;
@@ -389,7 +198,7 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
 
 .adjustment-text {
     color: $black-pearl;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 14px;
     line-height: 24px;
     padding: 42px 0;
@@ -402,7 +211,7 @@ text-with-features h2 {
 .main-heading {
     text-transform: uppercase;
     color: $black-pearl;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 15px;
     font-weight: bold;
     line-height: 27px;
@@ -414,7 +223,7 @@ text-with-features h2 {
     text-align: right;
     line-height: 27px;
     font-size: 16px;
-    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+    @extend %fonts;
     letter-spacing: 0.05em;
 }
 
@@ -446,7 +255,7 @@ text-with-features h2 {
 }
 .class-number {
     color: #fff;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
@@ -457,7 +266,7 @@ text-with-features h2 {
 }
 
 .class-label {
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 15px;
     font-weight: bold;
     line-height: 24px;
@@ -474,20 +283,20 @@ text-with-features h2 {
 }
 .classification-summary-cv {
     color: $ebony-clay;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 42px;
     font-weight: 800;
     line-height: 1.2em;
 }
 .classification-summary-label {
     color: $ebony-clay;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 15px;
     line-height: 24px;
 }
 .classification-summary-cv-details {
     color: $ebony-clay;
-    font-family: "Open Sans", sans-serif;
+    @extend %fonts;
     font-size: 15px;
     line-height: 24px;
     text-decoration: underline;
@@ -509,7 +318,7 @@ text-with-features h2 {
 }
 .badge a {
     color: #fff;
-    font-family: "Open Sans", "NachlieliCLM", sans-serif;
+    @extend %fonts;
     font-size: 13px;
     line-height: 20px;
 }

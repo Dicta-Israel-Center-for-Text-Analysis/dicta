@@ -12,6 +12,28 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+}
+
+@font-face {
+  font-family: 'NachlieliCLM';
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'NachlieliCLM';
+  font-weight: bold;
+  font-style: normal;
+  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+}
+
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+}
+
 /* front page */
 .form-inline input.search-control-class.form-control {
   width: 350px;
@@ -69,56 +91,27 @@
   color: #929292;
 }
 
-/* common pages */
-.rounded-btn {
-  height: 44px;
-  border-radius: 100px;
-  padding: 10px 0;
-  width: 215px;
-  outline: none;
-  border: none;
+@font-face {
+  font-family: 'NachlieliCLM';
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
 }
 
-.btn-blue {
-  color: white;
-  background-color: #0C8BFF;
+@font-face {
+  font-family: 'NachlieliCLM';
+  font-weight: bold;
+  font-style: normal;
+  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.btn-green {
-  color: #1C222D;
-  background-color: #0CFFB8;
-}
-
-.small-logo {
-  display: inline-block;
-  padding: 0 40px;
-  font-size: 25px;
-  font-weight: 900;
-  font-family: Martel, serif;
-  color: #fff;
-}
-
-.small-logo sup {
-  font-size: 7px;
-  top: -18px;
-  left: -12px;
-  font-weight: 600;
-}
-
-.top-back-arrow {
-  color: #0CFFB8;
-  font-size: 24px;
-  height: 67px;
-  width: 34px;
-  /*background-color: #646464;*/
-  padding: 22px 0 22px 0;
-  display: inline-block;
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
 /* search page */
 .search-control {
   color: #222B37;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .search-top-bar {
@@ -187,7 +180,6 @@
 
 .search-result-heading {
   color: #848F99;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   line-height: 24px;
 }
@@ -195,7 +187,6 @@
 .search-result-text {
   line-height: 27px;
   font-size: 16px;
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
   letter-spacing: 0.05em;
 }
 
@@ -207,6 +198,52 @@
   background-color: #fff;
   color: #222B37;
   width: 100%;
+}
+
+/* common pages */
+.rounded-btn {
+  height: 44px;
+  border-radius: 100px;
+  padding: 10px 0;
+  width: 215px;
+  outline: none;
+  border: none;
+}
+
+.btn-blue {
+  color: white;
+  background-color: #0C8BFF;
+}
+
+.btn-green {
+  color: #1C222D;
+  background-color: #0CFFB8;
+}
+
+.small-logo {
+  display: inline-block;
+  padding: 0 40px;
+  font-size: 25px;
+  font-weight: 900;
+  font-family: Martel, serif;
+  color: #fff;
+}
+
+.small-logo sup {
+  font-size: 7px;
+  top: -18px;
+  left: -12px;
+  font-weight: 600;
+}
+
+.top-back-arrow {
+  color: #0CFFB8;
+  font-size: 24px;
+  height: 67px;
+  width: 34px;
+  /*background-color: #646464;*/
+  padding: 22px 0 22px 0;
+  display: inline-block;
 }
 
 .preview-text {
@@ -265,7 +302,6 @@
   box-sizing: border-box;
   padding: 0 25px;
   line-height: 32px;
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
 .preview-text-message {
@@ -317,7 +353,6 @@
 .right-content, .right-content h2 {
   display: inline;
   /*color: #634C9F;*/
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-weight: bold;
   line-height: 24px;
@@ -344,7 +379,6 @@
 
 .info-heading {
   color: #1C222D;
-  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-weight: bold;
   line-height: 24px;
@@ -358,7 +392,6 @@
 
 .adjustment-text {
   color: #1C222D;
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   line-height: 24px;
   padding: 42px 0;
@@ -371,7 +404,6 @@ text-with-features h2 {
 .main-heading {
   text-transform: uppercase;
   color: #1C222D;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-weight: bold;
   line-height: 27px;
@@ -383,7 +415,6 @@ text-with-features h2 {
   text-align: right;
   line-height: 27px;
   font-size: 16px;
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
   letter-spacing: 0.05em;
 }
 
@@ -446,7 +477,6 @@ text-with-features h2 {
 
 .class-number {
   color: #fff;
-  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 24px;
   text-align: center;
@@ -457,7 +487,6 @@ text-with-features h2 {
 }
 
 .class-label {
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-weight: bold;
   line-height: 24px;
@@ -476,7 +505,6 @@ text-with-features h2 {
 
 .classification-summary-cv {
   color: #222B37;
-  font-family: "Open Sans", sans-serif;
   font-size: 42px;
   font-weight: 800;
   line-height: 1.2em;
@@ -484,14 +512,12 @@ text-with-features h2 {
 
 .classification-summary-label {
   color: #222B37;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   line-height: 24px;
 }
 
 .classification-summary-cv-details {
   color: #222B37;
-  font-family: "Open Sans", sans-serif;
   font-size: 15px;
   line-height: 24px;
   text-decoration: underline;
@@ -517,7 +543,6 @@ text-with-features h2 {
 
 .badge a {
   color: #fff;
-  font-family: "Open Sans", "NachlieliCLM", sans-serif;
   font-size: 13px;
   line-height: 20px;
 }

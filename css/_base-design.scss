@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'NachlieliCLM';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../fonts/NachlieliCLM-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NachlieliCLM';
+    font-weight: bold;
+    font-style: normal;
+    src: url('../fonts/NachlieliCLM-Bold.woff') format('woff');
+}
+%fonts {
+    font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+}
+
+// colors
+$black-pearl: #1C222D;
+$ebony-clay: #222B37;
+$light-slate-grey: #848F99;
+$grey: #929292;
+$geyser: #D5DCE0;
+$porcelain: #F6F8F9;
+
+// colors for buttons
+$dodger-blue: #0C8BFF;
+$bright-turquoise: #0CFFB8;
+
+// colors for classes
+$butterfly-bush-1st: #634C9F;
+$sun-glow-2nd: #FFD933;
+$tradewind-3rd: #4EB6A3;
+$chestnut-4th: #B65A4E;
+
+$color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
+@mixin generate-colors() {
+    @for $i from 1 through length($color-list)
+    {
+        $current-color: nth($color-list, $i) !global;
+        $current-color-index: $i - 1 !global;
+        @content
+    }
+
+}

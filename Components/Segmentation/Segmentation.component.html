@@ -2,21 +2,19 @@
         <div id="segmentationControls" class="button-slider author-text">
             <h2>SOURCE CRITICISM</h2>
 
-            <p class="refine-segmentation">Choose granularity:</p>
-            <img title="How granular do you want the decomposition to be." data-toggle="tooltip" style="width:20px;height:20px;" src="images/question-mark.png">
-             
+            <p class="refine-segmentation">
+            <span>Choose granularity</span>
+                <span>Rough</span>
             <input id="NumberOfSentencesLockedInId" 
                     ng-model="$ctrl.experiment.Segmentation_NumberOfSentencesLockedIn"
                     type="text" data-slider-min="10" data-slider-max="90" 
                     data-slider-step="1"
                     data-slider-id='NumberOfSentencesLockedInIdSlider' />
-            <p class="rough-refine"> <span class="text-left1">Rough</span><span class="text-right1">Fine</span></p>
+            <span class="text-right1">Fine</span></p>
 
             <div class="clearfix"></div>
-            <div class="author-refine-section">
-                <p class="advance"><i class="fa fa-wrench" aria-hidden="true"></i><a href="">Advanced</a></p>
+                <!--<p class="advance"><i class="fa fa-wrench" aria-hidden="true"></i><a href="">Advanced</a></p>-->
                 <button ng-click="$ctrl.RunExperiment();" class="btn segments-btn">Go</button>
-            </div>
         </div>
 
     </div>
@@ -24,7 +22,7 @@
     <in-progress></in-progress>
 
     <div class="col-xs-12">
-        <div class="box-right-side">
+        <div class="segmentation-summary">
             <div class="view-text" ng-show="$ctrl.experiment.resultData.segments">
                 <div class="row">
                     <div class="col-xs-4" ng-repeat="classData in $ctrl.experiment.featuresData.classes">
@@ -48,17 +46,19 @@
     <div ng-show="$ctrl.tab == '1'">
         <div class="col-xs-12">
             <div ng-show="$ctrl.experiment.resultData.segments" class="box-right-side">
-                <div class="border-box">
-                    <h2><span class="align-left">Selected text</span><span class="align-right">?</span></h2>
-                    <p class="line-h">
-                        <div id="segmentationSection{{$index}}" ng-repeat="hSegment in $ctrl.experiment.resultData.segments" >
-                            <div ng-repeat="segment in hSegment">
-                                <div dir="rtl" class="class-color-{{segment.classIndex}}">
-                                <span style="font-size:8px;" ng-show="$ctrl.experiment.isAllBibleSegmentation">({{segment.prefix}})</span> {{$ctrl.createSegment(segment.text)}}
-                                </div>
-                            </div>
+                <div id="section{{$index}}" class="row"
+                     ng-repeat="hSegment in $ctrl.experiment.resultData.segments">
+                    <div class="col-xs-11 class-segment-color-{{hSegment[0].classIndex}}">
+                        <div ng-repeat="sentence in hSegment"
+                             dir="rtl">
+                            <span style="font-size:8px;" ng-show="$ctrl.experiment.isAllBibleSegmentation">({{sentence.prefix}})</span>
+                            {{$ctrl.createSegment(sentence.text)}}
                         </div>
-                    </p>
+                    </div>
+                    <div class="col-xs-1">
+                        <div class="class-number class-bg-color-{{hSegment[0].classIndex}}">{{1+hSegment[0].classIndex}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

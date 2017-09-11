@@ -1,14 +1,13 @@
-﻿<div id="section{{$ctrl.index}}" class="border-box">
-    <h2 class="{{$ctrl.classifiedColor}}">
-        <span class="align-left">{{$ctrl.testFile.title}}</span><span class="align-right">
-                                      {{$ctrl.testFile.length}} words, {{$ctrl.testFile.classifiedAs}},
+﻿<div id="section{{$ctrl.index}}" class="text-with-features">
+    <h2><span class="class-number class-bg-color-{{$ctrl.classifiedClassIndex}}">{{$ctrl.classifiedClassIndex}}</span>
+        <span class="text-title">{{$ctrl.testFile.title}}</span></h2>
+    <div class="classified-as"><span class="class-color-{{$ctrl.classifiedClassIndex}}">{{$ctrl.testFile.classifiedAs}}</span>,
                                       <i ng-show="$ctrl.testFile.confidence==100">very high</i>
                                       <i ng-show="$ctrl.testFile.confidence>=95 && $ctrl.testFile.confidence<100">high</i>
                                       <i ng-show="$ctrl.testFile.confidence>=80 && $ctrl.testFile.confidence<95">medium</i>
                                       <i ng-show="$ctrl.testFile.confidence<80">low</i>
-                                  </span>
-    </h2>
-    <p class="text-with-features"
-       ng-bind-html="convert2TrustAsHtml($ctrl.testFile.htmlText)">
+        confidence
+    </div>
+    <p ng-bind-html="convert2TrustAsHtml($ctrl.testFile.htmlText)">
     </p>
 </div>

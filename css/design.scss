@@ -1,6 +1,8 @@
 @import "base-design";
 @import "front-page";
 @import "search";
+@import "main-page";
+@import "segmentation";
 
 /* common pages */
 
@@ -11,21 +13,31 @@
     width: 215px;
     outline: none;
     border: none;
+    &:focus {
+        outline: none;
+        border: 2px solid #0263BC;
+    }
 }
 
 .btn-blue {
     color: white;
     background-color: $dodger-blue;
+    &:hover {
+        background-color: $lighten-dodger-blue;
+    }
 }
 
 .btn-green {
     color: $black-pearl;
     background-color: $bright-turquoise;
+    &:hover {
+        background-color: $lighten-bright-turquoise;
+    }
 }
 
 .small-logo {
     display: inline-block;
-    padding: 0 40px;
+    padding: 0 40px 0 0;
     font-size: 25px;
     font-weight: 900;
     font-family: Martel, serif;
@@ -148,12 +160,6 @@
     margin: 0;
 }
 
-.main-page-selection-summary {
-    padding: 20px;
-    font-size: 24px;
-    line-height: 32px;
-}
-
 .right-content, .right-content h2 {
     display: inline;
     /*color: #634C9F;*/
@@ -174,12 +180,6 @@
 .saved-data-table-row:hover {
     background-color: $ebony-clay;
     color: #fff;
-}
-
-.classification-summary {
-    background-color: $porcelain;
-    border-radius: 3px;
-    padding: 24px 38px;
 }
 
 .info-heading {
@@ -204,10 +204,6 @@
     padding: 42px 0;
 }
 
-text-with-features h2 {
-    font-size: 10px;
-}
-
 .main-heading {
     text-transform: uppercase;
     color: $black-pearl;
@@ -218,18 +214,33 @@ text-with-features h2 {
 }
 
 .text-with-features {
-    max-height: 350px;
-    overflow-y: auto;
-    text-align: right;
-    line-height: 27px;
-    font-size: 16px;
-    @extend %fonts;
-    letter-spacing: 0.05em;
+    direction: rtl;
+    .classified-as {
+        font-size: 13px;
+        margin: 0 36px 24px;
+    }
+    p {
+        margin-right: 36px;
+        text-align: right;
+        line-height: 27px;
+        font-size: 16px;
+        @extend %fonts;
+        letter-spacing: 0.05em;
+    }
 }
 
+.text-title {
+    color: #1C222D;
+    @extend %fonts;
+    font-size: 24px;
+    line-height: 33px;
+    text-align: right;
+}
+
+// generate classes like class-color-0, ...1, etc.
 @include generate-colors {
     .class-color-#{$current-color-index} {
-        color: $current-color;
+            color: $current-color;
     }
 }
 @include generate-colors {
@@ -247,6 +258,13 @@ text-with-features h2 {
     .class-segment-color-#{$current-color-index} {
         @extend %class-segment-color;
         border-right: solid 4px $current-color;
+    }
+}
+
+@include generate-colors {
+    .highlight-feature-color-#{$current-color-index} {
+        padding-bottom: 1px;
+        border-bottom: dashed $current-color 2px;
     }
 }
 
@@ -305,6 +323,7 @@ text-with-features h2 {
     grid-column: 1;
 }
 .classification-summary {
+    @extend %results-summary;
     display: grid;
     grid-template-columns: 66% 34%;
 }
@@ -328,4 +347,23 @@ text-with-features h2 {
 }
 .classification-main {
     margin: 0 110px;
+}
+.training-classes {
+    border-radius: 3px;
+    border: solid 1px $geyser;
+}
+.training-class {
+    padding: 10px;
+}
+.training-class:not(:first-child) {
+    border-top: solid 1px $geyser;
+}
+.classification-controls-options {
+    padding: 10px;
+    a {
+        &:not(:last-child) {
+            margin-right: 40px;
+        }
+        text-decoration: underline;
+    }
 }

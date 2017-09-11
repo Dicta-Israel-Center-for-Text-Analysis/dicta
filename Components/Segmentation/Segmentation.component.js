@@ -35,6 +35,9 @@ jTextMinerApp.component('segmentation',
                 }))
             }
 
+            if (ctrl.experiment.resultData.segments)
+                afterSegmentation();
+
             ctrl.getTopFeatures = function (classData) {
                 return _.take(
                     ctrl.experiment.featuresData.features[0]

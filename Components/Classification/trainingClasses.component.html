@@ -1,6 +1,5 @@
-﻿<div ng-if="$ctrl.classificationExperiment.classes.Corpus_classes.length" class="box-found">
-
-    <div ng-repeat="item in $ctrl.classificationExperiment.classes.Corpus_classes" id="{{item.id}}">
+﻿<div ng-if="$ctrl.classificationExperiment.classes.Corpus_classes.length" class="training-classes">
+    <div ng-repeat="item in $ctrl.classificationExperiment.classes.Corpus_classes" class="training-class" id="{{item.id}}">
         <div class="class-number class-bg-color-{{$index}}">{{1+$index}}
         </div>
         <div class="class-label class-color-{{$index}}">
@@ -17,9 +16,7 @@
                 <!--<b>|</b>  {{item.totalNumberOfWords/item.numberOfChunks | number: 0}} words (avg.)</span>-->
             <span class="align-right"><a ng-click="UpdateClass($index);"><img src="images/secondTab/edit.png"></a></span></h2>
         </div>
-
     </div>
-   
 </div>
 
 

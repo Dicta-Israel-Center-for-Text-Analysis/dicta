@@ -15,7 +15,10 @@ jTextMinerApp.component('classification', {
                 }
             }
             return "Grey";
-        }
+        };
+        ctrl.indexOfClass = function (className) {
+            return _.findIndex(ctrl.experiment.classes.Corpus_classes, classData => classData.title === className)
+        };
 
         $scope.classNameToColor = ClassService.classNameToColor;
 
@@ -156,9 +159,9 @@ jTextMinerApp.component('classification', {
                     var colors = item.featureList
                         .filter(feature => wordFeatures
                             .some(wordFeature => hack(wordFeature.name) == feature.name))
-                        .map(feature => ClassService.classIndexToColor(feature.maxClassIndex));
+                        .map(feature => feature.maxClassIndex);
                     pieces.push("<span "
-                        + ( colors.length > 0 ? "style='font-weight: bold; color: " + colors[0] + "'" : "")
+                        + ( colors.length > 0 ? "class='highlight-feature-color-" + colors[0] + "' " : "")
                         + "title='" + prettyPrintMorphology(hoverText) + "'>"
                         + word
                         + "</span>")

@@ -2,7 +2,7 @@
     bindings: {
         testFile: '<',
         index: '<',
-        classifiedColor: '<',
+        classifiedClassIndex: '<',
         features: '<'
     },
     templateUrl: 'Components/Classification/textWithFeatures.component.html',

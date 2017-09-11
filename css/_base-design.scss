@@ -25,7 +25,9 @@ $porcelain: #F6F8F9;
 
 // colors for buttons
 $dodger-blue: #0C8BFF;
+$lighten-dodger-blue: #3BA1FF;
 $bright-turquoise: #0CFFB8;
+$lighten-bright-turquoise: #8AFFDD;
 
 // colors for classes
 $butterfly-bush-1st: #634C9F;
@@ -41,5 +43,10 @@ $color-list: $butterfly-bush-1st, $sun-glow-2nd, $tradewind-3rd, $chestnut-4th;
         $current-color-index: $i - 1 !global;
         @content
     }
+}
 
+%results-summary {
+    background-color: $porcelain;
+    border-radius: 3px;
+    padding: 24px 38px;
 }

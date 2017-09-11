@@ -1,7 +1,6 @@
 <div class="segmentation-controls">
-    <p>Decompose the text into <input class="author-assumed" ng-model="$ctrl.experiment.Segmentation_NumberOfClusters"
-                                      id="clusters" name="clusters" type="number"/> components. <img
-            title="Choose the number of threads to which to decompose the text." data-toggle="tooltip"
-            style="width:20px;height:20px;" src="images/question-mark.png"></p>
-    <button class="btn-green btn" ng-click="$ctrl.experiment.RunExperiment()">Segment</button>
+    <hr>
+    <p>Decompose the text into <input ng-model="$ctrl.experiment.Segmentation_NumberOfClusters"
+                                      id="clusters" name="clusters" type="number"/> components.</p>
+    <button class="btn-green rounded-btn btn" ng-click="$ctrl.experiment.RunExperiment()">Decompose</button>
 </div>

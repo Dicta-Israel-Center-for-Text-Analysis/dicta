@@ -14,9 +14,6 @@ jTextMinerApp.component('bibleMainPage',
             ctrl.textChosen = false;
             ctrl.showChooseText = true;
 
-            ctrl.active = function (tab) {
-                return ctrl.tab == tab ? 'active' : '';
-            };
             ctrl.saveText = function (selectionData) {
                 SelectClassService.setTestText(selectionData);
                 ctrl.textChosen = true;

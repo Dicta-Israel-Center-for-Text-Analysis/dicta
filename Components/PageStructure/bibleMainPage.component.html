@@ -1,59 +1,37 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-2" style="position:fixed;top:0">
-            <div style="height:300px;background-color: #222B37;color: white">
-                <div class="search-top-left">
-                    <span class="top-back-arrow" ui-sref="bibleFrontpage"><i class="material-icons">keyboard_arrow_left</i></span>
-                    <span class="small-logo">Dicta<sup>Bible</sup></span>
-                </div>
-                <h1 class="main-page-selection-summary">{{$ctrl.getSelection()}}</h1>
+<div>
+    <div class="main-page-controls">
+        <div class="main-page-selection-summary">
+            <div class="search-top-left">
+                <span class="top-back-arrow" ui-sref="bibleFrontpage"><i class="material-icons">keyboard_arrow_left</i></span>
+                <span class="small-logo">Dicta<sup>Bible</sup></span>
             </div>
-            <ul class="nav nav-tabs tabs-left">
-                <!--<li class="{{$ctrl.active('select')}}" ng-click="$ctrl.$state.go('select')"><a>Choose Text</a>-->
-                    <!--<ui-view name="select-controls"></ui-view>-->
-                <!--</li>-->
-                <!--<li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>-->
-                <li class="{{$ctrl.active('classify')}}" ui-sref="bibleInterface.classify"><a>Classify a Text</a>
-                    <ui-view name="classifyControls"></ui-view>
-                </li>
-                <li class="{{$ctrl.active('segment')}}" ui-sref="bibleInterface.segment"><a>Source Criticism</a>
-                    <ui-view name="segmentControls"></ui-view>
-                </li>
-                <li class="{{$ctrl.active('segment')}}" ui-sref="information"><a>Information</a>
-                </li>
-            </ul>
+            <h1 class="main-page-selection-summary">{{$ctrl.getSelection()}}</h1>
+            <a><i class="material-icons">view_day</i>
+                View</a>
+            <a><i class="material-icons">edit</i>
+                Edit</a>
         </div>
-        <div class="col-xs-10 col-xs-offset-2">
+        <ul class="nav-tabs-left">
+            <!--<li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>-->
+            <li ui-sref-active="active-tab" ui-sref="bibleInterface.classify">
+                <a><i class="material-icons">call_split</i>
+                    Classify a Text</a>
+                <ui-view name="classifyControls"></ui-view>
+            </li>
+            <li ui-sref-active="active-tab" ui-sref="bibleInterface.segment">
+                <a><i class="material-icons">content_copy</i>
+                    Source Criticism</a>
+                <ui-view name="segmentControls"></ui-view>
+            </li>
+            <li ui-sref-active="active-tab" ui-sref="information">
+                <a><i class="material-icons">info</i>
+                    Information</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
             <ui-view name="main"></ui-view>
-            <!--<search ng-show="$ctrl.tab=='search'" ></search>-->
-            <!--<div ng-show="$ctrl.tab=='select'">-->
-                <!--<div ng-if="$ctrl.textChosen">-->
-                    <!--<h4>Selected Text</h4>-->
-                    <!--<ul>-->
-                        <!--&lt;!&ndash; FIXME: list-style-type is only set because style.css is a mess &ndash;&gt;-->
-                        <!--<li style="list-style-type: disc" ng-repeat="key in $ctrl.selectedText.keys">{{key}}</li>-->
-                    <!--</ul>-->
-                    <!--<div ng-hide="$ctrl.showChooseText">-->
-                        <!--<button class="btn btn-default"-->
-                                <!--ng-click="$ctrl.showChooseText = true; $ctrl.textChosen = false">Change Selection</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<bible-view-selected-text on-classify="$ctrl.classify()"-->
-                                          <!--on-segment="$ctrl.segment()"-->
-                                          <!--on-search="$ctrl.runSearch(query)"-->
-                                          <!--ng-if="$ctrl.textChosen"></bible-view-selected-text>-->
-                <!--<choose-text-dialog-->
-                    <!--ng-show="$ctrl.showChooseText"-->
-                    <!--on-confirm="$ctrl.saveText(selectionData)"-->
-                    <!--hide-cancel="true"-->
-                <!--&gt;</choose-text-dialog>-->
-            <!--</div>-->
-            <!--<div ng-if="$ctrl.textChosen">-->
-                <!--<parallels ng-show="$ctrl.tab=='parallels'"></parallels>-->
-                <!--<classification ng-show="$ctrl.tab=='classify'"></classification>-->
-                <!--<segmentation ng-show="$ctrl.tab=='segment'"></segmentation>-->
-            <!--</div>-->
-            <!--<div ng-if="!$ctrl.textChosen && ['parallels','classify','segment'].includes($ctrl.tab)">Please <a ng-click="$ctrl.tab='select'">choose a text</a> first.</div>-->
         </div>
     </div>
 </div>

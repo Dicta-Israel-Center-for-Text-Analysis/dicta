@@ -38,7 +38,7 @@
                     <p> Select a desired text and navigate using the top navigation bar to select additional text. When
                         done, click “Analyze.”</p>
                 </div>
-                <div class="preview-text">
+                <div ng-show="$ctrl.previewText" class="preview-text">
                     <div ng-repeat="chapter in $ctrl.previewText | limitTo:10 ">
                         <div ng-repeat="line in chapter.contents">
                             {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' '))}}:

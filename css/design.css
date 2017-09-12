@@ -12,7 +12,7 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
@@ -36,7 +36,7 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
@@ -117,7 +117,7 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
@@ -232,7 +232,7 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
@@ -331,7 +331,7 @@
   src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .right-content, .right-content h2, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
 }
 
@@ -502,18 +502,6 @@
   font-size: 13px;
   line-height: 15px;
   margin: 0;
-}
-
-.right-content, .right-content h2 {
-  display: inline;
-  /*color: #634C9F;*/
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 24px;
-}
-
-.left-icons {
-  display: inline;
 }
 
 .classification-controls {

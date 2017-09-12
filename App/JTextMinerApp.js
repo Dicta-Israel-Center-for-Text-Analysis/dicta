@@ -38,6 +38,12 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/BibleInterface',
         component: 'bibleMainPage'
     })
+    .state('bibleInterface.view', {
+        url: '/BibleInterface/view',
+        views: {
+            main: { component: 'viewSelectedText' }
+        }
+    })
     .state('bibleInterface.information', {
         url: '/Information',
         views: {

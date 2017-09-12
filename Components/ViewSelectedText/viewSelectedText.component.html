@@ -1,14 +1,10 @@
-﻿<div class="col-md-12">
+﻿<div class="main-data">
     <in-progress></in-progress>
 
-    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks track by $index" class="box-right-side">
-        <div class="border-box">
-            <h2 style="background-color:#cfcfcf;">{{$ctrl.source[$index]}}</h2>
-            <p style="direction:rtl;" class="line-h2" ng-bind-html="$ctrl.chunkAsHTML(chunk)">
-            </p>
-        </div>
+    <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks track by $index" class="text-with-features">
+        <h2>{{$ctrl.trimTitle($ctrl.source[$index])}}</h2>
+        <p ng-bind-html="$ctrl.chunkAsHTML(chunk)"></p>
     </div>
-
 </div>
 
     

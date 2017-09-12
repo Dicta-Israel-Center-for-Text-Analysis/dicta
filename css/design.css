@@ -557,6 +557,13 @@
   direction: rtl;
 }
 
+.text-with-features h2 {
+  color: #1C222D;
+  font-size: 24px;
+  line-height: 33px;
+  text-align: right;
+}
+
 .text-with-features .classified-as {
   font-size: 13px;
   margin: 0 36px 24px;
@@ -731,7 +738,7 @@
   padding-top: 10px;
 }
 
-.classification-main {
+.main-data {
   margin: 0 110px;
 }
 

@@ -160,19 +160,6 @@
     margin: 0;
 }
 
-.right-content, .right-content h2 {
-    display: inline;
-    /*color: #634C9F;*/
-    @extend %fonts;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 24px;
-}
-
-.left-icons {
-    display: inline;
-}
-
 .classification-controls {
     padding: 5px;
 }
@@ -215,6 +202,12 @@
 
 .text-with-features {
     direction: rtl;
+    h2 {
+        color: $black-pearl;
+        font-size: 24px;
+        line-height: 33px;
+        text-align: right;
+    }
     .classified-as {
         font-size: 13px;
         margin: 0 36px 24px;
@@ -345,7 +338,7 @@
     font-weight: bold;
     padding-top: 10px;
 }
-.classification-main {
+.main-data {
     margin: 0 110px;
 }
 .training-classes {

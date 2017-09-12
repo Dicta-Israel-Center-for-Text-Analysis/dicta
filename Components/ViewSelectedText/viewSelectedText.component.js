@@ -17,6 +17,10 @@ jTextMinerApp.component('viewSelectedText', {
                 ctrl.chunks = response.data.map(chunk => chunk.text);
                 ctrl.source = response.data.map(chunk => chunk.chunkKey);
             });
+
+            ctrl.trimTitle = function(title) {
+                return title.substr(SelectClassService.testSetTitlesCommonPrefix.length + 1);
+            }
         }]
     }
 );

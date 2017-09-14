@@ -59,10 +59,10 @@ jTextMinerApp.component('chooseTextDialog', {
                 result.className = ctrl.className;
             if (result.hasOwnProperty("runChunking"))
                 result.runChunking().then(function() {
-                    ctrl.onConfirm({selectionData: result});
+                    ctrl.onConfirm({confirmData: result});
                 });
             else
-                ctrl.onConfirm({selectionData: result});
+                ctrl.onConfirm({confirmData: result});
             UserService.addRecentSelection({
                 title: SelectClassService.summarizeText(result),
                 type: 'Class',

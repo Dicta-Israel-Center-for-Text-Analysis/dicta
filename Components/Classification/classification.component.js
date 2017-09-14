@@ -1,6 +1,6 @@
 jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: ['$scope', 'ExperimentService', 'APIService', 'ClassificationService', 'ClassService', 'SaveClassInterface', 'SelectClassService', '$sce', 'ngDialog', '$q', 'StateService', function ($scope, ExperimentService, APIService, ClassificationService, ClassService, SaveClassInterface, SelectClassService, $sce, ngDialog, $q, StateService) {
+    controller: function ($scope, ExperimentService, APIService, ClassificationService, ClassService, SaveClassInterface, SelectClassService, $sce, DialogService, $q, StateService) {
         var ctrl = this;
         ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
         ctrl.showInProcess = false;
@@ -24,21 +24,12 @@ jTextMinerApp.component('classification', {
 
         // someone pressed the "Add Class" button, so show the dialog
         $scope.ContinueToAddClass = function (actionMode) {
-            ngDialog.openConfirm({
-                template: '<choose-text-dialog ' +
-                'on-confirm="confirm(); ngDialogData.saveClass(selectionData);" ' +
-                'on-cancel="closeThisDialog()" ' +
-                'class-name="ngDialogData.className"' +
-                'save-message="\'Save Class\'"' +
-                'naming-message="\'Name this class (optional)\'">' +
-                '</choose-text-dialog>',
-                plain: true,
-                className: 'ngdialog-theme-default',
-                data: {
-                    className: ctrl.experiment.classes.newClassName,
-                    saveClass: $scope.saveClass
-                }
-            });
+            DialogService.openDialog('chooseTextDialog', {
+                className: ctrl.experiment.classes.newClassName,
+                saveMessage: 'Save Class',
+                namingMessage: 'Name this class (optional)'
+            })
+                .then($scope.saveClass);
         };
 
         $scope.saveClass = function (selectionData) {
@@ -276,5 +267,5 @@ jTextMinerApp.component('classification', {
                     })}
             );
         }
-    }]
+    }
 });

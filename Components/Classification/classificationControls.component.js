@@ -1,20 +1,14 @@
 jTextMinerApp.component('classificationControls',
 {
     templateUrl: 'Components/Classification/classificationControls.component.html',
-    controller: ['StateService', 'ClassificationService', 'ngDialog', '$scope', 'SelectClassService',
-        function(StateService, ClassificationService, ngDialog, $scope, SelectClassService) {
+    controller:
+        function(StateService, ClassificationService, DialogService, $scope, SelectClassService) {
             const ctrl = this;
             ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
             ctrl.defineClass = function () {
-                ngDialog.openConfirm({
-                    plain: true,
-                    scope: $scope,
-                    template: '<choose-text-dialog ' +
-                    'on-confirm="$ctrl.saveClass(selectionData);confirm()" ' +
-                    'on-cancel="$ctrl.cancelClass();confirm()" ' +
-                    'save-message="\'ANALYZE\'"' + '>' +
-                    '</choose-text-dialog>'
-                });
+                DialogService.openDialog('chooseTextDialog', { saveMessage: 'ANALYZE' })
+                    .then(ctrl.saveClass)
+                    .catch(ctrl.cancelClass);
             };
             ctrl.saveClass = function (selectionData) {
                 const experiment = ctrl.experiment;
@@ -43,5 +37,5 @@ jTextMinerApp.component('classificationControls',
                 ctrl.experiment.runClassification();
                 // ctrl.experiment.getTextsWithFeatures();
             }
-        }]
+        }
 }); 

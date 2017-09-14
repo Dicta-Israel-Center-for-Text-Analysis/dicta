@@ -1,4 +1,4 @@
-﻿jTextMinerApp.component('selectOnlineCorpus', {
+jTextMinerApp.component('selectOnlineCorpus', {
         bindings: { selectionText: '=' },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
         controller: ['TreeService', 'SelectClassService', 'APIService', function (TreeService, SelectClassService, APIService) {
@@ -45,7 +45,7 @@
 
             // remove current item from array if 'ancestor' is an ancestor
             function removeIfAncestor(arr, idx, ancestor) {
-                var current = TreeService.keyToNode[arr[idx]];
+                var current = TreeService.keyToNode(arr[idx]);
                 while(current['parent'] != null) {
                     if (current['parent'] === ancestor) {
                         arr.splice(idx, 1);
@@ -58,7 +58,7 @@
             function recalculatePartials() {
                 ctrl.partialNodes = [];
                 for (var i=0;i< ctrl.selectedNodes.length; i++) {
-                    var parent = TreeService.keyToNode[ctrl.selectedNodes[i]]['parent'];
+                    var parent = TreeService.keyToNode(ctrl.selectedNodes[i])['parent'];
                     while (parent != null) {
                         if (ctrl.partialNodes.indexOf(parent['key']) == -1)
                             ctrl.partialNodes.push(parent['key']);
@@ -68,7 +68,7 @@
             }
 
             ctrl.isNodeSelected = function isNodeSelected(node) {
-                var parent = TreeService.keyToNode[node]['parent'];
+                var parent = TreeService.keyToNode(node)['parent'];
                 return ctrl.selectedNodes.indexOf(node) > -1 || (parent != null && isNodeSelected(parent['key']));
             };
 
@@ -88,7 +88,7 @@
                     }
                     else {
                         // select siblings and deselect ancestor
-                        var currentNode = TreeService.keyToNode[itemKey];
+                        var currentNode = TreeService.keyToNode(itemKey);
                         while ((idx = ctrl.selectedNodes.indexOf(currentNode['key'])) == -1) {
                             var children = currentNode['parent']['children'];
                             for (var i = 0; i < children.length; i++)
@@ -104,7 +104,7 @@
                     // select this
                     ctrl.selectedNodes.push(itemKey);
                     // check if all siblings are selected
-                    var parent = TreeService.keyToNode[itemKey]['parent'];
+                    var parent = TreeService.keyToNode(itemKey)['parent'];
                     if (parent != null) {
                         var sibCount = 0;
                         var siblings = parent['children'];
@@ -120,14 +120,14 @@
 
                 // remove any descendants already selected
                 for (var i = ctrl.selectedNodes.length - 1; i>=0; i--)
-                    removeIfAncestor(ctrl.selectedNodes, i, TreeService.keyToNode[itemKey]);
+                    removeIfAncestor(ctrl.selectedNodes, i, TreeService.keyToNode(itemKey));
 
                 recalculatePartials();
 
                 ctrl.selectedNodes = TreeService.treeSort(ctrl.selectedNodes, key => key);
                 ctrl.selectionText = SelectClassService.newTextFromCorpus(
                     ctrl.selectedNodes.map(key => "/Dicta Corpus/" + key),
-                    ctrl.selectedNodes.map(key => TreeService.keyToNode[key].id)
+                    ctrl.selectedNodes.map(key => TreeService.keyToNode(key).id)
                 );
 
                 updatePreview(ctrl.selectionText);

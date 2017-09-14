@@ -3,6 +3,7 @@ jTextMinerApp.component('chooseTextDialog', {
         onConfirm: '&',
         onCancel: '&',
         className: '<',
+        startingText: '<',
         saveMessage: '<',
         namingMessage: '<',
         startingMode: '<',
@@ -10,13 +11,14 @@ jTextMinerApp.component('chooseTextDialog', {
     },
     templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
     controller: function ($scope, SelectClassService, UserService) {
-        var ctrl = this;
+        const ctrl = this;
+        ctrl.selectionText = ctrl.startingText;
         //ctrl.selectedKeys = [];
 
         ctrl.actionMode = ctrl.startingMode || 'SelectOnlineCorpus';
         ctrl.changeActionMode = function (mode) {
             ctrl.actionMode = mode;
-        }
+        };
 
         ctrl.calculateName = true;
 

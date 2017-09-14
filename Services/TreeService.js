@@ -27,7 +27,7 @@ jTextMinerApp.factory('TreeService', function ($http, $q, UserService) {
                 var child = children[i];
                 // add links back to the parent, so we can find the parent to update selections
                 child['parent'] = node;
-                service.keyToNode[child['key']] = child;
+                service.$keyToNode[child['key']] = child;
                 if (typeof(child.children)=='string') {
                     requests.push($http.get('corpusData/' + child.children).
                         then(function (response) {
@@ -43,7 +43,29 @@ jTextMinerApp.factory('TreeService', function ($http, $q, UserService) {
                 return node;
                 });
         },
-        keyToNode: {},
+        $keyToNode: {},
+        keyToNode(key) {
+            if (!service.$keyToNode.hasOwnProperty(key)) {
+                const pathElements = key.split('/');
+                let nodeChildren = service.corpusTree;
+                let path = "";
+                pathElements.forEach(name => {
+                    if (path.length === 0)
+                        path = name;
+                    else
+                        path = path + '/' + name; 
+                    const childList = nodeChildren.filter(child => child.key === path);
+                    if (childList.length > 0) {
+                        const node = childList[0];
+                        service.loadNode(node);
+                        nodeChildren = node.children;
+                    }
+                    else
+                        return null;
+                })
+            }
+            return service.$keyToNode[key];
+        },
         // list - the list to be sorted
         // getKeyFunc - a function that takes a list item and returns its key
         treeSort (list, getKeyFuncParam) {

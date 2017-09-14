@@ -8,7 +8,7 @@
             <h1 class="main-page-selection-summary">{{$ctrl.getSelection()}}</h1>
             <a ui-sref="bibleInterface.view"><i class="material-icons">view_day</i>
                 View</a>
-            <a><i class="material-icons">edit</i>
+            <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
                 Edit</a>
         </div>
         <ul class="nav-tabs-left">

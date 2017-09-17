@@ -11,6 +11,7 @@ jTextMinerApp.factory('SelectClassService', function (UserService, APIService, T
     function newTextFromUpload(filename, chunkMode, chunkSize){
         return {
             mode: 'BrowseThisComputer',
+            title: filename,
             filename,
             chunkMode,
             chunkSize,
@@ -94,6 +95,7 @@ jTextMinerApp.factory('SelectClassService', function (UserService, APIService, T
     function newTextFromCorpus(keys, ids){
         return {
             mode: 'SelectOnlineCorpus',
+            title: null,
             keys,
             ids,
             textInfo: {}

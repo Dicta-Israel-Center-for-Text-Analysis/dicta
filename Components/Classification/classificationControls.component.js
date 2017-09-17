@@ -12,7 +12,6 @@ jTextMinerApp.component('classificationControls',
             };
             ctrl.saveClass = function (selectionData) {
                 const experiment = ctrl.experiment;
-                selectionData.className = SelectClassService.summarizeText(selectionData);
                 function addClass (classData) {
                     experiment.classes.isAllBible = experiment.classes.isAllBible && classData.bible;
                     experiment.featureCollection.updateFeaturesData({});
@@ -22,7 +21,8 @@ jTextMinerApp.component('classificationControls',
                 }
                 experiment.trainSet[selectionData.className] = selectionData.keys;
                 addClass({
-                    title: selectionData.className,
+                    title: selectionData.title,
+                    subtitle: selectionData.subtitle,
                     selectedText: selectionData.keys, //results.selectedText,
                     chunkMode: 'By chapter',
                     chunkSize: '',

@@ -35,8 +35,11 @@
             <p class="your-selection">YOUR SELECTION:</p>
             <p>{{$ctrl.getProposedName()}}</p>
         </div>
-        <!--<button type="button" class="padding_5 radius ngdialog-button ngdialog-button-secondary"-->
-                <!--ng-hide="$ctrl.hideCancel" ng-click="$ctrl.onCancel()">Cancel-->
-        <!--</button>-->
+        <div ng-show="$ctrl.description === null" class="choose-dialog-add-description"><a ng-click="$ctrl.addDescription()">Add Description</a></div>
+        <div ng-show="$ctrl.description !== null" class="choose-dialog-add-description">
+            <form>
+                <input class="add-description-input" title="Add Description" placeholder="Choose a description"
+                       type="text" ng-model="$ctrl.description" autofocus>
+            </form></div>
     </div>
 </div>

@@ -10,7 +10,8 @@
     height: 44px;
     border-radius: 100px;
     padding: 10px 0;
-    width: 215px;
+    max-width: 215px;
+    width: 100%;
     outline: none;
     border: none;
     &:focus {
@@ -163,10 +164,20 @@
 .classification-controls {
     padding: 5px;
 }
+.saved-data-table-row {
+    .subtitle {
+        color: $light-slate-grey;
+        padding-left: 10px;
+    }
+}
 
 .saved-data-table-row:hover {
     background-color: $ebony-clay;
     color: #fff;
+    .badge {
+        background-color: $bright-turquoise;
+        color: $ebony-clay;
+    }
 }
 
 .info-heading {
@@ -274,6 +285,8 @@
     display: inline-block;
     width: 24px;
     height: 24px;
+    margin-top: 5px;
+    vertical-align: top;
 }
 
 .class-label {
@@ -283,6 +296,15 @@
     line-height: 24px;
     display: inline-block;
     padding: 10px;
+    h3, h4 {
+    //    display: inline-block;
+        font-size: inherit;
+        font-weight: inherit;
+        margin: inherit;
+    }
+    h4 {
+        font-size: 13px;
+    }
 }
 .classification-summary-cv-box {
     text-align: center;
@@ -359,4 +381,19 @@
         }
         text-decoration: underline;
     }
+}
+.choose-dialog-add-description {
+    display: inline-block;
+    color: $porcelain;
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+    font-size: 13px;
+    line-height: 15px;
+}
+
+.add-description-input {
+    color: $black-pearl;
+    padding: 10px;
 }

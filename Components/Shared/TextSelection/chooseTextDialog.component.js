@@ -13,6 +13,11 @@ jTextMinerApp.component('chooseTextDialog', {
     controller: function ($scope, SelectClassService, UserService) {
         const ctrl = this;
         ctrl.selectionText = ctrl.startingText;
+
+        ctrl.description = null;
+        ctrl.addDescription = function () {
+            ctrl.description = '';
+        };
         //ctrl.selectedKeys = [];
 
         ctrl.actionMode = ctrl.startingMode || 'SelectOnlineCorpus';
@@ -57,6 +62,12 @@ jTextMinerApp.component('chooseTextDialog', {
                 case 'SelectOnlineCorpus': result = ctrl.selectionText; break;
                 case 'BrowseThisComputer': result = ctrl.browseData; break;
             }
+            if (ctrl.description && ctrl.description !== '') {
+                result.title = ctrl.description;
+                result.subtitle = SelectClassService.summarizeText(result);
+            }
+            else
+                result.title = SelectClassService.summarizeText(result);
             if (ctrl.className)
                 result.className = ctrl.className;
             if (result.hasOwnProperty("runChunking"))
@@ -66,7 +77,8 @@ jTextMinerApp.component('chooseTextDialog', {
             else
                 ctrl.onConfirm({confirmData: result});
             UserService.addRecentSelection({
-                title: SelectClassService.summarizeText(result),
+                title: result.title,
+                subtitle: result.subtitle,
                 type: 'Class',
                 time: Date.now(),
                 text: result

@@ -7,6 +7,7 @@
     top: 0;
     width: 244px;
     height: 100vh;
+    overflow-y: auto;
     background-color: $porcelain;
     box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15);
     +.container-fluid {
@@ -20,13 +21,19 @@
     background-color: $ebony-clay;
     color: #fff;
     h1 {
-        padding: 80px 20px 20px 20px;
+        padding: 80px 20px 0 20px;
         font-size: 24px;
         line-height: 32px;
     }
+    h2 {
+        margin-top: 0;
+        padding: 0 20px 0 20px;
+        font-size: 15px;
+        line-height: 1.3em;
+    }
     a {
         display: inline-block;
-        padding: 20px;
+        padding: 30px 20px 20px 20px;
         color: #fff;
         font-size: 13px;
         i {

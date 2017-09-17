@@ -3,10 +3,11 @@
         <div class="class-number class-bg-color-{{$index}}">{{1+$index}}
         </div>
         <div class="class-label class-color-{{$index}}">
-                <span  title="{{item.selectedText | limitTo: 1200}}...">{{item.title}}</span>
-                <span class="align-right">
-                    <a ng-show="$ctrl.showDeleteButton" ng-click="$ctrl.deleteClass($index);"><img src="images/secondTab/delete.png"></a>
-                </span>
+            <h3 title="{{item.selectedText | limitTo: 1200}}...">{{item.title}}</h3>
+            <h4 ng-if="item.subtitle">{{item.subtitle}}</h4>
+            <span class="align-right">
+                <a ng-show="$ctrl.showDeleteButton" ng-click="$ctrl.deleteClass($index);"><img src="images/secondTab/delete.png"></a>
+            </span>
             <!--<h2><span class="align-left small-details">{{item.numberOfChunks}} -->
                     <!--<i ng-show="item.chunkMode=='DoNotChunk'">documents (unchunked)</i>-->
                     <!--<i ng-show="item.chunkMode=='AppendAndChunk'">chunks (appended and chunked)</i>-->

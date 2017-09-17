@@ -42,7 +42,11 @@ jTextMinerApp.component('bibleMainPage',
                 ctrl.tab = 'segment';
             }
             ctrl.getSelection = function () {
-                return SelectClassService.summarizeText(SelectClassService.testText);
+                return SelectClassService.testText.title || SelectClassService.summarizeText(SelectClassService.testText);
+            }
+            ctrl.getSubtitle = function () {
+                if (SelectClassService.testText.title)
+                    return SelectClassService.summarizeText(SelectClassService.testText);
             }
         }
 }); 

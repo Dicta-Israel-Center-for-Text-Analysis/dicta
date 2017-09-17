@@ -17,7 +17,7 @@
                 <tbody>
                 <tr><th>Name</th><th>Type</th><th>Date Created</th></tr>
                 <tr class="saved-data-table-row" ng-click="$ctrl.onSavedDataSelected({text: saveData.text})" ng-repeat="saveData in $ctrl.savedSelections track by $index">
-                    <td>{{saveData.title}}</td>
+                    <td>{{saveData.title}} <span class="subtitle">{{saveData.subtitle}}</span></td>
                     <td><span class="badge">{{saveData.type}}</span></td>
                     <td>{{$ctrl.formatDate(saveData.time)}}</td>
                 </tr>

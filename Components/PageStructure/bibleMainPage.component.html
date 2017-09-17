@@ -5,7 +5,8 @@
                 <span class="top-back-arrow" ui-sref="bibleFrontpage"><i class="material-icons">keyboard_arrow_left</i></span>
                 <span class="small-logo">Dicta<sup>Bible</sup></span>
             </div>
-            <h1 class="main-page-selection-summary">{{$ctrl.getSelection()}}</h1>
+            <h1>{{$ctrl.getSelection()}}</h1>
+            <h2 ng-if="$ctrl.getSubtitle()">{{$ctrl.getSubtitle()}}</h2>
             <a ui-sref="bibleInterface.view"><i class="material-icons">view_day</i>
                 View</a>
             <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>

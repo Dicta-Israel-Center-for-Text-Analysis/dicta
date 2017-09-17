@@ -53,7 +53,8 @@
 <div>
     <h1 class="main-heading">Classify</h1>
 </div>
-<div ng-show="testSetChunks.length > 0">
+    <in-progress progress-flag="$ctrl.experiment.inProgress"></in-progress>
+<div ng-show="!$ctrl.experiment.inProgress && testSetChunks.length > 0">
     <chunk-bar chunks="$ctrl.chunkBarData"></chunk-bar>
     <classification-result-summary experiment="$ctrl.experiment"></classification-result-summary>
     <classification-adjustments experiment="$ctrl.experiment"></classification-adjustments>
@@ -68,8 +69,6 @@
         <!--</ul>-->
     <!--</div>-->
     <!--<div class="clearfix"></div>-->
-</div>
-<div>
     <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
         <text-with-features test-file="testFile" index="$index"
                             classified-class-index="$ctrl.indexOfClass(testFile.classifiedAs)"></text-with-features>

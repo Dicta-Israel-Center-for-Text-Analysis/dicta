@@ -14,7 +14,7 @@ jTextMinerApp.component('chooseTextDialog', {
         const ctrl = this;
         ctrl.selectionText = ctrl.startingText;
 
-        ctrl.description = null;
+        ctrl.description = ctrl.startingText.subtitle ? ctrl.startingText.title : null;
         ctrl.addDescription = function () {
             ctrl.description = '';
         };
@@ -66,8 +66,10 @@ jTextMinerApp.component('chooseTextDialog', {
                 result.title = ctrl.description;
                 result.subtitle = SelectClassService.summarizeText(result);
             }
-            else
+            else {
                 result.title = SelectClassService.summarizeText(result);
+                result.subtitle = null;
+            }
             if (ctrl.className)
                 result.className = ctrl.className;
             if (result.hasOwnProperty("runChunking"))

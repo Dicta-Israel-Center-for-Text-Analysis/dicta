@@ -1,12 +1,43 @@
 jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactory, SelectClassService, TreeService, ClassService, $q, APIService, UserService, SaveClassInterface, ExperimentService) {
 
     function newExperiment() {
+        function addClass(selectionData) {
+            function addClass (classData) {
+                experiment.classes.isAllBible = experiment.classes.isAllBible && classData.bible;
+                experiment.featureCollection.updateFeaturesData({});
+                experiment.classes.Corpus_maxId += 1;
+                classData.id = experiment.classes.Corpus_maxId;
+                experiment.classes.Corpus_classes.push(classData);
+            }
+            experiment.trainSet[selectionData.title] = selectionData.keys;
+            addClass({
+                title: selectionData.title,
+                text: selectionData,
+                selectedText: selectionData.keys, //results.selectedText,
+                chunkMode: 'By chapter',
+                chunkSize: '',
+                // numberOfChunks: results.numberOfChunks,
+                // totalNumberOfWords: results.totalNumberOfWords,
+                bible: true
+            });
+        }
         function deleteClass(index) {
             const deletedClass = experiment.classes.Corpus_classes.splice(index, 1)[0];
             delete experiment.trainSet[deletedClass.title];
             experiment.featureCollection.updateFeaturesData({});
             experiment.tsResultData = [];
             experiment.cvResultData = [];
+        }
+
+        function updateClass (index, selectionData) {
+            const classData = experiment.classes.Corpus_classes[index];
+            experiment.featureCollection.updateFeaturesData({});
+            experiment.classes.isAllBible = true; // FIXME: unclear when this is used, but the value is not updated
+            delete experiment.trainSet[classData.title];
+            experiment.trainSet[selectionData.title] = selectionData.keys;
+            classData.title = selectionData.title;
+            classData.text = selectionData;
+            classData.selectedText = selectionData.keys;
         }
 
         function runClassification() {
@@ -291,7 +322,9 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             trainSet: {},
             inProgress: false,
             error: false,
+            addClass,
             deleteClass,
+            updateClass,
             runClassification,
             prepareClassification,
             setError,

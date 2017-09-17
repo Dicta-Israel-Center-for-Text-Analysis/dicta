@@ -4,10 +4,7 @@
         </div>
         <div class="class-label class-color-{{$index}}">
             <h3 title="{{item.selectedText | limitTo: 1200}}...">{{item.title}}</h3>
-            <h4 ng-if="item.subtitle">{{item.subtitle}}</h4>
-            <span class="align-right">
-                <a ng-show="$ctrl.showDeleteButton" ng-click="$ctrl.deleteClass($index);"><img src="images/secondTab/delete.png"></a>
-            </span>
+            <h4 ng-if="item.text.subtitle">{{item.text.subtitle}}</h4>
             <!--<h2><span class="align-left small-details">{{item.numberOfChunks}} -->
                     <!--<i ng-show="item.chunkMode=='DoNotChunk'">documents (unchunked)</i>-->
                     <!--<i ng-show="item.chunkMode=='AppendAndChunk'">chunks (appended and chunked)</i>-->
@@ -15,7 +12,10 @@
                     <!--<i ng-show="item.chunkMode=='By chapter'">chapters </i>-->
 
                 <!--<b>|</b>  {{item.totalNumberOfWords/item.numberOfChunks | number: 0}} words (avg.)</span>-->
-            <span class="align-right"><a ng-click="UpdateClass($index);"><img src="images/secondTab/edit.png"></a></span></h2>
+            <div class="training-class-controls">
+                <a ng-click="$ctrl.updateClass($index);"><img src="images/secondTab/edit.png">Edit</a>
+                <a ng-show="$ctrl.showDeleteButton" ng-click="$ctrl.deleteClass($index);"><img src="images/secondTab/delete.png">Clear</a>
+            </div>
         </div>
     </div>
 </div>

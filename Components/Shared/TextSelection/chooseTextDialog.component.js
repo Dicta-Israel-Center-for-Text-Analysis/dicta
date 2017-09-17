@@ -14,7 +14,7 @@ jTextMinerApp.component('chooseTextDialog', {
         const ctrl = this;
         ctrl.selectionText = ctrl.startingText;
 
-        ctrl.description = ctrl.startingText.subtitle ? ctrl.startingText.title : null;
+        ctrl.description = (ctrl.startingText && ctrl.startingText.subtitle) ? ctrl.startingText.title : null;
         ctrl.addDescription = function () {
             ctrl.description = '';
         };

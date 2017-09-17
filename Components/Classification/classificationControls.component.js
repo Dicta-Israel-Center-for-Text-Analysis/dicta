@@ -11,28 +11,10 @@ jTextMinerApp.component('classificationControls',
                     .catch(ctrl.cancelClass);
             };
             ctrl.saveClass = function (selectionData) {
-                const experiment = ctrl.experiment;
-                function addClass (classData) {
-                    experiment.classes.isAllBible = experiment.classes.isAllBible && classData.bible;
-                    experiment.featureCollection.updateFeaturesData({});
-                    experiment.classes.Corpus_maxId += 1;
-                    classData.id = experiment.classes.Corpus_maxId;
-                    experiment.classes.Corpus_classes.push(classData);
-                }
-                experiment.trainSet[selectionData.className] = selectionData.keys;
-                addClass({
-                    title: selectionData.title,
-                    subtitle: selectionData.subtitle,
-                    selectedText: selectionData.keys, //results.selectedText,
-                    chunkMode: 'By chapter',
-                    chunkSize: '',
-                    // numberOfChunks: results.numberOfChunks,
-                    // totalNumberOfWords: results.totalNumberOfWords,
-                    bible: true
-                });
+                ctrl.experiment.addClass(selectionData);
             };
             ctrl.cancelClass = function (stuff) {
-            }
+            };
             ctrl.runExperiment = function () {
                 ctrl.experiment.runClassification();
                 // ctrl.experiment.getTextsWithFeatures();

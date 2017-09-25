@@ -75,9 +75,13 @@ angular.module('JTextMinerApp')
         return service[listName];
     }
 
+    function firebaseUserRef(key) {
+        return firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/" + key);
+    }
+
     function store(name, object) {
         if (service.$user) {
-            const ref = firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/" + name);
+            const ref = firebaseUserRef(name);
             ref.set(object);
         }
         else
@@ -91,7 +95,7 @@ angular.module('JTextMinerApp')
             return service.storage[name];
         if (service.$user) {
             service.storage[name] = defaultVal;
-            var ref = firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/" + name);
+            var ref = firebaseUserRef(name);
             ref.off();
             ref.on('value', function (data) {
                 $timeout(

@@ -86,5 +86,9 @@ jTextMinerApp.component('chooseTextDialog', {
                 text: result
             });
         }
+
+        ctrl.loadSaved = function (saved) {
+            ctrl.description = (saved && saved.subtitle) ? saved.title : null;
+        }
     }
 });

@@ -443,28 +443,6 @@
   text-align: right;
 }
 
-.breadcrumb {
-  text-transform: uppercase;
-  background-color: #fff;
-  border-bottom: 1px solid #D5DCE0;
-  border-radius: 0;
-  padding: 23px 15px;
-  color: #848F99;
-}
-
-.breadcrumb > li:last-child {
-  color: #222B37;
-}
-
-.breadcrumb > li + li:before {
-  content: '\00a0>\00a0';
-  padding: 0 5px;
-}
-
-.breadcrumb li a {
-  color: inherit;
-}
-
 .text-selection-rows, .preview-text {
   height: 400px;
   overflow-y: auto;
@@ -809,6 +787,49 @@
 
 .login-chooser .ngdialog-message {
   padding: 30px;
+}
+
+.select-corpus-top-area {
+  background-color: #fff;
+  border-bottom: 1px solid #D5DCE0;
+  border-radius: 0;
+}
+
+.select-corpus-breadcrumb {
+  display: inline-block;
+  width: 70%;
+}
+
+.load-saved-link {
+  display: inline-block;
+  width: 29%;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.load-saved-link .material-icons {
+  vertical-align: bottom;
+}
+
+.breadcrumb {
+  text-transform: uppercase;
+  padding: 23px 15px;
+  color: #848F99;
+  background-color: inherit;
+  margin-bottom: 0;
+}
+
+.breadcrumb > li:last-child {
+  color: #222B37;
+}
+
+.breadcrumb > li + li:before {
+  content: '\00a0>\00a0';
+  padding: 0 5px;
+}
+
+.breadcrumb li a {
+  color: inherit;
 }
 
 /*# sourceMappingURL=design.css.map */

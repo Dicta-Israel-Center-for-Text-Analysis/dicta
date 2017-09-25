@@ -1,8 +1,15 @@
 jTextMinerApp.component('selectOnlineCorpus', {
-        bindings: { selectionText: '=' },
+        bindings: {
+            selectionText: '=',
+            onLoadSaved: '&'
+        },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
-        controller: ['TreeService', 'SelectClassService', 'APIService', function (TreeService, SelectClassService, APIService) {
+        controller: function (TreeService, SelectClassService, APIService, UserService) {
             var ctrl = this;
+            ctrl.running = false;
+            ctrl.UserService = UserService;
+            ctrl.mode = 'select';
+
             function initBreadCrumbs() {
                 ctrl.breadCrumbs = [{
                     title: 'Collection',
@@ -23,6 +30,7 @@ jTextMinerApp.component('selectOnlineCorpus', {
             else
                 ctrl.selectedNodes = [];
             recalculatePartials();
+            updatePreview(ctrl.selectionText);
 
             // end of tree setup; helper functions come next
 
@@ -134,8 +142,14 @@ jTextMinerApp.component('selectOnlineCorpus', {
             };
 
             function updatePreview(selectedText) {
+                if (!selectedText || selectedText.keys.length === 0) {
+                    ctrl.previewText = null;
+                    return;
+                }
+                ctrl.running = true;
                 APIService.call('TextFeatures/GetTextLargeAndSmall', selectedText.keys)
                     .then(function (response) {
+                        ctrl.running = false;
                         ctrl.previewText = response.data;
                     });
             }
@@ -144,6 +158,14 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 ctrl.breadCrumbs = ctrl.breadCrumbs.slice(0, crumbNumber+1);
                 ctrl.treeNode = ctrl.breadCrumbs[crumbNumber].children;
             };
-            
-        }]
+
+            ctrl.saveClass = function (saveClass) {
+                ctrl.selectedNodes = saveClass.keys.map(function(key){return key.substring("/Dicta Corpus/".length)});
+                ctrl.selectionText = saveClass;
+                updatePreview(saveClass);
+                recalculatePartials();
+                ctrl.mode = 'select';
+                ctrl.onLoadSaved({saved: saveClass});
+            }
+        }
 });

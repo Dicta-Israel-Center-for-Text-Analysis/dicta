@@ -10,7 +10,7 @@
             <browse-this-computer browse-data="$ctrl.browseData"></browse-this-computer>
         </div>
         <div ng-show="$ctrl.actionMode == 'SelectOnlineCorpus' && !$ctrl.showInProcess">
-            <select-online-corpus selection-text="$ctrl.selectionText"></select-online-corpus>
+            <select-online-corpus selection-text="$ctrl.selectionText" on-load-saved="$ctrl.loadSaved(saved)"></select-online-corpus>
         </div>
         <br/>
         <!--<table ng-if="$ctrl.namingMessage" style="width:100%;">-->

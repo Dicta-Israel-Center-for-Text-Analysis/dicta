@@ -7,10 +7,18 @@
     </div>-->
     <!--<br />-->
     <div>
-        <ol class="breadcrumb">
-            <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb.title}}</a></li>
-        </ol>
-        <div class="row">
+        <div class="select-corpus-top-area">
+            <div class="select-corpus-breadcrumb">
+                <ol class="breadcrumb">
+                    <li ng-repeat="crumb in $ctrl.breadCrumbs"><a ng-click="$ctrl.selectCrumb($index)">{{crumb.title}}</a></li>
+                </ol>
+            </div>
+            <div class="load-saved-link">
+                <a ng-show="$ctrl.mode !== 'load'" ng-click="$ctrl.mode = 'load'"><i class="material-icons">launch</i> Load Saved Text</a>
+                <a ng-show="$ctrl.mode !== 'select'" ng-click="$ctrl.mode = 'select'"><i class="material-icons">launch</i> Select From Library</a>
+            </div>
+        </div>
+        <div ng-show="$ctrl.mode == 'select'" class="row">
             <div class="col-xs-3 text-selection-rows">
                 <table>
                     <tr ng-repeat="item in $ctrl.treeNode">
@@ -33,12 +41,13 @@
                 </table>
             </div>
             <div class="col-xs-9">
-                <div ng-hide="$ctrl.previewText" class="preview-text-message">
+                <div ng-hide="$ctrl.running || $ctrl.previewText" class="preview-text-message">
                     <h3>You can select several texts!</h3>
                     <p> Select a desired text and navigate using the top navigation bar to select additional text. When
                         done, click “Analyze.”</p>
                 </div>
-                <div ng-show="$ctrl.previewText" class="preview-text">
+                <in-progress progress-flag="$ctrl.running"></in-progress>
+                <div ng-show="!$ctrl.running && $ctrl.previewText" class="preview-text">
                     <div ng-repeat="chapter in $ctrl.previewText | limitTo:10 ">
                         <div ng-repeat="line in chapter.contents">
                             {{line.smallUnit.chunkKey.substring(line.smallUnit.chunkKey.lastIndexOf(' '))}}:
@@ -50,6 +59,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div ng-show="$ctrl.mode == 'load'">
+            <saved-data-table heading="'SAVED SEARCHES AND SELECTIONS'" expanded="true"
+                              saved-selections="$ctrl.UserService.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
+            <saved-data-table heading="'RECENT SELECTIONS'" expanded="false"
+                              saved-selections="$ctrl.UserService.recentSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
         </div>
     </div>
 </div>

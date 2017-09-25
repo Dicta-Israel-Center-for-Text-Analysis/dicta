@@ -1,6 +1,8 @@
-jTextMinerApp.factory('StateService', function() {
+jTextMinerApp.factory('StateService', function($q) {
     const service = {
         registry: {},
+        initPromise: $q.resolve(),
+        isBibleMode: true,
         getOrCreate(key, func) {
             if (!service.registry.hasOwnProperty(key))
                 service.registry[key] = func();

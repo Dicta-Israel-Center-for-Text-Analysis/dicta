@@ -1,11 +1,11 @@
 // loads the tree of the Dicta corpus
 // also provides a utility function 'treeSort' which sorts a list according to an in-order traversal of the tree
-jTextMinerApp.factory('TreeService', function ($http, $q, UserService) {
+jTextMinerApp.factory('TreeService', function ($http, $q, StateService) {
     var service = {
         corpusTree: [],
-        readyPromise: UserService.loginPromise
+        readyPromise: StateService.initPromise
             .then(() => $http.get(
-                UserService.isBibleUser
+                StateService.isBibleMode
                 ? 'corpusData/Bible.json'
                 :'corpusData/corpusTree.json'))
             .then(function (response)

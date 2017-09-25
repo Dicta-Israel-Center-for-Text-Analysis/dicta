@@ -27,9 +27,6 @@ angular.module('JTextMinerApp')
         get userToken() {
             return this.$userToken;
         },
-        get isBibleUser() {
-            return this.$isBibleUser;
-        },
         get loginPromise() {
             return this.$loginDeferral.promise;
         },
@@ -117,8 +114,7 @@ angular.module('JTextMinerApp')
         }
     }
 
-    function tryLogin (username, isBibleUser) {
-        this.$isBibleUser = !!isBibleUser;
+    function tryLogin (username) {
         APIService.call('UserService/Login', {
             username
         })
@@ -142,8 +138,7 @@ angular.module('JTextMinerApp')
                 $.cookie('userLogin', login);
             window.sessionStorage.setItem('userLoginData', JSON.stringify({
                 $user: 'testuser',
-                $userToken: service.$userToken,
-                $isBibleUser: service.$isBibleUser
+                $userToken: service.$userToken
             }));
         }
         else
@@ -159,7 +154,6 @@ angular.module('JTextMinerApp')
         const parsedData = JSON.parse(storedLoginData);
 //      service.$user = parsedData.$user;
         service.$userToken = parsedData.$userToken;
-        service.$isBibleUser = parsedData.$isBibleUser;
         service.$loginDeferral.resolve();
     }
 

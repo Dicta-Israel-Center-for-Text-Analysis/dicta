@@ -7,14 +7,15 @@
  *
  * */
 angular.module('JTextMinerApp')
-    .factory('UserService', ['APIService', '$q', function(APIService, $q)
+    .factory('UserService', ['APIService', '$q', '$timeout', function(APIService, $q, $timeout)
 {
     const service = {
-        $user: null,
+        $fixmeUser: 'testuser',
+        $user: firebase.auth().currentUser,
         $loginDeferral: $q.defer(),
         tryLogin,
         logout() {
-            this.$user = null;
+            firebase.auth().signOut().then (() => {service.storage = {}});
             $.removeCookie('userLogin');
         },
         isLoggedIn() {
@@ -41,8 +42,15 @@ angular.module('JTextMinerApp')
         saveSelection,
         addRecentSelection,
     };
-    const SAVED_SELECTIONS = '$savedSelections';
-    const RECENT_SELECTIONS = '$recentSelections';
+    firebase.auth().onAuthStateChanged(function(user) {
+        $timeout(
+            () => {
+                service.$user = user;
+            }
+        )
+    });
+    const SAVED_SELECTIONS = '_savedSelections';
+    const RECENT_SELECTIONS = '_recentSelections';
     
     function saveSelection(selection) {
         addToSelectionList(selection, SAVED_SELECTIONS);
@@ -62,20 +70,47 @@ angular.module('JTextMinerApp')
     }
 
     function getSelectionList(listName) {
-        if (!service.hasOwnProperty(listName))
+        //if (!service.hasOwnProperty(listName))
             service[listName] = get(listName, []);
         return service[listName];
     }
 
     function store(name, object) {
-        window.sessionStorage.setItem(name, JSON.stringify(object));
+        if (service.$user) {
+            const ref = firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/" + name);
+            ref.set(object);
+        }
+        else
+            window.sessionStorage.setItem(name, JSON.stringify(object));
     }
 
     function get(name, defaultVal) {
-        const stored = window.sessionStorage.getItem(name);
-        if (stored === null)
-            return defaultVal;
-        return JSON.parse(stored);
+        if (!service.storage)
+            service.storage = {};
+        if (service.storage[name])
+            return service.storage[name];
+        if (service.$user) {
+            service.storage[name] = defaultVal;
+            var ref = firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/" + name);
+            ref.off();
+            ref.on('value', function (data) {
+                $timeout(
+                    () => {
+                        if (data.val() && !_.isEqual(service.storage[name], data.val()))
+                            service.storage[name] = data.val()
+                    }
+                );
+            });
+            return service.storage[name];
+        }
+        else {
+            const stored = window.sessionStorage.getItem(name);
+            if (stored === null)
+                service.storage[name] = defaultVal;
+            else
+                service.storage[name] = JSON.parse(stored);
+            return service.storage[name];
+        }
     }
 
     function tryLogin (username, isBibleUser) {
@@ -98,11 +133,11 @@ angular.module('JTextMinerApp')
     function handleLoginAPIResponse(response){
         const login = response.data.userLogin;
         if (login !== "") {
-            service.$user = login;
+            // service.$user = login;
             if (login !== 'testuser')
                 $.cookie('userLogin', login);
             window.sessionStorage.setItem('userLoginData', JSON.stringify({
-                $user: service.$user,
+                $user: 'testuser',
                 $userToken: service.$userToken,
                 $isBibleUser: service.$isBibleUser
             }));
@@ -118,7 +153,7 @@ angular.module('JTextMinerApp')
     const storedLoginData = window.sessionStorage.getItem('userLoginData');
     if (storedLoginData) {
         const parsedData = JSON.parse(storedLoginData);
-        service.$user = parsedData.$user;
+//      service.$user = parsedData.$user;
         service.$userToken = parsedData.$userToken;
         service.$isBibleUser = parsedData.$isBibleUser;
         service.$loginDeferral.resolve();

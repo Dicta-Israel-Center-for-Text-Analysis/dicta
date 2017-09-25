@@ -31,7 +31,7 @@ jTextMinerApp.factory('SelectClassService', function (UserService, APIService, T
                     browse_MinimumChunkSize: this.chunkSize,
                     browse_ClassName: "unused",
                     browse_FileName: this.filename,
-                    userLogin: UserService.user
+                    userLogin: UserService.$fixmeUser
                 })
                     .then(function (response) {
                         this.keys.push(response.data);

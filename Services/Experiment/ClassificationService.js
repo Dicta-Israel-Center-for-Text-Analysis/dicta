@@ -113,7 +113,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
 
         function createRequestForRunClassification(type) {
             return {
-                userLogin: UserService.user,
+                userLogin: UserService.$fixmeUser,
                 expType: 'Classification',
                 expName: experiment.base.experimentName,
                 selectedAlgorithmTypeId: experiment.base.selectedAlgorithmTypeId,
@@ -372,7 +372,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             createSaveRequest() {
                 alert('Not implemented');
                 var saveRequest = {
-                    userLogin: UserService.user,
+                    userLogin: UserService.$fixmeUser,
                     expType: 'Classification',
                     expName: this.base.experimentName,
                     selectedAlgorithmTypeId: ExperimentService.selectedAlgorithmTypeId,

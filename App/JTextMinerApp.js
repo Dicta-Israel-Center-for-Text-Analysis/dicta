@@ -22,6 +22,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/Login',
         component: 'loginPage'
     })
+    .state('continueLogin', {
+        url: '/ContinueLogin',
+        component: 'continueLogin'
+    })
     .state('AfterLogin', {
         url: '/AfterLogin',
         component: 'afterLoginPage'

@@ -10,9 +10,12 @@
 <div class="container-fluid jumbo">
     <div></div>
     <div class="row">
-        <div class="col-md-offset-9 col-xs-1"><a class="header-link">About</a></div>
+        <div class="col-md-offset-8 col-xs-1"><a class="header-link">About</a></div>
         <div class="col-xs-1"><a class="header-link">Help Center</a></div>
-        <div class="col-xs-1"><a class="header-link">Login / Sign up</a></div>
+        <div class="col-xs-2" ng-hide="$ctrl.UserService.isLoggedIn()"><a class="header-link" ui-sref="continueLogin">Login / Sign up</a></div>
+        <div class="col-xs-2" ng-show="$ctrl.UserService.isLoggedIn()">
+            Welcome {{$ctrl.UserService.user.displayName}}!
+            <span class="header-link">/</span> <a class="header-link" ng-click="$ctrl.signOut()">Signout</a></div>
     </div>
     <div class="row jumbo-start">
         <div class="col-xs-offset-1 col-xs-10">
@@ -34,7 +37,7 @@
 </div>
 <div class="container">
     <saved-data-table heading="'SAVED SEARCHES AND SELECTIONS'" expanded="true"
-                      saved-selections="$ctrl.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
+                      saved-selections="$ctrl.UserService.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
     <saved-data-table heading="'RECENT SELECTIONS'" expanded="false"
-                      saved-selections="$ctrl.recentSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
+                      saved-selections="$ctrl.UserService.recentSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
 </div>

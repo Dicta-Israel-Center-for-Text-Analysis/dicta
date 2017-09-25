@@ -1,7 +1,7 @@
 jTextMinerApp.component('bibleFrontPage',
 {
     templateUrl: 'Components/PageStructure/bibleFrontPage.component.html',
-    controller: function($state, search, DialogService, $scope, SelectClassService, UserService) {
+    controller: function($state, search, DialogService, SelectClassService, UserService) {
             const ctrl = this;
 
             ctrl.runSearch = function () {
@@ -19,6 +19,12 @@ jTextMinerApp.component('bibleFrontPage',
                 SelectClassService.setTestText(selectClass);
                 $state.go('bibleInterface');
             };
+
+            ctrl.signOut = function () {
+                UserService.logout();
+            };
+
+            ctrl.UserService = UserService;
 
             ctrl.savedSelections = UserService.savedSelections;
             ctrl.recentSelections = UserService.recentSelections;

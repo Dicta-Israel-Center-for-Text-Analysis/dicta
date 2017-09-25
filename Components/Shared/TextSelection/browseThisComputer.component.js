@@ -23,7 +23,7 @@ jTextMinerApp.component('browseThisComputer', {
                     .then (function (fileId){
                         ctrl.browseData.fileId = fileId;
                     });
-                fileUpload.uploadFileToUrl(ctrl.zipFile, 'zipFile', UserService.user)
+                fileUpload.uploadFileToUrl(ctrl.zipFile, 'zipFile', UserService.$fixmeUser)
                     .then(function (wordCounts) {
                         ctrl.browseData.textInfo.wordCounts = wordCounts;
                         // reduce is used to sum the array

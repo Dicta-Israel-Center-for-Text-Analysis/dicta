@@ -803,4 +803,12 @@
   padding: 10px;
 }
 
+.login-chooser {
+  margin: auto;
+}
+
+.login-chooser .ngdialog-message {
+  padding: 30px;
+}
+
 /*# sourceMappingURL=design.css.map */

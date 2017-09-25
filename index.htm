@@ -31,6 +31,23 @@
     <link rel="stylesheet" type="text/css" href="css/tiberias.css" media="all" />
     <link rel="stylesheet" type="text/css" href="css/design.css" media="all" />
 
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBfOsXaYARLV-dFSy-y48dmQU-54o0p9W8",
+            authDomain: "dicta-d023a.firebaseapp.com",
+            databaseURL: "https://dicta-d023a.firebaseio.com",
+            projectId: "dicta-d023a",
+            storageBucket: "",
+            messagingSenderId: "372281311229"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.3.0/firebaseui.css" />
+
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="node_modules/lodash/lodash.min.js"></script>
     <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
@@ -140,6 +157,7 @@
     <script src="Components/Classification/classificationAdjustments.component.js"></script>
     <script src="Components/Segmentation/segmentationControls.component.js"></script>
     <script src="Services/DialogService.js"></script>
+    <script src="Components/PageStructure/continueLogin.component.js"></script>
 
 </head>
 <body ng-app="JTextMinerApp">

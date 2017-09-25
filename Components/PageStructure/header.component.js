@@ -5,8 +5,8 @@
             this.userLogin = UserService.user == "testuser" ? "Guest User" : UserService.user;;
             $scope.isShow = false;
 
-            if (!UserService.isLoggedIn())
-                $location.path('Login');
+            // if (!UserService.isLoggedIn())
+                //$location.path('Login');
         }]
     }
 );

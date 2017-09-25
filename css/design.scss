@@ -397,3 +397,10 @@
     color: $black-pearl;
     padding: 10px;
 }
+
+.login-chooser {
+    margin: auto;
+    .ngdialog-message {
+        padding: 30px;
+    }
+}

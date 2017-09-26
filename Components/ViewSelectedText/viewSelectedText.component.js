@@ -1,7 +1,6 @@
 jTextMinerApp.component('viewSelectedText', {
         templateUrl: 'Components/ViewSelectedText/viewSelectedText.component.html',
-        controller: ['$scope', 'SelectClassService', '$sce', 'APIService',
-            function ($scope, SelectClassService, $sce, APIService) {
+        controller: function ($scope, SelectClassService, $sce, APIService, UserService, $timeout) {
             const ctrl = this;
             ctrl.showInProcess = false;
 
@@ -21,6 +20,18 @@ jTextMinerApp.component('viewSelectedText', {
             ctrl.trimTitle = function(title) {
                 return title.substr(SelectClassService.testSetTitlesCommonPrefix.length + 1);
             }
-        }]
+
+            ctrl.saveText = function () {
+                UserService.saveSelection({
+                    title: SelectClassService.testText.title,
+                    subtitle: SelectClassService.testText.subtitle,
+                    type: 'Text',
+                    time: Date.now(),
+                    text: SelectClassService.testText
+                });
+                ctrl.saveMessage = 'Saved';
+                $timeout(() => { ctrl.saveMessage = ''; }, 3000);
+            }
+        }
     }
 );

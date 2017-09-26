@@ -832,4 +832,14 @@
   color: inherit;
 }
 
+.save-menu {
+  float: right;
+}
+
+.save-message {
+  color: #848F99;
+  float: right;
+  padding-right: 20px;
+}
+
 /*# sourceMappingURL=design.css.map */

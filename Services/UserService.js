@@ -60,6 +60,8 @@ angular.module('JTextMinerApp')
     function addToSelectionList(selection, listName, limit) {
         if (!service.hasOwnProperty(listName))
             service[listName] = get(listName, []);
+        // only one item for a given title allowed
+        service[listName] = service[listName].filter(item => item.title !== selection.title);
         service[listName].unshift(selection);
         if (limit && service[listName].length > limit)
             service[listName].pop();

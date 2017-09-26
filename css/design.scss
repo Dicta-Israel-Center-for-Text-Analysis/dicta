@@ -423,3 +423,12 @@
 .breadcrumb li a {
     color: inherit;
 }
+
+.save-menu {
+    float: right;
+}
+.save-message {
+    color: $light-slate-grey;
+    float: right;
+    padding-right: 20px;
+}

@@ -1,4 +1,7 @@
 ﻿<div class="main-data">
+    <div class="save-menu"><a ng-click="$ctrl.saveText()">Save</a></div>
+    <div class="save-message">{{$ctrl.saveMessage}}</div>
+    <h1 class="main-heading">Selected Text</h1>
     <in-progress></in-progress>
 
     <div ng-show="!$ctrl.showInProcess" ng-repeat="chunk in $ctrl.chunks track by $index" class="text-with-features">

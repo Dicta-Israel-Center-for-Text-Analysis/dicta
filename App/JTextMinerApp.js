@@ -43,7 +43,7 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         component: 'bibleMainPage'
     })
     .state('bibleInterface.view', {
-        url: '/BibleInterface/view',
+        url: '/View',
         views: {
             main: { component: 'viewSelectedText' }
         }

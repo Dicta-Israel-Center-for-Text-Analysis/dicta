@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="$ctrl.mode == 'load'">
+        <div ng-show="$ctrl.mode == 'load'" class="text-selection-rows">
             <saved-data-table heading="'SAVED SEARCHES AND SELECTIONS'" expanded="true"
                               saved-selections="$ctrl.UserService.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
             <saved-data-table heading="'RECENT SELECTIONS'" expanded="false"

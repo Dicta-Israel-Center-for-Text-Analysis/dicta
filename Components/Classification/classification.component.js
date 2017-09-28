@@ -1,9 +1,27 @@
 jTextMinerApp.component('classification', {
     templateUrl: 'Components/Classification/classification.component.html',
-    controller: function ($scope, ExperimentService, APIService, ClassificationService, ClassService, SaveClassInterface, SelectClassService, $sce, DialogService, $q, StateService) {
+    controller: function ($scope, ExperimentService, APIService, ClassificationService, ClassService, SaveClassInterface, SelectClassService, $sce, DialogService, $q, StateService, $timeout, UserService) {
         var ctrl = this;
         ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
         ctrl.showInProcess = false;
+
+        ctrl.saveMessage = "";
+        ctrl.saveMode = "Save";
+        ctrl.save = function () {
+            ctrl.saveMessage = "Saved " + ctrl.saveMode;
+            switch (ctrl.saveMode) {
+                case 'test text':  UserService.saveTextSelection(SelectClassService.testText, 'Text');
+                    break;
+                case 'classes': ctrl.experiment.classes.Corpus_classes.forEach(classData => UserService.saveTextSelection(classData.text, 'Class'));
+                    break;
+                case 'entire experiment': ctrl.saveMessage = 'Saving an entire experiment not implemented yet'
+            }
+            ctrl.saveMode = "Save";
+            $timeout(() => {
+                ctrl.saveMessage = ''
+            }, 3000);
+        };
+        
         $scope.countFilesPerClass = [];
 
         $scope.colors = ClassService.colors;

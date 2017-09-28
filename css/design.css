@@ -444,7 +444,7 @@
 }
 
 .text-selection-rows, .preview-text {
-  height: 400px;
+  height: 480px;
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0 25px;
@@ -836,10 +836,14 @@
   float: right;
 }
 
-.save-message {
+.classify-save-message, .save-message {
   color: #848F99;
   float: right;
   padding-right: 20px;
+}
+
+.classify-save-control {
+  float: right;
 }
 
 /*# sourceMappingURL=design.css.map */

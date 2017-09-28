@@ -37,6 +37,7 @@ angular.module('JTextMinerApp')
             return getSelectionList(RECENT_SELECTIONS);
         },
         saveSelection,
+        saveTextSelection,
         addRecentSelection,
     };
     firebase.auth().onAuthStateChanged(function(user) {
@@ -48,7 +49,17 @@ angular.module('JTextMinerApp')
     });
     const SAVED_SELECTIONS = '_savedSelections';
     const RECENT_SELECTIONS = '_recentSelections';
-    
+
+    function saveTextSelection(text, type) {
+        saveSelection({
+            title: text.title,
+            subtitle: text.subtitle || null,
+            type: type,
+            time: Date.now(),
+            text: text
+        });
+    }
+
     function saveSelection(selection) {
         addToSelectionList(selection, SAVED_SELECTIONS);
     }

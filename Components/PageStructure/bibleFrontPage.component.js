@@ -17,7 +17,7 @@ jTextMinerApp.component('bibleFrontPage',
 
             ctrl.saveClass = function (selectClass) {
                 SelectClassService.setTestText(selectClass);
-                $state.go('bibleInterface');
+                $state.go('bibleInterface.view');
             };
 
             ctrl.signOut = function () {

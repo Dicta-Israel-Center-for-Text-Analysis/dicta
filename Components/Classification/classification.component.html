@@ -51,6 +51,17 @@
 <!--<in-progress></in-progress>-->
 <div class="main-data">
 <div>
+    <div class="classify-save-control">
+        <form>
+            <select title="Save Selection" ng-model="$ctrl.saveMode" ng-change="$ctrl.save()">
+                <option>Save</option>
+                <option value="test text">Save test text</option>
+                <option value="classes">Save classes</option>
+                <option value="entire experiment">Save entire experiment</option>
+            </select>
+        </form>
+    </div>
+    <div class="classify-save-message">{{$ctrl.saveMessage}}</div>
     <h1 class="main-heading">Classify</h1>
 </div>
     <in-progress progress-flag="$ctrl.experiment.inProgress"></in-progress>

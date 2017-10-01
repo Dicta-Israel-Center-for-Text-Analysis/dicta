@@ -91,7 +91,7 @@
 }
 
 .text-selection-rows, .preview-text {
-    height: 400px;
+    height: 480px;
     overflow-y: auto;
     box-sizing: border-box;
     padding: 0 25px;
@@ -204,10 +204,9 @@
     p {
         margin-right: 36px;
         text-align: right;
-        line-height: 27px;
-        font-size: 16px;
+        line-height: 30px;
+        font-size: 18px;
         @extend %fonts;
-        letter-spacing: 0.05em;
     }
 }
 
@@ -245,7 +244,7 @@
 
 @include generate-colors {
     .highlight-feature-color-#{$current-color-index} {
-        padding-bottom: 1px;
+        padding-bottom: 2px;
         border-bottom: dashed $current-color 2px;
     }
 }

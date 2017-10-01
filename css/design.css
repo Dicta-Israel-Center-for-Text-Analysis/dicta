@@ -1,19 +1,19 @@
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: bold;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
 .search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
 .segmentation-summary, .classification-summary {
@@ -23,21 +23,21 @@
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: bold;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
 .search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
 .segmentation-summary, .classification-summary {
@@ -104,21 +104,21 @@
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: bold;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
 .search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
 .segmentation-summary, .classification-summary {
@@ -204,7 +204,7 @@
 
 .search-result-text {
   line-height: 27px;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.05em;
 }
 
@@ -219,21 +219,21 @@
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: bold;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
 .search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
 .segmentation-summary, .classification-summary {
@@ -326,21 +326,21 @@
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: normal;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Light.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'NachlieliCLM';
+  font-family: 'TaameyDavidCLM';
   font-weight: bold;
   font-style: normal;
-  src: url("../fonts/NachlieliCLM-Bold.woff") format("woff");
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
 .search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
-  font-family: 'Open Sans', 'NachlieliCLM', sans-serif;
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
 .segmentation-summary, .classification-summary {
@@ -557,9 +557,8 @@
 .text-with-features p {
   margin-right: 36px;
   text-align: right;
-  line-height: 27px;
-  font-size: 16px;
-  letter-spacing: 0.05em;
+  line-height: 30px;
+  font-size: 18px;
 }
 
 .text-title {
@@ -623,22 +622,22 @@
 }
 
 .highlight-feature-color-0 {
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   border-bottom: dashed #634C9F 2px;
 }
 
 .highlight-feature-color-1 {
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   border-bottom: dashed #FFD933 2px;
 }
 
 .highlight-feature-color-2 {
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   border-bottom: dashed #4EB6A3 2px;
 }
 
 .highlight-feature-color-3 {
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   border-bottom: dashed #B65A4E 2px;
 }
 

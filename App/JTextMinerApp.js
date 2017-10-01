@@ -38,6 +38,10 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/search',
         component: 'search'
     })
+    .state('searchStart', {
+        url: '/searchStart',
+        component: 'searchFrontPage'
+    })
     .state('bibleInterface', {
         url: '/BibleInterface',
         component: 'bibleMainPage'

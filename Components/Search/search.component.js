@@ -1,11 +1,9 @@
 jTextMinerApp.component('search',
 {
     templateUrl: 'Components/Search/search.component.html',
-    controller: [
-        '$http', 'search', '$scope', 'bibleContextMenu', '$timeout',
-        function($http, search, $scope, bibleContextMenu, $timeout) {
+    controller: function($http, search, $scope, bibleContextMenu, $timeout, StateService) {
             const ctrl = this;
-
+            ctrl.showBack = StateService.frontPageState === 'bibleFrontpage';
             ctrl.search = search;
             ctrl.currentPage = 1;
             ctrl.previousQuery = '';
@@ -98,5 +96,5 @@ jTextMinerApp.component('search',
                         response.data.suggest["my-suggestion"]["0"].options
                     );
             }
-        }]
+        }
 }); 

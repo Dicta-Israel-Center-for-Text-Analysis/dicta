@@ -93,3 +93,9 @@
     color: $ebony-clay;
     width: 100%;
 }
+
+.form-inline input.search-start-control-class {
+    width: 550px;
+    margin-left: -50px;
+    direction: rtl;
+}

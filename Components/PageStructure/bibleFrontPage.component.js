@@ -1,8 +1,10 @@
 jTextMinerApp.component('bibleFrontPage',
 {
     templateUrl: 'Components/PageStructure/bibleFrontPage.component.html',
-    controller: function($state, search, DialogService, SelectClassService, UserService) {
+    controller: function($state, search, DialogService, SelectClassService, UserService, StateService) {
             const ctrl = this;
+
+            StateService.frontPageState = 'bibleFrontpage';
 
             ctrl.runSearch = function () {
                 search.query = ctrl.searchQuery;

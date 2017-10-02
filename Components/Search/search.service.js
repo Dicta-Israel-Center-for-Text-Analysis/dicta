@@ -6,20 +6,19 @@ angular.module('JTextMinerApp')
             offset: 0,
             sortByCorpusOrder: true,
             searchResults: [],
-            searchResponse: {},
+            searchResponse: false,
             searching: false,
             search(offset) {
-                if (!offset) {
-                    this.offset = 0;
-                    if (this.lastQuery !== this.query) {
-                        this.lastQuery = this.query;
-                        this.submitSearch();
-                    }
-                }
-                else {
+                if (!offset)
+                    service.offset = 0;
+                else
                     service.offset = offset;
-                    this.updateSearch();
+                if (this.lastQuery !== this.query) {
+                    this.lastQuery = this.query;
+                    service.submitSearch();
                 }
+                else
+                    this.updateSearch();
             },
             updateSearch() {
                 service.searching = true;
@@ -28,6 +27,7 @@ angular.module('JTextMinerApp')
                 return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
                     .then(function (response) {
                         service.searchResults = response.data.hits.hits;
+                        service.searchResponse = true;
                         service.searching = false;
                     })
             },
@@ -98,6 +98,9 @@ angular.module('JTextMinerApp')
                     this.fullQuery.query.bool["filter"] = [];
                     //{"term": {"_type": "small"}}];
                 }
+                this.fullQuery.query.bool.filter.push({
+                    ids: { "values": null }
+                });
                 return $http.post("http://dev.dicta.org.il/essearch/", preQuery)
                     .then((response) => {
                         let childUnitScores = {};
@@ -121,18 +124,8 @@ angular.module('JTextMinerApp')
                                 || childUnitScores[hit._source.corpus_order_path] < hit._score
                             })
                             .map(hit => hit._id);
-                        this.fullQuery.query.bool.filter.push({
-                                ids: {
-                                    "values": service.completeResults.slice(0, service.RESULTS_AT_A_TIME)
-                                }
-                            });
-                        return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
-                    })
-                    .then(function (response) {
-                        service.searchResults = response.data.hits.hits;
-                        service.searchResponse = response.data;
                         service.offset = 0;
-                        service.searching = false;
+                        service.updateSearch();
                     })
             },
             toggleSortOrder(){

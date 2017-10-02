@@ -46,8 +46,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-8">
-                <div class="search-result-summary" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
-                    <p>{{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} -
+                <div class="search-result-summary"
+                     ng-hide="$ctrl.search.searching
+                     || !$ctrl.search.searchResponse">
+                    <p ng-hide="$ctrl.search.completeResults.length === 0">
+                        {{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} -
                         {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
                     <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
                 </div>
@@ -56,7 +59,7 @@
         <div style="text-align:center" ng-show="$ctrl.search.searching">
             <img src="images/loader.gif"/>
         </div>
-        <div class="row" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse.hasOwnProperty('hits')">
+        <div class="row" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse">
             <div class="col-xs-8 search-result" ng-repeat="result in $ctrl.search.searchResults">
                 <!--<h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>-->
                     <h5 class="search-result-heading">{{result._source.english_path || result._source.displayname_eng}}</h5>

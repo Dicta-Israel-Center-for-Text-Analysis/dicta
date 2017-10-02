@@ -67,7 +67,7 @@ angular.module('JTextMinerApp')
                         "post_tags": ["</mark>"],
                         "fields": {
                             "parsed_text*": {
-                                fragment_size: 10000
+                                fragment_size: 100000
                             }
                         }
                     },

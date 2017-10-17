@@ -402,7 +402,6 @@
   font-weight: 900;
   font-family: Martel, serif;
   color: #fff;
-  /* height: 67px; */
 }
 
 .small-logo sup {
@@ -850,6 +849,34 @@
 
 .classify-save-control {
   float: right;
+}
+
+.text-classification-data-dialog {
+  height: 90vh;
+  padding: 25px;
+}
+
+.text-classification-data-dialog td, .text-classification-data-dialog th {
+  padding: 5px;
+}
+
+.text-classification-data-dialog h2 {
+  margin-top: 0;
+}
+
+.text-classification-data-dialog .feature-area {
+  overflow-y: scroll;
+  will-change: transform;
+  max-height: calc(100% - 100px);
+}
+
+.classification-data-classname {
+  vertical-align: top;
+}
+
+.classification-data-classname h4 {
+  line-height: 23.1px;
+  margin-top: 0;
 }
 
 /*# sourceMappingURL=design.css.map */

@@ -434,3 +434,27 @@
 .classify-save-control {
     float: right;
 }
+
+.text-classification-data-dialog {
+    height: 90vh;
+    padding: 25px;
+    td, th {
+      padding: 5px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .feature-area {
+      overflow-y: scroll;
+      will-change: transform;
+      max-height: calc(100% - 100px);
+    }
+}
+
+.classification-data-classname {
+    vertical-align: top;
+    h4 {
+      line-height: 23.1px;
+      margin-top: 0;
+    }
+}

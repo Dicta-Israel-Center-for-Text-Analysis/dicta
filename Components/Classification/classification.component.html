@@ -82,7 +82,8 @@
     <!--<div class="clearfix"></div>-->
     <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
         <text-with-features test-file="testFile" index="$index"
-                            classified-class-index="$ctrl.indexOfClass(testFile.classifiedAs)"></text-with-features>
+                            classified-class-index="$ctrl.indexOfClass(testFile.classifiedAs)"
+                            experiment="$ctrl.experiment"></text-with-features>
     </div>
 
 </div>

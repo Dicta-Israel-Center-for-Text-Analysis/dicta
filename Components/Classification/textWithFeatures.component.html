@@ -8,6 +8,7 @@
                                       <i ng-show="$ctrl.testFile.confidence<80">low</i>
         confidence
     </div>
+    <div><a class="advanced-info-link" ng-click="$ctrl.viewAdvanced()">View advanced information</a></div>
     <p ng-bind-html="convert2TrustAsHtml($ctrl.testFile.htmlText)">
     </p>
 </div>

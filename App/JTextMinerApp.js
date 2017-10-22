@@ -38,6 +38,16 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/search',
         component: 'search'
     })
+    .state('search.terms', {
+        url: '/{terms}/{page}',
+        component: 'search',
+        params: {
+            page: {
+                dynamic: true,
+                value: '1'
+            }
+        }
+    })
     .state('searchStart', {
         url: '/searchStart',
         component: 'searchFrontPage'

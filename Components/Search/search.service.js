@@ -15,10 +15,10 @@ angular.module('JTextMinerApp')
                     service.offset = offset;
                 if (this.lastQuery !== this.query) {
                     this.lastQuery = this.query;
-                    service.submitSearch();
+                    return service.submitSearch();
                 }
                 else
-                    this.updateSearch();
+                    return this.updateSearch();
             },
             updateSearch() {
                 service.searching = true;

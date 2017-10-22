@@ -1,12 +1,11 @@
 jTextMinerApp.component('searchFrontPage',
 {
     templateUrl: 'Components/Search/searchFrontPage.component.html',
-    controller: function($state, search) {
+    controller: function($state) {
         const ctrl = this;
 
         ctrl.runSearch = function () {
-            search.query = ctrl.searchQuery;
-            $state.go('search');
+            $state.go('search.terms', {terms: ctrl.searchQuery, page: '1'});
         };
     }
 }); 

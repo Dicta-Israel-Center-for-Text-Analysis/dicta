@@ -1,14 +1,13 @@
 jTextMinerApp.component('bibleFrontPage',
 {
     templateUrl: 'Components/PageStructure/bibleFrontPage.component.html',
-    controller: function($state, search, DialogService, SelectClassService, UserService, StateService) {
+    controller: function($state, DialogService, SelectClassService, UserService, StateService) {
             const ctrl = this;
 
             StateService.frontPageState = 'bibleFrontpage';
 
             ctrl.runSearch = function () {
-                search.query = ctrl.searchQuery;
-                $state.go('search');
+                $state.go('search.terms', {terms: ctrl.searchQuery, page: '1'});
             };
 
             ctrl.showLibrary = function () {

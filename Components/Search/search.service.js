@@ -125,7 +125,7 @@ angular.module('JTextMinerApp')
                             })
                             .map(hit => hit._id);
                         service.offset = 0;
-                        service.updateSearch();
+                        return service.updateSearch();
                     })
             },
             toggleSortOrder(){

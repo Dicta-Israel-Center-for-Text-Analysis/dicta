@@ -6,15 +6,19 @@ jTextMinerApp.component('search',
     templateUrl: 'Components/Search/search.component.html',
     controller: function ($http, search, $scope, bibleContextMenu, $timeout, StateService, $state) {
         const ctrl = this;
+
+        // initial setup
+        // show a back button only if not invoked as a standalone search engine
         ctrl.showBack = StateService.frontPageState === 'bibleFrontpage';
         ctrl.search = search;
         ctrl.currentPage = 1;
         ctrl.previousQuery = '';
 
+        // get search terms and page number from the ui-router state
         const searchParams = ctrl.$transition$.params();
         if (searchParams.hasOwnProperty('terms')) {
             search.query = searchParams.terms;
-            getQueryFromService();
+            updateUIforSearchTerm();
             search.search()
                 .then(() => {
                     if (searchParams.hasOwnProperty('page')) {
@@ -28,10 +32,28 @@ jTextMinerApp.component('search',
             ctrl.runSearch();
         }
 
+        // callback from ui-router when the params change but the state is otherwise the same
+        // apparently, it just needs to be set; there's no need to register the callback anywhere
         ctrl.uiOnParamsChanged = function (newParams) {
             console.log("new params: ", newParams);
+            if (newParams.hasOwnProperty('terms')) {
+                search.query = newParams.terms;
+                updateUIforSearchTerm();
+                search.search()
+                    .then(() => {
+                        if (newParams.hasOwnProperty('page')) {
+                            this.currentPage = +newParams.page;
+                            updateResults();
+                        }
+                    });
+            }
+            else if (newParams.hasOwnProperty('page')) {
+                this.currentPage = +newParams.page;
+                updateResults();
+            }
         };
 
+        // callback from the autocomplete input box when the user presses enter
         ctrl.setSearchTerm = function (selected) {
             if (selected == null) return;
             ctrl.previousQuery = selected.title;
@@ -39,16 +61,14 @@ jTextMinerApp.component('search',
             ctrl.runSearch();
         };
 
-        $scope.$watch('$ctrl.search.query', getQueryFromService);
-        // getQueryFromService();
+        // should be removed; the service shouldn't be the source of state; ui-router should be
+        $scope.$watch('$ctrl.search.query', updateUIforSearchTerm);
 
-        function getQueryFromService() {
-            //if (ctrl.previousQuery != search.query) {
+        function updateUIforSearchTerm() {
             ctrl.previousQuery = search.query;
             $timeout(() =>
                 $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query), 1000
             );
-            //}
         }
 
         ctrl.runSearch = function () {
@@ -69,7 +89,11 @@ jTextMinerApp.component('search',
         ctrl.onSearch = function (params) {
             search.query = params.query.replace(/<\/?mark>/g, '');
             if (params.item) {
-                search.query += " lexeme:" + params.item.$parent.result._source.lemmas[params.item.$index];
+                let lemmas = params.item.$parent.result._source.lemmas;
+                if (Array.isArray(lemmas[0]))
+                    lemmas = _.flatten(lemmas);
+                lemmas = _.flatMap(lemmas, lemma => lemma.split(' '));
+                search.query += " lexeme:" + lemmas[params.item.$index];
             }
             ctrl.runSearch();
         };

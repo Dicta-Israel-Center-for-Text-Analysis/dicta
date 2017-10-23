@@ -31,7 +31,7 @@ jTextMinerApp.component('search',
             search.query = newParams.terms;
 
             function updateResultsFromParams() {
-                search.smallUnitsOnly = !newParams.allResults;
+                search.smallUnitsOnly = !(search.smallUnitResults.length === 0 || newParams.allResults);
                 ctrl.currentPage = +newParams.page;
                 const pages = Math.ceil(ctrl.numResults() / ctrl.search.RESULTS_AT_A_TIME);
                 if (ctrl.currentPage > pages) {

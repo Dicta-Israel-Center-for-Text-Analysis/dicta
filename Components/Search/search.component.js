@@ -14,43 +14,50 @@ jTextMinerApp.component('search',
         ctrl.currentPage = 1;
         ctrl.previousQuery = '';
 
+        ctrl.reentranceFlag = false;
+        function setControlFromState (newParams) {
+            // the control will render if there's no search term, but then there's no existing data
+            if (!newParams.hasOwnProperty('terms')) return;
+
+            ctrl.lastState = newParams;
+            if (ctrl.reentranceFlag) return;
+
+            // new search needed for new terms or new order, but not for a new page or showing chapter results
+            const newSearchNeeded =
+                search.sortByCorpusOrder !== newParams.tanachOrder
+                || ctrl.previousQuery !== newParams.terms;
+
+            search.sortByCorpusOrder = newParams.tanachOrder;
+            search.query = newParams.terms;
+
+            function updateResultsFromParams() {
+                search.smallUnitsOnly = !newParams.allResults;
+                ctrl.currentPage = +newParams.page;
+                const pages = Math.ceil(ctrl.numResults() / ctrl.search.RESULTS_AT_A_TIME);
+                if (ctrl.currentPage > pages) {
+                    ctrl.currentPage = pages;
+                    ctrl.reentranceFlag = true;
+                    $state.go('.', {page: ctrl.currentPage});
+                    ctrl.reentranceFlag = false;
+                }
+                search.loadResults(ctrl.currentPage);
+            }
+            if (newSearchNeeded) {
+                updateUIforSearchTerm();
+                search.search()
+                    .then(updateResultsFromParams);
+            }
+            else
+                updateResultsFromParams();
+        }
+
         // get search terms and page number from the ui-router state
-        const searchParams = ctrl.$transition$.params();
-        if (searchParams.hasOwnProperty('terms')) {
-            search.query = searchParams.terms;
-            updateUIforSearchTerm();
-            search.search()
-                .then(() => {
-                    if (searchParams.hasOwnProperty('page')) {
-                        this.currentPage = +searchParams.page;
-                        updateResults();
-                    }
-                });
-        }
-        else if (!_.isEmpty(search.query)) {
-            ctrl.previousQuery = search.query;
-            ctrl.runSearch();
-        }
+        setControlFromState(ctrl.$transition$.params());
 
         // callback from ui-router when the params change but the state is otherwise the same
         // apparently, it just needs to be set; there's no need to register the callback anywhere
-        ctrl.uiOnParamsChanged = function (newParams) {
-            console.log("new params: ", newParams);
-            if (newParams.hasOwnProperty('terms')) {
-                search.query = newParams.terms;
-                updateUIforSearchTerm();
-                search.search()
-                    .then(() => {
-                        if (newParams.hasOwnProperty('page')) {
-                            this.currentPage = +newParams.page;
-                            updateResults();
-                        }
-                    });
-            }
-            else if (newParams.hasOwnProperty('page')) {
-                this.currentPage = +newParams.page;
-                updateResults();
-            }
+        ctrl.uiOnParamsChanged = function(newParams) {
+            setControlFromState(Object.assign({}, ctrl.lastState, newParams));
         };
 
         // callback from the autocomplete input box when the user presses enter
@@ -67,12 +74,11 @@ jTextMinerApp.component('search',
         function updateUIforSearchTerm() {
             ctrl.previousQuery = search.query;
             $timeout(() =>
-                $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query), 1000
-            );
+                $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query));
         }
 
         ctrl.runSearch = function () {
-            $state.go('search.terms', {terms: search.query, page: '1'});
+            $state.go('search.terms', {terms: search.query, page: '1', allResults: false});
             ctrl.currentPage = 1;
             search.search();
         };
@@ -149,15 +155,14 @@ jTextMinerApp.component('search',
             return ctrl.lastHighlights[text.highlight.parsed_text_rep];
         };
 
-        ctrl.updateResults = updateResults;
-
-        function updateResults () {
+        ctrl.updateResults = function () {
             $state.go('.', {page: ctrl.currentPage})
             search.loadResults(ctrl.currentPage);
         }
 
         ctrl.showLargeUnits = function () {
             search.smallUnitsOnly = false;
+            $state.go('.', { allResults: true });
             ctrl.currentPage = 1;
             search.loadResults(1);
         };
@@ -184,6 +189,11 @@ jTextMinerApp.component('search',
                 .then(response =>
                     response.data.suggest["my-suggestion"]["0"].options
                 );
+        }
+
+        ctrl.toggleSortOrder = function() {
+            search.toggleSortOrder();
+            $state.go('.', { tanachOrder: search.sortByCorpusOrder });
         }
     }
 });

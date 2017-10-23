@@ -33,11 +33,11 @@
         </div>
         <div class="col-xs-4" ng-show="$ctrl.search.completeResults.length > 0">
             <p>
-                <a ng-show="!$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by
+                <a ng-show="!$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.toggleSortOrder()">Sort by
                     Tanakh Order</a>
                 <span ng-show="$ctrl.search.sortByCorpusOrder">Sort by Tanakh Order</span>
                 |
-                <a ng-show="$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.search.toggleSortOrder()">Sort by
+                <a ng-show="$ctrl.search.sortByCorpusOrder" ng-click="$ctrl.toggleSortOrder()">Sort by
                     Relevance</a>
                 <span ng-show="!$ctrl.search.sortByCorpusOrder">Sort by Relevance</span>
             </p>
@@ -73,8 +73,9 @@
                     <!--<h5>Score: {{result._score}}</h5>-->
                     <p class="search-result-text" dir="rtl">
                         <span ng-repeat="sentence in $ctrl.highlight(result)">
-                            <span ng-if="$ctrl.highlight(result).length > 1">({{$ctrl.numToHebrew($index + 1)}})</span>
-                            <span ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
+                            <span ng-if="$ctrl.highlight(result).length > 1">
+                                ({{$ctrl.numToHebrew($index + 1)}})</span>&nbsp;<span
+                                  ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
                                   context-menu-on="click"
                                   ng-bind-html="word + ' '"></span>
                         </span>

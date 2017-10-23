@@ -90,6 +90,7 @@ jTextMinerApp.component('search',
             search.query = params.query.replace(/<\/?mark>/g, '');
             if (params.item) {
                 let lemmas = params.item.result._source.lemmas;
+                // in chapters, get the right pasuk
                 if (Array.isArray(lemmas[0]))
                     lemmas = lemmas[params.item.$parent.$index];
                 lemmas = _.flatMap(lemmas, lemma => lemma.split(' '));

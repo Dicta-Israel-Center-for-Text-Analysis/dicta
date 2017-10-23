@@ -125,6 +125,18 @@ jTextMinerApp.component('search',
         function updateResults () {
             $state.go('.', {page: ctrl.currentPage})
             search.loadResults(ctrl.currentPage);
+        }
+
+        ctrl.showLargeUnits = function () {
+            search.smallUnitsOnly = false;
+            ctrl.currentPage = 1;
+            search.loadResults(1);
+        };
+
+        ctrl.numResults = function () {
+            if (!_.isArray(search.completeResults))
+                return 0;
+            return search.smallUnitsOnly ? search.smallUnitResults.length : search.completeResults.length;
         };
 
         ctrl.runSuggest = function (userInputString, timeoutPromise) {

@@ -50,8 +50,13 @@
                      ng-hide="$ctrl.search.searching
                      || !$ctrl.search.searchResponse">
                     <p ng-hide="$ctrl.search.completeResults.length === 0">
-                        {{$ctrl.search.completeResults.length}} results, showing results {{$ctrl.search.offset + 1}} -
-                        {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.</p>
+                        {{$ctrl.numResults()}} results, showing results {{$ctrl.search.offset + 1}} -
+                        {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.
+                        <span class="only-showing-verses" ng-if="$ctrl.search.smallUnitsOnly">
+                            &nbsp; Only showing verses.
+                            <a ng-click="$ctrl.showLargeUnits()">Show all results.</a>
+                        </span>
+                    </p>
                     <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
                 </div>
             </div>
@@ -73,8 +78,8 @@
                     </p>
             </div>
             <div class="col-xs-8 text-center"
-                 ng-show="$ctrl.search.completeResults.length > $ctrl.search.RESULTS_AT_A_TIME">
-                <ul uib-pagination total-items="$ctrl.search.completeResults.length"
+                 ng-show="$ctrl.numResults() > $ctrl.search.RESULTS_AT_A_TIME">
+                <ul uib-pagination total-items="$ctrl.numResults()"
                     items-per-page="$ctrl.search.RESULTS_AT_A_TIME" ng-model="$ctrl.currentPage"
                     ng-change="$ctrl.updateResults()" max-size="5" class="pagination-sm"
                     boundary-link-numbers="true"></ul>

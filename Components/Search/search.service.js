@@ -4,6 +4,7 @@ angular.module('JTextMinerApp')
             RESULTS_AT_A_TIME: 20,
             query: "",
             offset: 0,
+            smallUnitsOnly: true,
             sortByCorpusOrder: true,
             searchResults: [],
             searchResponse: false,
@@ -23,7 +24,8 @@ angular.module('JTextMinerApp')
             updateSearch() {
                 service.searching = true;
                 this.fullQuery.query.bool.filter[this.fullQuery.query.bool.filter.length - 1].ids.values
-                    = service.completeResults.slice(this.offset, this.offset + service.RESULTS_AT_A_TIME);
+                    = (service.smallUnitsOnly ? service.smallUnitResults : service.completeResults)
+                    .slice(this.offset, this.offset + service.RESULTS_AT_A_TIME);
                 return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
                     .then(function (response) {
                         service.searchResults = response.data.hits.hits;
@@ -33,6 +35,7 @@ angular.module('JTextMinerApp')
             },
             submitSearch() {
                 service.searching = true;
+                service.smallUnitsOnly = true;
                 const queryParamRegex = /(\S+:\S+)/g;
                 const baseQueryString = service.query.replace(queryParamRegex, '');
                 const queryParamsArray = service.query.match(queryParamRegex);
@@ -124,6 +127,9 @@ angular.module('JTextMinerApp')
                                 || childUnitScores[hit._source.corpus_order_path] < hit._score
                             })
                             .map(hit => hit._id);
+                        service.smallUnitResults = hits.filter(hit => hit._type === 'small').map(hit => hit._id);;
+                        if (service.smallUnitResults.length === 0)
+                            service.smallUnitsOnly = false;
                         service.offset = 0;
                         return service.updateSearch();
                     })

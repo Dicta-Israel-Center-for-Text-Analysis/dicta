@@ -224,6 +224,10 @@
   direction: rtl;
 }
 
+.only-showing-verses {
+  font-weight: normal;
+}
+
 @font-face {
   font-family: 'TaameyDavidCLM';
   font-weight: normal;

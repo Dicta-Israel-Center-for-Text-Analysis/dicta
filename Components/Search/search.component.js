@@ -123,11 +123,14 @@ jTextMinerApp.component('search',
         };
 
         function highlight(text) {
-            // parsed_text_rep should cover all cases
-            //if (text.highlight && text.highlight['parsed_text.y'])
-            //    return splitWords(text.highlight['parsed_text.y'].join('...'));
-            if (text.highlight && text.highlight['parsed_text_rep']) {
-                const highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
+            let highlights;
+            if (text.highlight) {
+                if (text.highlight['parsed_text_rep'])
+                    highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
+                else if (text.highlight['parsed_text.y'])
+                    return [splitWords(text.highlight['parsed_text.y'].join('...').replace('mark>','b>'))];
+            }
+            if (highlights) {
                 let highlightedSentences = [];
                 let counter = 0;
                 const sentences = text._source.parsed_text.split(/\n/);
@@ -145,7 +148,7 @@ jTextMinerApp.component('search',
                 return highlightedSentences;
             }
             const re = new RegExp("(" + search.query.replace(/ /g, '|') + ")", "g");
-            return splitWords(text._source.parsed_text.replace(re, "<b>$1</b>"));
+            return [splitWords(text._source.parsed_text.replace(re, "<b>$1</b>"))];
         }
 
         ctrl.lastHighlights = {};

@@ -39,9 +39,21 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         component: 'search'
     })
     .state('search.terms', {
-        url: '/{terms}/{page}',
+        url: '/{terms}/{page}?tanachOrder&allResults',
         component: 'search',
         params: {
+            tanachOrder: {
+                dynamic: true,
+                type: 'bool',
+                value: true,
+                squash: true
+            },
+            allResults: {
+                dynamic: true,
+                type: 'bool',
+                value: false,
+                squash: true
+            },
             page: {
                 dynamic: true,
                 value: '1'

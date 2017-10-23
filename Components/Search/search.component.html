@@ -52,7 +52,7 @@
                     <p ng-hide="$ctrl.search.completeResults.length === 0">
                         {{$ctrl.numResults()}} results, showing results {{$ctrl.search.offset + 1}} -
                         {{$ctrl.search.offset + $ctrl.search.searchResults.length}}.
-                        <span class="only-showing-verses" ng-if="$ctrl.search.smallUnitsOnly">
+                        <span class="only-showing-verses" ng-if="$ctrl.moreResultsAvailable()">
                             &nbsp; Only showing verses.
                             <a ng-click="$ctrl.showLargeUnits()">Show all results.</a>
                         </span>

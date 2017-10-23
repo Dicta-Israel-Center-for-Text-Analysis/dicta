@@ -192,11 +192,15 @@ jTextMinerApp.component('search',
                 .then(response =>
                     response.data.suggest["my-suggestion"]["0"].options
                 );
-        }
+        };
 
         ctrl.toggleSortOrder = function() {
             search.toggleSortOrder();
             $state.go('.', { tanachOrder: search.sortByCorpusOrder });
+        };
+
+        ctrl.moreResultsAvailable = function () {
+            return search.smallUnitsOnly && search.completeResults.length > search.smallUnitResults.length
         }
     }
 });

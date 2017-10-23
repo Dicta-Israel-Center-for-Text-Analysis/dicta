@@ -72,9 +72,12 @@
                         <!--result._source.displayname_heb}}</h5>-->
                     <!--<h5>Score: {{result._score}}</h5>-->
                     <p class="search-result-text" dir="rtl">
-                        <span ng-repeat="word in $ctrl.highlight(result) track by $index" context-menu="$ctrl.menuOptions"
-                              context-menu-on="click"
-                              ng-bind-html="word + ' '"></span>
+                        <span ng-repeat="sentence in $ctrl.highlight(result)">
+                            <span ng-if="$ctrl.highlight(result).length > 1">({{$ctrl.numToHebrew($index + 1)}})</span>
+                            <span ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
+                                  context-menu-on="click"
+                                  ng-bind-html="word + ' '"></span>
+                        </span>
                     </p>
             </div>
             <div class="col-xs-8 text-center"

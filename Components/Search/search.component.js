@@ -89,9 +89,9 @@ jTextMinerApp.component('search',
         ctrl.onSearch = function (params) {
             search.query = params.query.replace(/<\/?mark>/g, '');
             if (params.item) {
-                let lemmas = params.item.$parent.result._source.lemmas;
+                let lemmas = params.item.result._source.lemmas;
                 if (Array.isArray(lemmas[0]))
-                    lemmas = _.flatten(lemmas);
+                    lemmas = lemmas[params.item.$parent.$index];
                 lemmas = _.flatMap(lemmas, lemma => lemma.split(' '));
                 search.query += " lexeme:" + lemmas[params.item.$index];
             }
@@ -100,24 +100,52 @@ jTextMinerApp.component('search',
 
         ctrl.menuOptions = bibleContextMenu.menu(ctrl.onSearch);
 
-        ctrl.highlight = function (text) {
+        ctrl.numToHebrew = function(num) {
+            const ones = num % 10;
+            const tens = (num - ones)/10 % 10;
+            const hundreds = (num - tens*10 - ones) / 100;
+            let result = '';
+            if (hundreds) result = "dקרשת"[hundreds];
+            if (tens === 1 && ones === 5)
+                result += 'טו';
+            else if (tens === 1 && ones === 6)
+                result += 'טז';
+            else
+                result += (tens ? "dיכלמנסעפצ"[tens] : '') + (ones ? "dאבגדהוזחט"[ones] : '');
+            return result;
+        };
+
+        function highlight(text) {
             // parsed_text_rep should cover all cases
             //if (text.highlight && text.highlight['parsed_text.y'])
             //    return splitWords(text.highlight['parsed_text.y'].join('...'));
             if (text.highlight && text.highlight['parsed_text_rep']) {
                 const highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
-                const words = text._source.parsed_text.split(/\s/);
-                let highlightedWords = [];
-                highlights.forEach((highlight, index) =>
-                    highlightedWords.push(
-                        highlight.startsWith('<mark')
-                            ? '<b>' + words[index] + '</b>'
-                            : words[index]
-                    ));
-                return highlightedWords;
+                let highlightedSentences = [];
+                let counter = 0;
+                const sentences = text._source.parsed_text.split(/\n/);
+                sentences.forEach(sentence => {
+                    let highlightedWords = [];
+                    words = sentence.split(' ');
+                    words.forEach(word =>
+                        highlightedWords.push(
+                            highlights[counter++].startsWith('<mark')
+                                ? '<b>' + word + '</b>'
+                                : word
+                        ));
+                    highlightedSentences.push(highlightedWords);
+                });
+                return highlightedSentences;
             }
             const re = new RegExp("(" + search.query.replace(/ /g, '|') + ")", "g");
             return splitWords(text._source.parsed_text.replace(re, "<b>$1</b>"));
+        }
+
+        ctrl.lastHighlights = {};
+        ctrl.highlight = function (text) {
+            if (!ctrl.lastHighlights.hasOwnProperty(text.highlight.parsed_text_rep))
+                ctrl.lastHighlights[text.highlight.parsed_text_rep] = highlight(text);
+            return ctrl.lastHighlights[text.highlight.parsed_text_rep];
         };
 
         ctrl.updateResults = updateResults;

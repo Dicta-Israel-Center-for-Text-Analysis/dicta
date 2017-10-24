@@ -1,5 +1,5 @@
 angular.module('JTextMinerApp')
-    .factory('search', function ($http) {
+    .factory('search', function (APIService) {
         const service = {
             RESULTS_AT_A_TIME: 20,
             query: "",
@@ -26,7 +26,7 @@ angular.module('JTextMinerApp')
                 this.fullQuery.query.bool.filter[this.fullQuery.query.bool.filter.length - 1].ids.values
                     = (service.smallUnitsOnly ? service.smallUnitResults : service.completeResults)
                     .slice(this.offset, this.offset + service.RESULTS_AT_A_TIME);
-                return $http.post("http://dev.dicta.org.il/essearch/", this.fullQuery)
+                return APIService.search(this.fullQuery)
                     .then(function (response) {
                         service.searchResults = response.data.hits.hits;
                         service.searchResponse = true;
@@ -104,7 +104,7 @@ angular.module('JTextMinerApp')
                 this.fullQuery.query.bool.filter.push({
                     ids: { "values": null }
                 });
-                return $http.post("http://dev.dicta.org.il/essearch/", preQuery)
+                return APIService.search(preQuery)
                     .then((response) => {
                         let childUnitScores = {};
                         let smallUnitScores = {};

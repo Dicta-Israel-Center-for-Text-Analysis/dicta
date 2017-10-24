@@ -4,7 +4,7 @@ jTextMinerApp.component('search',
         $transition$: '<'
     },
     templateUrl: 'Components/Search/search.component.html',
-    controller: function ($http, search, $scope, bibleContextMenu, $timeout, StateService, $state) {
+    controller: function (APIService, search, $scope, bibleContextMenu, $timeout, StateService, $state) {
         const ctrl = this;
 
         // initial setup
@@ -35,7 +35,7 @@ jTextMinerApp.component('search',
                 ctrl.currentPage = +newParams.page;
                 const pages = Math.ceil(ctrl.numResults() / ctrl.search.RESULTS_AT_A_TIME);
                 if (ctrl.currentPage > pages) {
-                    ctrl.currentPage = pages;
+                    ctrl.currentPage = pages === 0 ? 1 : pages;
                     ctrl.reentranceFlag = true;
                     $state.go('.', {page: ctrl.currentPage});
                     ctrl.reentranceFlag = false;
@@ -159,9 +159,9 @@ jTextMinerApp.component('search',
         };
 
         ctrl.updateResults = function () {
-            $state.go('.', {page: ctrl.currentPage})
+            $state.go('.', {page: ctrl.currentPage});
             search.loadResults(ctrl.currentPage);
-        }
+        };
 
         ctrl.showLargeUnits = function () {
             search.smallUnitsOnly = false;
@@ -177,7 +177,7 @@ jTextMinerApp.component('search',
         };
 
         ctrl.runSuggest = function (userInputString, timeoutPromise) {
-            return $http.post("http://dev.dicta.org.il/essearch/",
+            return APIService.search(
                 {
                     "suggest": {
                         "my-suggestion": {

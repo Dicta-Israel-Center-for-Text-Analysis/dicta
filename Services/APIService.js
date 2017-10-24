@@ -53,5 +53,12 @@ angular.module('JTextMinerApp')
                         return result;
                     });
     };
+    APIService.search = function (data, config) {
+        let server = 'dev.dicta.org.il';
+        if ($location.host().startsWith('server'))
+            server = $location.host();
+        return $http.post($location.protocol() + "://" + server + "/essearch/", data, config);
+    };
+
     return APIService;
 });

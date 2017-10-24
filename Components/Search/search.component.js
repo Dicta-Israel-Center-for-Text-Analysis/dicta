@@ -29,6 +29,7 @@ jTextMinerApp.component('search',
 
             search.sortByCorpusOrder = newParams.tanachOrder;
             search.query = newParams.terms;
+            ctrl.previousQuery = search.query;
 
             function updateResultsFromParams() {
                 search.smallUnitsOnly = !(search.smallUnitResults.length === 0 || newParams.allResults);
@@ -44,8 +45,18 @@ jTextMinerApp.component('search',
             }
             if (newSearchNeeded) {
                 updateUIforSearchTerm();
+                ctrl.variations = [];
                 search.search()
-                    .then(updateResultsFromParams);
+                    .then(function() {
+                        search.getLexemeVariations().then(
+                            results => {
+                                ctrl.variations = results.filter(result => result.variations.length > 1)
+                                ctrl.variationsSelected = ctrl.variations.map(v => "all");
+                                readVariations(search.query);
+                            }
+                        );
+                        updateResultsFromParams();
+                    });
             }
             else
                 updateResultsFromParams();
@@ -63,7 +74,6 @@ jTextMinerApp.component('search',
         // callback from the autocomplete input box when the user presses enter
         ctrl.setSearchTerm = function (selected) {
             if (selected == null) return;
-            ctrl.previousQuery = selected.title;
             search.query = selected.title;
             ctrl.runSearch();
         };
@@ -72,19 +82,15 @@ jTextMinerApp.component('search',
         $scope.$watch('$ctrl.search.query', updateUIforSearchTerm);
 
         function updateUIforSearchTerm() {
-            ctrl.previousQuery = search.query;
             $timeout(() =>
                 $scope.$broadcast('angucomplete-alt:changeInput', 'search', search.query));
         }
 
         ctrl.runSearch = function () {
             $state.go('search.terms', {terms: search.query, page: '1', allResults: false});
-            ctrl.currentPage = 1;
-            search.search();
         };
 
         ctrl.inputChanged = function (searchTerm) {
-            ctrl.previousQuery = searchTerm;
             search.query = searchTerm;
         };
 
@@ -200,7 +206,28 @@ jTextMinerApp.component('search',
         };
 
         ctrl.moreResultsAvailable = function () {
+            if (!search.completeResults) return false;
             return search.smallUnitsOnly && search.completeResults.length > search.smallUnitResults.length
+        };
+
+        function readVariations(query) {
+            const lexemeParam = query.split(' ').filter(term => term.startsWith('lexeme:'));
+            if (lexemeParam.length === 0) return;
+            const lexemes = lexemeParam[0].substring(7).split('+');
+            ctrl.variations.forEach((variation, index) => {
+                variation.variations.forEach(oneVariation => {
+                    if (lexemes.includes(oneVariation.lemma))
+                        ctrl.variationsSelected[index] = oneVariation.lemma;
+                })
+            })
+        }
+
+        ctrl.setVariations = function () {
+            const lemmas = ctrl.variationsSelected.filter(selection => selection !== 'all');
+            search.query = search.query.split(' ').filter(term => !term.startsWith('lexeme:')).join(' ');
+            if (lemmas.length !== 0)
+                search.query += ' lexeme:' + lemmas.join('+');
+            ctrl.runSearch();
         }
     }
 });

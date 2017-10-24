@@ -1,5 +1,5 @@
 angular.module('JTextMinerApp')
-    .factory('search', function (APIService) {
+    .factory('search', function (APIService, $q) {
         const service = {
             RESULTS_AT_A_TIME: 20,
             query: "",
@@ -93,8 +93,9 @@ angular.module('JTextMinerApp')
                     this.fullQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
                 }
                 if (queryParams['lexeme']) {
-                    preQuery.query.bool["filter"] = [{"match": {"lemmas": queryParams['lexeme']}}];
-                    this.fullQuery.query.bool["filter"] = [{"match": {"lemmas": queryParams['lexeme']}}];
+                    const lemmaList = queryParams['lexeme'].split('+');
+                    preQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
+                    this.fullQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
                 }
                 if (!this.fullQuery.query.bool.hasOwnProperty("filter")) {
                     //preQuery.query.bool["filter"] = [];{"term": {"_type": "small"}}];
@@ -133,6 +134,28 @@ angular.module('JTextMinerApp')
                         service.offset = 0;
                         return service.updateSearch();
                     })
+            },
+            getLexemeVariations() {
+                function resultToVariation(result) {
+                    const lemmaGroups = _.groupBy(result, wordData=> wordData.lemma);
+                    const lemmaObject = _.mapValues(lemmaGroups, lemmaData=> _.maxBy(lemmaData, wordData => wordData.count))
+                    return Object.values(lemmaObject);
+                }
+                return $q.all(service.query.split(' ').filter(term => !term.includes(':'))
+                    .map(term => APIService.wordSearch({
+                        query: {
+                            multi_match: {
+                                fields: ["parsed_text*"],
+                                query: term
+                            }
+                        },
+                        "_source": ["parsed_text", "lemma", "count"]
+                    })
+                        .then(result => ({
+                            term,
+                            variations: resultToVariation(result.data.hits.hits.map(hit => hit._source))
+                        }))
+                    ));
             },
             toggleSortOrder(){
                 this.sortByCorpusOrder = !this.sortByCorpusOrder;

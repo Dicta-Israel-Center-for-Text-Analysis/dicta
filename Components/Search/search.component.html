@@ -29,7 +29,12 @@
     </div>
     <div class="search-control-bar">
         <div class="col-xs-8">
-
+            <span ng-repeat="wordData in $ctrl.variations">
+                <select ng-model="$ctrl.variationsSelected[$index]" ng-change="$ctrl.setVariations()">
+                    <option selected value="all">All {{wordData.term}} meanings</option>
+                    <option ng-repeat="lemmaData in wordData.variations" value="{{lemmaData.lemma}}">{{lemmaData.parsed_text}}</option>
+                </select>
+            </span>
         </div>
         <div class="col-xs-4" ng-show="$ctrl.search.completeResults.length > 0">
             <p>

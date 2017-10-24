@@ -34,8 +34,8 @@ jTextMinerApp.component('search',
                 search.smallUnitsOnly = !(search.smallUnitResults.length === 0 || newParams.allResults);
                 ctrl.currentPage = +newParams.page;
                 const pages = Math.ceil(ctrl.numResults() / ctrl.search.RESULTS_AT_A_TIME);
-                if (ctrl.currentPage > pages) {
-                    ctrl.currentPage = pages === 0 ? 1 : pages;
+                if (ctrl.currentPage > pages && pages !== 0) {
+                    ctrl.currentPage = pages;
                     ctrl.reentranceFlag = true;
                     $state.go('.', {page: ctrl.currentPage});
                     ctrl.reentranceFlag = false;

@@ -9,8 +9,13 @@
             <div class="row">
                 <div class="col-md-8 col-xs-12">
                     <form class="form-inline search-top-bar-form">
-                        <!--<input class="form-control" style="width:300px" ng-enter="$ctrl.search()" ng-model="$ctrl.searchTerm" type="text">-->
-                        <angucomplete-alt id="search"
+                        <div class="search-autocomplete-container">
+                            <input class="search-top-bar-form-control search-top-bar-input search-control-class"
+                                   placeholder="Enter search terms"
+                                   ng-enter="$ctrl.runSearch()" ng-model="$ctrl.search.query" type="text">
+                        </div>
+                        <!-- suggestions aren't providing useful information yet -->
+                        <!--<angucomplete-alt id="search"
                                           placeholder="Enter search terms"
                                           pause="300"
                                           selected-object="$ctrl.setSearchTerm"
@@ -20,7 +25,7 @@
                                           input-changed="$ctrl.inputChanged"
                                           input-class="search-top-bar-form-control search-top-bar-input search-control-class"
                                           text-no-results="false"
-                                          match-class="autocomplete-highlight"></angucomplete-alt>
+                                          match-class="autocomplete-highlight"></angucomplete-alt>-->
                         <button class="search-top-bar-button search-top-bar-form-control" ng-click="$ctrl.runSearch()"><i class="fa fa-search"></i></button>
                     </form>
                 </div>

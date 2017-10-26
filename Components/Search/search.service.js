@@ -93,7 +93,7 @@ angular.module('JTextMinerApp')
                     this.fullQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
                 }
                 if (queryParams['lexeme']) {
-                    const lemmaList = queryParams['lexeme'].split('+');
+                    const lemmaList = queryParams['lexeme'].replace(/-/g, ' ').split('+');
                     preQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
                     this.fullQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
                 }
@@ -149,6 +149,7 @@ angular.module('JTextMinerApp')
                                 query: term
                             }
                         },
+                        size: 10000,
                         "_source": ["parsed_text", "lemma", "count"]
                     })
                         .then(result => ({

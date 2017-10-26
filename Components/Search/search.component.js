@@ -133,23 +133,37 @@ jTextMinerApp.component('search',
             if (text.highlight) {
                 if (text.highlight['parsed_text_rep'])
                     highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
-                else if (text.highlight['parsed_text.y'])
-                    return [splitWords(text.highlight['parsed_text.y'].join('...').replace('mark>','b>'))];
+                else if (text.highlight['parsed_text.y']) {
+                    const highlight = text.highlight['parsed_text.y'].join('...');
+                    const highlightArray = [splitWords(highlight.replace(/mark>/g,'b>'))];
+                    if (highlight.includes('mark>'))
+                        highlightArray[0].containsMatch = true; 
+                    return highlightArray;
+                }
             }
             if (highlights) {
                 let highlightedSentences = [];
                 let counter = 0;
                 const sentences = text._source.parsed_text.split(/\n/);
-                sentences.forEach(sentence => {
+                let lastMatch = -1;
+                sentences.forEach((sentence, index) => {
                     let highlightedWords = [];
+                    let highlightInSentence = false;
                     words = sentence.split(' ');
-                    words.forEach(word =>
-                        highlightedWords.push(
-                            highlights[counter++].startsWith('<mark')
+                    words.forEach(word => {
+                        const mark = highlights[counter++].startsWith('<mark');
+                        if (mark) highlightInSentence = true;
+                        highlightedWords.push(mark                            
                                 ? '<b>' + word + '</b>'
-                                : word
-                        ));
+                                : word)
+                    });
                     highlightedSentences.push(highlightedWords);
+                     if (highlightInSentence) {
+                        highlightedWords.containsMatch = true;
+                        lastMatch = index;
+                    }
+                    else if (lastMatch === index - 1)
+                        highlightedWords.showEllipsis = true;
                 });
                 return highlightedSentences;
             }

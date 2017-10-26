@@ -34,6 +34,7 @@
     </div>
     <div class="search-control-bar">
         <div class="col-xs-8">
+            &nbsp;
             <span ng-repeat="wordData in $ctrl.variations">
                 <select ng-model="$ctrl.variationsSelected[$index]" ng-change="$ctrl.setVariations()">
                     <option selected value="all">All {{wordData.term}} meanings</option>
@@ -83,11 +84,14 @@
                     <!--<h5>Score: {{result._score}}</h5>-->
                     <p class="search-result-text" dir="rtl">
                         <span ng-repeat="sentence in $ctrl.highlight(result)">
+                            <span ng-if="sentence.containsMatch">
                             <span ng-if="$ctrl.highlight(result).length > 1">
                                 ({{$ctrl.numToHebrew($index + 1)}})</span>&nbsp;<span
                                   ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
                                   context-menu-on="click"
                                   ng-bind-html="word + ' '"></span>
+                            </span>
+                            <span ng-if="sentence.showEllipsis"> ... </span>
                         </span>
                     </p>
             </div>

@@ -122,7 +122,7 @@ angular.module('JTextMinerApp')
                         service.completeResults = hits.filter(hit =>
                             {
                                 if (hit._type === "cross") {
-                                    return hit._source.children_path.every(path => smallUnitScores[path] < hit._score)
+                                    return hit._source.children_path.every(path => !smallUnitScores.hasOwnProperty(path) || smallUnitScores[path] < hit._score)
                                 }
                                 return !childUnitScores.hasOwnProperty(hit._source.corpus_order_path)
                                 || childUnitScores[hit._source.corpus_order_path] < hit._score

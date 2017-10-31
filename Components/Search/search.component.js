@@ -251,5 +251,10 @@ jTextMinerApp.component('search',
                 search.query += ' lexeme:' + lemmas.join('+');
             ctrl.runSearch();
         }
+
+        ctrl.hasEllipsis = function (result) {
+            const highlighted = ctrl.highlight(result);
+            return !highlighted.every(sentence => sentence.containsMatch);
+        }
     }
 });

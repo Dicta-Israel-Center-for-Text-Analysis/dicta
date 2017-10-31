@@ -85,8 +85,9 @@
                     <p class="search-result-text" dir="rtl">
                         <span ng-repeat="sentence in $ctrl.highlight(result)">
                             <span ng-if="sentence.containsMatch || result.showFull">
-                            <span ng-if="$ctrl.highlight(result).length > 1">
-                                ({{$ctrl.numToHebrew($index + 1)}})</span>&nbsp;<span
+                            <span ng-if="$ctrl.highlight(result).length > 1 && !(result._type === 'cross')">
+                                ({{$ctrl.numToHebrew($index + 1)}})&nbsp;</span><span ng-if="result._type === 'cross' && $index===1">
+                                        (א)&nbsp;</span><span
                                   ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
                                   context-menu-on="click"
                                   ng-bind-html="word + ' '"></span>
@@ -94,7 +95,7 @@
                             <span ng-if="sentence.showEllipsis && !result.showFull"> ... </span>
                         </span>
                     </p>
-                <div class="search-full-toggle text-center" ng-if="result._type!=='small'"><a ng-click="result.showFull = !result.showFull">
+                <div class="search-full-toggle text-center" ng-if="$ctrl.hasEllipsis(result)"><a ng-click="result.showFull = !result.showFull">
                     <button class="btn btn-default" ng-hide="result.showFull">Show full result</button>
                     <button class="btn btn-default" ng-show="result.showFull">Show matches only</button>
                 </a></div>

@@ -128,16 +128,17 @@ jTextMinerApp.component('search',
             return result;
         };
 
-        function highlight(text) {
+        function baseHighlight(text) {
             let highlights;
             if (text.highlight) {
                 if (text.highlight['parsed_text_rep'])
                     highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
+                else if (text.highlight['parsed_text.spelling_expansion'])
+                    highlights = text.highlight['parsed_text.spelling_expansion'][0].split(/\s/);
                 else if (text.highlight['parsed_text.y']) {
                     const highlight = text.highlight['parsed_text.y'].join('...');
                     const highlightArray = [splitWords(highlight.replace(/mark>/g,'b>'))];
-                    if (highlight.includes('mark>'))
-                        highlightArray[0].containsMatch = true; 
+                    // TODO: doesn't handle multiline matches
                     return highlightArray;
                 }
             }
@@ -158,7 +159,7 @@ jTextMinerApp.component('search',
                                 : word)
                     });
                     highlightedSentences.push(highlightedWords);
-                     if (highlightInSentence) {
+                    if (highlightInSentence) {
                         highlightedWords.containsMatch = true;
                         lastMatch = index;
                     }
@@ -169,6 +170,13 @@ jTextMinerApp.component('search',
             }
             const re = new RegExp("(" + search.query.replace(/ /g, '|') + ")", "g");
             return [splitWords(text._source.parsed_text.replace(re, "<b>$1</b>"))];
+        }
+
+        function highlight(text) {
+            const base = baseHighlight(text);
+            // if we don't know where the matches are, show all
+            if (!base.some(sentence => sentence.containsMatch)) base.forEach(sentence => sentence.containsMatch = true);
+            return base;
         }
 
         ctrl.lastHighlights = {};

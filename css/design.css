@@ -228,6 +228,10 @@
   font-weight: normal;
 }
 
+.search-full-toggle {
+  padding: 15px 0;
+}
+
 @font-face {
   font-family: 'TaameyDavidCLM';
   font-weight: normal;

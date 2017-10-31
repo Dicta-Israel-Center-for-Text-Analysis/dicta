@@ -84,16 +84,20 @@
                     <!--<h5>Score: {{result._score}}</h5>-->
                     <p class="search-result-text" dir="rtl">
                         <span ng-repeat="sentence in $ctrl.highlight(result)">
-                            <span ng-if="sentence.containsMatch">
+                            <span ng-if="sentence.containsMatch || result.showFull">
                             <span ng-if="$ctrl.highlight(result).length > 1">
                                 ({{$ctrl.numToHebrew($index + 1)}})</span>&nbsp;<span
                                   ng-repeat="word in sentence track by $index" context-menu="$ctrl.menuOptions"
                                   context-menu-on="click"
                                   ng-bind-html="word + ' '"></span>
                             </span>
-                            <span ng-if="sentence.showEllipsis"> ... </span>
+                            <span ng-if="sentence.showEllipsis && !result.showFull"> ... </span>
                         </span>
                     </p>
+                <div class="search-full-toggle text-center" ng-if="result._type!=='small'"><a ng-click="result.showFull = !result.showFull">
+                    <button class="btn btn-default" ng-hide="result.showFull">Show full result</button>
+                    <button class="btn btn-default" ng-show="result.showFull">Show matches only</button>
+                </a></div>
             </div>
             <div class="col-xs-8 text-center"
                  ng-show="$ctrl.numResults() > $ctrl.search.RESULTS_AT_A_TIME">

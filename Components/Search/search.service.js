@@ -1,5 +1,5 @@
 angular.module('JTextMinerApp')
-    .factory('search', function (APIService, $q) {
+    .factory('search', function (APIService, $q, $http) {
         function getMatches(queryString, regex) {
             const remainingQuery = queryString.replace(regex, '');
             let matches = [];
@@ -22,8 +22,8 @@ angular.module('JTextMinerApp')
 
         function stringifyQuery(terms, lexemes) {
             const termQuery = terms.map(term => term.includes(' ') ? `"${term}"` : term ).join(' ');
-            const lexemeQuery = 'lexeme:' + lexemes.join('+').replace(/ /g,'-');
-            return [termQuery, lexemeQuery].join(' ');
+            const lexemeQuery = lexemes.length === 0 ? null : 'lexeme:' + lexemes.join('+').replace(/ /g,'-');
+            return _.compact([termQuery, lexemeQuery]).join(' ');
         }
 
         function makeBaseQuery(queryString, options = {}) {
@@ -41,6 +41,23 @@ angular.module('JTextMinerApp')
                 result.multi_match["minimum_should_match"] = options.minimum_should_match;
             return result;
         }
+        
+        const lexemeTypes = {
+            adjv: "Adjective",
+            advb: "Adverb",
+            conj: "Conjunction",
+            art: "Article",
+            intj: "Interjection",
+            inrg: "Interrogative",
+            subs: "Noun",
+            nega: "Negative",
+            prep: "Preposition",
+            prde: "Demonstrative pronoun",
+            prin: "Interrogative pronoun",
+            nmpr: "Proper noun",
+            prps: "Personal pronoun",
+            verb: "Verb"
+        };
 
         const service = {
             RESULTS_AT_A_TIME: 20,
@@ -161,11 +178,37 @@ angular.module('JTextMinerApp')
                     })
             },
             getLexemeVariations() {
+                function loadLexemeList() {
+                    if (!service.lexemeListPromise) {
+                        service.lexemeListPromise = $http.get('TanakhLexemes.json')
+                            .then(response => {
+                                service.lexemeList = response.data;
+                                const keys = Object.keys(service.lexemeList);
+                                keys.forEach(key => {
+                                    if (key !== key.normalize())
+                                        service.lexemeList[key.normalize()] = service.lexemeList[key];
+                                })
+                            });
+                    }
+                }
+
                 function resultToVariation(result) {
                     const lemmaGroups = _.groupBy(result, wordData=> wordData.lemma);
-                    const lemmaObject = _.mapValues(lemmaGroups, lemmaData=> _.maxBy(lemmaData, wordData => wordData.count))
-                    return Object.values(lemmaObject);
+                    const lemmaObject = _.mapValues(lemmaGroups, lemmaData=> _.maxBy(lemmaData, wordData => wordData.count));
+                    const variations = Object.values(lemmaObject);
+                    variations.forEach(variation => {
+                        service.lexemeListPromise.then(() => {
+                            if (service.lexemeList.hasOwnProperty(variation.lemma)) {
+                                const lexemeData = service.lexemeList[variation.lemma];
+                                variation.parsed_text = variation.lemma.replace(/[_=/[]/g,'') + ' (' + lexemeTypes[lexemeData.type] + ') ' + lexemeData.eng;
+                            }
+                        })
+                    });
+                    return variations;
                 }
+
+                loadLexemeList();
+
                 return $q.all(service.query.split(' ').filter(term => !term.includes(':'))
                     .map(term => APIService.wordSearch({
                         query: {

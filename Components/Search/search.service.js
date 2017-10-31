@@ -1,5 +1,47 @@
 angular.module('JTextMinerApp')
     .factory('search', function (APIService, $q) {
+        function getMatches(queryString, regex) {
+            const remainingQuery = queryString.replace(regex, '');
+            let matches = [];
+            let match;
+            let stop = false;
+            while (!stop && null !== (match = regex.exec(queryString))) {
+                matches.push(match[1]);
+                if (!regex.global) stop = true;
+            }
+            return { remainingQuery, matches }
+        }
+
+        function parseQueryString(queryString) {
+            const quoted = getMatches(queryString, /"([^"]*)"/g);
+            const lexemeParam = getMatches(quoted.remainingQuery, /lexeme:(\S+)/);
+            const terms = getMatches(lexemeParam.remainingQuery, /(\S+)+/g);
+            const lexemes = lexemeParam.matches.length === 0 ? [] : lexemeParam.matches[0].replace(/-/g,' ').split('+');
+            return { terms: quoted.matches.concat(terms.matches), lexemes };
+        }
+
+        function stringifyQuery(terms, lexemes) {
+            const termQuery = terms.map(term => term.includes(' ') ? `"${term}"` : term ).join(' ');
+            const lexemeQuery = 'lexeme:' + lexemes.join('+').replace(/ /g,'-');
+            return [termQuery, lexemeQuery].join(' ');
+        }
+
+        function makeBaseQuery(queryString, options = {}) {
+            const matchType = options.matchType ? options.matchType : "phrase";
+            let result = {
+                "multi_match": {
+                    "type": matchType,
+                    "slop": 1000,
+                    "fields": ["parsed_text*"],
+                    "query": queryString,
+                    "tie_breaker": 0.001
+                }
+            };
+            if (options.minimum_should_match)
+                result.multi_match["minimum_should_match"] = options.minimum_should_match;
+            return result;
+        }
+
         const service = {
             RESULTS_AT_A_TIME: 20,
             query: "",
@@ -37,32 +79,16 @@ angular.module('JTextMinerApp')
                 service.searching = true;
                 service.smallUnitsOnly = true;
                 const queryParamRegex = /(\S+:\S+)/g;
-                const baseQueryString = service.query.replace(queryParamRegex, '');
-                const queryParamsArray = service.query.match(queryParamRegex);
-                let queryParams = {};
-                if (queryParamsArray) {
-                    queryParamsArray.forEach(
-                        match => {
-                            let [paramName, paramValue] = match.split(':');
-                            queryParams[paramName] = paramValue;
-                        }
-                    )
-                }
-                const baseQuery = {
-                    "multi_match": {
-                        "type": "phrase",
-                        "slop": 1000,
-                        "fields": ["parsed_text*"],
-                        "query": baseQueryString,
-                        "tie_breaker": 0.001,
-                        "minimum_should_match": "3<80%"
-                    }
-                };
+                const queryData = parseQueryString(service.query);
+
+                const baseQuery = makeBaseQuery(queryData.terms.join(' '), {"minimum_should_match": "3<80%"});
 
                 this.fullQuery = {
                     "query": {
                         "bool": {
-                            "must": baseQuery
+                            "must": [baseQuery],
+                            // values will be populated with values from the pre-query
+                            filter: [{ids: {"values": null}}]
                         }
                     },
                     "highlight": {
@@ -77,34 +103,31 @@ angular.module('JTextMinerApp')
                     "size": this.RESULTS_AT_A_TIME,
                     "track_scores": true
                 };
-
-                const preQuery = {
-                    query: {
-                        "bool": {
-                            "must": baseQuery
-                        }
-                    },
-                    "_source": ["corpus_order_path", "children_path"],
-                    size: 10000,
-                    track_scores: true
-                };
-                if (!queryParams['sortByScore'] && this.sortByCorpusOrder) {
-                    preQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
-                    this.fullQuery["sort"] = {"corpus_order_path": {"order": "asc"}};
+                
+                function makePreQuery(baseQuery) {
+                    return {
+                        query: {
+                            bool: {
+                                must: [ baseQuery ]
+                            }
+                        },
+                        "_source": ["corpus_order_path", "children_path"],
+                        size: 10000,
+                        track_scores: true
+                    };
                 }
-                if (queryParams['lexeme']) {
-                    const lemmaList = queryParams['lexeme'].replace(/-/g, ' ').split('+');
-                    preQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
-                    this.fullQuery.query.bool["filter"] = lemmaList.map(lemma => ({"term": {"lemmas": lemma}}));
+                const preQuery = makePreQuery(baseQuery);
+                
+                if (this.sortByCorpusOrder) {
+                    const sortByCorpusDSL = {"corpus_order_path": {"order": "asc"}};
+                    preQuery["sort"] = sortByCorpusDSL;
+                    this.fullQuery["sort"] = sortByCorpusDSL;
                 }
-                if (!this.fullQuery.query.bool.hasOwnProperty("filter")) {
-                    //preQuery.query.bool["filter"] = [];{"term": {"_type": "small"}}];
-                    this.fullQuery.query.bool["filter"] = [];
-                    //{"term": {"_type": "small"}}];
+                if (queryData.lexemes.length) {
+                    const lexemeQueryDSL = queryData.lexemes.map(lemma => ({"term": {"lemmas": lemma}}));
+                    preQuery.query.bool.must = preQuery.query.bool.must.concat(lexemeQueryDSL);
+                    this.fullQuery.query.bool.must = this.fullQuery.query.bool.must.concat(lexemeQueryDSL);
                 }
-                this.fullQuery.query.bool.filter.push({
-                    ids: { "values": null }
-                });
                 return APIService.search(preQuery)
                     .then((response) => {
                         let childUnitScores = {};

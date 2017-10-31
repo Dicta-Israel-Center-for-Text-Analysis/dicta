@@ -202,6 +202,12 @@
   line-height: 24px;
 }
 
+.search-result-heading .material-icons {
+  font-size: 13px;
+  padding-bottom: 3px;
+  vertical-align: middle;
+}
+
 .search-result-text {
   line-height: 27px;
   font-size: 18px;

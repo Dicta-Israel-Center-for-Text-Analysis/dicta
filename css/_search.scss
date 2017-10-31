@@ -75,6 +75,11 @@
     @extend %fonts;
     font-size: 13px;
     line-height: 24px;
+    .material-icons {
+        font-size: 13px;
+        padding-bottom: 3px;
+        vertical-align: middle;
+    }
 }
 
 .search-result-text {

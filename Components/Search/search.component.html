@@ -78,7 +78,7 @@
         <div class="row" ng-hide="$ctrl.search.searching || !$ctrl.search.searchResponse">
             <div class="col-xs-8 search-result" ng-repeat="result in $ctrl.search.searchResults">
                 <!--<h5 class="col-xs-1" style="width: 1%">{{$ctrl.search.offset + $index + 1}}.</h5>-->
-                    <h5 class="search-result-heading">{{result._source.english_path || result._source.displayname_eng}}</h5>
+                    <a href="{{$ctrl.getLink(result._source.english_path)}}" target="_blank"><h5 class="search-result-heading">{{result._source.english_path || result._source.displayname_eng}} <i class="material-icons">launch</i></h5></a>
                     <!--<h5 class="text-left" dir="rtl">{{result._source.hebrew_path ||-->
                         <!--result._source.displayname_heb}}</h5>-->
                     <!--<h5>Score: {{result._score}}</h5>-->

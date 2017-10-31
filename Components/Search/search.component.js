@@ -256,5 +256,18 @@ jTextMinerApp.component('search',
             const highlighted = ctrl.highlight(result);
             return !highlighted.every(sentence => sentence.containsMatch);
         }
+
+        // TODO: cut-and-pasted here, should have a central place for utility functions
+        function bookChapterAndVerse(key) {
+            let matches = /\/[^/]*\/([^/]*)\/Chapter ([^/]*)(?:\/Pasuk (.*))?/.exec(key);
+            matches.shift();
+            return _.compact(matches);
+        }
+
+        ctrl.getLink = function(key) {
+            let bookChapterAndVerseNums = bookChapterAndVerse(key);
+            bookChapterAndVerseNums[0] = bookChapterAndVerseNums[0].replace(' ', '_');
+            return "http://www.sefaria.org/" + bookChapterAndVerseNums.join('.') + "?lang=he"
+        };
     }
 });

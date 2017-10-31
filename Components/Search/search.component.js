@@ -233,12 +233,11 @@ jTextMinerApp.component('search',
         };
 
         function readVariations(query) {
-            const lexemeParam = query.split(' ').filter(term => term.startsWith('lexeme:'));
-            if (lexemeParam.length === 0) return;
-            const lexemes = lexemeParam[0].substring(7).split('+');
+            const parsedQuery = search.parseQueryString(search.query);
+            if (parsedQuery.lexemes.length === 0) return;
             ctrl.variations.forEach((variation, index) => {
                 variation.variations.forEach(oneVariation => {
-                    if (lexemes.includes(oneVariation.lemma))
+                    if (parsedQuery.lexemes.includes(oneVariation.lemma))
                         ctrl.variationsSelected[index] = oneVariation.lemma;
                 })
             })
@@ -246,9 +245,8 @@ jTextMinerApp.component('search',
 
         ctrl.setVariations = function () {
             const lemmas = ctrl.variationsSelected.filter(selection => selection !== 'all');
-            search.query = search.query.split(' ').filter(term => !term.startsWith('lexeme:')).join(' ');
-            if (lemmas.length !== 0)
-                search.query += ' lexeme:' + lemmas.join('+');
+            const parsedQuery = search.parseQueryString(search.query);
+            search.query = search.stringifyQuery(parsedQuery.terms, lemmas);
             ctrl.runSearch();
         }
 

@@ -130,12 +130,17 @@ jTextMinerApp.component('search',
         };
 
         function baseHighlight(text) {
+            function highlightsToBool(text) {
+                return text.split(/\s/).map(word => word.startsWith('<mark'));
+            }
             let highlights;
             if (text.highlight) {
                 if (text.highlight['parsed_text_rep'])
-                    highlights = text.highlight['parsed_text_rep'][0].split(/\s/);
-                else if (text.highlight['parsed_text.spelling_expansion'])
-                    highlights = text.highlight['parsed_text.spelling_expansion'][0].split(/\s/);
+                    highlights = highlightsToBool(text.highlight['parsed_text_rep'][0]);
+                if (text.highlight['parsed_text.spelling_expansion']) {
+                    const expansionBools = highlightsToBool(text.highlight['parsed_text.spelling_expansion'][0]);
+                    highlights = highlights ? _.zipWith(highlights, expansionBools, (a,b) => a || b) : expansionBools;
+                }
                 else if (text.highlight['parsed_text.y']) {
                     const highlight = text.highlight['parsed_text.y'].join('...');
                     const highlightArray = [splitWords(highlight.replace(/mark>/g,'b>'))];
@@ -153,7 +158,7 @@ jTextMinerApp.component('search',
                     let highlightInSentence = false;
                     words = sentence.split(' ');
                     words.forEach(word => {
-                        const mark = highlights[counter++].startsWith('<mark');
+                        const mark = highlights[counter++];
                         if (mark) highlightInSentence = true;
                         highlightedWords.push(mark                            
                                 ? '<b>' + word + '</b>'

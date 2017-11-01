@@ -71,6 +71,7 @@ angular.module('JTextMinerApp')
             parseQueryString,
             stringifyQuery,
             search(offset) {
+                service.searchResults = [];
                 if (!offset)
                     service.offset = 0;
                 else

@@ -131,7 +131,7 @@ jTextMinerApp.component('search',
 
         function baseHighlight(text) {
             function highlightsToBool(text) {
-                return text.split(/\s/).map(word => word.startsWith('<mark'));
+                return text.split(/\s/).map(word => word.includes('<mark'));
             }
             let highlights;
             if (text.highlight) {

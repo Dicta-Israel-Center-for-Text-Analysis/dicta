@@ -46,6 +46,7 @@ jTextMinerApp.component('search',
             if (newSearchNeeded) {
                 updateUIforSearchTerm();
                 ctrl.variations = [];
+                ctrl.lastHighlights = {};
                 search.search()
                     .then(function() {
                         search.getLexemeVariations().then(
@@ -181,9 +182,10 @@ jTextMinerApp.component('search',
 
         ctrl.lastHighlights = {};
         ctrl.highlight = function (text) {
-            if (!ctrl.lastHighlights.hasOwnProperty(text.highlight.parsed_text_rep))
-                ctrl.lastHighlights[text.highlight.parsed_text_rep] = highlight(text);
-            return ctrl.lastHighlights[text.highlight.parsed_text_rep];
+            const source = text._source.parsed_text
+            if (!ctrl.lastHighlights.hasOwnProperty(source))
+                ctrl.lastHighlights[source] = highlight(text);
+            return ctrl.lastHighlights[source];
         };
 
         ctrl.updateResults = function () {

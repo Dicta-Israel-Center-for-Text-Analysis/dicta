@@ -46,14 +46,15 @@ jTextMinerApp.component('search',
             if (newSearchNeeded) {
                 updateUIforSearchTerm();
                 ctrl.variations = [];
+                ctrl.synonyms = [];
                 ctrl.lastHighlights = {};
                 search.search()
                     .then(function() {
                         search.getLexemeVariations().then(
                             results => {
-                                ctrl.variations = results.filter(result => result.variations.length > 1)
+                                ctrl.variations = results;
                                 ctrl.variationsSelected = ctrl.variations.map(v => "all");
-                                readVariations(search.query);
+                                loadVariationsFromQuery(search.query);
                             }
                         );
                         updateResultsFromParams();
@@ -239,14 +240,32 @@ jTextMinerApp.component('search',
             return search.smallUnitsOnly && search.completeResults.length > search.smallUnitResults.length
         };
 
-        function readVariations(query) {
+        function loadVariationsFromQuery(query) {
             const parsedQuery = search.parseQueryString(search.query);
-            if (parsedQuery.lexemes.length === 0) return;
+            // after the search service loaded possible variations and synonyms, convert them for the UI
+            // for each term
             ctrl.variations.forEach((variation, index) => {
+                // so far, no specific lexeme has been picked for this term
+                let selected = false;
+                let possibleSynonyms = [];
+                // possible lexemes for this term in the search query
+                const lexemesInVariation = variation.variations.map(one => one.lemma);
+                // for each lexeme related to this term in the query
                 variation.variations.forEach(oneVariation => {
-                    if (parsedQuery.lexemes.includes(oneVariation.lemma))
+                    // if this lexeme is in the list of lexemes in the query, then the UI should show this lexeme is selected
+                    if (parsedQuery.lexemes.includes(oneVariation.lemma)) {
                         ctrl.variationsSelected[index] = oneVariation.lemma;
-                })
+                        selected = true;
+                        // and the user is only interested in synonyms of this specific meaning of this term in their query
+                        variation.synonyms = oneVariation.synonyms;
+                    }
+                    else if (oneVariation.synonyms)
+                        possibleSynonyms = _.union(possibleSynonyms, oneVariation.synonyms);
+                });
+                if (!selected)
+                    variation.synonyms = possibleSynonyms;
+                // sometimes, a few of the lexemes are synonyms of each other, but don't display them
+                _.pull(variation.synonyms, ...lexemesInVariation);
             })
         }
 
@@ -274,5 +293,19 @@ jTextMinerApp.component('search',
             bookChapterAndVerseNums[0] = bookChapterAndVerseNums[0].replace(' ', '_');
             return "http://www.sefaria.org/" + bookChapterAndVerseNums.join('.') + "?lang=he"
         };
+
+        ctrl.lexemeToDescription = function (lexeme) {
+            return lexeme.replace(/[=/_[]*/g,'').replace('aramaic', '\u00a0(Aramaic)');
+        };
+
+        ctrl.lexemeToWord = function (lexeme) {
+            return lexeme.replace(/[=/_a-z[]*/g,'');
+        };
+
+        ctrl.multipleOptions = function(wordData) { return wordData.variations.length > 1 };
+
+        ctrl.relatedSearchTerms = function () {
+            return ctrl.variations && ctrl.variations.length > 0 && ctrl.variations.some(variation => variation.synonyms && variation.synonyms.length > 1);
+        }
     }
 });

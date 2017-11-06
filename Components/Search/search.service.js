@@ -70,6 +70,7 @@ angular.module('JTextMinerApp')
             searching: false,
             parseQueryString,
             stringifyQuery,
+            synonyms: {},
             search(offset) {
                 service.searchResults = [];
                 if (!offset)
@@ -186,22 +187,37 @@ angular.module('JTextMinerApp')
                                 service.lexemeList = response.data;
                                 const keys = Object.keys(service.lexemeList);
                                 keys.forEach(key => {
-                                    if (key !== key.normalize())
-                                        service.lexemeList[key.normalize()] = service.lexemeList[key];
+                                    const normalized = key.normalize();
+                                    if (key !== normalized)
+                                        service.lexemeList[normalized] = service.lexemeList[key];
+                                    if (!normalized.startsWith('<')) {
+                                        const keyTranslation = service.lexemeList[normalized].eng;
+                                        if (service.synonyms[keyTranslation])
+                                            service.synonyms[keyTranslation].push(normalized);
+                                        else
+                                            service.synonyms[keyTranslation] = [normalized];
+                                    }
                                 })
                             });
                     }
                 }
 
+                // results of searching for each term in the query, mapped to possible meanings
                 function resultToVariation(result) {
                     const lemmaGroups = _.groupBy(result, wordData=> wordData.lemma);
                     const lemmaObject = _.mapValues(lemmaGroups, lemmaData=> _.maxBy(lemmaData, wordData => wordData.count));
                     const variations = Object.values(lemmaObject);
+                    // add data from our lexeme list to each possible meaning for each term
                     variations.forEach(variation => {
                         service.lexemeListPromise.then(() => {
                             if (service.lexemeList.hasOwnProperty(variation.lemma)) {
+                                // first, add a better description
                                 const lexemeData = service.lexemeList[variation.lemma];
-                                variation.parsed_text = variation.lemma.replace(/[_=/[]/g,'') + ' (' + lexemeTypes[lexemeData.type] + ') ' + lexemeData.eng;
+                                variation.parsed_text = variation.lemma.replace(/[_=/[]/g,'').replace('aramaic', ' (Aramaic)') + ' (' + lexemeTypes[lexemeData.type] + ') ' + lexemeData.eng;
+                                // then, add possible synonyms
+                                const synonyms = service.synonyms[lexemeData.eng];
+                                if (synonyms.length > 1)
+                                    variation.synonyms = synonyms.filter(lexeme => lexeme !== variation.lemmas);
                             }
                         })
                     });
@@ -210,7 +226,7 @@ angular.module('JTextMinerApp')
 
                 loadLexemeList();
 
-                return $q.all(service.query.split(' ').filter(term => !term.includes(':'))
+                return $q.all(parseQueryString(service.query).terms
                     .map(term => APIService.wordSearch({
                         query: {
                             multi_match: {

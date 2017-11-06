@@ -112,3 +112,19 @@
 .search-full-toggle {
     padding: 15px 0;
 }
+
+.related-search-terms {
+    line-height: 24px;
+    font-size: 15px;
+    margin-right: -30px;
+    padding: 24px 0;
+    border-bottom: 1px solid $geyser;
+    h2 {
+        margin: 0 0 14px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+}
+.related-search-suggestion {
+    font-size: 17px;
+}

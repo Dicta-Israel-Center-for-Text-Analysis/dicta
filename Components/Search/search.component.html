@@ -35,7 +35,7 @@
     <div class="search-control-bar">
         <div class="col-xs-8">
             &nbsp;
-            <span ng-repeat="wordData in $ctrl.variations">
+            <span ng-repeat="wordData in $ctrl.variations | filter: $ctrl.multipleOptions">
                 <select ng-model="$ctrl.variationsSelected[$index]" ng-change="$ctrl.setVariations()">
                     <option selected value="all">All {{wordData.term}} meanings</option>
                     <option ng-repeat="lemmaData in wordData.variations" value="{{lemmaData.lemma}}">{{lemmaData.parsed_text}}</option>
@@ -69,6 +69,16 @@
                         </span>
                     </p>
                     <p ng-show="$ctrl.search.completeResults.length === 0">No results found.</p>
+                </div>
+                <div class="related-search-terms" ng-if="$ctrl.relatedSearchTerms()">
+                    <h2>Related Searches</h2>
+                    <span ng-repeat="variation in $ctrl.variations">
+                        <div ng-if="variation.synonyms.length > 0">Similar to {{variation.term}}:&#x200e;
+                            <span class="related-search-suggestion" ng-repeat="synonym in variation.synonyms track by $index"><a
+                                    ui-sref="{terms: $ctrl.lexemeToWord(synonym) + ' lexeme:'+synonym}">{{$ctrl.lexemeToDescription(synonym)}}</a>
+                                {{$index !== variation.synonyms.length - 1 ?',':''}}&#x200e; </span>
+                        </div>
+                    </span>
                 </div>
             </div>
         </div>

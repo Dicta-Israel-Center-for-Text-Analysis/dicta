@@ -1,17 +1,19 @@
 jTextMinerApp.component('editFeatureSetDialog', {
     bindings: {
-        experiment: '<',
+        featureCollection: '<',
+        featureIndex: '<',
+        classObject: '<',
         onConfirm: '&',
-        onCancel: '&',
+        onDiscard: '&',
+        runExtract: '&'
     },
     templateUrl: "Components/Classification/editFeatureSetDialog.component.html",
     controller: function ($scope, ngDialog, APIService, ClassificationService, $timeout, SelectClassService) {
     var ctrl = this;
-    var featureCollection = ctrl.experiment.featureCollection;
-    var featureIndex = 0;
+    var featureCollection = ctrl.featureCollection;
+    var featureIndex = ctrl.featureIndex;
     var featureSet = {};
     var featuresData = [];
-    this.classObject = ctrl.experiment.classes;
 
     if (featureIndex !== undefined) {
         if (featureCollection.featuresData.features !== undefined && featureCollection.featuresData.features.length > featureIndex)
@@ -23,7 +25,7 @@ jTextMinerApp.component('editFeatureSetDialog', {
     }
     else {
         $scope.newFeatureSet = true;
-        //$scope.featureSet = featureCollection.getNewFeatureSet();
+        $scope.featureSet = featureCollection.getNewFeatureSet();
     }
 
     var corpusSets = {};
@@ -34,7 +36,6 @@ jTextMinerApp.component('editFeatureSetDialog', {
         return corpusclass.selectedText;
     });
     keyListArray = keyListArray.concat(SelectClassService.testText.keys);
-    keyListArray = _.flatten(keyListArray);
     for (var i = 0; i < keyListArray.length; i++) {
         var classKeys = keyListArray[i].split(', ');
         for (var j = 0; j < classKeys.length; j++) {

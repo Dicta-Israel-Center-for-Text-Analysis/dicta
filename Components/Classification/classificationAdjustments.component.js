@@ -4,7 +4,10 @@ jTextMinerApp.component('classificationAdjustments',
         experiment: '<'
     },
     templateUrl: 'Components/Classification/classificationAdjustments.component.html',
-    controller: [
-        function() {
-        }]
+    controller: function(DialogService) {
+        const ctrl = this;
+        ctrl.removeFeatures = function () {
+            DialogService.openDialog('editFeatureSetDialog', { experiment: ctrl.experiment })
+        }
+    }
 }); 

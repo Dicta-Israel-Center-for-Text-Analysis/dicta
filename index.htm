@@ -3,6 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-103843509-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-103843509-1');
+    </script>
+
     <title>Dicta- Center of Text Analysis</title>
 
     <link rel="icon" href="/favicon.png" />
@@ -142,16 +152,6 @@
     <script type="text/javascript" src="Services/ExperimentService.js"></script>
     <script src="Services/StateService.js"></script>
     <script type="text/javascript" src="js/tiberias_tour.js"></script>
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-103843509-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
     <script src="Components/Classification/classificationControls.component.js"></script>
     <script src="Components/Classification/classificationResultSummary.component.js"></script>
     <script src="Components/Classification/classificationAdjustments.component.js"></script>

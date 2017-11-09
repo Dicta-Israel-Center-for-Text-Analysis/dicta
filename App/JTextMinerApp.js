@@ -109,14 +109,13 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
 })
 .run(function($transitions) {
     $transitions.onSuccess({}, function(transition) {
-        console.log('transition', transition.to().name, transition.params());
-        if (transition.from().name !== transition.to().name)
-            gtag('event', 'page_view', {
-                'value': transition.to().name
-            });
-        if (transition.to().name === 'search' && transition.params()[terms])
+        //console.log('transition', transition.to().name, transition.params());
+        if (transition.from().name !== transition.to().name) {
+            gtag('config', 'UA-103843509-1', {'page_path': '/' + transition.to().name});
+        }
+        if (transition.to().name === 'search.terms' && transition.params()['terms'])
             gtag('event', 'search', {
-                'value': transition.params()[terms]
+                'search_term': transition.params()['terms']
             });
     });
 });

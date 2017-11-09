@@ -226,7 +226,7 @@ angular.module('JTextMinerApp')
 
                 loadLexemeList();
 
-                return $q.all(parseQueryString(service.query).terms
+                return $q.all([service.lexemeListPromise].concat(parseQueryString(service.query).terms
                     .map(term => APIService.wordSearch({
                         query: {
                             multi_match: {
@@ -241,7 +241,10 @@ angular.module('JTextMinerApp')
                             term,
                             variations: resultToVariation(result.data.hits.hits.map(hit => hit._source))
                         }))
-                    ));
+                    )))
+                    .then(results => {
+                        return results.slice(1)
+                    });
             },
             toggleSortOrder(){
                 this.sortByCorpusOrder = !this.sortByCorpusOrder;

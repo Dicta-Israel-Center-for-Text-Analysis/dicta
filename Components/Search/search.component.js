@@ -305,7 +305,7 @@ jTextMinerApp.component('search',
         ctrl.multipleOptions = function(wordData) { return wordData.variations.length > 1 };
 
         ctrl.relatedSearchTerms = function () {
-            return ctrl.variations && ctrl.variations.length > 0 && ctrl.variations.some(variation => variation.synonyms && variation.synonyms.length > 1);
+            return ctrl.variations && ctrl.variations.length > 0 && ctrl.variations.some(variation => variation.synonyms && variation.synonyms.length > 0);
         }
     }
 });

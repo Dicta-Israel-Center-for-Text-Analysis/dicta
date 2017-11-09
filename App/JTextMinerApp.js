@@ -106,4 +106,17 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         template: '<tabs></tabs>'
     })
     
+})
+.run(function($transitions) {
+    $transitions.onSuccess({}, function(transition) {
+        console.log('transition', transition.to().name, transition.params());
+        if (transition.from().name !== transition.to().name)
+            gtag('event', 'page_view', {
+                'value': transition.to().name
+            });
+        if (transition.to().name === 'search' && transition.params()[terms])
+            gtag('event', 'search', {
+                'value': transition.params()[terms]
+            });
+    });
 });

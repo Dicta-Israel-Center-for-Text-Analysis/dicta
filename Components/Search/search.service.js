@@ -192,7 +192,7 @@ angular.module('JTextMinerApp')
                                     const normalized = key.normalize();
                                     if (key !== normalized)
                                         service.lexemeList[normalized] = service.lexemeList[key];
-                                    if (!normalized.startsWith('<')) {
+                                    if (!service.lexemeList[normalized].eng.startsWith('<un')) {
                                         const keyTranslation = service.lexemeList[normalized].eng;
                                         if (service.synonyms[keyTranslation])
                                             service.synonyms[keyTranslation].push(normalized);
@@ -218,7 +218,7 @@ angular.module('JTextMinerApp')
                                 variation.parsed_text = variation.lemma.replace(/[_=/[]/g,'').replace('aramaic', ' (Aramaic)') + ' (' + lexemeTypes[lexemeData.type] + ') ' + lexemeData.eng;
                                 // then, add possible synonyms
                                 const synonyms = service.synonyms[lexemeData.eng];
-                                if (synonyms.length > 1)
+                                if (synonyms && synonyms.length > 1)
                                     variation.synonyms = synonyms.filter(lexeme => lexeme !== variation.lemmas);
                             }
                         })

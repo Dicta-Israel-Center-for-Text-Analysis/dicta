@@ -311,5 +311,26 @@ jTextMinerApp.component('search',
         ctrl.relatedSearchTerms = function () {
             return ctrl.variations && ctrl.variations.length > 0 && ctrl.variations.some(variation => variation.synonyms && variation.synonyms.length > 0);
         }
+
+        ctrl.resultCountMessage = function () {
+            if (search.smallUnitResults.length === 0)
+                return 'No verses found, ' + search.completeResults.length + ' results found';
+            if (search.smallUnitResults.length !== search.completeResults.length)
+                return search.smallUnitResults.length  + ' verses found, ' + search.completeResults.length + ' total results found';
+            else
+                return search.smallUnitResults.length  + ' verses found';
+        }
+
+        ctrl.showingLargeUnits = function () {
+            return !search.smallUnitsOnly && search.smallUnitResults.length > 0;
+        }
+
+        ctrl.showSmallUnits = function () {
+            search.smallUnitsOnly = true;
+            $state.go('.', { allResults: false });
+            ctrl.currentPage = 1;
+            search.loadResults(1);
+
+        }
     }
 });

@@ -75,7 +75,7 @@
                     <span ng-repeat="variation in $ctrl.variations">
                         <div ng-if="variation.synonyms.length > 0">Similar to {{variation.term}}:&#x200e;
                             <span class="related-search-suggestion" ng-repeat="synonym in variation.synonyms track by $index"><a
-                                    ui-sref="{terms: $ctrl.lexemeToWord(synonym) + ' lexeme:'+synonym}">{{$ctrl.lexemeToDescription(synonym)}}</a>
+                                    ui-sref="{terms: $ctrl.makeLexemeQuery(synonym)}">{{$ctrl.lexemeToDescription(synonym)}}</a>
                                 {{$index !== variation.synonyms.length - 1 ?',':''}}&#x200e; </span>
                         </div>
                     </span>

@@ -21,7 +21,9 @@ angular.module('JTextMinerApp')
         }
 
         function stringifyQuery(terms, lexemes) {
-            const termQuery = terms.map(term => term.includes(' ') ? `"${term}"` : term ).join(' ');
+            // we don't yet support queries with quotes, and this yields suprising results for Merodach-baladan, so it's temporarily disabled
+            //const termQuery = terms.map(term => term.includes(' ') ? `"${term}"` : term ).join(' ');
+            const termQuery = terms.join(' ');
             const lexemeQuery = lexemes.length === 0 ? null : 'lexeme:' + lexemes.join('+').replace(/ /g,'-');
             return _.compact([termQuery, lexemeQuery]).join(' ');
         }

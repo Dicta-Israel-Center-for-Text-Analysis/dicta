@@ -302,6 +302,10 @@ jTextMinerApp.component('search',
             return lexeme.replace(/[=/_a-z[]*/g,'');
         };
 
+        ctrl.makeLexemeQuery = function (synonym) {
+            return search.stringifyQuery([ctrl.lexemeToWord(synonym)], [synonym]);
+        };
+
         ctrl.multipleOptions = function(wordData) { return wordData.variations.length > 1 };
 
         ctrl.relatedSearchTerms = function () {

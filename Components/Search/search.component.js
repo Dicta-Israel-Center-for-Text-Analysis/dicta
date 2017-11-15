@@ -313,6 +313,7 @@ jTextMinerApp.component('search',
         }
 
         ctrl.resultCountMessage = function () {
+            if (!search.smallUnitResults) return '';
             if (search.smallUnitResults.length === 0)
                 return 'No verses found, ' + search.completeResults.length + ' results found';
             if (search.smallUnitResults.length !== search.completeResults.length)

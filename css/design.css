@@ -12,7 +12,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -36,7 +36,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -117,7 +117,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -270,7 +270,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -377,7 +377,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -393,10 +393,63 @@
   width: 100%;
 }
 
+@font-face {
+  font-family: 'TaameyDavidCLM';
+  font-weight: normal;
+  font-style: normal;
+  src: url("../fonts/TaameyDavidCLM-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'TaameyDavidCLM';
+  font-weight: bold;
+  font-style: normal;
+  src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
+}
+
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a {
+  font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
+}
+
+.segmentation-summary, .classification-summary {
+  background-color: #F6F8F9;
+  border-radius: 3px;
+  padding: 24px 38px;
+}
+
+.classification-wizard-help {
+  color: #646464;
+  line-height: 1.5em;
+}
+
+.classification-wizard-superscript {
+  color: white;
+  background-color: #646464;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  margin-left: -19px;
+  vertical-align: top;
+}
+
+.classification-wizard-icon {
+  height: 57px;
+  width: 57px;
+}
+
+.classification-wizard-help-text {
+  margin-top: 20px;
+}
+
 /* common pages */
 .rounded-btn {
   height: 44px;
-  border-radius: 100px;
+  border-radius: 5px;
   padding: 10px 0;
   max-width: 215px;
   width: 100%;
@@ -453,10 +506,6 @@
   display: inline-block;
 }
 
-.preview-text {
-  direction: rtl;
-}
-
 .ngdialog.ngdialog-theme-default .ngdialog-content {
   background-color: transparent;
 }
@@ -482,11 +531,16 @@
 }
 
 .text-selection-rows, .preview-text {
-  height: 480px;
+  height: 380px;
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0 25px;
   line-height: 32px;
+}
+
+.text-selection-rows {
+  border-right: solid 1px #D5DCE0;
+  padding-right: 5px;
 }
 
 .preview-text-message {
@@ -508,7 +562,7 @@
 .ngdialog.ngdialog-theme-default .ngdialog-message.choose-text-dialog {
   /* margin: -1em; */
   margin-bottom: 0 !important;
-  height: 550px;
+  height: 500px;
 }
 
 .preview-name {
@@ -516,7 +570,7 @@
   display: inline-block;
   color: #fff;
   font-weight: bold;
-  width: 900px;
+  width: calc(100% - 320px);
   height: 2em;
   line-height: 1.15em;
 }
@@ -828,13 +882,15 @@
 
 .select-corpus-top-area {
   background-color: #fff;
-  border-bottom: 1px solid #D5DCE0;
+  border: 1px solid #D5DCE0;
   border-radius: 0;
+  display: flex;
 }
 
 .select-corpus-breadcrumb {
   display: inline-block;
   width: 70%;
+  height: 60px;
 }
 
 .load-saved-link {
@@ -909,6 +965,66 @@
 .classification-data-classname h4 {
   line-height: 23.1px;
   margin-top: 0;
+}
+
+.select-corpus-checkbox, .select-corpus-arrow {
+  opacity: 0.5;
+}
+
+.select-corpus-checkbox:checked, .select-corpus-arrow:checked {
+  opacity: 1;
+}
+
+:hover > * > .select-corpus-checkbox, :hover > * > .select-corpus-arrow {
+  opacity: 1;
+}
+
+.select-corpus-arrow {
+  float: right;
+}
+
+.select-corpus-tabs {
+  text-align: center;
+}
+
+.select-corpus-tabs ul {
+  padding: 0;
+}
+
+.select-corpus-tabs li {
+  padding: 10px;
+  display: inline-block;
+}
+
+.select-corpus-tabs li.active {
+  border-bottom: solid 2px #D5DCE0;
+}
+
+.select-corpus-select-all, .select-corpus-up {
+  width: 42px;
+  height: 60px;
+  border-right: solid 1px #D5DCE0;
+}
+
+.select-corpus-select-all {
+  padding: 20px 10px 10px 13px;
+}
+
+.select-corpus-up {
+  padding: 18px 10px 10px 10px;
+}
+
+.wizard-heading {
+  background-color: #222B37;
+  padding: 15px;
+  color: white;
+  text-align: center;
+}
+
+.wizard-heading .material-icons {
+  float: left;
+  color: white;
+  vertical-align: bottom;
 }
 
 /*# sourceMappingURL=design.css.map */

@@ -1,0 +1,7 @@
+<div class="text-center classification-wizard-help">
+    <img ng-if="$ctrl.step === 0" class="classification-wizard-icon" src="images/classify/Microscope-Outline.svg"/>
+    <img ng-if="$ctrl.step > 0" class="classification-wizard-icon" src="images/classify/Lowercase-Outline.svg"/>
+    <div ng-if="$ctrl.step > 0" class="classification-wizard-superscript">{{$ctrl.step}}</div>
+    <div ng-if="$ctrl.step === 0" class="classification-wizard-help-text">Select a text for classification. You may select multiple texts; when done, click “Next”</div>
+    <div ng-if="$ctrl.step > 0" class="classification-wizard-help-text">Create a class of texts by choosing from the texts on the left.</div>
+</div>

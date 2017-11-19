@@ -3,12 +3,13 @@
 @import "search";
 @import "main-page";
 @import "segmentation";
+@import "classification";
 
 /* common pages */
 
 .rounded-btn {
     height: 44px;
-    border-radius: 100px;
+    border-radius: 5px;
     padding: 10px 0;
     max-width: 215px;
     width: 100%;
@@ -62,10 +63,6 @@
     display: inline-block;
 }
 
-.preview-text {
-    direction: rtl;
-}
-
 .ngdialog.ngdialog-theme-default .ngdialog-content {
     background-color: transparent;
 }
@@ -91,12 +88,16 @@
 }
 
 .text-selection-rows, .preview-text {
-    height: 480px;
+    height: 380px;
     overflow-y: auto;
     box-sizing: border-box;
     padding: 0 25px;
     line-height: 32px;
     @extend %fonts;
+}
+.text-selection-rows {
+    border-right: solid 1px $geyser;
+    padding-right: 5px;
 }
 
 .preview-text-message {
@@ -118,7 +119,7 @@
 .ngdialog.ngdialog-theme-default .ngdialog-message.choose-text-dialog {
     /* margin: -1em; */
     margin-bottom: 0 !important;
-    height: 550px;
+    height: 500px;
 }
 
 .preview-name {
@@ -126,7 +127,7 @@
     display: inline-block;
     color: #fff;
     font-weight: bold;
-    width: 900px;
+    width: calc(100% - 320px);
     height: 2em;
     line-height: 1.15em;
 }
@@ -384,12 +385,14 @@
 
 .select-corpus-top-area {
     background-color: #fff;
-    border-bottom: 1px solid $geyser;
+    border: 1px solid $geyser;
     border-radius: 0;
+    display: flex;
 }
 .select-corpus-breadcrumb {
     display: inline-block;
     width: 70%;
+    height: 60px;
 }
 
 .load-saved-link {
@@ -456,5 +459,54 @@
     h4 {
       line-height: 23.1px;
       margin-top: 0;
+    }
+}
+
+.select-corpus-checkbox, .select-corpus-arrow {
+    opacity: 0.5;
+    &:checked {
+        opacity: 1;
+    }
+}
+:hover > * > .select-corpus-checkbox, :hover > * > .select-corpus-arrow {
+    opacity: 1;
+}
+.select-corpus-arrow {
+    float: right;
+}
+
+.select-corpus-tabs {
+    text-align: center;
+    ul {
+        padding: 0;
+    }
+    li {
+        padding: 10px;
+        display: inline-block;
+        &.active {
+            border-bottom: solid 2px $geyser;
+        }
+    }
+}
+.select-corpus-select-all, .select-corpus-up {
+    width: 42px;
+    height: 60px;
+    border-right: solid 1px $geyser;
+}
+.select-corpus-select-all {
+    padding: 20px 10px 10px 13px;
+}
+.select-corpus-up {
+    padding: 18px 10px 10px 10px;
+}
+.wizard-heading {
+    background-color: $ebony-clay;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    .material-icons {
+        float: left;
+        color: white;
+        vertical-align: bottom;
     }
 }

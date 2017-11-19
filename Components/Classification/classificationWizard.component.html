@@ -1,0 +1,27 @@
+<div>
+    <div class="dialog-close">
+        <span ng-click="$ctrl.onCancel()"><i class="material-icons">close</i></span>
+    </div>
+    <div class="wizard-heading"><a ng-click="$ctrl.back()" ng-if="$ctrl.step !== 0"><i class="material-icons">keyboard_arrow_left</i></a> {{$ctrl.stepHeading}}</div>
+    <choose-text-dialog ng-show="$ctrl.step === 0" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 1" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 2" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 3" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 4" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 5" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 6" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 7" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 8" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <choose-text-dialog ng-show="$ctrl.step === 9" embedded="true" explanation-component="$ctrl.explanation"
+                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+    <div ng-show="$ctrl.step === 10" class="text-center ngdialog-message" style="padding: 70px">10 classes are not yet supported. Please contact us if you need support for more classes. <a ng-click="$ctrl.back()">Go back</a></div>
+</div>

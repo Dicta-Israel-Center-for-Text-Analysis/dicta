@@ -7,7 +7,9 @@ jTextMinerApp.component('chooseTextDialog', {
         saveMessage: '<',
         namingMessage: '<',
         startingMode: '<',
-        hideCancel: '<'
+        hideCancel: '<',
+        embedded: '<',
+        explanationComponent: '<'
     },
     templateUrl: 'Components/Shared/TextSelection/chooseTextDialog.component.html',
     controller: function ($scope, SelectClassService, UserService) {

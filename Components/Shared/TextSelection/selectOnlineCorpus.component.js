@@ -1,7 +1,8 @@
 jTextMinerApp.component('selectOnlineCorpus', {
         bindings: {
             selectionText: '=',
-            onLoadSaved: '&'
+            onLoadSaved: '&',
+            explanationComponent: '<'
         },
         templateUrl: 'Components/Shared/TextSelection/selectOnlineCorpus.component.html',
         controller: function (TreeService, SelectClassService, APIService, UserService) {
@@ -166,6 +167,15 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 recalculatePartials();
                 ctrl.mode = 'select';
                 ctrl.onLoadSaved({saved: saveClass});
+            };
+
+            ctrl.goUp = function () {
+                if (ctrl.breadCrumbs.length > 1)
+                    ctrl.selectCrumb(ctrl.breadCrumbs.length - 1);
+            };
+
+            ctrl.toggleAll = function() {
+                
             }
         }
 });

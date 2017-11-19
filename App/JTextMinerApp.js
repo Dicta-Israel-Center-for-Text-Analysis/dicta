@@ -1,4 +1,4 @@
-﻿//https://github.com/cornflourblue/angu-fixed-header-table
+//https://github.com/cornflourblue/angu-fixed-header-table
 //https://www.pointblankdevelopment.com.au/blog/angularjs-fixed-header-scrollable-table-directive
 var jTextMinerApp = angular.module('JTextMinerApp', ['ui.router', 'ngResource', 'anguFixedHeaderTable', 'ui.bootstrap', 'ngDialog', 'ui.bootstrap.tabs', 'ui.indeterminate', 'ngSanitize', 'angucomplete-alt', 'ui.bootstrap.contextMenu']);
 // set default values for all dialogs
@@ -80,6 +80,24 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
             // selectControls: { component: 'bibleViewSelectedText' },
             main: { component: 'bibleViewSelectedText' }
 
+        }
+    })
+    .state('classificationStart', {
+        url: '/classifyStart',
+        component: 'classificationStart'
+    })
+    .state('classificationStart.wizard', {
+        url: '/wizard/{step}',
+        params: {
+            step: {
+                value: '0',
+                dynamic: true
+            }
+        },
+        onEnter: function(DialogService, $state) {
+            DialogService.openDialog('classificationWizard').finally(function() {
+                $state.go('^');
+            });
         }
     })
     .state('bibleInterface.classify', {

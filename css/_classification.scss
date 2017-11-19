@@ -1,0 +1,31 @@
+@import "base-design";
+
+.classification-wizard-help {
+    color: #646464;
+    line-height: 1.5em;
+}
+
+.classification-wizard-superscript {
+    color:white;
+    @extend %fonts;
+    background-color: #646464;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 12px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-top: -9px;
+    margin-left: -19px;
+    vertical-align: top;
+}
+
+.classification-wizard-icon {
+    height: 57px;
+    width: 57px;
+}
+
+.classification-wizard-help-text {
+    margin-top: 20px;
+}

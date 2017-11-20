@@ -192,7 +192,7 @@ angular.module('JTextMinerApp')
                                     const normalized = key.normalize();
                                     if (key !== normalized)
                                         service.lexemeList[normalized] = service.lexemeList[key];
-                                    if (!service.lexemeList[normalized].eng.startsWith('<un')) {
+                                    if (!service.lexemeList[normalized].eng.startsWith('<')) {
                                         const keyTranslation = service.lexemeList[normalized].eng;
                                         if (service.synonyms.hasOwnProperty(keyTranslation))
                                             service.synonyms[keyTranslation].push(normalized);

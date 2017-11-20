@@ -5,7 +5,7 @@ jTextMinerApp.component('classificationWizard',
         onConfirm: '&'
     },
     templateUrl: 'Components/Classification/classificationWizard.component.html',
-    controller: function(StateService, ClassificationService, $state) {
+    controller: function(StateService, ClassificationService, $state, SelectClassService) {
         const ctrl = this;
         ctrl.experiment = StateService.getOrCreate('classificationExperiment', () => ClassificationService.newExperiment());
 
@@ -37,6 +37,30 @@ jTextMinerApp.component('classificationWizard',
             $state.go('.',{ step: ctrl.step });
         };
 
+        ctrl.runExperiment = function () {
+            ctrl.onConfirm();
+            $state.go('bibleInterface.classify');
+            ctrl.experiment.runClassification();
+        };
 
+        ctrl.saveText = function (text) {
+            SelectClassService.setTestText(text);
+        };
+
+        ctrl.saveClass = function (classNum, classData) {
+            if (classNum + 1 > ctrl.experiment.classes.Corpus_classes.length)
+                ctrl.experiment.addClass(classData);
+            else
+                ctrl.experiment.updateClass(classNum, classData);
+        };
+
+        ctrl.getText = function () {
+            return SelectClassService.testText;
+        };
+
+        ctrl.getClass = function (index) {
+            if (index < ctrl.experiment.classes.Corpus_classes.length)
+                return ctrl.experiment.classes.Corpus_classes[index].text;
+        }
     }
 }); 

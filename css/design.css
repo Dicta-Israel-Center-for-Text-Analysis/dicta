@@ -520,6 +520,7 @@
   background-color: #222B37;
   border: solid 1px #fff;
   padding: 10px;
+  display: flex;
 }
 
 .dialog-close {
@@ -570,7 +571,7 @@
   display: inline-block;
   color: #fff;
   font-weight: bold;
-  width: calc(100% - 320px);
+  flex: auto;
   height: 2em;
   line-height: 1.15em;
 }
@@ -753,8 +754,9 @@
 .class-label {
   font-size: 15px;
   font-weight: bold;
-  line-height: 24px;
-  display: inline-block;
+  line-height: 36px;
+  display: inline;
+  margin-top: 20px;
   padding: 10px;
 }
 
@@ -762,6 +764,10 @@
   font-size: inherit;
   font-weight: inherit;
   margin: inherit;
+}
+
+.class-label h3 {
+  display: inline;
 }
 
 .class-label h4 {

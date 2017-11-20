@@ -5,6 +5,8 @@ jTextMinerApp.component('chooseTextDialog', {
         className: '<',
         startingText: '<',
         saveMessage: '<',
+        alternative: '<',
+        alternativeAction: '&',
         namingMessage: '<',
         startingMode: '<',
         hideCancel: '<',
@@ -58,7 +60,14 @@ jTextMinerApp.component('chooseTextDialog', {
             }
         }
 
-        ctrl.confirm = function() {
+        function dispatch(data, alternative) {
+            if (alternative)
+                ctrl.alternativeAction(data);
+            else
+                ctrl.onConfirm(data);
+        }
+
+        ctrl.confirm = function(alternative) {
             let result;
             switch(ctrl.actionMode) {
                 case 'SelectOnlineCorpus': result = ctrl.selectionText; break;
@@ -76,10 +85,10 @@ jTextMinerApp.component('chooseTextDialog', {
                 result.className = ctrl.className;
             if (result.hasOwnProperty("runChunking"))
                 result.runChunking().then(function() {
-                    ctrl.onConfirm({confirmData: result});
+                    dispatch({confirmData: result}, alternative);
                 });
             else
-                ctrl.onConfirm({confirmData: result});
+                dispatch({confirmData: result}, alternative);
             UserService.addRecentSelection({
                 title: result.title,
                 subtitle: result.subtitle,
@@ -87,7 +96,7 @@ jTextMinerApp.component('chooseTextDialog', {
                 time: Date.now(),
                 text: result
             });
-        }
+        };
 
         ctrl.loadSaved = function (saved) {
             ctrl.description = (saved && saved.subtitle) ? saved.title : null;

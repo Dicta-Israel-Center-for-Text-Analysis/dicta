@@ -2,7 +2,7 @@
     <div class="main-page-controls">
         <div class="main-page-selection-summary">
             <div class="search-top-left">
-                <span class="top-back-arrow" ui-sref="bibleFrontpage"><i class="material-icons">keyboard_arrow_left</i></span>
+                <span class="top-back-arrow" ui-sref="classificationStart"><i class="material-icons">keyboard_arrow_left</i></span>
                 <span class="small-logo">Dicta<sup>Bible</sup></span>
             </div>
             <h1>{{$ctrl.getSelection()}}</h1>
@@ -19,15 +19,15 @@
                     Classify a Text</a>
                 <ui-view name="classifyControls"></ui-view>
             </li>
-            <li ui-sref-active="active-tab" ui-sref="bibleInterface.segment">
-                <a><i class="material-icons">content_copy</i>
-                    Source Criticism</a>
-                <ui-view name="segmentControls"></ui-view>
-            </li>
-            <li ui-sref-active="active-tab" ui-sref="information">
-                <a><i class="material-icons">info</i>
-                    Information</a>
-            </li>
+            <!--<li ui-sref-active="active-tab" ui-sref="bibleInterface.segment">-->
+                <!--<a><i class="material-icons">content_copy</i>-->
+                    <!--Source Criticism</a>-->
+                <!--<ui-view name="segmentControls"></ui-view>-->
+            <!--</li>-->
+            <!--<li ui-sref-active="active-tab" ui-sref="information">-->
+                <!--<a><i class="material-icons">info</i>-->
+                    <!--Information</a>-->
+            <!--</li>-->
         </ul>
     </div>
     <div class="container-fluid">

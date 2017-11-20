@@ -4,24 +4,60 @@
     </div>
     <div class="wizard-heading"><a ng-click="$ctrl.back()" ng-if="$ctrl.step !== 0"><i class="material-icons">keyboard_arrow_left</i></a> {{$ctrl.stepHeading}}</div>
     <choose-text-dialog ng-show="$ctrl.step === 0" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Save Text'"
+                        starting-text="$ctrl.getText()"
+                        on-confirm="$ctrl.saveText(confirmData);$ctrl.nextStep()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 1" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Save First Class'"
+                        starting-text="$ctrl.getClass(0)"
+                        on-confirm="$ctrl.saveClass(0,confirmData);$ctrl.nextStep()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 2" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(1)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(1,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(1,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 3" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(2)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(2,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(2,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 4" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(3)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(3,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(3,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 5" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(4)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(4,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(4,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 6" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(5)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(5,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(5,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 7" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(6)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(6,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(6,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 8" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(7)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(7,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(7,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <choose-text-dialog ng-show="$ctrl.step === 9" embedded="true" explanation-component="$ctrl.explanation"
-                        on-confirm="$ctrl.nextStep()"></choose-text-dialog>
+                        save-message="'Classify'"
+                        starting-text="$ctrl.getClass(8)"
+                        alternative="'Add another class'"
+                        alternative-action="$ctrl.saveClass(8,confirmData);$ctrl.nextStep()"
+                        on-confirm="$ctrl.saveClass(8,confirmData);$ctrl.runExperiment()"></choose-text-dialog>
     <div ng-show="$ctrl.step === 10" class="text-center ngdialog-message" style="padding: 70px">10 classes are not yet supported. Please contact us if you need support for more classes. <a ng-click="$ctrl.back()">Go back</a></div>
 </div>

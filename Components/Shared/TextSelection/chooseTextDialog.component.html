@@ -40,6 +40,7 @@
                        type="text" ng-model="$ctrl.description" autofocus>
             </form>
         </div>
+        <div style="display: inline-block" ng-if="$ctrl.alternative"><a ng-click="$ctrl.confirm(true)">{{$ctrl.alternative}}</a></div>
         <button type="button" class="rounded-btn btn-green"
                 ng-click="$ctrl.confirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>

@@ -73,7 +73,7 @@
                               saved-selections="$ctrl.UserService.savedSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
         </div>
         <div ng-show="$ctrl.mode == 'recent'" class="text-selection-rows">
-            <saved-data-table heading="'RECENT SELECTIONS'" expanded="false"
+            <saved-data-table heading="'RECENT SELECTIONS'" expanded="true"
                               saved-selections="$ctrl.UserService.recentSelections" on-saved-data-selected="$ctrl.saveClass(text)"></saved-data-table>
         </div>
     </div>

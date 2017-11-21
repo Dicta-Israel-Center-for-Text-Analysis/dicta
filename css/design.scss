@@ -515,3 +515,22 @@
         vertical-align: bottom;
     }
 }
+
+.edit-featureset-dialog {
+    h1 {
+        color: #646464;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 22px;
+    }
+    .material-icons {
+        vertical-align: bottom;
+    }
+    feature-table {
+        max-height: 500px;
+        margin-bottom: 30px;
+        overflow-y: auto;
+        display: block;
+        will-change: transform;
+    }
+}

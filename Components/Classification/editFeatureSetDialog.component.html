@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" style="background-color: #fff">
+﻿<div class="edit-featureset-dialog container-fluid" style="background-color: #fff">
     <div class="row">
         <div class="col-xs-2">
             <h1>Remove words and features</h1>
@@ -6,8 +6,8 @@
             <div ng-repeat="category in $ctrl.categories">
                 <input title="{{category}}" type="checkbox" ng-model="$ctrl.selectedCategories[category]">  {{category}}
             </div>
-            <div>Reset</div>
-            <div><button class="rounded-btn btn-default"><i class="material-icons">refresh</i> Update</button></div>
+            <!--<div>Reset</div>-->
+            <div><button class="rounded-btn btn-blue" ng-click="saveFeatureSetAndReturn()"><i class="material-icons">refresh</i> Update</button></div>
         </div>
         <div class="col-xs-10">
             <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">

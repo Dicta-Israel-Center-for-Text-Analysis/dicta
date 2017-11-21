@@ -174,7 +174,16 @@ jTextMinerApp.component('selectOnlineCorpus', {
             };
 
             ctrl.toggleAll = function() {
-                
+                const allSelected = ctrl.treeNode.every(node => ctrl.isNodeSelected(node.key));
+                ctrl.treeNode.forEach(node => {
+                    const key = node.key;
+                    if (!allSelected) {
+                        if (!ctrl.isNodeSelected(key))
+                            ctrl.toggleSelection(key);
+                    }
+                    else
+                        ctrl.toggleSelection(key);
+                })
             }
         }
 });

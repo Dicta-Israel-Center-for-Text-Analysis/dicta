@@ -170,7 +170,7 @@ jTextMinerApp.component('selectOnlineCorpus', {
 
             ctrl.goUp = function () {
                 if (ctrl.breadCrumbs.length > 1)
-                    ctrl.selectCrumb(ctrl.breadCrumbs.length - 1);
+                    ctrl.selectCrumb(ctrl.breadCrumbs.length - 2);
             };
 
             ctrl.toggleAll = function() {

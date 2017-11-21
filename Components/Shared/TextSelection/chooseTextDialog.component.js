@@ -17,11 +17,20 @@ jTextMinerApp.component('chooseTextDialog', {
     controller: function ($scope, SelectClassService, UserService) {
         const ctrl = this;
         ctrl.selectionText = ctrl.startingText;
+        ctrl.editingDescription = false;
+        ctrl.description = '';
 
         ctrl.description = (ctrl.startingText && ctrl.startingText.subtitle) ? ctrl.startingText.title : null;
         ctrl.addDescription = function () {
-            ctrl.description = '';
+            ctrl.editingDescription = true;
         };
+        ctrl.blurDescription = function () {
+            ctrl.editingDescription = false;
+        };
+        ctrl.hasDescription = function () {
+            return !_.isEmpty(ctrl.description);
+        };
+        
         //ctrl.selectedKeys = [];
 
         ctrl.actionMode = ctrl.startingMode || 'SelectOnlineCorpus';

@@ -367,6 +367,9 @@
 }
 .choose-dialog-add-description {
     display: inline-block;
+    @extend %fonts;
+    align-self: center;
+    padding: 10px;
     color: $porcelain;
     a {
         color: inherit;
@@ -533,4 +536,16 @@
         display: block;
         will-change: transform;
     }
+}
+
+.alternative-action {
+    @extend %fonts;
+    display: inline-block;
+    align-self: center;
+    color: #fff;
+    a {
+        font-weight: bold;
+        color: inherit;
+    }
+    padding: 0px 10px;
 }

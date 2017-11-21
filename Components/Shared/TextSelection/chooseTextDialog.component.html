@@ -33,14 +33,16 @@
             <p class="your-selection">YOUR SELECTION:</p>
             <p>{{$ctrl.getProposedName()}}</p>
         </div>
-        <div ng-show="$ctrl.description === null" class="choose-dialog-add-description"><a ng-click="$ctrl.addDescription()">Add Description</a></div>
-        <div ng-show="$ctrl.description !== null" class="choose-dialog-add-description">
+        <div ng-show="!$ctrl.editingDescription" class="choose-dialog-add-description"><a ng-click="$ctrl.addDescription()">
+            {{ $ctrl.hasDescription() ? $ctrl.description: 'Add Description'}}
+        </a></div>
+        <div ng-show="$ctrl.editingDescription" class="choose-dialog-add-description">
             <form>
                 <input class="add-description-input" title="Add Description" placeholder="Choose a description"
-                       type="text" ng-model="$ctrl.description" autofocus>
+                       type="text" ng-model="$ctrl.description" autofocus ng-blur="$ctrl.blurDescription()">
             </form>
         </div>
-        <div style="display: inline-block" ng-if="$ctrl.alternative"><a ng-click="$ctrl.confirm(true)">{{$ctrl.alternative}}</a></div>
+        <div class="alternative-action" ng-if="$ctrl.alternative"><a ng-click="$ctrl.confirm(true)">{{$ctrl.alternative}}</a> or</div>
         <button type="button" class="rounded-btn btn-green"
                 ng-click="$ctrl.confirm()"><span ng-if="!$ctrl.saveMessage">Save</span>{{$ctrl.saveMessage}}
         </button>

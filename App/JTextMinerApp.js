@@ -94,8 +94,8 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
                 dynamic: true
             }
         },
-        onEnter: function(DialogService, $state) {
-            DialogService.openDialog('classificationWizard').catch(function() {
+        onEnter: function(DialogService, $state, $transition$) {
+            DialogService.openDialog('classificationWizard', { $transition$ }).catch(function() {
                 $state.go('^');
             });
         }

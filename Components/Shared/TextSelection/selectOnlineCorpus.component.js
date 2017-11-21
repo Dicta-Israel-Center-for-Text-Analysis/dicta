@@ -22,16 +22,15 @@ jTextMinerApp.component('selectOnlineCorpus', {
                 ctrl.corpusTree = TreeService.corpusTree;
                 ctrl.treeNode = ctrl.corpusTree;
                 initBreadCrumbs();
-            });
 
-            // based on http://stackoverflow.com/questions/14514461/how-to-bind-to-list-of-checkbox-values-with-angularjs
-            // list selected nodes by key
-            if (ctrl.selectionText && ctrl.selectionText.keys)
-                ctrl.selectedNodes = ctrl.selectionText.keys.map(function(key){return key.substring("/Dicta Corpus/".length)});
-            else
-                ctrl.selectedNodes = [];
-            recalculatePartials();
-            updatePreview(ctrl.selectionText);
+                // list selected nodes by key
+                if (ctrl.selectionText && ctrl.selectionText.keys)
+                    ctrl.selectedNodes = ctrl.selectionText.keys.map(function(key){return key.substring("/Dicta Corpus/".length)});
+                else
+                    ctrl.selectedNodes = [];
+                recalculatePartials();
+                updatePreview(ctrl.selectionText);
+            });
 
             // end of tree setup; helper functions come next
 

@@ -27,11 +27,23 @@
         INITIAL_FEATURE_SET.id = 0;
         INITIAL_FEATURE_SET.featureSetName = 'Default name';
 
+        const INITIAL_MORPHOLOGY = _.assign(getNewFeatureSet(), {
+            id: 1,
+            featureSetName: 'Morphology',
+            tokenizerType: 'Morphology'
+        });
+
+        const INITIAL_SYNTAX = _.assign(getNewFeatureSet(), {
+            id: 2,
+            featureSetName: 'SyntaxClause',
+            tokenizerType: 'SyntaxClause'
+        });
+
         var collection = {
             totalNumberOfFeatures: 0,
             featuresData: {},
-            FeatureSet_maxId: 1,
-            Feature_sets: [INITIAL_FEATURE_SET],
+            FeatureSet_maxId: 3,
+            Feature_sets: [INITIAL_FEATURE_SET, INITIAL_MORPHOLOGY/*, INITIAL_SYNTAX*/],
             getNewFeatureSet: getNewFeatureSet
         };
 

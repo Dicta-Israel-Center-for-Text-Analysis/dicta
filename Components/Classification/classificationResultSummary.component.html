@@ -5,7 +5,7 @@
             <div class="classification-summary-class-label class-color-{{$index}}">{{classData.title}}</div>
             <div>
             <span ng-repeat="feature in classData.features" class="badge">
-                <a ng-click="$ctrl.showFeatureExamples(feature)">{{feature.name}}</a>
+                <a ng-click="$ctrl.showFeatureExamples(feature)">{{$ctrl.prettyPrint(feature.name)}}</a>
             </span>
             </div>
         </div>

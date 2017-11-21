@@ -25,6 +25,10 @@ jTextMinerApp.component('classificationResultSummary',
             return ctrl.cache;
         };
 
+        ctrl.prettyPrint = function (name) {
+            return prettyPrintMorphology(name);
+        };
+
         ctrl.showFeatureExamples = function () {
             debugger;
         }

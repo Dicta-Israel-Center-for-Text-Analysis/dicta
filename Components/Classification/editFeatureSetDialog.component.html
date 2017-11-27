@@ -3,8 +3,11 @@
         <div class="col-xs-2">
             <h1>Remove words and features</h1>
             <div><i class="material-icons">info</i> Choose what to exclude from analysis</div>
-            <div ng-repeat="category in $ctrl.categories">
-                <input title="{{category}}" type="checkbox" ng-model="$ctrl.selectedCategories[category]">  {{category}}
+            <div ng-repeat="category in $ctrl.experiment.featureCollection.allFeatureSetNames">
+                <input title="{{category}}" type="checkbox"
+                       ng-checked="$ctrl.experiment.featureCollection.allFeatureSets[category].selected"
+                       ng-click="$ctrl.experiment.featureCollection.toggleFeatureSet(category)">
+                {{category}}
             </div>
             <!--<div>Reset</div>-->
             <div><button class="rounded-btn btn-blue" ng-click="saveFeatureSetAndReturn()"><i class="material-icons">refresh</i> Update</button></div>

@@ -1,6 +1,7 @@
 ﻿jTextMinerApp.factory('FeatureCollectionFactory', function ($rootScope) {
-    return { newCollection: function () {
-        var DEFAULT_FEATURE_SET = {
+return {
+    newCollection: function (collectionType) {
+        const DEFAULT_FEATURE_SET = {
             tokenizerType: 'Word',
             featureType: 'Unigram',
             normalizerType: 'Frequency',
@@ -23,9 +24,10 @@
             return angular.copy(DEFAULT_FEATURE_SET);
         }
 
-        var INITIAL_FEATURE_SET = getNewFeatureSet();
-        INITIAL_FEATURE_SET.id = 0;
-        INITIAL_FEATURE_SET.featureSetName = 'Default name';
+        const INITIAL_FEATURE_SET = _.assign(getNewFeatureSet(),{
+            id: 0,
+            featureSetName: 'Words'
+        });
 
         const INITIAL_MORPHOLOGY = _.assign(getNewFeatureSet(), {
             id: 1,
@@ -39,13 +41,52 @@
             tokenizerType: 'SyntaxClause'
         });
 
-        var collection = {
+        const collection = {
             totalNumberOfFeatures: 0,
             featuresData: {},
-            FeatureSet_maxId: 3,
-            Feature_sets: [INITIAL_FEATURE_SET, INITIAL_MORPHOLOGY/*, INITIAL_SYNTAX*/],
+            FeatureSet_maxId: 1,
+            Feature_sets: [INITIAL_FEATURE_SET],
             getNewFeatureSet: getNewFeatureSet
         };
+
+        if (collectionType === 'Classification') {
+            collection.Feature_sets.push(INITIAL_MORPHOLOGY);
+            //collection.Feature_sets.push(INITIAL_SYNTAX);
+            collection.FeatureSet_maxId = 3;
+            collection.allFeatureSets = {
+                'Words': {
+                    set: INITIAL_FEATURE_SET,
+                    selected: true
+                },
+                'Morphology': {
+                    set: INITIAL_MORPHOLOGY,
+                    selected: true
+                },
+                'Syntax': {
+                    set: INITIAL_SYNTAX,
+                    selected: false //true
+                }
+            };
+            collection.allFeatureSetNames = ['Words', 'Morphology', 'Syntax'];
+            collection.toggleFeatureSet = function (name, selected) {
+                if (!collection.allFeatureSets.hasOwnProperty(name))
+                    throw "Incorrect feature set name passed to toggleFeatureSet.";
+                const setData = collection.allFeatureSets[name];
+                const state = setData.selected;
+                if (selected === state) return;
+                const newState = (selected === undefined) ? !state : !!selected;
+                if (newState) {
+                    collection.Feature_sets.push(setData.set);
+                    collection.FeatureSet_maxId++;
+                }
+                else {
+                    const index = collection.Feature_sets.indexOf(setData.set);
+                    collection.Feature_sets.splice(index, 1);
+                    collection.FeatureSet_maxId--;
+                }
+                setData.selected = newState;
+            }
+        }
 
         // does this code work?
         collection.updateTotalNumberOfFeatures = function (item) {

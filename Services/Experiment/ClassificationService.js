@@ -48,6 +48,10 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                     if (experiment.listener)
                         experiment.listener(response);
                     return response;
+                })
+                .catch(() => {
+                    experiment.setError('Server failed.');
+                    experiment.inProgress = false;
                 });
         }
 
@@ -311,7 +315,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
         }
 
         let experiment = {
-            featureCollection: FeatureCollectionFactory.newCollection(),
+            featureCollection: FeatureCollectionFactory.newCollection('Classification'),
             Classification_CrossValidationFolds: 10,
             Classification_isKeepingChunksFromSameFileTogether: false,
             Classification_TestSetExperimentType: 'Unknown',

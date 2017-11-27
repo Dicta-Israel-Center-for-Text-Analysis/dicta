@@ -65,6 +65,9 @@
     <h1 class="main-heading">Classify</h1>
 </div>
     <in-progress progress-flag="$ctrl.experiment.inProgress"></in-progress>
+    <div ng-show="$ctrl.experiment.error">
+        {{$ctrl.experiment.errorMsg}}
+    </div>
 <div ng-show="!$ctrl.experiment.inProgress && testSetChunks.length > 0">
     <chunk-bar chunks="$ctrl.chunkBarData"></chunk-bar>
     <classification-result-summary experiment="$ctrl.experiment"></classification-result-summary>

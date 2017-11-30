@@ -1,4 +1,4 @@
-﻿<table class="table table-striped feature-set-table">
+﻿<table class="table table-striped feature-set-table" ng-if="$ctrl.features && $ctrl.features.length > 0">
     <tr class="vfeature_content">
         <td><a href="" ng-click="sortClick('name')">Feature <span ng-class="arrowClass('name')"></span></a></td>
         <td><a href="" ng-click="sortClick('className')">Class <span ng-class="arrowClass('className')"></span></a></td>
@@ -24,3 +24,6 @@
     </tr>
 
 </table>
+<div class="feature-set-table-empty" ng-if="!$ctrl.features || $ctrl.features.length === 0">
+    No features found.
+</div>

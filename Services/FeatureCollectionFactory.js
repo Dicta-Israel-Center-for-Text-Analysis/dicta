@@ -46,7 +46,8 @@ return {
             featuresData: {},
             FeatureSet_maxId: 1,
             Feature_sets: [INITIAL_FEATURE_SET],
-            getNewFeatureSet: getNewFeatureSet
+            getNewFeatureSet: getNewFeatureSet,
+            collectionType
         };
 
         if (collectionType === 'Classification') {
@@ -125,6 +126,23 @@ return {
             $rootScope.$broadcast("featureSetDataUpdated");
         }
 
+        collection.copyData = function(source) {
+            collection.totalNumberOfFeatures = source.totalNumberOfFeatures;
+            collection.featuresData = _.cloneDeep(source.featuresData);
+            collection.FeatureSet_maxId = source.FeatureSet_maxId;
+            collection.Feature_sets = _.cloneDeep(source.Feature_sets);
+            collection.allFeatureSets = _.cloneDeep(source.allFeatureSets);
+        };
+
         return collection;
+    },
+    duplicateCollection(source) {
+        const destination = this.newCollection(source.collectionType);
+        destination.totalNumberOfFeatures = source.totalNumberOfFeatures;
+        destination.featuresData = _.cloneDeep(source.featuresData);
+        destination.FeatureSet_maxId = source.FeatureSet_maxId;
+        destination.Feature_sets = _.cloneDeep(source.Feature_sets);
+        destination.allFeatureSets = _.cloneDeep(source.allFeatureSets);
+        return destination;
     }
 }});

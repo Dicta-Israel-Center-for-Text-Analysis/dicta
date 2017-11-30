@@ -29,3 +29,30 @@
 .classification-wizard-help-text {
     margin-top: 20px;
 }
+
+.edit-featureset-dialog-categories {
+    border-top: 1px $light-slate-grey solid;
+}
+.edit-featureset-dialog-category {
+    padding: 10px;
+    &.category-active {
+        background-color: #eee;
+    }
+    border-bottom: 1px $light-slate-grey solid;
+}
+
+.edit-featureset-dialog-controls {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+.edit-featureset-dialog-update {
+    margin-top: auto;
+}
+.edit-featureset-dialog-features {
+    padding-top: 20px;
+}
+.feature-set-table-empty {
+    text-align: center;
+    padding: 20px;
+}

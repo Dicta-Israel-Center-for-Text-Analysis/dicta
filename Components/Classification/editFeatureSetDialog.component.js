@@ -5,26 +5,31 @@ jTextMinerApp.component('editFeatureSetDialog', {
         onCancel: '&',
     },
     templateUrl: "Components/Classification/editFeatureSetDialog.component.html",
-    controller: function ($scope, ngDialog, APIService, ClassificationService, $timeout, SelectClassService) {
-    var ctrl = this;
-    var featureCollection = ctrl.experiment.featureCollection;
-    var featureIndex = 0;
-    var featureSet = {};
-    var featuresData = [];
-    this.classObject = ctrl.experiment.classes;
+    controller: function ($scope, $timeout, SelectClassService, FeatureCollectionFactory) {
+    const ctrl = this;
+    ctrl.featureCollection = FeatureCollectionFactory.duplicateCollection(ctrl.experiment.featureCollection);
+    let individualFeaturesData = {};
+    ctrl.classObject = ctrl.experiment.classes;
 
-    if (featureIndex !== undefined) {
-        if (featureCollection.featuresData.features !== undefined && featureCollection.featuresData.features.length > featureIndex)
-            featuresData = featureCollection.featuresData.features[featureIndex];
-        featureSet = featureCollection.Feature_sets[featureIndex];
-        $scope.newFeatureSet = false;
-        $scope.featureSet = angular.copy(featureSet);
-        $scope.featuresData = angular.copy(featuresData);
+    if (ctrl.featureCollection.featuresData.features !== undefined)
+        ctrl.featureCollection.featuresData.features.forEach(initializeFeatureSet);
+
+    function initializeFeatureSet(featuresList, index) {
+        // Surprisingly, the featureSetId returned with every feature is the index of the featureSet in the request
+        // The ID field in the request is ignored
+        // Instead, we rely on the index of the feature sets staying consistent with the extracted features.
+        // We must therefore rerun extraction immediately after closing this dialog
+        const featureSetKey = _.findKey(ctrl.experiment.featureCollection.allFeatureSets, setData => setData.set.tokenizerType
+                 === ctrl.experiment.featureCollection.Feature_sets[index].tokenizerType);
+        individualFeaturesData[featureSetKey] = featuresList;
     }
-    else {
-        $scope.newFeatureSet = true;
-        //$scope.featureSet = featureCollection.getNewFeatureSet();
-    }
+
+    ctrl.newFeatureSet = false;
+    ctrl.featuresData = individualFeaturesData;
+
+    // if this component would be used to edit a new feature set, use these lines:
+    // ctrl.newFeatureSet = true;
+    // ctrl.featureSet = featureCollection.getNewFeatureSet();
 
     var corpusSets = {};
 
@@ -53,7 +58,7 @@ jTextMinerApp.component('editFeatureSetDialog', {
     }
 
     var corpusList = Object.keys(corpusSets);
-    $scope.isAllBible = corpusList.length == 1 && (corpusList[0] == 'Bible' || corpusList[0] == 'Tanakh');
+    ctrl.isAllBible = corpusList.length == 1 && (corpusList[0] == 'Bible' || corpusList[0] == 'Tanakh');
 
     var onlyBibleMishnaOrTosefta = true;
     for (var i = 0; i < corpusList.length; i++) {
@@ -61,76 +66,76 @@ jTextMinerApp.component('editFeatureSetDialog', {
             onlyBibleMishnaOrTosefta = false;
     }
 
-    $scope.featureEnabled = function (featureName) {
+    ctrl.featureEnabled = function (featureName) {
         if (['SyntaxClause', 'SyntaxPhrase'].indexOf(featureName) > -1)
-            return $scope.isAllBible;
+            return ctrl.isAllBible;
         else if (featureName == 'Morphology' && !onlyBibleMishnaOrTosefta)
             return false;
-        else if (!$scope.isAllBible) {
+        else if (!ctrl.isAllBible) {
             if (featureName == 'vocalized')
                 return false;
         }
         return true;
+    };
+
+    if (!ctrl.featureEnabled('vocalized')) {
+        ctrl.featureSet.vocalized = false;
     }
 
-    if (!$scope.featureEnabled('vocalized')) {
-        $scope.featureSet.vocalized = false;
-    }
-
-    $scope.featureSetChanged = false;
-    $scope.$watch('featureSet', function (newValue, oldValue) {
+    ctrl.featureSetChanged = false;
+    $scope.$watch('$ctrl.featureSet', function (newValue, oldValue) {
         if (oldValue && newValue !== oldValue)
-            $scope.featureSetChanged = true;
+            ctrl.featureSetChanged = true;
     }, true);
 
-    $scope.toggleFeature = function (feature) {
+    ctrl.toggleFeature = function (feature) {
         feature.selected = !feature.selected;
-        featureCollection.updateTotalNumberOfFeatures(feature);
+        ctrl.featureCollection.updateTotalNumberOfFeatures(feature);
     };
 
     function showNewFeatures() {
-        $scope.newFeatureSet = false;
-        featuresData = featureCollection.featuresData.features[featureIndex];
-        $scope.featureSet = angular.copy(featureSet);
-        $scope.featuresData = angular.copy(featuresData);
+        ctrl.newFeatureSet = false;
+        individualFeaturesData = ctrl.featureCollection.featuresData.features[featureIndex];
+        ctrl.featureSet = angular.copy(featureSet);
+        ctrl.featuresData = angular.copy(individualFeaturesData);
         $timeout(function () {
-            $scope.featureSetChanged = false;
+            ctrl.featureSetChanged = false;
         });
     }
 
-    $scope.extractFeatures = function () {
-        $scope.saveFeatureSet();
+    ctrl.extractFeatures = function () {
+        ctrl.saveFeatureSet();
         ctrl.runExtract().then(showNewFeatures);
-    }
+    };
 
-    $scope.saveFeatureSet = function () {
-        if ($scope.newFeatureSet) {
-            console.log("isIncludeLexeme: " + $scope.featureSet.includeLexeme);
-            console.log("isSpoOnly: " + $scope.featureSet.spoOnly);
-            $scope.featureSet.id = featureCollection.FeatureSet_maxId;
-            featureCollection.FeatureSet_maxId++;
-            $scope.featureSet.featureSetName = 'Default name' + featureCollection.FeatureSet_maxId;
-            featureCollection.Feature_sets.push($scope.featureSet);
-            featureIndex = featureCollection.Feature_sets.length - 1;
-            featureSet = $scope.featureSet;
-            featureCollection.updateFeaturesData({});
+    ctrl.saveFeatureSet = function () {
+        if (ctrl.newFeatureSet) {
+            console.log("isIncludeLexeme: " + ctrl.featureSet.includeLexeme);
+            console.log("isSpoOnly: " + ctrl.featureSet.spoOnly);
+            ctrl.featureSet.id = ctrl.featureCollection.FeatureSet_maxId;
+            ctrl.featureCollection.FeatureSet_maxId++;
+            ctrl.featureSet.featureSetName = 'Default name' + ctrl.featureCollection.FeatureSet_maxId;
+            ctrl.featureCollection.Feature_sets.push(ctrl.featureSet);
+            featureIndex = ctrl.featureCollection.Feature_sets.length - 1;
+            featureSet = ctrl.featureSet;
+            ctrl.featureCollection.updateFeaturesData({});
         }
         else {
-            if (angular.equals($scope.featureSet, featureSet)) {
-                angular.copy($scope.featuresData, featuresData);
-            }
-            else {
-                angular.copy([], featuresData);
-                featureCollection.updateFeaturesData({});
-            }
-            angular.copy($scope.featureSet, featureSet);
+           ctrl.experiment.featureCollection.copyData(ctrl.featureCollection);
         }
-    }
+    };
 
-    $scope.saveFeatureSetAndReturn = function () {
-        $scope.saveFeatureSet();
+    ctrl.saveFeatureSetAndReturn = function () {
+        ctrl.saveFeatureSet();
+        ctrl.experiment.runClassification();
         ctrl.onConfirm();
-    }
+    };
+
+    ctrl.currentCategory = ctrl.featureCollection.allFeatureSetNames[0];
+    ctrl.showFeatureSet = function (category) {
+        ctrl.currentCategory = category;
+    };
+
     tiberias_tour(FeatureSetSelectionTour);
 }
 });

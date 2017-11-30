@@ -446,6 +446,38 @@
   margin-top: 20px;
 }
 
+.edit-featureset-dialog-categories {
+  border-top: 1px #848F99 solid;
+}
+
+.edit-featureset-dialog-category {
+  padding: 10px;
+  border-bottom: 1px #848F99 solid;
+}
+
+.edit-featureset-dialog-category.category-active {
+  background-color: #eee;
+}
+
+.edit-featureset-dialog-controls {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.edit-featureset-dialog-update {
+  margin-top: auto;
+}
+
+.edit-featureset-dialog-features {
+  padding-top: 20px;
+}
+
+.feature-set-table-empty {
+  text-align: center;
+  padding: 20px;
+}
+
 /* common pages */
 .rounded-btn {
   height: 44px;
@@ -1033,6 +1065,10 @@
   float: left;
   color: white;
   vertical-align: bottom;
+}
+
+.edit-featureset-dialog {
+  min-height: 550px;
 }
 
 .edit-featureset-dialog h1 {

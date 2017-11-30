@@ -14,8 +14,9 @@ jTextMinerApp.component('classificationResultSummary',
                 return ctrl.cache;
             ctrl.lastFeatures = ctrl.experiment.featureCollection.featuresData.features;
             const allFeatures =_.flatten(ctrl.experiment.featureCollection.featuresData.features);
+            const activeFeatures = allFeatures.filter(feature => feature.selected);
             const topFeatures = _.groupBy(
-                _.sortBy(allFeatures, feature => feature.maxTTest),
+                _.sortBy(activeFeatures, feature => feature.maxTTest),
                 feature => feature.className
             );
             ctrl.cache = ctrl.experiment.classes.Corpus_classes.map(classData => ({

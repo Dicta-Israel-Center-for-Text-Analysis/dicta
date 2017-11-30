@@ -1,22 +1,40 @@
-﻿<div class="edit-featureset-dialog container-fluid" style="background-color: #fff">
-    <div class="row">
-        <div class="col-xs-2">
-            <h1>Remove words and features</h1>
-            <div><i class="material-icons">info</i> Choose what to exclude from analysis</div>
-            <div ng-repeat="category in $ctrl.experiment.featureCollection.allFeatureSetNames">
-                <input title="{{category}}" type="checkbox"
-                       ng-checked="$ctrl.experiment.featureCollection.allFeatureSets[category].selected"
-                       ng-click="$ctrl.experiment.featureCollection.toggleFeatureSet(category)">
-                {{category}}
+﻿<div>
+    <div class="dialog-close">
+        <span ng-click="$ctrl.onCancel()"><i class="material-icons">close</i></span>
+    </div>
+    <div class="edit-featureset-dialog container-fluid" style="background-color: #fff">
+        <div class="row">
+            <div class="col-xs-2 edit-featureset-dialog-controls">
+                <h1>Remove words and features</h1>
+                <div><i class="material-icons">info</i> Choose what to include in analysis</div>
+                <div class="edit-featureset-dialog-categories">
+                    <div class="edit-featureset-dialog-category {{$ctrl.currentCategory === category ? 'category-active' : ''}}"
+                         ng-click="$ctrl.showFeatureSet(category)"
+                         ng-repeat="category in $ctrl.featureCollection.allFeatureSetNames">
+                        <input title="{{category}}" type="checkbox"
+                               ng-checked="$ctrl.featureCollection.allFeatureSets[category].selected"
+                               ng-click="$ctrl.featureCollection.toggleFeatureSet(category)">
+                        {{category}}
+                    </div>
+                </div>
+                <!--<div>Reset</div>-->
+                <div class="edit-featureset-dialog-update">
+                    <button class="rounded-btn btn-blue" ng-click="$ctrl.saveFeatureSetAndReturn()"><i
+                            class="material-icons">refresh</i>
+                        Update
+                    </button>
+                </div>
             </div>
-            <!--<div>Reset</div>-->
-            <div><button class="rounded-btn btn-blue" ng-click="saveFeatureSetAndReturn()"><i class="material-icons">refresh</i> Update</button></div>
-        </div>
-        <div class="col-xs-10">
-            <div ng-if="featuresData.length && !featureSetChanged" class="col-sm-12">
-                <hr>
-                <div id="featureSetFeatureTable" class="feature">
-                    <feature-table is-select-disabled="false" features="featuresData" is-morphology="featureSet.tokenizerType == 'Morphology' || featureSet.tokenizerType.startsWith('Syntax')" classes="$ctrl.classObject.Corpus_classes"></feature-table>
+            <div class="col-xs-10 edit-featureset-dialog-features">
+                <div ng-if="$ctrl.featureCollection.featuresData.features.length && !$ctrl.featureSetChanged">
+                    <div ng-repeat="category in $ctrl.featureCollection.allFeatureSetNames">
+                        <div id="featureSetFeatureTable" class="feature" ng-show="$ctrl.currentCategory === category">
+                            <feature-table is-select-disabled="false"
+                                           features="$ctrl.featuresData[category]"
+                                           is-morphology="true"
+                                           classes="$ctrl.classObject.Corpus_classes"></feature-table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

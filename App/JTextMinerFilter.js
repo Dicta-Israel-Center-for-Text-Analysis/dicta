@@ -1,29 +1,21 @@
-﻿jTextMinerApp.filter("positiveInfluence", function () { // register new filter
-    return function (items, index) { // filter arguments
+jTextMinerApp.filter("positiveInfluence", function () { // register new filter
+    return function (items, className) { // filter arguments
         // http://stackoverflow.com/questions/11753321/passing-arguments-to-angularjs-filters
-        var arrayToReturn = [];
         if (angular.isUndefined(items))
-            return arrayToReturn;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].maxClassIndex == index && items[i].influence > 0) {
-                arrayToReturn.push(items[i]);
-            }
-        }
-        return arrayToReturn;
+            return [];
+        return items.filter(item =>
+            (item.tTestForEachClass[className] === Math.max(...Object.values(item.tTestForEachClass))
+                && item.influence > 0));
     };
 });
 jTextMinerApp.filter("negativeInfluence", function () { // register new filter
-    return function (items, index) { // filter arguments
+    return function (items, className) { // filter arguments
         // http://stackoverflow.com/questions/11753321/passing-arguments-to-angularjs-filters
-        var arrayToReturn = [];
         if (angular.isUndefined(items))
-            return arrayToReturn;
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].maxClassIndex == index && items[i].influence < 0) {
-                arrayToReturn.push(items[i]);
-            }
-        }
-        return arrayToReturn;
+            return [];
+        return items.filter(item =>
+            (item.tTestForEachClass[className] === Math.max(...Object.values(item.tTestForEachClass))
+                && item.influence < 0));
     };
 });
 

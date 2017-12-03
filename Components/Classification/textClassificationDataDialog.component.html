@@ -41,12 +41,12 @@
                     </th>
                     <th colspan="5">
                         <p><i class="fa fa-star"></i> Represented
-                            ({{($ctrl.testFile.featureList | positiveInfluence: $index).length}})</p>
+                            ({{($ctrl.testFile.featureList | positiveInfluence: oneclass.title).length}})</p>
                     </th>
                 </tr>
 
 
-                <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: $index">
+                <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: oneclass.title">
                     <td title="{{feature.title}}"><b>{{$ctrl.convertFeatureName(feature.name)}}</b>
                     </td>
                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number:
@@ -71,10 +71,10 @@
                 <tr>
                     <th colspan="5">
                         <p class="reprencented">Insufficient occurrences ({{($ctrl.testFile.featureList |
-                            negativeInfluence: $index).length}})</p>
+                            negativeInfluence: oneclass.title).length}})</p>
                     </th>
                 </tr>
-                <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | negativeInfluence: $index">
+                <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | negativeInfluence: oneclass.title">
                     <td title="{{feature.title}}"><b>{{$ctrl.convertFeatureName(feature.name)}}</b>
                     </td>
                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number:

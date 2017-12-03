@@ -168,7 +168,10 @@ jTextMinerApp.component('classification', {
                     var colors = item.featureList
                         .filter(feature => wordFeatures
                             .some(wordFeature => hack(wordFeature.name) == feature.name))
-                        .map(feature => feature.maxClassIndex);
+                        .map(feature => ctrl.indexOfClass(
+                            // maxClassIndex is no longer reliable. Instead, calculate the name with the highest T-test
+                            _.maxBy(Object.keys(feature.tTestForEachClass), key => feature.tTestForEachClass[key])
+                        ));
                     pieces.push("<span "
                         + ( colors.length > 0 ? "class='highlight-feature-color-" + colors[0] + "' " : "")
                         + "title='" + prettyPrintMorphology(hoverText) + "'>"

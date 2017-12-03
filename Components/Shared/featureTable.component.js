@@ -220,7 +220,7 @@ function prettyPrintMorphology(converted) {
             ).join(', ');
     }
     //remove prefixes that distinguish feature set types if the server is sending them
-    converted = converted.replace(/@\w\w-/g, '@');
+    converted = converted.replace(/@(ml|ms|so|sc|sp)/g, '@');
 
     // we match things that look like morphology - @ followed by any text until #, then a series of terms starting with #
     converted = converted.replace(/@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');

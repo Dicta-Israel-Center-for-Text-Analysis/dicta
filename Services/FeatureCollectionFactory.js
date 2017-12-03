@@ -52,7 +52,7 @@ return {
 
         if (collectionType === 'Classification') {
             collection.Feature_sets.push(INITIAL_MORPHOLOGY);
-            //collection.Feature_sets.push(INITIAL_SYNTAX);
+            collection.Feature_sets.push(INITIAL_SYNTAX);
             collection.FeatureSet_maxId = 3;
             collection.allFeatureSets = {
                 'Words': {
@@ -65,7 +65,7 @@ return {
                 },
                 'Syntax': {
                     set: INITIAL_SYNTAX,
-                    selected: false //true
+                    selected: true
                 }
             };
             collection.allFeatureSetNames = ['Words', 'Morphology', 'Syntax'];

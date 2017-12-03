@@ -219,6 +219,8 @@ function prettyPrintMorphology(converted) {
                 function(item) { return morphologyIdDict.hasOwnProperty(item) ? morphologyIdDict[item] : item}
             ).join(', ');
     }
+    //remove prefixes that distinguish feature set types if the server is sending them
+    converted = converted.replace(/@\w\w-/g, '@');
 
     // we match things that look like morphology - @ followed by any text until #, then a series of terms starting with #
     converted = converted.replace(/@([^ #]*)(#[A-Z0-9_]+)+/g, dictLookup).replace(/_$/, '');

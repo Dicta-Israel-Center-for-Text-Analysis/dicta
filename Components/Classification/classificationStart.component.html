@@ -1,1 +1,57 @@
-<div class="text-center"><a ng-click="$ctrl.showWizard()"><img src="images/classifyStartPlaceholder.png"></a></div>
+<link rel="stylesheet" type="text/css" href="css/class-start-style-en.css">
+<link rel="stylesheet" type="text/css" href="css/class-start-style.css">
+<div class="class-intro">
+    <div class="wrapper">
+        <section id="top">
+            <ul class="main-navigation">
+                <li><a class="home home-icon">Dicta</a></li>
+                <li class="user-auth" ng-hide="$ctrl.UserService.isLoggedIn()" ui-sref="continueLogin({nextState: 'classificationStart'})">
+                    <a>Login</a>
+                    <span>/</span>
+                    <a>Signup</a>
+                </li>
+                <li ng-show="$ctrl.UserService.isLoggedIn()">
+                    <a>Welcome {{$ctrl.UserService.user.displayName}}!</a>
+                    <span >/</span>
+                    <a ng-click="$ctrl.signOut()">Signout</a>
+                </li>
+            </ul>
+            <div class="inner">
+                <div class="container">
+
+                    <div class="logo">
+                        <a>
+                            <h1>Dicta <em>Bible <br>Classification </em></h1>
+                        </a>
+                    </div>
+
+                    <p>Classify your text with custom text classes and discover distinguishing features</p>
+                    <a class="btn btn-custom" ng-click="$ctrl.showWizard()">Start Classification</a>
+                </div>
+            </div>
+        </section>
+        <section id="bottom">
+            <div class="container">
+                <h4>How does it work?</h4>
+                <div class="row img-frame show-grid">
+                    <div class="col-xs-12 col-sm-3">
+                        <img style="width: 54px; height: 58px;" src="images/class-start/Microscope-Outline.png">
+                        <p>Select the text you'd <br>like to classify</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <img style="width: 57px; height: 57px;" src="images/class-start/Lowercase-Outline.png">
+                        <p>Select the text classes<br> for classification</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <img style="width: 58px; height: 58px;" src="images/class-start/Web Service-Outline.png">
+                        <p>Refine your analysis<br> using a variety of tools</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <img style="width: 54px; height: 58px;" src="images/class-start/Idea-Solid.png">
+                        <p>Review the classification<br> of your text</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

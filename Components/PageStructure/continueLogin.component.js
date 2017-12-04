@@ -1,10 +1,14 @@
 jTextMinerApp.component('continueLogin',
 {
+    bindings: {
+        $transition$: '<'
+    },
     templateUrl: 'Components/PageStructure/continueLogin.component.html',
     controller: function (UserService, StateService, $state) {
         const ctrl = this;
         ctrl.userLogin = '';
         ctrl.onError = false;
+        ctrl.nextState = ctrl.$transition$.params().nextState;
         // FirebaseUI config.
         const uiConfig = {
             signInOptions: [
@@ -15,8 +19,9 @@ jTextMinerApp.component('continueLogin',
                 firebase.auth.EmailAuthProvider.PROVIDER_ID
             ],
             callbacks: {
-                signInSuccess: ()=> { $state.go('bibleFrontpage'); return false; },
-
+                signInSuccess: ()=> {
+                    $state.go(ctrl.nextState); return false;
+                },
             },
             // Terms of service url.
             tosUrl: '<your-tos-url>'

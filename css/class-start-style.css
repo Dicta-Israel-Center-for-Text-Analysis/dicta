@@ -1,0 +1,299 @@
+.class-intro .wrapper {
+  color: #828282;
+  height: 100vh;
+}
+
+.class-intro #top {
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 66%;
+  position: relative;
+}
+
+.class-intro .main-navigation {
+  display: block;
+  text-align: right;
+  margin: 0;
+  padding: 19px 20px;
+  list-style: none;
+}
+
+.class-intro .main-navigation li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.class-intro .main-navigation li:first-child {
+  margin-right: 28px;
+}
+
+.class-intro .main-navigation li a {
+  color: #646464;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.class-intro .logo {
+  width: 370px;
+  margin: 0 auto 62px;
+}
+
+.class-intro .logo h1 em {
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 600;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.class-intro .logo h1 {
+  font-family: 'Martel', serif;
+  font-size: 71px;
+  line-height: 73px;
+  font-weight: 900;
+  text-align: left;
+  color: #646464;
+}
+
+.class-intro .main-navigation li .home-icon {
+  position: relative;
+}
+
+.class-intro .main-navigation li .home-icon:before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: url(../images/class-start/menu-icon-gray.png) no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 4px;
+  left: -18px;
+}
+
+.class-intro .inner {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+}
+
+.class-intro .inner p {
+  font-size: 17px;
+  line-height: 20px;
+  text-align: center;
+  color: #868686;
+  margin: 0 0 20px;
+}
+
+.class-intro .container {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.class-intro #top .container {
+  width: 428px;
+  margin: 0 auto;
+  padding: 120px 0 0 0;
+}
+
+.class-intro #top .container .btn-custom {
+  text-decoration: none;
+  display: block;
+  width: 304px;
+  height: 44px;
+  padding: 0;
+  line-height: 42px;
+  object-fit: contain;
+  border-radius: 3px;
+  background-color: #596a7d;
+  margin: 0 auto 134px;
+  position: relative;
+  color: #fff;
+}
+
+.class-intro #top .container p {
+  margin-bottom: 20px;
+  display: block;
+  overflow: hidden;
+  text-align: center;
+}
+
+.class-intro .btn-custom:before {
+  content: "";
+  width: 8px;
+  height: 14px;
+  background: url(../images/class-start/caret-right-active-icon.png) no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 14px;
+  left: 75px;
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -ms-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+}
+
+.class-intro .btn-custom:hover:before {
+  left: 80px;
+}
+
+.class-intro #bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40px 0 20px;
+  min-height: 250px;
+  background-color: #f6f8f9;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.class-intro #bottom h4 {
+  text-align: center;
+  margin-bottom: 60px;
+  font-family: 'Open Sans';
+  font-size: 17px;
+  line-height: 20px;
+  color: #6900ff;
+}
+
+.class-intro .img-frame {
+  text-align: center;
+}
+
+.class-intro .img-frame img {
+  display: block;
+  margin: 0 auto 25px;
+}
+
+.class-intro .img-frame p {
+  margin: 0 0 25px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #868686;
+}
+
+.class-intro .show-grid>[class^=col-] {
+  position: relative;
+}
+
+.class-intro .show-grid>[class^=col-]:after {
+  width: 28px;
+  height: 1px;
+  z-index: 9999;
+  position: absolute;
+  top: 23px;
+  left: -14px;
+  content: '';
+  background: url("../images/class-start/Line.png") no-repeat;
+}
+
+.class-intro .show-grid>[class^=col-]:first-child:after {
+  background: none;
+  display: none;
+}
+
+@media screen and (max-height: 780px) {
+  .class-intro  {
+    overflow-y: auto;
+  }
+
+  .class-intro .wrapper {
+    height: 100%;
+  }
+
+  .class-intro #bottom {
+    position: static;
+  }
+
+  .class-intro #top {
+    height: inherit;
+  }
+
+  .class-intro #top .container {
+    padding: 50px 0 50px 0;
+  }
+
+  .class-intro #top .container .btn-custom {
+    margin: 0 auto 40px;
+  }
+
+  .class-intro .inner {
+    position: static;
+    top: auto;
+    transform: initial;
+    left: auto;
+    right: auto;
+  }
+}
+
+@media screen and (max-width:786px) {
+  .class-intro .wrapper {
+    height: inherit;
+  }
+
+  .class-intro .inner {
+    width: 100%;
+    position: static;
+    transform: translateY(0);
+  }
+
+  .class-intro #bottom {
+    position: static;
+  }
+
+  .class-intro .show-grid>[class^=col-]:after {
+    width: 28px;
+    height: 1px;
+    z-index: 9999;
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    margin: 0 0 0 -14px;
+    content: '';
+    background: url("../images/class-start/Line.png") no-repeat;
+  }
+
+  .class-intro #top .container {
+    width: 100%;
+    padding: 30px 15px 0;
+  }
+
+  .class-intro #top .container .btn-custom {
+    margin: 0 auto 60px;
+  }
+
+  .class-intro .logo {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto 25px;
+  }
+
+  .class-intro .logo h1 {
+    font-size: 60px;
+    line-height: 60px;
+  }
+
+  .class-intro .logo h1 em {
+    font-size: 17px;
+    line-height: 21px;
+  }
+
+  .class-intro #top {
+    height: inherit;
+  }
+}

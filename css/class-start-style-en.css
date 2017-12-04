@@ -1,0 +1,112 @@
+.class-intro *,.class-intro *:before,.class-intro *:after {
+  box-sizing: border-box;
+}
+
+.class-intro {
+  overflow-x: hidden;
+  margin: 0;
+  background-color: #fff;
+  margin: 0;
+  min-width: 320px;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.class-intro section {
+  position: relative;
+  display: block;
+}
+
+.class-intro img {
+  border: 0px;
+  margin: 0px;
+}
+
+.class-intro a>img {
+  display: block;
+}
+
+.class-intro a {
+  transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  -ms-transition: all 0.3s ease-in;
+}
+
+.class-intro a,.class-intro h1,.class-intro h2,.class-intro h3,.class-intro h4,.class-intro h5,.class-intro h6,.class-intro,.class-intro span {
+  text-transform: none ;
+}
+
+.class-intro h1,.class-intro h2,.class-intro h3,.class-intro h4,.class-intro h5,.class-intro h6 {
+  color: #000000;
+  margin: 0;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+/**========== Title ==========**/
+
+.class-intro h1 {
+  font-size: 32px;
+  line-height: 35px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  font-family: 'Arimo', sans-serif;
+}
+
+.class-intro h2 {
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 400;
+}
+
+.class-intro h3 {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 700;
+}
+
+/**========== Txt ==========**/
+
+.class-intro p,.class-intro ul li,.class-intro ul li a,.class-intro span {
+  line-height: inherit;
+}
+
+/**========== Link ==========**/
+
+.class-intro a {
+  color: rgba(255, 255, 255, 0.96);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.class-intro a:hover,.class-intro a:focus {
+  text-decoration: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.class-intro a img {
+  border: none;
+}
+
+/**========== List ==========**/
+
+.class-intro ul {
+  padding: 0;
+  margin: 0 0 0;
+  list-style: none;
+}
+
+.class-intro ul ul {
+  margin-bottom: 0;
+}
+
+.class-intro li {
+  float: none;
+}

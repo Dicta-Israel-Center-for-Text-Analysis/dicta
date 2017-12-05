@@ -5,8 +5,6 @@ jTextMinerApp.component('bibleMainPage',
             if (!UserService.isLoggedIn()) {
                 // $location.path('Login');
             }
-            if (!SelectClassService.testText)
-                $state.go('bibleFrontpage');
             const ctrl = this;
             ctrl.$state = $state;
             ctrl.tab = 'search';
@@ -42,10 +40,10 @@ jTextMinerApp.component('bibleMainPage',
                 ctrl.tab = 'segment';
             }
             ctrl.getSelection = function () {
-                return SelectClassService.testText.title;
+                return SelectClassService.testText? SelectClassService.testText.title : null;
             }
             ctrl.getSubtitle = function () {
-                return SelectClassService.testText.subtitle;
+                return SelectClassService.testText ? SelectClassService.testText.subtitle : null;
             }
         }
 }); 

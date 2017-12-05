@@ -55,6 +55,20 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                 });
         }
 
+        function runExtractAndCV() {
+            experiment.error = false;
+            experiment.inProgress = true;
+            return experiment.prepareClassification()
+                .then(callRunClassificationFirstTime)
+                .then(() =>{
+                    experiment.inProgress = false;
+                })
+                .catch(() => {
+                    experiment.setError('Server failed.');
+                    experiment.inProgress = false;
+                });
+        }
+
         function prepareClassification() {
             // in theory, if nothing has changed, this can be skipped, but we don't yet have code that can check
             if (false) {
@@ -132,7 +146,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
 
                 features: experiment.featureCollection.featuresData.features,
                 trainSet: experiment.trainSet,
-                selectedTestTextKeys: SelectClassService.testText.keys
+                selectedTestTextKeys: SelectClassService.testText ? SelectClassService.testText.keys : []
             };
         }
 
@@ -330,6 +344,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             deleteClass,
             updateClass,
             runClassification,
+            runExtractAndCV,
             prepareClassification,
             setError,
             getTextsWithFeatures,

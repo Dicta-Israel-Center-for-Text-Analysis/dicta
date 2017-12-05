@@ -4,7 +4,7 @@ jTextMinerApp.component('classificationStart',
     controller: function(DialogService, $state, UserService) {
         const ctrl = this;
         ctrl.showWizard = function () {
-            $state.go('classificationStart.wizard');
+            $state.go('classificationStart.wizard', { step: -1 });
         };
 
         ctrl.UserService = UserService;

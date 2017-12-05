@@ -1,16 +1,23 @@
 <div>
     <div class="main-page-controls">
         <div class="main-page-selection-summary">
-            <div class="search-top-left">
+            <div>
                 <span class="top-back-arrow" ui-sref="classificationStart"><i class="material-icons">keyboard_arrow_left</i></span>
                 <span class="small-logo">Dicta<sup>Bible</sup></span>
             </div>
-            <h1>{{$ctrl.getSelection()}}</h1>
-            <h2 ng-if="$ctrl.getSubtitle()">{{$ctrl.getSubtitle()}}</h2>
-            <a ui-sref="bibleInterface.view"><i class="material-icons">view_day</i>
-                View</a>
-            <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
-                Edit</a>
+            <div ng-if="$ctrl.getSelection()">
+                <h1>{{$ctrl.getSelection()}}</h1>
+                <h2 ng-if="$ctrl.getSubtitle()">{{$ctrl.getSubtitle()}}</h2>
+                <a ui-sref="bibleInterface.view"><i class="material-icons">view_day</i>
+                    View</a>
+                <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
+                    Edit</a>
+            </div>
+            <div ng-if="!$ctrl.getSelection()">
+                <h2>No test text selected.</h2>
+                <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
+                    Select a Test Text</a>
+            </div>
         </div>
         <ul class="nav-tabs-left">
             <!--<li class="{{$ctrl.active('parallels')}}" ng-click="$ctrl.tab='parallels'"><a>Find Parallel Verses</a></li>-->

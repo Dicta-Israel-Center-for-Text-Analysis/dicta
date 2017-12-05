@@ -2,7 +2,22 @@
     <div class="dialog-close">
         <span ng-click="$ctrl.onCancel()"><i class="material-icons">close</i></span>
     </div>
-    <div class="wizard-heading"><a ng-click="$ctrl.back()" ng-if="$ctrl.step !== 0"><i class="material-icons">keyboard_arrow_left</i></a> {{$ctrl.stepHeading}}</div>
+    <div class="wizard-heading">
+        <a ng-click="$ctrl.back()" ng-if="$ctrl.step > 0">
+            <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+        {{$ctrl.stepHeading}}
+    </div>
+    <div ng-show="$ctrl.step === -1" class="ngdialog-message wizard-intro">
+        <div ng-click="$ctrl.nextStep()" class="wizard-huge-button">
+            <div><img class="classification-wizard-icon" src="images/classify/Microscope-Outline.svg"/></div>
+            Start by analyzing a text
+        </div>
+        <div ng-click="$ctrl.selectClassesOnly()" class="wizard-huge-button">
+            <div><img class="classification-wizard-icon" src="images/classify/Lowercase-Outline.svg"/></div>
+            Start by comparing two classes
+        </div>
+    </div>
     <choose-text-dialog ng-show="$ctrl.step === 0" embedded="true" explanation-component="$ctrl.explanation"
                         save-message="'Save Text'"
                         starting-text="$ctrl.getText()"

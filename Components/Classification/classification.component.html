@@ -68,7 +68,7 @@
     <div ng-show="$ctrl.experiment.error">
         {{$ctrl.experiment.errorMsg}}
     </div>
-<div ng-show="!$ctrl.experiment.inProgress && testSetChunks.length > 0">
+<div ng-show="!$ctrl.experiment.inProgress && $ctrl.experiment.cvResultData.accuracy">
     <chunk-bar chunks="$ctrl.chunkBarData"></chunk-bar>
     <classification-result-summary experiment="$ctrl.experiment"></classification-result-summary>
     <classification-adjustments experiment="$ctrl.experiment"></classification-adjustments>
@@ -83,10 +83,12 @@
         <!--</ul>-->
     <!--</div>-->
     <!--<div class="clearfix"></div>-->
-    <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
-        <text-with-features test-file="testFile" index="$index"
-                            classified-class-index="$ctrl.indexOfClass(testFile.classifiedAs)"
-                            experiment="$ctrl.experiment"></text-with-features>
+    <div ng-show="testSetChunks.length > 0">
+        <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
+            <text-with-features test-file="testFile" index="$index"
+                                classified-class-index="$ctrl.indexOfClass(testFile.classifiedAs)"
+                                experiment="$ctrl.experiment"></text-with-features>
+        </div>
     </div>
 
 </div>

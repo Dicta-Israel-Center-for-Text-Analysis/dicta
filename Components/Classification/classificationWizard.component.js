@@ -16,7 +16,10 @@ jTextMinerApp.component('classificationWizard',
                 .map(word => 'Select the ' + word + ' text class'))
             .concat(['Unsupported']);
         function setHeading() {
-            ctrl.stepHeading = ctrl.stepHeadings[ctrl.step];
+            if (ctrl.step === -1)
+                ctrl.stepHeading = "How would you like to start?";
+            else
+                ctrl.stepHeading = ctrl.stepHeadings[ctrl.step];
             ctrl.explanation = {
                 component: 'wizardHelpText',
                 parameters: {
@@ -58,10 +61,20 @@ jTextMinerApp.component('classificationWizard',
             $state.go('.',{ step: ctrl.step });
         };
 
+        ctrl.selectClassesOnly = function () {
+            ctrl.step += 2;
+            setHeading();
+            SelectClassService.testText = null;
+            $state.go('.',{ step: ctrl.step });
+        };
+
         ctrl.runExperiment = function () {
+            if (SelectClassService.testText)
+                ctrl.experiment.runClassification();
+            else
+                ctrl.experiment.runExtractAndCV();
             ctrl.onConfirm();
             $state.go('bibleInterface.classify');
-            ctrl.experiment.runClassification();
         };
 
         ctrl.saveText = function (text) {

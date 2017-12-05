@@ -303,7 +303,7 @@
 }
 
 .main-page-selection-summary h1 {
-  padding: 80px 20px 0 20px;
+  padding: 15px 20px 0 20px;
   font-size: 24px;
   line-height: 32px;
 }
@@ -440,6 +440,23 @@
 .classification-wizard-icon {
   height: 57px;
   width: 57px;
+}
+
+.wizard-intro {
+  display: flex;
+  padding: 0 100px;
+}
+
+.wizard-huge-button {
+  display: inline-block;
+  margin: auto;
+  text-align: center;
+  border: #646464 solid 1px;
+  padding: 100px 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .classification-wizard-help-text {
@@ -1065,6 +1082,10 @@
   float: left;
   color: white;
   vertical-align: bottom;
+}
+
+.wizard-intro {
+  min-height: 500px;
 }
 
 .edit-featureset-dialog {

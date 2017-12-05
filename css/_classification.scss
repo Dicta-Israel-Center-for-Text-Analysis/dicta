@@ -25,6 +25,21 @@
     height: 57px;
     width: 57px;
 }
+.wizard-intro {
+    display: flex;
+    padding: 0 100px;
+}
+.wizard-huge-button {
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+    border: #646464 solid 1px;
+    padding: 100px 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
 
 .classification-wizard-help-text {
     margin-top: 20px;

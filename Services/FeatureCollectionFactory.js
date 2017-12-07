@@ -1,4 +1,4 @@
-﻿jTextMinerApp.factory('FeatureCollectionFactory', function ($rootScope) {
+jTextMinerApp.factory('FeatureCollectionFactory', function ($rootScope) {
 return {
     newCollection: function (collectionType) {
         const DEFAULT_FEATURE_SET = {
@@ -82,6 +82,8 @@ return {
                 }
                 else {
                     const index = collection.Feature_sets.indexOf(setData.set);
+                    if (index === -1)
+                        throw "Can't find the feature set to unselect it."
                     collection.Feature_sets.splice(index, 1);
                     collection.FeatureSet_maxId--;
                 }
@@ -130,8 +132,10 @@ return {
             collection.totalNumberOfFeatures = source.totalNumberOfFeatures;
             collection.featuresData = _.cloneDeep(source.featuresData);
             collection.FeatureSet_maxId = source.FeatureSet_maxId;
-            collection.Feature_sets = _.cloneDeep(source.Feature_sets);
             collection.allFeatureSets = _.cloneDeep(source.allFeatureSets);
+            // regenerate Feature_sets from allFeatures. Perhaps it should be a getter
+            collection.Feature_sets = Object.values(collection.allFeatureSets)
+                .filter(setData => setData.selected).map(setData => setData.set);
         };
 
         return collection;
@@ -141,8 +145,9 @@ return {
         destination.totalNumberOfFeatures = source.totalNumberOfFeatures;
         destination.featuresData = _.cloneDeep(source.featuresData);
         destination.FeatureSet_maxId = source.FeatureSet_maxId;
-        destination.Feature_sets = _.cloneDeep(source.Feature_sets);
         destination.allFeatureSets = _.cloneDeep(source.allFeatureSets);
+        destination.Feature_sets = Object.values(destination.allFeatureSets)
+            .filter(setData => setData.selected).map(setData => setData.set);
         return destination;
     }
 }});

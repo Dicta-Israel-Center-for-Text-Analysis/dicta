@@ -29,6 +29,13 @@
     display: flex;
     padding: 0 100px;
 }
+.sub-heading {
+    color: $black-pearl;
+    @extend %fonts;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 27px;
+}
 .wizard-huge-button {
     display: inline-block;
     margin: auto;

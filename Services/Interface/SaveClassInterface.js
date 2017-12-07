@@ -3,7 +3,7 @@ jTextMinerApp.factory('SaveClassInterface', function (UserService) {
         getInstance(settings){
             return {
                 select_ClassName: settings.className,
-                select_RootKeys: settings.text.keys,
+                select_RootKeys: settings.text ? settings.text.keys : [],
             }
         }
     };

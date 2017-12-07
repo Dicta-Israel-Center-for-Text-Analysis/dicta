@@ -255,6 +255,8 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
         }
 
         function getTextsWithFeatures() {
+            if (!SelectClassService.testText || SelectClassService.testText.keys.length === 0)
+                return $q.resolve();
             var featureTypeMap = {
                 "Word": "WORDS",
                 "Letter": "LETTERS",

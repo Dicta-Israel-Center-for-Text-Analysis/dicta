@@ -12,7 +12,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -36,7 +36,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -117,7 +117,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -270,7 +270,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -377,7 +377,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -407,7 +407,7 @@
   src: url("../fonts/TaameyDavidCLM-Bold.woff") format("woff");
 }
 
-.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
+.search-control, .search-result-heading, .search-result-text, .classification-wizard-superscript, .sub-heading, .text-selection-rows, .preview-text, .info-heading, .adjustment-text, .main-heading, .text-with-features p, .text-title, .class-number, .class-label, .classification-summary-cv, .classification-summary-label, .classification-summary-cv-details, .badge a, .choose-dialog-add-description, .alternative-action {
   font-family: 'Open Sans', 'TaameyDavidCLM', sans-serif;
 }
 
@@ -445,6 +445,13 @@
 .wizard-intro {
   display: flex;
   padding: 0 100px;
+}
+
+.sub-heading {
+  color: #1C222D;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 27px;
 }
 
 .wizard-huge-button {
@@ -1115,12 +1122,16 @@
   display: inline-block;
   align-self: center;
   color: #fff;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 .alternative-action a {
   font-weight: bold;
   color: inherit;
+}
+
+.inherit-font-size {
+  font-size: inherit;
 }
 
 /*# sourceMappingURL=design.css.map */

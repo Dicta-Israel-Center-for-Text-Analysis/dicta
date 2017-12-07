@@ -38,7 +38,7 @@ jTextMinerApp.component('editFeatureSetDialog', {
     var keyListArray = this.classObject.Corpus_classes.map(function (corpusclass) {
         return corpusclass.selectedText;
     });
-    keyListArray = keyListArray.concat(SelectClassService.testText.keys);
+    keyListArray = keyListArray.concat(SelectClassService.testText ? SelectClassService.testText.keys : []);
     keyListArray = _.flatten(keyListArray);
     for (var i = 0; i < keyListArray.length; i++) {
         var classKeys = keyListArray[i].split(', ');

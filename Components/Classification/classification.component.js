@@ -21,6 +21,19 @@ jTextMinerApp.component('classification', {
                 ctrl.saveMessage = ''
             }, 3000);
         };
+
+        ctrl.SelectClassService = SelectClassService;
+
+        ctrl.editSelectedText = function () {
+            DialogService.openDialog('chooseTextDialog',
+                {
+                    saveMessage: 'Select as test text'
+                })
+                .then(selectClass => {
+                    SelectClassService.setTestText(selectClass);
+                })
+                .then(ctrl.experiment.runClassification);
+        };
         
         $scope.countFilesPerClass = [];
 

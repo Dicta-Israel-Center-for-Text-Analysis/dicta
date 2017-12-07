@@ -70,6 +70,7 @@
     </div>
 <div ng-show="!$ctrl.experiment.inProgress && $ctrl.experiment.cvResultData.accuracy">
     <chunk-bar chunks="$ctrl.chunkBarData"></chunk-bar>
+    <h2 class="sub-heading">Classes</h2>
     <classification-result-summary experiment="$ctrl.experiment"></classification-result-summary>
     <classification-adjustments experiment="$ctrl.experiment"></classification-adjustments>
     <!--<div class="flies-color" style="width:420px;">-->
@@ -83,6 +84,11 @@
         <!--</ul>-->
     <!--</div>-->
     <!--<div class="clearfix"></div>-->
+    <hr>
+    <h2 class="sub-heading">Test Text</h2>
+    <div ng-hide="$ctrl.SelectClassService.testText">
+        No test text selected. <a ng-click="$ctrl.editSelectedText()"><i class="material-icons inherit-font-size">edit</i> Select</a>
+    </div>
     <div ng-show="testSetChunks.length > 0">
         <div ng-repeat="testFile in testSetChunks track by $index" class="box-right-side">
             <text-with-features test-file="testFile" index="$index"

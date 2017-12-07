@@ -2,7 +2,7 @@
     <div class="modal-content" style="width: 1000px;left: calc(50% - 450px)">
         <div class="modal-header">
             <h4>
-                <button type="button" class="close" data-dismiss="modal" ng-click="onConfirm()"
+                <button type="button" class="close" data-dismiss="modal" ng-click="$ctrl.onConfirm()"
                         aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <span style="color: #337ab7">View Crossvalidation Results</span>
@@ -20,7 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="chunk in sortedList" ng-style="boldIfMisclassified(chunk)">
+                            <tr ng-repeat="chunk in $ctrl.sortedFilteredList">
                                 <td>{{chunk.className}}</td>
                                 <td>{{chunk.realClassName}}</td>
                                 <td>{{chunk.filename}}</td>
@@ -36,7 +36,7 @@
                 <div class="col-sm-12">
                     <div class="footer_content1">
                         <h4>
-                            <button class="btn btn-primary" ng-click="onConfirm()"><strong> <i
+                            <button class="btn btn-primary" ng-click="$ctrl.onConfirm()"><strong> <i
                                     class="fa fa-check-circle-o"></i> OK </strong></button>
                         </h4>
                     </div>

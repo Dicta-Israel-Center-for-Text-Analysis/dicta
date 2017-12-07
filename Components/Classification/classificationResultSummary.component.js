@@ -32,6 +32,10 @@ jTextMinerApp.component('classificationResultSummary',
 
         ctrl.showFeatureExamples = function () {
             debugger;
+        };
+
+        ctrl.openCvDialog = function () {
+            DialogService.openDialog('crossvalidationTableDialog', {crossvalidationResults: ctrl.experiment.cvResultData});
         }
     }
 }); 

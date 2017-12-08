@@ -62,5 +62,9 @@ jTextMinerApp.component('crossvalidationTableDialog', {
 
         ctrl.sortedFilteredList = ctrl.crossvalidationResults.classificationList.sort((a, b) => alphanum(a.filename, b.filename))
             .filter(chunk => chunk.className != chunk.realClassName);
+
+        ctrl.removePrefix = function (filename) {
+            return filename.replace(/\/Dicta Corpus\//,'');
+        }
     }
 });

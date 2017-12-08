@@ -23,7 +23,7 @@
                             <tr ng-repeat="chunk in $ctrl.sortedFilteredList">
                                 <td>{{chunk.className}}</td>
                                 <td>{{chunk.realClassName}}</td>
-                                <td>{{chunk.filename}}</td>
+                                <td>{{$ctrl.removePrefix(chunk.filename)}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -9,6 +9,13 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                 classData.id = experiment.classes.Corpus_maxId;
                 experiment.classes.Corpus_classes.push(classData);
             }
+            // can't have two classes with the same title, because the API cannot handle duplicate class names
+            let counter = 1;
+            const baseTitle = selectionData.title;
+            while (experiment.classes.Corpus_classes.some(classData => classData.title === selectionData.title)) {
+                counter++;
+                selectionData.title = baseTitle + ' (' + counter + ')';
+            }
             experiment.trainSet[selectionData.title] = selectionData.keys;
             addClass({
                 title: selectionData.title,

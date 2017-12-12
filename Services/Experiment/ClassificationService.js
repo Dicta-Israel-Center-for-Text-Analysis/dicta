@@ -2,7 +2,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
 
     function newExperiment() {
         function addClass(selectionData) {
-            function addClass (classData) {
+            function addClassInternal (classData) {
                 experiment.classes.isAllBible = experiment.classes.isAllBible && classData.bible;
                 experiment.featureCollection.updateFeaturesData({});
                 experiment.classes.Corpus_maxId += 1;
@@ -17,7 +17,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                 selectionData.title = baseTitle + ' (' + counter + ')';
             }
             experiment.trainSet[selectionData.title] = selectionData.keys;
-            addClass({
+            addClassInternal({
                 title: selectionData.title,
                 text: selectionData,
                 selectedText: selectionData.keys, //results.selectedText,
@@ -261,71 +261,74 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             }
         }
 
-        function getTextsWithFeatures() {
-            if (!SelectClassService.testText || SelectClassService.testText.keys.length === 0)
-                return $q.resolve();
-            var featureTypeMap = {
+        function getTestTextWithFeatures() {
+            return getTextWithFeatures(SelectClassService.testText)
+                .then(responses => {
+                    experiment.testTexts = responses[0];
+                    experiment.testTextsFeatures = responses[1];
+                    return responses[0];
+                })
+        }
+
+        function getFeatureSettings(featureSet) {
+            const featureTypeMap = {
                 "Word": "WORDS",
                 "Letter": "LETTERS",
                 "Morphology": "MORPHOLOGY",
                 "SyntaxClause": "SYNTAX_CLAUSE_TYPES",
                 "SyntaxPhrase": "SYNTAX_PHRASE_SEQUENCES"
             };
-            var nGramMap = {
+            const nGramMap = {
                 "Unigram": 1,
                 "Bigram": 2,
                 "Trigram": 3
             };
+            const filter = function () {
+                if (featureSet.tokenizerType === "Word" || featureSet.tokenizerType === "Letter") {
+                    if (featureSet.vocalized)
+                        return "VOWELIZED";
+                    return "TEXT_ONLY";
+                }
+                if (featureSet.tokenizerType === "Morphology") {
+                    return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
+                }
+                if (featureSet.tokenizerType === "SyntaxPhrase" && featureSet.spoOnly) {
+                    return "SUBJECT_PREDICATE_OBJECT";
+                }
+                return "";
+            }();
+            return  {
+                "type": featureTypeMap[featureSet.tokenizerType],
+                "filter": filter,
+                "nGram": nGramMap[featureSet.featureType]
+            }
+        }
+
+        function getTextWithFeatures(text) {
+            if (!text || text.keys.length === 0)
+                return $q.resolve();
             experiment.testTexts = [];
             experiment.testTextsFeatures = [];
             var textPromise;
             var featurePromises = [];
             for (let featureSet of experiment.featureCollection.Feature_sets) {
-                var filter = function () {
-                    if (featureSet.tokenizerType === "Word" || featureSet.tokenizerType === "Letter") {
-                        if (featureSet.vocalized)
-                            return "VOWELIZED";
-                        return "TEXT_ONLY";
-                    }
-                    if (featureSet.tokenizerType === "Morphology") {
-                        return featureSet.includeLexeme ? "" : "(?<=@)[^#]+";
-                    }
-                    if (featureSet.tokenizerType === "SyntaxPhrase" && featureSet.spoOnly) {
-                        return "SUBJECT_PREDICATE_OBJECT";
-                    }
-                    return "";
-                    // filter = featureSet.
-                    //     includeLexeme: false,
-                    //     spoOnly: false,
-                    //     vocalized: true,
-                    //     sinDot: false,
-                    //     tokenized: false,
-                    //     includeNumber: false,
-                    //     includePunctuation: false
-                }();
+                const featureSettings = getFeatureSettings(featureSet);
                 var featuresRequest = {
-                    "keys": SelectClassService.testText.keys,
+                    "keys": text.keys,
                     "chunkType": "LARGE",
-                    "featureSettings": {
-                        "type": featureTypeMap[featureSet.tokenizerType],
-                        "filter": filter,
-                        "nGram": nGramMap[featureSet.featureType]
-                    }
+                    featureSettings
                 };
                 featurePromises.push(APIService.call("TextFeatures/ListFeatures", featuresRequest));
             }
             var textRequest = {
-                "keys": SelectClassService.testText.keys,
+                "keys": text.keys,
                 "chunkType": "LARGE"
             };
             textPromise = APIService.call("TextFeatures/GetText", textRequest).then(
-                function (response) {
-                    experiment.testTexts = response.data;
-                    return response.data;
-                }
+                response => response.data
             );
             var featuresCompletePromise = $q.all(featurePromises).then(function (responses) {
-                experiment.testTextsFeatures = _.flatMap(responses, response => response.data);
+                return _.flatMap(responses, response => response.data);
             });
             return $q.all([textPromise, featuresCompletePromise]).then(values => {experiment.save(); return values;});
         }
@@ -356,7 +359,9 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             runExtractAndCV,
             prepareClassification,
             setError,
-            getTextsWithFeatures,
+            getFeatureSettings,
+            getTextWithFeatures,
+            getTestTextWithFeatures,
             registerListener,
             fixmeCounter: 1,
             save() {

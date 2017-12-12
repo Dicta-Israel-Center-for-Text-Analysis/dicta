@@ -1,0 +1,12 @@
+<div class="ngdialog-message" style="padding: 20px">
+    <h2>Examples of "{{$ctrl.displayName}}"</h2>
+    <div class="samples-of-feature-examples">
+        <div ng-repeat="large in $ctrl.examples">
+            <div ng-repeat="small in large.contents" style="line-height: 1.5em; margin-bottom: 10px">
+                <div>{{$ctrl.trim(small.smallUnit.chunkKey)}}</div>
+                <span ng-bind-html="small.smallUnit.text"/>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" ng-click="$ctrl.onConfirm()">OK</button>
+</div>

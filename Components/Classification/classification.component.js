@@ -78,7 +78,7 @@ jTextMinerApp.component('classification', {
             $scope.testSetChunks = [];
 
             var classification = ctrl.experiment.runClassification();
-            var getTexts = ctrl.experiment.getTextsWithFeatures();
+            var getTexts = ctrl.experiment.getTestTextWithFeatures();
 
             return $q.all([classification, getTexts])
                 .then(afterClassification);
@@ -98,7 +98,7 @@ jTextMinerApp.component('classification', {
         }
         // HACK!!!
         function workaround (response) {
-            return ctrl.experiment.getTextsWithFeatures()
+            return ctrl.experiment.getTestTextWithFeatures()
                 .then(() => afterClassification(response));
         }
         ctrl.experiment.registerListener(workaround);

@@ -30,8 +30,12 @@ jTextMinerApp.component('classificationResultSummary',
             return prettyPrintMorphology(name);
         };
 
-        ctrl.showFeatureExamples = function () {
-            debugger;
+        ctrl.showFeatureExamples = function (feature) {
+            DialogService.openDialog('samplesOfFeature', {
+                featureName: feature.name,
+                featureSet: ctrl.experiment.featureCollection.Feature_sets[feature.featureSetId],
+                experiment: ctrl.experiment
+            })
         };
 
         ctrl.openCvDialog = function () {

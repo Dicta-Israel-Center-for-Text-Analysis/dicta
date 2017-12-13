@@ -333,6 +333,11 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             return $q.all([textPromise, featuresCompletePromise]).then(values => {experiment.save(); return values;});
         }
 
+        function findFeatureSet(featureName) {
+            const featureNumber = _.findIndex(experiment.featureCollection.featuresData.features, features=> features.some(feature => feature.name=== featureName));
+            return experiment.featureCollection.Feature_sets[featureNumber];
+        }
+
         function registerListener(listener) {
             experiment.listener = listener;
             experiment.load();
@@ -362,6 +367,7 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
             getFeatureSettings,
             getTextWithFeatures,
             getTestTextWithFeatures,
+            findFeatureSet,
             registerListener,
             fixmeCounter: 1,
             save() {

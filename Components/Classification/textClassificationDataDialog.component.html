@@ -20,7 +20,7 @@
                         Feature
                     </th>
                     <th class="occur-class">
-                        Occurrences
+                        Approximate Occurrences
                     </th>
                     <th class="frequency-class">
                         Frequency
@@ -47,7 +47,7 @@
 
 
                 <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | positiveInfluence: oneclass.title">
-                    <td title="{{feature.title}}"><b>{{$ctrl.convertFeatureName(feature.name)}}</b>
+                    <td title="{{feature.title}}"><b ng-click="$ctrl.showExamples(feature)">{{$ctrl.convertFeatureName(feature.name)}}</b>
                     </td>
                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number:
                         0}}
@@ -75,7 +75,7 @@
                     </th>
                 </tr>
                 <tr ng-repeat="feature in $ctrl.testFile.featureList | orderBy:test_predicate:reverse | orderBy:'-influence' | negativeInfluence: oneclass.title">
-                    <td title="{{feature.title}}"><b>{{$ctrl.convertFeatureName(feature.name)}}</b>
+                    <td title="{{feature.title}}"><b ng-click="$ctrl.showExamples(feature)">{{$ctrl.convertFeatureName(feature.name)}}</b>
                     </td>
                     <td class="occur-content">{{feature.numberOfAppearancesInDoc | number:
                         0}}

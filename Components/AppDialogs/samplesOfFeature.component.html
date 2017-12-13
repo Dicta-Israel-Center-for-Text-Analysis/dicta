@@ -1,5 +1,9 @@
 <div class="ngdialog-message" style="padding: 20px">
     <h2>Examples of "{{$ctrl.displayName}}"</h2>
+
+    <in-progress progress-flag="$ctrl.inProgress"></in-progress>
+    <div ng-if="$ctrl.error">{{$ctrl.error}}</div>
+
     <div class="samples-of-feature-examples">
         <div ng-repeat="large in $ctrl.examples">
             <div ng-repeat="small in large.contents" style="line-height: 1.5em; margin-bottom: 10px">

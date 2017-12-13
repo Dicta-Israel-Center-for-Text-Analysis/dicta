@@ -6,7 +6,7 @@ jTextMinerApp.component('textClassificationDataDialog',
         onConfirm: '&'
     },
     templateUrl: 'Components/Classification/textClassificationDataDialog.component.html',
-    controller: function() {
+    controller: function(DialogService) {
         const ctrl = this;
         
         ctrl.convertFeatureName = function (featureName) {
@@ -30,5 +30,12 @@ jTextMinerApp.component('textClassificationDataDialog',
         ctrl.classNameToColor = function (className) {
             return ctrl.classIndexToColor(ctrl.indexOfClass(className));
         }
+
+        ctrl.showExamples = function (feature) {
+            DialogService.openDialog('samplesOfFeature', {
+                featureName: feature.name,
+                experiment: ctrl.experiment
+            })
+        };
     }
 }); 

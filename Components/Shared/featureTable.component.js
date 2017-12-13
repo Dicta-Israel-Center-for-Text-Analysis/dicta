@@ -244,10 +244,11 @@ jTextMinerApp.component('featureTable', {
             isSelectDisabled: '=',
             features: '=',
             isMorphology: '=',
-            classes: '<'
+            classes: '<',
+            experiment: '<'
         },
         templateUrl: 'Components/Shared/featureTable.component.html',
-        controller: ['$scope', 'ClassService', function ($scope, ClassService) {
+        controller: function ($scope, ClassService, DialogService) {
             var ctrl = this;
             $scope.predicate = '-maxTTest';
 
@@ -288,5 +289,11 @@ jTextMinerApp.component('featureTable', {
                 }
                 return converted;
             }
-        }]
+            ctrl.showExamples = function (feature) {
+                DialogService.openDialog('samplesOfFeature', {
+                    featureName: feature.name,
+                    experiment: ctrl.experiment
+                })
+            };
+        }
 });

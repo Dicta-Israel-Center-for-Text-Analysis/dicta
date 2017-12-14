@@ -128,6 +128,18 @@ jTextMinerApp.config(function ($stateProvider, $urlRouterProvider) {
         url: '/Tabs',
         template: '<tabs></tabs>'
     })
+    .state('Parallels', {
+        url: '/Parallels',
+        component: 'parallels',
+        onEnter: function (StateService, TreeService) {
+            StateService.isBibleMode = false;
+            TreeService.changeMode();
+        },
+        onExit: function (StateService, TreeService) {
+            StateService.isBibleMode = true;
+            TreeService.changeMode();
+        }
+    })
     
 })
 .run(function($transitions) {

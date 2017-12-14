@@ -1,19 +1,26 @@
 // loads the tree of the Dicta corpus
 // also provides a utility function 'treeSort' which sorts a list according to an in-order traversal of the tree
 jTextMinerApp.factory('TreeService', function ($http, $q, StateService) {
-    var service = {
+    function initService() {
+        return $http.get(
+            StateService.isBibleMode
+                ? 'corpusData/Bible.json'
+                :'corpusData/corpusTree.json')
+        .then(function (response)
+            {
+                service.corpusTree = response.data;
+                service.loaded = false;
+                service.loadNode(null);
+            });
+    }
+    const service = {
         corpusTree: [],
         readyPromise: StateService.initPromise
-            .then(() => $http.get(
-                StateService.isBibleMode
-                ? 'corpusData/Bible.json'
-                :'corpusData/corpusTree.json'))
-            .then(function (response)
-        {
-            service.corpusTree = response.data;
-            service.loaded = false;
-            service.loadNode(null);
-        }),
+            .then(initService),
+        changeMode() {
+            service.readyPromise = initService();
+            return service.readyPromise;
+        },
         loadNode(node){
             if (node == null) {
                 if (service.loaded)
@@ -45,23 +52,31 @@ jTextMinerApp.factory('TreeService', function ($http, $q, StateService) {
         },
         $keyToNode: {},
         keyToNode(key) {
+            function loadOneLevel(nodeChildren, path) {
+                let request = null;
+                const childList = nodeChildren.filter(child => child.key === path);
+                if (childList.length > 0) {
+                    const node = childList[0];
+                    request = service.loadNode(node);
+                }
+                else
+                    return null;
+                return request.then(node => node.children);
+            }
+
             if (!service.$keyToNode.hasOwnProperty(key)) {
                 const pathElements = key.split('/');
-                let nodeChildren = service.corpusTree;
                 let path = "";
+                let lastRequest;
                 pathElements.forEach(name => {
                     if (path.length === 0)
                         path = name;
                     else
-                        path = path + '/' + name; 
-                    const childList = nodeChildren.filter(child => child.key === path);
-                    if (childList.length > 0) {
-                        const node = childList[0];
-                        service.loadNode(node);
-                        nodeChildren = node.children;
-                    }
+                        path = path + '/' + name;
+                    if (lastRequest)
+                        lastRequest = lastRequest.then((nodeChildren) => loadOneLevel(nodeChildren, path));
                     else
-                        return null;
+                        lastRequest = loadOneLevel(service.corpusTree, path);
                 })
             }
             return service.$keyToNode[key];

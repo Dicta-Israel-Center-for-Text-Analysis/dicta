@@ -51,6 +51,8 @@ jTextMinerApp.factory('SelectClassService', function (UserService, APIService, T
         if (!text) return;
         if (text.mode === 'BrowseThisComputer') return 'Uploaded Text';
         const sortedKeys = TreeService.treeSort(text.keys);
+        if (text.keys.some(key => !key.startsWith('/Dicta Corpus/Tanakh')))
+            return text.keys.map(key => key.replace('/Dicta Corpus/','')).join(', ');
         let summaries = [];
         let lastSummary;
         let lastRangeStart;

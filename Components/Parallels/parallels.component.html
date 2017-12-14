@@ -1,3 +1,29 @@
-<parallels-controls experiment="$ctrl.experiment"></parallels-controls>
-<parallels-results experiment="$ctrl.experiment"></parallels-results>
-<!--<parallels-details></parallels-details>-->
+<div>
+    <div class="main-page-controls">
+        <div class="main-page-selection-summary">
+            <div>
+                <span class="top-back-arrow" ui-sref="classificationStart"><i class="material-icons">keyboard_arrow_left</i></span>
+                <span class="small-logo">Dicta<sup>Parallels</sup></span>
+            </div>
+            <div ng-if="$ctrl.getSelection()">
+                <h1>{{$ctrl.getSelection()}}</h1>
+                <h2 ng-if="$ctrl.getSubtitle()">{{$ctrl.getSubtitle()}}</h2>
+                <a ui-sref="bibleInterface.view"><i class="material-icons">view_day</i>
+                    View</a>
+                <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
+                    Edit</a>
+            </div>
+            <div ng-if="!$ctrl.getSelection()">
+                <h2>No test text selected.</h2>
+                <a ng-click="$ctrl.editSelectedText()"><i class="material-icons">edit</i>
+                    Select a Test Text</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <parallels-controls experiment="$ctrl.experiment"></parallels-controls>
+            <parallels-results experiment="$ctrl.experiment"></parallels-results>
+        </div>
+    </div>
+</div>

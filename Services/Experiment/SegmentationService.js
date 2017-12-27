@@ -24,7 +24,7 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
             angular.extend(segmentationExperiment.featureCollection.Feature_sets[0],
                 {
                     tokenized: true,
-                    filterCount: 500,
+                    filterCount: 1500,
                     normalizerType: "Binary"
                 });
 
@@ -43,7 +43,7 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                     // userLogin: UserService.user,
                     // expType: 'Segmentation',
                     // expName: 'Untitled',
-                    featureSets: this.featureCollection.Feature_sets,
+                    featureSets: _.cloneDeep(this.featureCollection.Feature_sets),
                     segmentationActionMode: this.Segmentation_ActionMode,
                     segmentationChunkBy: this.Segmentation_ChunkBy
                 });
@@ -89,6 +89,7 @@ jTextMinerApp.factory('SegmentationService', function ($rootScope, FeatureCollec
                 segmentationExperiment.updateSegmentation_ActionModeValue();
                 
                 var tmp = segmentationExperiment.createDataForRun();
+                tmp.featureSets[0].normalizerType = 'Frequency';
                 tmp.extractData = segmentationExperiment.createDataForExtract();
                 return APIService.call('JTextMinerAPI/RunSegmentation', tmp)
                     .then( function (response) {

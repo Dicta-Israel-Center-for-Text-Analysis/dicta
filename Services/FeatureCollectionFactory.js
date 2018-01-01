@@ -40,6 +40,11 @@ return {
             featureSetName: 'SyntaxClause',
             tokenizerType: 'SyntaxClause'
         });
+        const INITIAL_LEXEME = _.assign(getNewFeatureSet(), {
+            id: 3,
+            featureSetName: 'Lexeme',
+            tokenizerType: 'Lexeme'
+        });
 
         const collection = {
             totalNumberOfFeatures: 0,
@@ -66,9 +71,13 @@ return {
                 'Syntax': {
                     set: INITIAL_SYNTAX,
                     selected: true
+                },
+                'Lexemes': {
+                    set: INITIAL_LEXEME,
+                    selected: false
                 }
             };
-            collection.allFeatureSetNames = ['Words', 'Morphology', 'Syntax'];
+            collection.allFeatureSetNames = ['Words', 'Morphology', 'Syntax', 'Lexemes'];
             collection.toggleFeatureSet = function (name, selected) {
                 if (!collection.allFeatureSets.hasOwnProperty(name))
                     throw "Incorrect feature set name passed to toggleFeatureSet.";

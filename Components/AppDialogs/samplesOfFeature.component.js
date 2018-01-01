@@ -75,7 +75,7 @@ jTextMinerApp.component('samplesOfFeature',
                 .concat(SelectClassService.testText ? SelectClassService.testText.keys : []);
             //remove prefixes that distinguish feature set types if the server is sending them
             const featureName = ctrl.featureName
-                .replace(/@(ml|ms|so|sc|sp)/g, '@');
+                .replace(/@(ml|ms|so|sc|sp)\u200e?/g, '@');
             ctrl.inProgress = true;
             APIService.call('TextFeatures/FindFeature', {
                 featureName,

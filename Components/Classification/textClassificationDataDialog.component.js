@@ -11,7 +11,7 @@ jTextMinerApp.component('textClassificationDataDialog',
         
         ctrl.convertFeatureName = function (featureName) {
             let converted = featureName;
-            if (converted.indexOf('_') > -1) {
+            if (converted.indexOf('_') > -1 || converted.startsWith('@ml')) {
                 converted = prettyPrintMorphology(converted);
             }
             return converted;

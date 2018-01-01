@@ -236,6 +236,7 @@ function prettyPrintMorphology(converted) {
     }
     // match things that look like syntax phrase sequences, @ followed by groups of 4 chars joined with _
     converted = converted.replace(/@\w{4}(_\w{4})*/g, syntaxPhraseSeqLookup);
+    if (converted.startsWith('@')) converted = converted.substr(1) + ' (lexeme)';
     return converted;
 }
 

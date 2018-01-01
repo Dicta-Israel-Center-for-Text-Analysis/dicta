@@ -276,7 +276,8 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                 "Letter": "LETTERS",
                 "Morphology": "MORPHOLOGY",
                 "SyntaxClause": "SYNTAX_CLAUSE_TYPES",
-                "SyntaxPhrase": "SYNTAX_PHRASE_SEQUENCES"
+                "SyntaxPhrase": "SYNTAX_PHRASE_SEQUENCES",
+                "Lexeme": "LEXEMES"
             };
             const nGramMap = {
                 "Unigram": 1,
@@ -295,6 +296,10 @@ jTextMinerApp.factory('ClassificationService', function (FeatureCollectionFactor
                 if (featureSet.tokenizerType === "SyntaxPhrase" && featureSet.spoOnly) {
                     return "SUBJECT_PREDICATE_OBJECT";
                 }
+                if (featureSet.tokenizerType === 'Lexeme')
+                    // this is only needed because lexemes are returned without punctuation right now,
+                    // so DictaText needs to match the behavior
+                    return "([^@\\p{L}]+)";
                 return "";
             }();
             return  {
